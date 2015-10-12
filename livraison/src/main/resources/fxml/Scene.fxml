@@ -48,7 +48,7 @@
                   </GridPane>
                </bottom>
                <center>
-                  <TreeView prefHeight="305.0" prefWidth="258.0" BorderPane.alignment="CENTER" />
+                  <TreeView fx:id="livraisonsTreeView" prefHeight="305.0" prefWidth="258.0" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
          </left>
@@ -74,7 +74,7 @@
             </BorderPane>
          </bottom>
          <center>
-            <Canvas height="305.0" width="298.0" BorderPane.alignment="CENTER" />
+            <Canvas fx:id="graphCanvas" height="305.0" width="298.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
    </children>
