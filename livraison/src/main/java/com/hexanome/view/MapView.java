@@ -42,16 +42,30 @@ public class MapView implements Initializable {
         Random r = new Random();
         
         for(int i = 0; i < 20; i++){
-            AddNode(new Point(r.nextInt(1000), r.nextInt(1000)));
+            AddNode("EMPTY", new Point(r.nextInt(1000), r.nextInt(1000)));
         }
+        
+        for(int i = 0; i < 10; i++){
+            AddNode("DELIVERY", new Point(r.nextInt(1000), r.nextInt(1000)));
+        }
+        
+        AddNode("WAREHOUSE", new Point(r.nextInt(1000), r.nextInt(1000)));
     }
     
     /**
-     * Add an empty node a the position pt.x & pt.y
+     * Add a node a the position pt.x & pt.y
+     * @param Type Node Type
      * @param pt node position
      */
-    public void AddNode(Point pt) { 
-        EmptyNodeView n = new EmptyNodeView(pt);
+    public void AddNode(String Type, Point pt) { 
+        NodeView n = null ;
+ 
+        switch(Type){
+            case "EMPTY": n = new EmptyNodeView(pt); break;
+            case "DELIVERY": n = new DeliveryNodeView(pt); break;
+            case "WAREHOUSE": n = new WarehouseNodeView(pt); break;
+        }
+
         MainPane.getChildren().add(n);   
         n.setLayoutX(pt.x);
         n.setLayoutY(pt.y);        
@@ -63,7 +77,7 @@ public class MapView implements Initializable {
      * @param pt 
      */
     public void DeleteNode(Point pt) {
-        MainPane.getChildren().remove((EmptyNodeView) nodeList.get(pt));
+        MainPane.getChildren().remove((NodeView) nodeList.get(pt));
         nodeList.remove(pt);
     }
 
