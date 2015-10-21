@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -7,8 +9,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hexanome.view.EmptyNodeView">
-    <stylesheets>
-        <URL value="@/styles/emptynodeview.css"/>
-    </stylesheets>
-</AnchorPane>
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+      <Circle fx:id="nodeShape" layoutX="10.0" layoutY="10.0" radius="10.0" stroke="BLACK" strokeType="INSIDE">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0" startX="0.028846153846153848" startY="0.42788461538461536">
+               <stops>
+                  <Stop color="#0d0d0d" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Circle>
+    </children>
+</fx:root>

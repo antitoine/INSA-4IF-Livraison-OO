@@ -5,20 +5,6 @@
  */
 package com.hexanome.view;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.TreeItem;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.RectangleBuilder;
-import org.controlsfx.control.PopOver;
-import org.controlsfx.glyphfont.Glyph;
-
 /**
  *
  * @author hverlin
