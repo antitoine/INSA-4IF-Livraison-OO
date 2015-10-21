@@ -1,15 +1,14 @@
 
 package com.hexanome.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 
-public class BtnListener implements ActionListener{
+public class BtnListener implements javafx.event.EventHandler<ActionEvent>{
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void handle(ActionEvent event) {
+        System.out.println(""+event.toString()+"-> "+event.getSource()+"  "+event.getTarget());
     }
 
 }
