@@ -1,3 +1,5 @@
+package com.hexanome.view;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,7 +15,7 @@ import javafx.fxml.Initializable;
  *
  * @author hverlin
  */
-public class EmptyNodeView implements Initializable {
+public class WarehouseNodeView implements Initializable {
 
     /**
      * Initializes the controller class.
