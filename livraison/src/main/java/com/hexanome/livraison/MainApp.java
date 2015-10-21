@@ -5,24 +5,21 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TreeItem;
 import javafx.stage.Stage;
-
 
 public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
-        
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
-        
-        // créé la fenêtre principale
+
+        // créer la fenêtre principale
         stage.setTitle("Editeur de livraisons");
         stage.setScene(scene);
         stage.setMaximized(true);
-        stage.show();  
+        stage.show();
     }
 
     /**

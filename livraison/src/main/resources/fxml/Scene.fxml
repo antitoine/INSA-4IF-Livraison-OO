@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hexanome.livraison.FXMLController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hexanome.view.MainWindow">
    <children>
       <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -30,28 +32,6 @@
               </menus>
             </MenuBar>
          </top>
-         <left>
-            <BorderPane prefHeight="335.0" prefWidth="282.0" BorderPane.alignment="CENTER">
-               <bottom>
-                  <GridPane BorderPane.alignment="CENTER">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="147.0" text="Itinéraire" />
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="177.0" text="Feuille de route" GridPane.columnIndex="1" />
-                     </children>
-                  </GridPane>
-               </bottom>
-               <center>
-                  <TreeView fx:id="livraisonsTreeView" prefHeight="305.0" prefWidth="258.0" BorderPane.alignment="CENTER" />
-               </center>
-            </BorderPane>
-         </left>
          <bottom>
             <BorderPane fx:id="bottomPane" prefHeight="36.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <right>
@@ -74,8 +54,30 @@
             </BorderPane>
          </bottom>
          <center>
-            <Canvas fx:id="graphCanvas" height="305.0" width="298.0" BorderPane.alignment="CENTER" />
+            <BorderPane fx:id="mainPane" prefHeight="335.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
          </center>
+         <left>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <center>
+                  <TreeView fx:id="livraisonsTreeView" prefHeight="305.0" prefWidth="258.0" BorderPane.alignment="CENTER" />
+               </center>
+               <bottom>
+                  <GridPane prefHeight="30.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="147.0" text="Itinéraire" />
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="177.0" text="Feuille de route" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+               </bottom>
+            </BorderPane>
+         </left>
       </BorderPane>
    </children>
 </AnchorPane>

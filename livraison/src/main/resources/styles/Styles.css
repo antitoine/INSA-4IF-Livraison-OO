@@ -1,9 +1,6 @@
 // exemple de style 
 // ouai c'est moche mais c'est juste en démo'
 #bottomPane{
-    -fx-background-color: #f5e99d;
+    -fx-border-color: black;
 }
 
-.label{
-    -fx-text-fill: brown;
-}
