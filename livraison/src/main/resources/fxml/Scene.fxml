@@ -53,14 +53,8 @@
                </center>
             </BorderPane>
          </bottom>
-         <center>
-            <BorderPane fx:id="mainPane" prefHeight="335.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
-         </center>
          <left>
             <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <center>
-                  <TreeView fx:id="livraisonsTreeView" prefHeight="305.0" prefWidth="258.0" BorderPane.alignment="CENTER" />
-               </center>
                <bottom>
                   <GridPane prefHeight="30.0" prefWidth="250.0" BorderPane.alignment="CENTER">
                     <columnConstraints>
@@ -76,8 +70,18 @@
                      </children>
                   </GridPane>
                </bottom>
+               <center>
+                  <fx:include source="DeliveryTreeView.fxml" />
+               </center>
             </BorderPane>
          </left>
+         <center>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <content>
+                  <fx:include source="MapView.fxml" />
+               </content>
+            </ScrollPane>
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>

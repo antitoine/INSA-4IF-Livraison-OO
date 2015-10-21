@@ -19,8 +19,8 @@ public class PlanningDocument {
         dom = domdoc;
     }
     
-    public ArrayList<TimeSlot> getTimeSlots() {
-        
-    }
+//    public ArrayList<TimeSlot> getTimeSlots() {
+//        
+//    }
             
 }

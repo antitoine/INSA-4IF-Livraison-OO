@@ -5,19 +5,31 @@
  */
 package com.hexanome.controller;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /**
  *
  * @author hverlin
  */
-public class UIManager {
+public class UIManager extends Application{
 
     public UIManager() {
     }
     
-    /**
-     *
-     */
-    public void showMainWindow() {
-        
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("/styles/Styles.css");
+
+        // créer la fenêtre principale
+        stage.setTitle("Editeur de livraisons");
+        stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.show();
     }
 }
