@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hexanome.livraison.utils;
+package com.hexanome.utils;
 
-import com.hexanome.livraison.utils.MapDocument;
-import com.hexanome.livraison.utils.PlanningDocument;
-import com.hexanome.livraison.utils.RouteDocument;
+import com.hexanome.utils.MapDocument;
+import com.hexanome.utils.PlanningDocument;
+import com.hexanome.utils.RouteDocument;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;

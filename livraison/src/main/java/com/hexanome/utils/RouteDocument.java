@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hexanome.livraison.utils;
+package com.hexanome.utils;
 
 import java.io.File;
 
