@@ -59,14 +59,12 @@ public class DeliveryTreeView implements Initializable {
     }
     
     public static void AddTimeSlot(TimeSlot ts){
-        // TODO : change for ts.getId()
-        System.out.println(""+ts.getId());
-        timeSlotBranch.put(ts.getId(), makeBranch("8h - 10h", rootItem));
+        String info = ts.getStartTime() + " - " + ts.getEndTime();
+//        timeSlotBranch.put(ts.getStartTime(), makeBranch(info, rootItem));
     }
 
     public static void AddDelivery(Delivery delivery) {
-        // TODO : change for delivery.getId
-        deliveryBranch.put(delivery.getId(), makeBranch("livraison ", rootItem));
+//        deliveryBranch.put(delivery.getId(), makeBranch("livraison ", rootItem));
     }
 
     public static void DeleteDelivery() {

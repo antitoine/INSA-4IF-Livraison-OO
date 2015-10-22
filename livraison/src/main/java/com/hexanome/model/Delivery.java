@@ -20,5 +20,9 @@ public class Delivery {
     public Delivery(Node node) {
         this.node = node;
     }
+
+    public int getId(){
+        return node.getId();
+    }
     
 }

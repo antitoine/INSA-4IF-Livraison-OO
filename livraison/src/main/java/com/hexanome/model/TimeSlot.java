@@ -13,6 +13,14 @@ import java.util.ArrayList;
  */
 public class TimeSlot {
     private int startTime; // Unit : seconds
+
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public int getEndTime() {
+        return endTime;
+    }
     private int endTime; // Unit : seconds 
     private ArrayList<Delivery> deliveries;
     
@@ -26,4 +34,6 @@ public class TimeSlot {
         // \todo implement here
         return false;
     }
+
+
 }

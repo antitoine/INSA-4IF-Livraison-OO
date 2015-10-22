@@ -1,9 +1,9 @@
 /*
  * mapView Stylesheet file.
  */
-#AnchorPane{
+#AnchorPane:hover{
         -fx-background-color: transparent;
-       // -fx-background-image: url("img/grid.png");
+        -fx-background-image: url("img/grid.png");
         -fx-background-repeat: repeat;   
         -fx-background-position: center center;
 }
