@@ -32,4 +32,8 @@ public class UIManager extends Application{
         stage.setMaximized(true);
         stage.show();
     }
+    
+    public void NotifyUI(final String Action){
+        
+    }
 }
