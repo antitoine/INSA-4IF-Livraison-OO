@@ -6,22 +6,15 @@
 package com.hexanome.view;
 
 import java.awt.Point;
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Circle;
 
 /**
  * FXML Controller class
@@ -39,20 +32,32 @@ public class MapView implements Initializable, Observer {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        nodeList = new HashMap<>();
+    public  void initialize(URL url, ResourceBundle rb) {
+        
 
+        nodeList = new HashMap<>();
+        arcList = new HashMap<>();
         Random r = new Random();
 
-        for (int i = 0; i < 20; i++) {
-            AddNode("EMPTY", new Point(r.nextInt(1000), r.nextInt(1000)));
+        Point pttemp = new Point(r.nextInt(1000), r.nextInt(1000));
+
+        for (int i = 0; i < 10; i++) {
+            Point pt1 = pttemp;
+            Point pt2 = new Point(r.nextInt(1000), r.nextInt(1000));
+
+            AddNode(ConstView.EMPTYNODE, pt1);
+            AddNode(ConstView.EMPTYNODE, pt2);
+
+            AddArc(pt1, pt2);
+
+            pttemp = pt2;
         }
 
         for (int i = 0; i < 10; i++) {
-            AddNode("DELIVERY", new Point(r.nextInt(1000), r.nextInt(1000)));
+            AddNode(ConstView.DELIVERYNODE, new Point(r.nextInt(1000), r.nextInt(1000)));
         }
 
-        AddNode("WAREHOUSE", new Point(r.nextInt(1000), r.nextInt(1000)));
+        AddNode(ConstView.WAREHOUSENODE, new Point(r.nextInt(1000), r.nextInt(1000)));
     }
 
     @Override
@@ -71,20 +76,20 @@ public class MapView implements Initializable, Observer {
         NodeView n = null;
 
         switch (Type) {
-            case "EMPTY":
+            case ConstView.EMPTYNODE:
                 n = new EmptyNodeView(pt);
                 break;
-            case "DELIVERY":
+            case ConstView.DELIVERYNODE:
                 n = new DeliveryNodeView(pt);
                 break;
-            case "WAREHOUSE":
+            case ConstView.WAREHOUSENODE:
                 n = new WarehouseNodeView(pt);
                 break;
         }
 
         MainPane.getChildren().add(n);
-        n.setLayoutX(pt.x);
-        n.setLayoutY(pt.y);
+        n.toFront();
+        n.relocate(pt.x - n.getPrefWidth() / 2, pt.y - n.getPrefHeight() / 2);
         nodeList.put(pt, n);
     }
 
@@ -94,6 +99,7 @@ public class MapView implements Initializable, Observer {
 
     /**
      * Delete a node a the position pt
+     *
      * @param pt
      */
     public void DeleteNode(Point pt) {
@@ -102,6 +108,11 @@ public class MapView implements Initializable, Observer {
     }
 
     public void AddArc(Point pt1, Point pt2) {
+
+        ArcView av = new ArcView(pt1, pt2);
+        MainPane.getChildren().add(av);
+        arcList.put(pt1, av);
+        av.toBack();
 
     }
 

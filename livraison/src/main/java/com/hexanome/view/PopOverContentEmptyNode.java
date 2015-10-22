@@ -14,7 +14,7 @@ import org.controlsfx.glyphfont.Glyph;
 /**
  * FXML Controller class
  */
-public class PopOverContentEmptyNode extends BorderPane {
+public class PopOverContentEmptyNode extends PopOverContent {
     
     @FXML
     Button btnValidate;
@@ -26,15 +26,8 @@ public class PopOverContentEmptyNode extends BorderPane {
     Text adressText;
     
     public PopOverContentEmptyNode(String adress) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PopOverContentEmptyNode.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(EmptyNodeView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        super(ConstView.POPOVEREMPTY);
         
         btnValidate.setGraphic(new Glyph("FontAwesome", "CHECK"));
         btnValidate.setOnAction(MainWindow.getBtnListener());
