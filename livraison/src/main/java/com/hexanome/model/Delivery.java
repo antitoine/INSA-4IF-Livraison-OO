@@ -10,15 +10,15 @@ package com.hexanome.model;
  * @author paul
  */
 public class Delivery {
-    private float _deliveryTime ;
-    private Node _node;
+    private float deliveryTime ;
+    private Node node;
     
     /**
      * 
      * @param node 
      */
     public Delivery(Node node) {
-        _node = node;
+        this.node = node;
     }
     
 }

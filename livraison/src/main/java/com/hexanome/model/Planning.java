@@ -12,16 +12,16 @@ import java.util.ArrayList;
  * @author paul
  */
 public class Planning {
-    private Map _map;
-    private Node _warehouse;
-    private Route _route;
-    private ArrayList<TimeSlot> _timeSlots;
+    private Map map;
+    private Node warehouse;
+    private Route route;
+    private ArrayList<TimeSlot> timeSlots;
     
     public Planning(Map map, Node warehouse, ArrayList<TimeSlot> timeSlots) {
-        _map = map;
-        _warehouse = warehouse;
-        _route = null; // On initialise à null pour l'instant
-        _timeSlots = timeSlots;
+        this.map = map;
+        this.warehouse = warehouse;
+        this.route = null; // On initialise à null pour l'instant
+        this.timeSlots = timeSlots;
     }
     
     // \todo add methods here

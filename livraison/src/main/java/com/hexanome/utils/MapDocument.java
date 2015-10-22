@@ -18,9 +18,9 @@ public class MapDocument
 {
     private Document dom;
     
-    public MapDocument(Document domDoc) 
+    public MapDocument(Document dom) 
     {
-        dom = domDoc;
+        this.dom = dom;
     }
     
     public ArrayList<Node> getNodes()

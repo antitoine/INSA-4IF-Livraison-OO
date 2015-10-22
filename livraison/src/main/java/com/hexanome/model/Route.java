@@ -12,10 +12,10 @@ import java.util.ArrayList;
  * @author paul
  */
 public class Route {
-    private ArrayList<Path> _paths;
+    private ArrayList<Path> paths;
     
     public Route(ArrayList<Path> paths) {
-        _paths = paths;
+        this.paths = paths;
     }
     
     public void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {

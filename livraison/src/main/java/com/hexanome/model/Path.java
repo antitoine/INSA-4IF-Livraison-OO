@@ -12,17 +12,17 @@ import java.util.ArrayList;
  * @author paul
  */
 public class Path {
-    private ArrayList<Arc> _arcs;
-    private float _pathDuration;
+    private ArrayList<Arc> arcs;
+    private float pathDuration;
     /**
      * 
      * @param arcs 
      */
     public Path(ArrayList<Arc> arcs) {
-        _arcs = arcs;
-        _pathDuration = 0;
+        this.arcs = arcs;
+        this.pathDuration = 0;
         for (Arc arc : arcs) {
-            _pathDuration += arc.getDuration();
+            this.pathDuration += arc.getDuration();
         }
     }
     /**

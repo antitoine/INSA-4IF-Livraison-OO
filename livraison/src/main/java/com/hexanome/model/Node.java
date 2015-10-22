@@ -12,10 +12,10 @@ import java.util.ArrayList;
  * @author paul
  */
 public class Node {
-    private int _id;
-    private float _x;
-    private float _y;
-    ArrayList<Arc> _outgoings;
+    private int id;
+    private float x;
+    private float y;
+    ArrayList<Arc> outgoings;
     
     /**
      * 
@@ -24,9 +24,9 @@ public class Node {
      * @param y 
      */
     public Node(int id, float x, float y) {
-        _id = id;
-        _x = x;
-        _y = y;
+        this.id = id;
+        this.x = x;
+        this.y = y;
     }
     /**
      * 

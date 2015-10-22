@@ -12,14 +12,14 @@ import java.util.ArrayList;
  * @author paul
  */
 public class TimeSlot {
-    private int _startTime; // Unit : seconds
-    private int _endTime; // Unit : seconds 
-    private ArrayList<Delivery> _deliveries;
+    private int startTime; // Unit : seconds
+    private int endTime; // Unit : seconds 
+    private ArrayList<Delivery> deliveries;
     
     public TimeSlot(int startTime, int endTime, ArrayList<Delivery> deliveries) {
-        _startTime = startTime;
-        _endTime = endTime;
-        _deliveries = deliveries;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.deliveries = deliveries;
     }
     
     public boolean containsTime(float time) {

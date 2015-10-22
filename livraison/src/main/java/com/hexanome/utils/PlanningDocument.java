@@ -22,13 +22,13 @@ import org.jdom2.Element;
  * @author paul
  */
 public class PlanningDocument {
-    private Document _dom;
+    private Document dom;
     /**
      * 
      * @param dom 
      */
     public PlanningDocument(Document dom) {
-        _dom = dom;
+        this.dom = dom;
     }
     /**
      * 
@@ -37,7 +37,7 @@ public class PlanningDocument {
      */
     public Node getWarehouse(Map map) {
         // Retreive warehouse element 
-        Element warehouse = _dom.getRootElement().getChild("Entrepot");
+        Element warehouse = dom.getRootElement().getChild("Entrepot");
         Node node = null;
         try {
             // Retreive the Id of the node
@@ -56,7 +56,7 @@ public class PlanningDocument {
      */
     public ArrayList<TimeSlot> getTimeSlots(Map map) {
         // Get all the XML nodes representing timeslots
-        LinkedList<Element> timeSlotElements = (LinkedList<Element>)_dom.getRootElement().getChildren("Plage");
+        LinkedList<Element> timeSlotElements = (LinkedList<Element>)dom.getRootElement().getChildren("Plage");
         // Create the list f timeslots that will be returned 
         ArrayList<TimeSlot> timeslots = new ArrayList<>();
         // Loop on timeslots XML nodes

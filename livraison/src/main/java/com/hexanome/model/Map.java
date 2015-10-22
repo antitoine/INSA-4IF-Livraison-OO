@@ -12,8 +12,8 @@ import java.util.ArrayList;
  * @author paul
  */
 public class Map {
-    private ArrayList<Node> _nodes;
-    private ArrayList<Arc> _arcs;
+    private ArrayList<Node> nodes;
+    private ArrayList<Arc> arcs;
     
     /**
      * 
@@ -30,7 +30,7 @@ public class Map {
         // Create a new node 
         Node n = new Node(id, x, y);
         // Add the new node to the local collection
-        _nodes.add(n);
+        nodes.add(n);
         // Return the new node
         return n;
     }
@@ -49,7 +49,7 @@ public class Map {
         // Attaching the arc to its source node
         src.AttachOutgoingArc(a);
         // Adding arc to the internal collection
-        _arcs.add(a);
+        arcs.add(a);
         // Return the new arc
         return a;
     }
@@ -77,14 +77,14 @@ public class Map {
      * @return 
      */
     public ArrayList<Arc> getArcs() {
-        return _arcs;
+        return arcs;
     }
     /**
      * 
      * @return 
      */
     public ArrayList<Node> getNodes() {
-        return _nodes;
+        return nodes;
     }
     /**
      * 
