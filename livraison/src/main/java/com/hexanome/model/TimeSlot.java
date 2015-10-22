@@ -12,11 +12,11 @@ import java.util.ArrayList;
  * @author paul
  */
 public class TimeSlot {
-    private float _startTime;
-    private float _endTime;
+    private int _startTime; // Unit : seconds
+    private int _endTime; // Unit : seconds 
     private ArrayList<Delivery> _deliveries;
     
-    public TimeSlot(float startTime, float endTime, ArrayList<Delivery> deliveries) {
+    public TimeSlot(int startTime, int endTime, ArrayList<Delivery> deliveries) {
         _startTime = startTime;
         _endTime = endTime;
         _deliveries = deliveries;
