@@ -58,6 +58,7 @@ public class MapView implements Initializable, Observer {
         }
 
         AddNode(ConstView.WAREHOUSENODE, new Point(r.nextInt(1000), r.nextInt(1000)));
+        
     }
 
     @Override

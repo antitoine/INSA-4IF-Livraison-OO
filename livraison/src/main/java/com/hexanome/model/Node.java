@@ -35,5 +35,9 @@ public class Node {
     public void AttachOutgoingArc(Arc arc) {
         // \todo implement here
     }
+
+    public int getId() {
+        return _id;
+    }
     
 }
