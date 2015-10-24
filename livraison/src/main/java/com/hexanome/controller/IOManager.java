@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hexanome.controller;
 
 import com.hexanome.model.Route;
@@ -36,12 +31,12 @@ public class IOManager {
         return iomanager;
     }
     
-    MapDocument getMapDocument(String filename) {
-        return DocumentFactory.createMapDocument(filename);
+    MapDocument getMapDocument(File file) {
+        return DocumentFactory.createMapDocument(file);
     }
     
-    PlanningDocument getPlanningDocument(String filename) {
-        return DocumentFactory.createPlanningDocument(filename);
+    PlanningDocument getPlanningDocument(File file) {
+        return DocumentFactory.createPlanningDocument(file);
     }
     
     boolean saveRouteDocument(String filename, Route route) {

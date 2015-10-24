@@ -13,6 +13,7 @@ import com.hexanome.view.DeliveryTreeView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.MapView;
 import java.awt.Point;
+import java.io.File;
 import java.util.Random;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -24,7 +25,7 @@ import javafx.stage.Stage;
  * @author hverlin
  */
 public class UIManager extends Application {
-    
+
     MainWindow mainWindow;
 
     public UIManager() {
@@ -32,28 +33,30 @@ public class UIManager extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        mainWindow = new MainWindow();
+        mainWindow = new MainWindow(stage);
         Scene scene = new Scene(mainWindow);
         scene.getStylesheets().add("/styles/Styles.css");
-        
+
         // créer la fenêtre principale
         stage.setTitle("Editeur de livraisons");
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
-                
+
         testMapDisplay(mainWindow.getMapView());
-        
+
         testTreeView(mainWindow.getDeliveryTreeView());
     }
 
     public static void NotifyUI(ConstView.Action action) {
-        switch(action){
-            case QUIT : 
+        switch (action) {
+            case QUIT:
                 System.exit(0);
                 break;
         }
     }
+    
+
 
     private void testTreeView(DeliveryTreeView dv) {
         Random r = new Random();

@@ -1,6 +1,7 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.UIManager;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,9 +10,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class MainWindow extends AnchorPane {
 
@@ -23,19 +25,25 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private BorderPane mainPane;
-    
+
     @FXML
     private MapView mapView;
-    
+
     @FXML
     private DeliveryTreeView deliveryTreeView;
 
-    
+    final FileChooser fileChooser;
+
     static BtnListener btnListener;
 
-    public MainWindow() {
+    private Stage stage;
+
+    public MainWindow(Stage stage) {
         btnListener = new BtnListener();
-                
+        fileChooser = new FileChooser();
+        configureFileChooser(fileChooser, "Load file...");
+        this.stage = stage;
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.MAINWINDOW));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -43,11 +51,11 @@ public class MainWindow extends AnchorPane {
         try {
             fxmlLoader.load();
         } catch (IOException ex) {
-            Logger.getLogger(EmptyNodeView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         mapView.initialize(null, null);
-       
+
     }
 
     public static BtnListener getBtnListener() {
@@ -55,8 +63,8 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void quitApplication(ActionEvent event) {
@@ -70,7 +78,34 @@ public class MainWindow extends AnchorPane {
     public DeliveryTreeView getDeliveryTreeView() {
         return deliveryTreeView;
     }
-    
-    
+
+    @FXML
+    private void loadMap() {
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            // TODO : voir comment on implémente ça
+            // openFile(file);
+        }
+    }
+
+    @FXML
+    private void loadPlanning() {
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            //  openFile(file);
+        }
+    }
+
+    private static void configureFileChooser(final FileChooser fileChooser, String title) {
+        fileChooser.setTitle(title);
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+        );
+
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("xml", "*.xml"),
+                new FileChooser.ExtensionFilter("All files", "*.*")
+        );
+    }
 
 }

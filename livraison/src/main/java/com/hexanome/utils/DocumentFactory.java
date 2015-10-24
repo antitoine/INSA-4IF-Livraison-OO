@@ -5,9 +5,6 @@
  */
 package com.hexanome.utils;
 
-import com.hexanome.utils.MapDocument;
-import com.hexanome.utils.PlanningDocument;
-import com.hexanome.utils.RouteDocument;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -21,9 +18,9 @@ import org.jdom2.input.SAXBuilder;
  * @author paul
  */
 public class DocumentFactory {
-    public static MapDocument createMapDocument(String filename)
+    public static MapDocument createMapDocument(File file)
     {
-        File mapf = new File(filename);
+        File mapf = file;
         
         if(mapf.exists() && !mapf.isDirectory())
         {
@@ -46,9 +43,9 @@ public class DocumentFactory {
         return null;
     }
     
-    public static PlanningDocument createPlanningDocument(String filename)
+    public static PlanningDocument createPlanningDocument(File file)
     {
-        File planf = new File(filename);
+        File planf = file;
         
         if(planf.exists() && !planf.isDirectory())
         {

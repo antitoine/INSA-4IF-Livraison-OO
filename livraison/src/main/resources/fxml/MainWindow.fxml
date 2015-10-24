@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.input.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.canvas.*?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import com.hexanome.view.* ?>
 
-<fx:root xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8" >
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <top>
@@ -17,17 +18,32 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Fichier">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Charger Plan" />
-                                <MenuItem mnemonicParsing="false" text="Charger Planning" />
+                                <MenuItem mnemonicParsing="false" onAction="#loadMap" text="Charger Plan">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#loadPlanning" text="Charger Planning">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
                                 <MenuItem mnemonicParsing="false" text="Supprimer Plan" />
                                 <MenuItem mnemonicParsing="false" text="Supprimer Planning" />
-                                <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="Quitter" />
+                                <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="Quitter">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Action">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Annuler" />
-                                <MenuItem mnemonicParsing="false" text="Rétablir" />
+                                <MenuItem mnemonicParsing="false" text="Annuler">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                                <MenuItem mnemonicParsing="false" text="Rétablir">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
                             </items>
                         </Menu>
                     </menus>
@@ -57,7 +73,7 @@
             <left>
                 <BorderPane> 
                     <center>
-                        <DeliveryTreeView AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" prefHeight="2000"  fx:id="deliveryTreeView" />
+                        <DeliveryTreeView fx:id="deliveryTreeView" prefHeight="2000" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                        
                     </center>
                     <bottom>
