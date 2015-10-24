@@ -8,15 +8,16 @@ public final class ConstView {
     public static final String POPOVERWAREHOUSE = "/fxml/PopOverContentWarehouse.fxml";
     public static final String POPOVEREMPTY = "/fxml/PopOverContentEmptyNode.fxml";
     public static final String POPOVERDELIVERY = "/fxml/PopOverContentDelivery.fxml";
+    public static final String MAPVIEW = "/fxml/MapView.fxml";
+    public static final String MAINWINDOW = "/fxml/MainWindow.fxml";
 
-    public  static enum Action {
-        QUIT, VALIDATE, TUESDAY, WEDNESDAY,
-        THURSDAY, FRIDAY, SATURDAY
+    public static enum Action {
+
+        QUIT, ADD_NODE, DELETE_NODE
     }
 
     /**
-     * Private this prevents even the native class from calling this ctor as
-     * well :
+     * must not be called !
      */
     private ConstView() {
         throw new AssertionError();

@@ -19,63 +19,65 @@ import javafx.scene.layout.AnchorPane;
  */
 public class DeliveryTreeView implements Initializable {
 
-    static TreeView<String> deliveryTree;
-    
-    static TreeItem<String> rootItem;
-    
+    TreeView<String> deliveryTree;
+
+    TreeItem<String> rootItem;
+
     @FXML
     AnchorPane treePane;
-    
-    static HashMap<Integer, TreeItem<String>> timeSlotBranch;
-    static HashMap<Integer, TreeItem<String>> deliveryBranch;
 
+    HashMap<Integer, TreeItem<String>> timeSlotBranch;
+    HashMap<Integer, TreeItem<String>> deliveryBranch;
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        deliveryTree = new TreeView<String>();
-        
-        rootItem = new TreeItem<>();
+        deliveryBranch = new HashMap<>();
+        timeSlotBranch = new HashMap<>();
+
+        deliveryTree = new TreeView<>();
+
+        rootItem = new TreeItem<>("root");
         rootItem.setExpanded(true);
-        
+
         deliveryTree.setRoot(rootItem);
         deliveryTree.setShowRoot(false);
-        
+
         treePane.getChildren().add(deliveryTree);
 
         deliveryTree.getSelectionModel().selectedItemProperty().
                 addListener(new ChangeListener<TreeItem<String>>() {
                     @Override
                     public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> oldValue, TreeItem<String> newValue) {
-
                     }
-
                 });
 
     }
-    
-    public static void AddTimeSlot(TimeSlot ts){
+
+    public void AddTimeSlot(TimeSlot ts) {
         String info = ts.getStartTime() + " - " + ts.getEndTime();
-//        timeSlotBranch.put(ts.getStartTime(), makeBranch(info, rootItem));
+        timeSlotBranch.put(ts.getStartTime(), makeBranch(info, rootItem));
     }
 
-    public static void AddDelivery(Delivery delivery) {
-//        deliveryBranch.put(delivery.getId(), makeBranch("livraison ", rootItem));
+    public void AddDelivery(Delivery delivery, int parentId) {
+        deliveryBranch.put(delivery.getId(), makeBranch("livraison " + delivery.getId(),
+                timeSlotBranch.get(parentId)));
     }
 
-    public static void DeleteDelivery() {
-
-    }
-
-    public static void SwapDeliveries() {
+    public void DeleteDelivery() {
 
     }
 
-    private static TreeItem<String> makeBranch(String title, TreeItem<String> parent) {
+    public void SwapDeliveries() {
+
+    }
+
+    private TreeItem<String> makeBranch(String title, TreeItem<String> parent) {
         TreeItem<String> item = new TreeItem<>(title);
         item.setExpanded(true);
         parent.getChildren().add(item);

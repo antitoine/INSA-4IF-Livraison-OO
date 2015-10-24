@@ -1,17 +1,19 @@
 package com.hexanome.view;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import com.hexanome.controller.UIManager;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-public class MainWindow implements Initializable {
+public class MainWindow extends AnchorPane {
 
     @FXML
     private TreeView<String> livraisonsTreeView;
@@ -23,31 +25,53 @@ public class MainWindow implements Initializable {
 
     @FXML
     private BorderPane mainPane;
-
-    public enum ACTION {
-
-        QUIT, OPEN
-    }
-
-    static BtnListener btnListener;
-
+    
     @FXML
-    private void quitApplication(ActionEvent event) {
-        // TODO : UIManager.Notify(ACTION.QUIT);
-        System.exit(0);
-    }
+    private MapView mapView;
+
+    
+    static BtnListener btnListener;
 
     public MainWindow() {
         btnListener = new BtnListener();
-    }
+                
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.MAINWINDOW));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
+        try {
+            fxmlLoader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(EmptyNodeView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        mapView.initialize(null, null);
+       
     }
 
     public static BtnListener getBtnListener() {
         return btnListener;
+    }
+
+    /**
+     * 
+     * @param event 
+     */
+    @FXML
+    private void quitApplication(ActionEvent event) {
+        UIManager.NotifyUI(ConstView.Action.QUIT);
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public TreeView<String> getLivraisonsTreeView() {
+        return livraisonsTreeView;
+    }
+
+    public MapView getMapView() {
+        return mapView;
     }
 
 }

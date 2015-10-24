@@ -26,11 +26,6 @@ public abstract class NodeView extends Pane {
     Node nodeShape;
 
     public NodeView(String nodeType, Point p) {
-        this.addEventFilter(InputEvent.ANY, (event) -> {
-            if ("SCROLL".equals(event.getEventType().toString())) {
-                event.consume();
-            }
-        });
         
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(nodeType));
         fxmlLoader.setRoot(this);
