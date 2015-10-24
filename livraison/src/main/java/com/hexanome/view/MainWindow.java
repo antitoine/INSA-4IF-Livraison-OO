@@ -16,8 +16,6 @@ import javafx.scene.layout.BorderPane;
 public class MainWindow extends AnchorPane {
 
     @FXML
-    private TreeView<String> livraisonsTreeView;
-    @FXML
     private MenuItem quitMenuItem;
 
     @FXML
@@ -28,6 +26,9 @@ public class MainWindow extends AnchorPane {
     
     @FXML
     private MapView mapView;
+    
+    @FXML
+    private DeliveryTreeView deliveryTreeView;
 
     
     static BtnListener btnListener;
@@ -61,17 +62,15 @@ public class MainWindow extends AnchorPane {
     private void quitApplication(ActionEvent event) {
         UIManager.NotifyUI(ConstView.Action.QUIT);
     }
-    
-    /**
-     *
-     * @return
-     */
-    public TreeView<String> getLivraisonsTreeView() {
-        return livraisonsTreeView;
-    }
 
     public MapView getMapView() {
         return mapView;
     }
+
+    public DeliveryTreeView getDeliveryTreeView() {
+        return deliveryTreeView;
+    }
+    
+    
 
 }

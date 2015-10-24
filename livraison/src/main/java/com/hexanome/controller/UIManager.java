@@ -41,10 +41,10 @@ public class UIManager extends Application {
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
+                
+        testMapDisplay(mainWindow.getMapView());
         
-        MapView mv = mainWindow.getMapView();
-        
-        testMapDisplay(mv);
+        testTreeView(mainWindow.getDeliveryTreeView());
     }
 
     public static void NotifyUI(ConstView.Action action) {

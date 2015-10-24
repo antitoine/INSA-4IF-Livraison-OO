@@ -2,13 +2,16 @@ package com.hexanome.view;
 
 import com.hexanome.model.Delivery;
 import com.hexanome.model.TimeSlot;
-import java.awt.Point;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -17,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * FXML Controller class
  */
-public class DeliveryTreeView implements Initializable {
+public class DeliveryTreeView extends AnchorPane implements Initializable {
 
     TreeView<String> deliveryTree;
 
@@ -28,6 +31,18 @@ public class DeliveryTreeView implements Initializable {
 
     HashMap<Integer, TreeItem<String>> timeSlotBranch;
     HashMap<Integer, TreeItem<String>> deliveryBranch;
+
+    public DeliveryTreeView() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.TREEVIEW));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(EmptyNodeView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * Initializes the controller class.

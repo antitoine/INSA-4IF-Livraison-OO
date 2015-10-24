@@ -7,8 +7,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="treePane" id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hexanome.view.DeliveryTreeView">
+<fx:root id="AnchorPane" fx:id="treePane"  styleClass="mainFxmlClass" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
     <stylesheets>
         <URL value="@/styles/deliverytreeview.css" />
     </stylesheets>
-</AnchorPane>
+</fx:root>

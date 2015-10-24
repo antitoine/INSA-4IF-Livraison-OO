@@ -9,6 +9,7 @@ public final class ConstView {
     public static final String POPOVEREMPTY = "/fxml/PopOverContentEmptyNode.fxml";
     public static final String POPOVERDELIVERY = "/fxml/PopOverContentDelivery.fxml";
     public static final String MAPVIEW = "/fxml/MapView.fxml";
+    public static final String TREEVIEW = "/fxml/DeliveryTreeView.fxml";
     public static final String MAINWINDOW = "/fxml/MainWindow.fxml";
 
     public static enum Action {
