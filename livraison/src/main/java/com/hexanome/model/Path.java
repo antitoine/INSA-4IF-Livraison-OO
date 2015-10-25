@@ -41,4 +41,10 @@ public class Path {
         // \todo implement here
         return null;
     }
+    
+    public boolean constainsNode(Node node)
+    {
+        // \todo implement here
+        return false;
+    }
 }

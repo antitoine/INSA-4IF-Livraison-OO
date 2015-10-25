@@ -24,5 +24,36 @@ public class Planning {
         this.timeSlots = timeSlots;
     }
     
+    public void computeRoute()
+    {
+        // \todo implement here
+    }
+    
+    public Route getFastestRoute(Planning planning)
+    {
+        // \todo implement here
+        return null;
+    }
+    
+    public void addDelivery(Delivery delivery, Delivery previousDelivery, TimeSlot timeSlot)
+    {
+        // \todo implement here
+    }
+    
+    public void removeDelivery(Delivery delivery)
+    {
+        // \todo implement here
+    }
+    
+    public void swapDeliveries(Delivery delivery1, Delivery delivery2)
+    {
+        // \todo implement here
+    }
+    public ArrayList<TimeSlot> getTimeSlots()
+    {
+        // \todo implement here
+        return null;
+    }
+    
     // \todo add methods here
 }

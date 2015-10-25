@@ -24,5 +24,9 @@ public class Delivery {
     public int getId(){
         return node.getId();
     }
+
+    public void SetDelivery(float deliveryTime){
+        this.deliveryTime = deliveryTime;
+    }
     
 }
