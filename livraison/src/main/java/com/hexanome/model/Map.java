@@ -5,6 +5,7 @@
  */
 package com.hexanome.model;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -24,11 +25,13 @@ public class Map {
     }
     /**
      * Factory method to build nodes in map
+     * @param id
+     * @param location
      * @return 
      */
-    public Node createNode(int id, float x, float y) {
+    public Node createNode(int id, Point location) {
         // Create a new node 
-        Node n = new Node(id, x, y);
+        Node n = new Node(id, location);
         // Add the new node to the local collection
         nodes.add(n);
         // Return the new node
@@ -55,11 +58,10 @@ public class Map {
     }
     /**
      * 
-     * @param x
-     * @param y
+     * @param location
      * @return 
      */
-    public Node getNode(float x, float y) {
+    public Node getNodeByLocation(Point location) {
         // \todo implement here
         return null; 
     }
@@ -68,7 +70,7 @@ public class Map {
      * @param id
      * @return 
      */
-    public Node getNode(int id) {
+    public Node getNodeById(int id) {
        // \todo implement here
         return null; 
     }

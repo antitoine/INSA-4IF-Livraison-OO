@@ -43,7 +43,7 @@ public class PlanningDocument {
             // Retreive the Id of the node
             int nodeId = warehouse.getAttribute("adresse").getIntValue();
             // Return the node which is associated with the id
-            node = map.getNode(nodeId);
+            node = map.getNodeById(nodeId);
         } catch (DataConversionException ex) {
             Logger.getLogger(PlanningDocument.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,7 +73,7 @@ public class PlanningDocument {
                 Delivery delivery = null;
                 try {
                     int nodeId = deliveryElement.getAttribute("adresse").getIntValue();
-                    delivery = new Delivery(map.getNode(nodeId));
+                    delivery = new Delivery(map.getNodeById(nodeId));
                 } catch (DataConversionException ex) {
                     Logger.getLogger(PlanningDocument.class.getName()).log(Level.SEVERE, null, ex);
                 }

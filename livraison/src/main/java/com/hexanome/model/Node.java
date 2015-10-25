@@ -5,6 +5,7 @@
  */
 package com.hexanome.model;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -13,20 +14,17 @@ import java.util.ArrayList;
  */
 public class Node {
     private int id;
-    private float x;
-    private float y;
+    private Point location;
     ArrayList<Arc> outgoings;
     
     /**
      * 
      * @param id
-     * @param x
-     * @param y 
+     * @param location
      */
-    public Node(int id, float x, float y) {
+    public Node(int id, Point location) {
         this.id = id;
-        this.x = x;
-        this.y = y;
+        this.location = location;
     }
     /**
      * 
@@ -38,6 +36,10 @@ public class Node {
 
     public int getId() {
         return id;
+    }
+
+    public Point getLocation() {
+        return location;
     }
     
 }

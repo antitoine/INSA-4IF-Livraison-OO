@@ -1,7 +1,11 @@
 package com.hexanome.view;
 
+/**
+ * Contains all the different path for the fxml files, and also the different 
+ * action that are handled by the UIManager
+ */
 public final class ConstView {
-
+    
     public static final String EMPTYNODE = "/fxml/EmptyNodeView.fxml";
     public static final String DELIVERYNODE = "/fxml/DeliveryNodeView.fxml";
     public static final String WAREHOUSENODE = "/fxml/WarehouseNodeView.fxml";
@@ -13,8 +17,7 @@ public final class ConstView {
     public static final String MAINWINDOW = "/fxml/MainWindow.fxml";
 
     public static enum Action {
-
-        QUIT, ADD_NODE, DELETE_NODE
+        QUIT, ADD_NODE, DELETE_NODE, SWAP_NODE, UNDO, REDO, LOAD_MAP, LOAD_PLANNING
     }
 
     /**

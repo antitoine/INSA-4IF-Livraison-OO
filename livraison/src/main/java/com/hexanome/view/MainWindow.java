@@ -38,6 +38,10 @@ public class MainWindow extends AnchorPane {
 
     private Stage stage;
 
+    /**
+     * Main window
+     * @param stage Main stage for the application 
+     */
     public MainWindow(Stage stage) {
         btnListener = new BtnListener();
         fileChooser = new FileChooser();
