@@ -21,7 +21,23 @@ public class UIManager extends Application {
 
     MainWindow mainWindow;
 
-    public UIManager() {
+    private static UIManager uimanager = null;
+    /**
+     * 
+     */
+    private UIManager() {
+        // Nothing to do here for now
+    }
+    /**
+     * 
+     * @return 
+     */
+    public static UIManager getInstance() {
+        if(uimanager == null)
+        {
+            uimanager = new UIManager();
+        }
+        return uimanager;
     }
 
     @Override

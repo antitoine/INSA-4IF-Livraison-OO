@@ -5,10 +5,31 @@
  */
 package com.hexanome.controller;
 
+import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.IOManager;
+import com.hexanome.controller.ModelManager;
+import com.hexanome.controller.UIManager;
 /**
  *
  * @author paul
  */
 public class Controller {
-    
+    private static Controller controller = null;
+    /**
+     * 
+     */
+    private Controller() {
+        // Nothing to do here for now
+    }
+    /**
+     * 
+     * @return 
+     */
+    public static Controller getInstance() {
+        if(controller == null)
+        {
+            controller = new Controller();
+        }
+        return controller;
+    }
 }
