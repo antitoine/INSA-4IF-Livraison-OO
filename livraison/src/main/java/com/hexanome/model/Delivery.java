@@ -32,5 +32,10 @@ public class Delivery {
     public void SetDelivery(float deliveryTime){
         this.deliveryTime = deliveryTime;
     }
-    
+    /**
+     * 
+     */
+    public Node getNode() {
+        return node;
+    }
 }
