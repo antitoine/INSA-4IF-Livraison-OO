@@ -1,5 +1,6 @@
 package com.hexanome.controller;
 
+import com.hexanome.controller.Controller;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
@@ -65,19 +66,25 @@ public class UIManager extends Application {
     public static void NotifyUI(ConstView.Action action, Object arg) {
         switch (action) {
             case QUIT:
-                System.exit(0);
+                System.exit(0); // Not undoable
                 break;
             case UNDO :
+                ContextManager.getInstance().undo(); // Special redoable
                 break;
             case REDO :
+                ContextManager.getInstance().redo(); // Special undoable
                 break;
             case ADD_NODE:
                 break;
             case DELETE_NODE :
                 break;
+            case SWAP_NODE :
+                break;
             case LOAD_MAP :
+                ContextManager.getInstance().loadMap(); // Not undoable
                 break;
             case LOAD_PLANNING :
+                ContextManager.getInstance().loadPlanning(); // Not undoable
                 break;
         }
     }   

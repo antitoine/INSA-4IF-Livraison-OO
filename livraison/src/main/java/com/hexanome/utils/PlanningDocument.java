@@ -93,9 +93,12 @@ public class PlanningDocument {
     }
     /**
      * 
+     * @param map
      * @return 
      */
-    public boolean checkIntegrity() {
+    // RemoveMeLater : must have a map to check if nodes used in the planning 
+    //                 also exist in the map.
+    public boolean checkIntegrity(Map map) {
         // \todo implement all XML checks here !
         return false;
     }
