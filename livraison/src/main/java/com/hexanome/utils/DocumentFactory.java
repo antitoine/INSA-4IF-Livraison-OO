@@ -20,13 +20,11 @@ import org.jdom2.input.SAXBuilder;
 public class DocumentFactory {
     public static MapDocument createMapDocument(File file)
     {
-        File mapf = file;
-        
-        if(mapf.exists() && !mapf.isDirectory())
+        if(file.exists() && !file.isDirectory())
         {
             SAXBuilder builder = new SAXBuilder();
             try {
-                Document document = (Document) builder.build(mapf);
+                Document document = (Document) builder.build(file);
                 MapDocument mapdoc = new MapDocument(document);
                 return mapdoc;
             } catch (IOException ex) {
@@ -45,13 +43,11 @@ public class DocumentFactory {
     
     public static PlanningDocument createPlanningDocument(File file)
     {
-        File planf = file;
-        
-        if(planf.exists() && !planf.isDirectory())
+        if(file.exists() && !file.isDirectory())
         {
             SAXBuilder builder = new SAXBuilder();
             try {
-                Document document = (Document) builder.build(planf);
+                Document document = (Document) builder.build(file);
                 PlanningDocument plandoc = new PlanningDocument(document);
                 return plandoc;
             } catch (IOException ex) {
