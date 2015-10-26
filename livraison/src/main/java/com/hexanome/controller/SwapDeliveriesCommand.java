@@ -21,7 +21,7 @@ public class SwapDeliveriesCommand implements ICommand {
     }
     
     @Override
-    public void execute() {
+    public ICommand execute() {
         if(ModelManager.getInstance().getRoute() != null)
         {
             ModelManager.getInstance().getRoute().swapDeliveries(
@@ -32,10 +32,11 @@ public class SwapDeliveriesCommand implements ICommand {
         {
             // \todo treat error case
         }
+        return this;
     }
     
     @Override
-    public void reverse() {
+    public ICommand reverse() {
         if(ModelManager.getInstance().getRoute() != null)
         {
             ModelManager.getInstance().getRoute().swapDeliveries(
@@ -46,6 +47,7 @@ public class SwapDeliveriesCommand implements ICommand {
         {
             // \todo treat error case
         }
+        return this;
     }
     
 }

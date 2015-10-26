@@ -18,12 +18,14 @@ public class RemoveDeliveryCommand implements ICommand {
     }
     
     @Override
-    public void execute() {
+    public ICommand execute() {
         // \todo implement
+        return this;
     }
     
     @Override
-    public void reverse() {
+    public ICommand reverse() {
         // \todo implement
+        return this;
     }
 }
