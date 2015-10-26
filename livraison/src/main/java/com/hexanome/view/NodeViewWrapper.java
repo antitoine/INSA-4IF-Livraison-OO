@@ -7,12 +7,12 @@ import java.util.Observer;
 /**
  * Wrapper around a Node
  */
-public class NodeWrapper implements Observer {
+public class NodeViewWrapper implements Observer {
 
     Node node;
     NodeView nodeView;
 
-    public NodeWrapper(Node node, String initialNodeType) {
+    public NodeViewWrapper(Node node, String initialNodeType) {
         this.node = node;
     }
 
