@@ -42,15 +42,17 @@ public class Map {
      * @param streetName
      * @param length
      * @param avgSpeed
-     * @param src
-     * @param dest
+     * @param srcNodeId
+     * @param destNodeId
      * @return 
      */
-    public Arc createArc(String streetName, float length, float avgSpeed, Node src, Node dest) {
+    public Arc createArc(String streetName, float length, float avgSpeed, int srcNodeId, int destNodeId) {
+        // Retreive source node
+        Node srcNode = getNodeById(srcNodeId);
         // Creating a new arc
-        Arc a = new Arc(streetName, length, avgSpeed, src, dest);
+        Arc a = new Arc(streetName, length, avgSpeed, srcNode, getNodeById(destNodeId));
         // Attaching the arc to its source node
-        src.AttachOutgoingArc(a);
+        srcNode.AttachOutgoingArc(a);
         // Adding arc to the internal collection
         arcs.add(a);
         // Return the new arc
@@ -97,5 +99,9 @@ public class Map {
     public Path getFastestPath(Node start, Node end) {
         // \todo implement here
         return null;
+    }
+    
+    public void clear() {
+        // \todo implement here
     }
 }
