@@ -80,7 +80,7 @@ public class DeliveryTreeView extends AnchorPane implements Initializable {
     }
 
     public void AddDelivery(Delivery delivery, int parentId) {
-        deliveryBranch.put(delivery.getId(), makeBranch("livraison " + delivery.getId(),
+        deliveryBranch.put(delivery.getNode().getId(), makeBranch("livraison " + delivery.getNode().getId(),
                 timeSlotBranch.get(parentId)));
     }
 

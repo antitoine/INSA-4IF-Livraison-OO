@@ -22,23 +22,8 @@ public class UIManager extends Application {
 
     MainWindow mainWindow;
 
-    private static UIManager uimanager = null;
-    /**
-     * 
-     */
-    private UIManager() {
-        // Nothing to do here for now
-    }
-    /**
-     * 
-     * @return 
-     */
-    public static UIManager getInstance() {
-        if(uimanager == null)
-        {
-            uimanager = new UIManager();
-        }
-        return uimanager;
+    public UIManager() {
+        
     }
 
     @Override
@@ -69,10 +54,10 @@ public class UIManager extends Application {
                 System.exit(0); // Not undoable
                 break;
             case UNDO :
-                ContextManager.getInstance().undo(); // Special redoable
+                //ContextManager.getInstance().undo(); // Special redoable
                 break;
             case REDO :
-                ContextManager.getInstance().redo(); // Special undoable
+                //ContextManager.getInstance().redo(); // Special undoable
                 break;
             case ADD_NODE:
                 // Create an AddDeliveryCommand and give it to context manager
@@ -84,10 +69,10 @@ public class UIManager extends Application {
                 // Create a SwapDeliveryCommand and give it to context manager
                 break;
             case LOAD_MAP :
-                ContextManager.getInstance().loadMap(); // Not undoable
+                //ContextManager.getInstance().loadMap(); // Not undoable
                 break;
             case LOAD_PLANNING :
-                ContextManager.getInstance().loadPlanning(); // Not undoable
+                //ContextManager.getInstance().loadPlanning(); // Not undoable
                 break;
         }
     }   
@@ -114,7 +99,7 @@ public class UIManager extends Application {
             dv.AddTimeSlot(new TimeSlot(start, r.nextInt(24), null));
 
             for (int j = 0; j < 10; j++) {
-                dv.AddDelivery(new Delivery(-1, new Node(r.nextInt(10000), new Point(i, j))), start);
+                dv.AddDelivery(new Delivery(i+j, new Node(r.nextInt(10000), new Point(i, j))), start);
             }
         }
     }
