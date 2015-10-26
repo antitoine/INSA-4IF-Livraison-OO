@@ -10,8 +10,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import com.hexanome.view.* ?>
+<?import org.controlsfx.glyphfont.*?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" type="AnchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
     <children>
         <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <bottom>
@@ -43,25 +44,29 @@
  
                     </center>
                     <bottom>
-                        <GridPane prefHeight="30.0" prefWidth="200.0">
+                        <GridPane prefHeight="30.0" prefWidth="250.0">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="147.0" text="%compute_route" />
-                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="177.0" text="%planning" GridPane.columnIndex="1" />
+                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="%compute_route">
+                                    <graphic>
+                                        <Glyph fontFamily="FontAwesome" icon="COGS" />
+                                    </graphic>
+                                </Button>
+                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="%planning" GridPane.columnIndex="1">
+                                    <graphic>
+                                        <Glyph fontFamily="FontAwesome" icon="PRINT" />
+                                    </graphic>
+                                </Button>
                             </children>
                         </GridPane>
-                        
                     </bottom>
-           
-                   
-                </BorderPane>
-                
+                </BorderPane>          
             </left>
             <center>
                 <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -71,61 +76,76 @@
                 </ScrollPane>
             </center>
             <right>
-
             </right>
-         <top>
-            <VBox BorderPane.alignment="CENTER">
-               <children>
-                  <MenuBar>
-                     <menus>
-                        <Menu mnemonicParsing="false" text="%file">
-                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#loadMap" text="%load_map">
-                                 <accelerator>
-                                    <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                                 </accelerator>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
-                                 <accelerator>
-                                    <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
-                                 </accelerator>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" text="%clear_map" />
-                              <MenuItem mnemonicParsing="false" text="%delete_planning" />
-                              <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="%exit">
-                                 <accelerator>
-                                    <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                                 </accelerator>
-                              </MenuItem>
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="%actions">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="%undo" onAction="#undo" >
-                                 <accelerator>
-                                    <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                                 </accelerator>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" text="%redo" onAction="#redo">
-                                 <accelerator>
-                                    <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                                 </accelerator>
-                              </MenuItem>
-                           </items>
-                        </Menu>
-                     </menus>
-                  </MenuBar>
-                  <ToolBar>
-                    <items>
-                      <Button mnemonicParsing="false" text="%load_map" onAction="#loadMap"/>
-                        <Button mnemonicParsing="false" text="%load_planning" onAction="#loadPlanning"/>
-                        <Button mnemonicParsing="false" text="%undo" onAction="#undo"/>
-                        <Button mnemonicParsing="false" text="%redo" onAction="#redo"/>
-                    </items>
-                  </ToolBar>
-               </children>
-            </VBox>
-         </top>
+            <top>
+                <VBox BorderPane.alignment="CENTER">
+                    <children>
+                        <MenuBar>
+                            <menus>
+                                <Menu mnemonicParsing="false" text="%file">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#loadMap" text="%load_map">
+                                            <accelerator>
+                                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                            </accelerator>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
+                                            <accelerator>
+                                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                                            </accelerator>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" text="%clear_map" />
+                                        <MenuItem mnemonicParsing="false" text="%delete_planning" />
+                                        <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="%exit">
+                                            <accelerator>
+                                                <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                            </accelerator>
+                                        </MenuItem>
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="%actions">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#undo" text="%undo">
+                                            <accelerator>
+                                                <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                            </accelerator>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#redo" text="%redo">
+                                            <accelerator>
+                                                <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                            </accelerator>
+                                        </MenuItem>
+                                    </items>
+                                </Menu>
+                            </menus>
+                        </MenuBar>
+                        <ToolBar>
+                            <items>
+                                <Button mnemonicParsing="false" onAction="#loadMap" text="%load_map">
+                                    <graphic>
+                                        <Glyph fontFamily="FontAwesome" icon="FOLDER_OPEN" />
+                                    </graphic>
+                                </Button>
+                                <Button mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
+                                    <graphic>
+                                        <Glyph fontFamily="FontAwesome" icon="FILE" />
+                                    </graphic>
+                                </Button>
+                                <Button mnemonicParsing="false" onAction="#undo">
+                                    <graphic>
+                                        <Glyph fontFamily="FontAwesome" icon="UNDO" />
+                                    </graphic>
+                                </Button>
+                                <Button mnemonicParsing="false" onAction="#redo">
+                                    <graphic>
+                                        <Glyph fontFamily="FontAwesome" icon="REPEAT" />
+                                    </graphic>
+                                </Button>
+                            </items>
+                        </ToolBar>
+                    </children>
+                </VBox>
+            </top>
         </BorderPane>
     </children>
 </fx:root>
