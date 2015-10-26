@@ -33,7 +33,7 @@ public class UIManager extends Application {
         scene.getStylesheets().add("/styles/Styles.css");
 
         // créer la fenêtre principale
-        stage.setTitle("Editeur de livraisons");
+        stage.setTitle("Delivery Manager");
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();

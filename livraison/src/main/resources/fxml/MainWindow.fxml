@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.*?>
@@ -16,34 +17,39 @@
             <top>
                 <MenuBar BorderPane.alignment="CENTER">
                     <menus>
-                        <Menu mnemonicParsing="false" text="Fichier">
+                        <Menu mnemonicParsing="false" text="%file">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#loadMap" text="Charger Plan">
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator></MenuItem>
-                                <MenuItem mnemonicParsing="false" onAction="#loadPlanning" text="Charger Planning">
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
-                           </accelerator></MenuItem>
-                                <MenuItem mnemonicParsing="false" text="Supprimer Plan" />
-                                <MenuItem mnemonicParsing="false" text="Supprimer Planning" />
-                                <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="Quitter">
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator></MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#loadMap" text="%load_map">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" text="%clear_map" />
+                                <MenuItem mnemonicParsing="false" text="%delete_planning" />
+                                <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="%exit">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Action">
+                        <Menu mnemonicParsing="false" text="%actions">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Annuler">
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator></MenuItem>
-                                <MenuItem mnemonicParsing="false" text="Rétablir">
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator></MenuItem>
+                                <MenuItem mnemonicParsing="false" text="%undo">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" text="%redo">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
                             </items>
                         </Menu>
                     </menus>
@@ -59,22 +65,23 @@
                         </ProgressBar>
                     </right>
                     <left>
-                        <Label text="Editeur d'itinéraire" BorderPane.alignment="CENTER">
+                        <Label text="%app_title" BorderPane.alignment="CENTER">
                             <padding>
                                 <Insets left="10.0" />
                             </padding>
                         </Label>
                     </left>
                     <center>
-                        <Label fx:id="labelInfos" text="En attente" BorderPane.alignment="CENTER" />
+                        <Label fx:id="labelInfos" text="%waiting" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
             </bottom>
             <left>
                 <BorderPane> 
                     <center>
-                        <DeliveryTreeView fx:id="deliveryTreeView" prefHeight="2000" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                       
+ 
+                        <DeliveryTreeView fx:id="deliveryTreeView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+ 
                     </center>
                     <bottom>
                         <GridPane prefHeight="30.0" prefWidth="200.0">
@@ -86,12 +93,13 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="147.0" text="Itinéraire" />
-                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="177.0" text="Feuille de route" GridPane.columnIndex="1" />
+                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="147.0" text="%compute_route" />
+                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="177.0" text="%planning" GridPane.columnIndex="1" />
                             </children>
                         </GridPane>
                         
                     </bottom>
+           
                    
                 </BorderPane>
                 

@@ -3,6 +3,8 @@ package com.hexanome.view;
 import com.hexanome.controller.UIManager;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -49,6 +51,8 @@ public class MainWindow extends AnchorPane {
         this.stage = stage;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.MAINWINDOW));
+        fxmlLoader.setResources(ResourceBundle.getBundle("bundles.LangueBundle", new Locale("en")));
+
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

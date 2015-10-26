@@ -16,18 +16,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
  */
-public class DeliveryTreeView extends AnchorPane implements Initializable {
+public class DeliveryTreeView extends VBox implements Initializable {
 
     TreeView<String> deliveryTree;
-
     TreeItem<String> rootItem;
-
-    @FXML
-    AnchorPane treePane;
 
     HashMap<Integer, TreeItem<String>> timeSlotBranch;
     HashMap<Integer, TreeItem<String>> deliveryBranch;
@@ -63,7 +60,9 @@ public class DeliveryTreeView extends AnchorPane implements Initializable {
         deliveryTree.setRoot(rootItem);
         deliveryTree.setShowRoot(false);
 
-        treePane.getChildren().add(deliveryTree);
+        this.getChildren().add(deliveryTree);
+        
+        deliveryTree.setPrefHeight(1000);
 
         deliveryTree.getSelectionModel().selectedItemProperty().
                 addListener(new ChangeListener<TreeItem<String>>() {
