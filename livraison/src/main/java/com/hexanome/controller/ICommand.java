@@ -11,5 +11,12 @@ package com.hexanome.controller;
  *
  */
 public interface ICommand {
-
+    /**
+     * 
+     */
+    public void execute();
+    /**
+     * 
+     */
+    public void reverse();
 }

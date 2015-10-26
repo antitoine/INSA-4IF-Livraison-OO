@@ -87,6 +87,13 @@ public class ModelManager {
      * 
      * @return 
      */
+    Planning getPlanning() {
+       return planning; 
+    }
+    /**
+     * 
+     * @return 
+     */
     Route getRoute() {
         // \todo
         return null;  

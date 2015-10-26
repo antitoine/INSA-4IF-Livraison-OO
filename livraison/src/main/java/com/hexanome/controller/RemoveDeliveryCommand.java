@@ -10,5 +10,20 @@ package com.hexanome.controller;
  * @author paul
  */
 public class RemoveDeliveryCommand implements ICommand {
+    /**
+     * 
+     */
+    public RemoveDeliveryCommand() {
+        // \todo implement
+    }
     
+    @Override
+    public void execute() {
+        // \todo implement
+    }
+    
+    @Override
+    public void reverse() {
+        // \todo implement
+    }
 }

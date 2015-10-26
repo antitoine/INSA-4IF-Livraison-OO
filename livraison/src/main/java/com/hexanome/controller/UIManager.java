@@ -75,10 +75,13 @@ public class UIManager extends Application {
                 ContextManager.getInstance().redo(); // Special undoable
                 break;
             case ADD_NODE:
+                // Create an AddDeliveryCommand and give it to context manager
                 break;
             case DELETE_NODE :
+                // Create a RemoveDeliveryCommand and give it to context manager
                 break;
             case SWAP_NODE :
+                // Create a SwapDeliveryCommand and give it to context manager
                 break;
             case LOAD_MAP :
                 ContextManager.getInstance().loadMap(); // Not undoable
@@ -111,7 +114,7 @@ public class UIManager extends Application {
             dv.AddTimeSlot(new TimeSlot(start, r.nextInt(24), null));
 
             for (int j = 0; j < 10; j++) {
-                dv.AddDelivery(new Delivery(new Node(r.nextInt(10000), new Point(i, j))), start);
+                dv.AddDelivery(new Delivery(-1, new Node(r.nextInt(10000), new Point(i, j))), start);
             }
         }
     }

@@ -72,8 +72,9 @@ public class PlanningDocument {
                 // Create a delivery element
                 Delivery delivery = null;
                 try {
+                    int deliveryId = deliveryElement.getAttribute("id").getIntValue();
                     int nodeId = deliveryElement.getAttribute("adresse").getIntValue();
-                    delivery = new Delivery(map.getNodeById(nodeId));
+                    delivery = new Delivery(deliveryId, map.getNodeById(nodeId));
                 } catch (DataConversionException ex) {
                     Logger.getLogger(PlanningDocument.class.getName()).log(Level.SEVERE, null, ex);
                 }

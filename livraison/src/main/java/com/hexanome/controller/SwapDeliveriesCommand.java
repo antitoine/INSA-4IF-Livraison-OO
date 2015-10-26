@@ -10,5 +10,42 @@ package com.hexanome.controller;
  * @author paul
  */
 public class SwapDeliveriesCommand implements ICommand {
+    private int firstDeliveryId;
+    private int secondDeliveryId;
+    /**
+     * 
+     */
+    public SwapDeliveriesCommand(int firstDeliveryId, int secondDeliveryId) {
+        this.firstDeliveryId = firstDeliveryId;
+        this.secondDeliveryId = secondDeliveryId;
+    }
+    
+    @Override
+    public void execute() {
+        if(ModelManager.getInstance().getRoute() != null)
+        {
+            ModelManager.getInstance().getRoute().swapDeliveries(
+                    ModelManager.getInstance().getPlanning().getDeliveryById(firstDeliveryId),
+                    ModelManager.getInstance().getPlanning().getDeliveryById(secondDeliveryId));
+        }
+        else
+        {
+            // \todo treat error case
+        }
+    }
+    
+    @Override
+    public void reverse() {
+        if(ModelManager.getInstance().getRoute() != null)
+        {
+            ModelManager.getInstance().getRoute().swapDeliveries(
+                    ModelManager.getInstance().getPlanning().getDeliveryById(secondDeliveryId),
+                    ModelManager.getInstance().getPlanning().getDeliveryById(firstDeliveryId));
+        }
+        else
+        {
+            // \todo treat error case
+        }
+    }
     
 }
