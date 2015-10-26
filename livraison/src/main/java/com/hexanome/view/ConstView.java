@@ -6,6 +6,8 @@ package com.hexanome.view;
  */
 public final class ConstView {
     
+    public static final String APP_TITLE = "Delivery Manager";
+    
     public static final String EMPTYNODE = "/fxml/EmptyNodeView.fxml";
     public static final String DELIVERYNODE = "/fxml/DeliveryNodeView.fxml";
     public static final String WAREHOUSENODE = "/fxml/WarehouseNodeView.fxml";

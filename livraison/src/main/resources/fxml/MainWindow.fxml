@@ -14,47 +14,6 @@
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <top>
-                <MenuBar BorderPane.alignment="CENTER">
-                    <menus>
-                        <Menu mnemonicParsing="false" text="%file">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#loadMap" text="%load_map">
-                                    <accelerator>
-                                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                                    </accelerator>
-                                </MenuItem>
-                                <MenuItem mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
-                                    <accelerator>
-                                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
-                                    </accelerator>
-                                </MenuItem>
-                                <MenuItem mnemonicParsing="false" text="%clear_map" />
-                                <MenuItem mnemonicParsing="false" text="%delete_planning" />
-                                <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="%exit">
-                                    <accelerator>
-                                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                                    </accelerator>
-                                </MenuItem>
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="%actions">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="%undo">
-                                    <accelerator>
-                                        <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                                    </accelerator>
-                                </MenuItem>
-                                <MenuItem mnemonicParsing="false" text="%redo">
-                                    <accelerator>
-                                        <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                                    </accelerator>
-                                </MenuItem>
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-            </top>
             <bottom>
                 <BorderPane fx:id="bottomPane" prefHeight="36.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                     <right>
@@ -114,6 +73,59 @@
             <right>
 
             </right>
+         <top>
+            <VBox BorderPane.alignment="CENTER">
+               <children>
+                  <MenuBar>
+                     <menus>
+                        <Menu mnemonicParsing="false" text="%file">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#loadMap" text="%load_map">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                 </accelerator>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                                 </accelerator>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" text="%clear_map" />
+                              <MenuItem mnemonicParsing="false" text="%delete_planning" />
+                              <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="%exit">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                 </accelerator>
+                              </MenuItem>
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="%actions">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="%undo" onAction="#undo" >
+                                 <accelerator>
+                                    <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                 </accelerator>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" text="%redo" onAction="#redo">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                 </accelerator>
+                              </MenuItem>
+                           </items>
+                        </Menu>
+                     </menus>
+                  </MenuBar>
+                  <ToolBar>
+                    <items>
+                      <Button mnemonicParsing="false" text="%load_map" onAction="#loadMap"/>
+                        <Button mnemonicParsing="false" text="%load_planning" onAction="#loadPlanning"/>
+                        <Button mnemonicParsing="false" text="%undo" onAction="#undo"/>
+                        <Button mnemonicParsing="false" text="%redo" onAction="#redo"/>
+                    </items>
+                  </ToolBar>
+               </children>
+            </VBox>
+         </top>
         </BorderPane>
     </children>
 </fx:root>

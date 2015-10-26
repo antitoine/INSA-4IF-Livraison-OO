@@ -34,7 +34,7 @@ public abstract class NodeView extends Pane {
         try {
             fxmlLoader.load();
         } catch (IOException ex) {
-            Logger.getLogger(EmptyNodeView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NodeView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         position = p;

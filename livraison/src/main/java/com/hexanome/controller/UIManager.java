@@ -1,6 +1,5 @@
 package com.hexanome.controller;
 
-import com.hexanome.controller.Controller;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
@@ -32,8 +31,8 @@ public class UIManager extends Application {
         Scene scene = new Scene(mainWindow);
         scene.getStylesheets().add("/styles/Styles.css");
 
-        // créer la fenêtre principale
-        stage.setTitle("Delivery Manager");
+        // Contructs the main scene that will include all the UI
+        stage.setTitle(ConstView.APP_TITLE);
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();

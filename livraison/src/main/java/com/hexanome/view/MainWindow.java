@@ -42,7 +42,8 @@ public class MainWindow extends AnchorPane {
 
     /**
      * Main window
-     * @param stage Main stage for the application 
+     *
+     * @param stage Main stage for the application
      */
     public MainWindow(Stage stage) {
         btnListener = new BtnListener();
@@ -102,6 +103,16 @@ public class MainWindow extends AnchorPane {
         if (file != null) {
             //  openFile(file);
         }
+    }
+
+    @FXML
+    private void undo() {
+        // TODO
+    }
+
+    @FXML
+    private void redo() {
+        // TODO
     }
 
     private static void configureFileChooser(final FileChooser fileChooser, String title) {
