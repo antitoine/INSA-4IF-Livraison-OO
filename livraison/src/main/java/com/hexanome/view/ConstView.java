@@ -19,7 +19,12 @@ public final class ConstView {
     public static final String MAINWINDOW = "/fxml/MainWindow.fxml";
 
     public static enum Action {
-        QUIT, ADD_NODE, DELETE_NODE, SWAP_NODE, UNDO, REDO, LOAD_MAP, LOAD_PLANNING
+        QUIT, ADD_NODE, DELETE_NODE, SWAP_NODE, UNDO, REDO, LOAD_MAP, LOAD_PLANNING, 
+        COMPUTE_ROUTE, GENERATE_ROADMAP, CLICK_ON_EMPTY_NODE, CLICK_ON_DELIVERY_NODE
+    }
+    
+    public static enum TreeItemType {
+        TIMESLOT, DELIVERY
     }
 
     /**

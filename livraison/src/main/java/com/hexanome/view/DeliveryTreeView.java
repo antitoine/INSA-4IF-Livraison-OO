@@ -10,13 +10,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
+import org.controlsfx.glyphfont.Glyph;
 
 /**
  * FXML Controller class
@@ -61,26 +62,32 @@ public class DeliveryTreeView extends VBox implements Initializable {
         deliveryTree.setShowRoot(false);
 
         this.getChildren().add(deliveryTree);
-        
+
         deliveryTree.setPrefHeight(1000);
 
-        deliveryTree.getSelectionModel().selectedItemProperty().
-                addListener(new ChangeListener<TreeItem<String>>() {
-                    @Override
-                    public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> oldValue, TreeItem<String> newValue) {
-                    }
-                });
+//        deliveryTree.getSelectionModel().selectedItemProperty().
+//                addListener(new ChangeListener<TreeItem<String>>() {
+//                    @Override
+//                    public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> oldValue, TreeItem<String> newValue) {
+//                    }
+//                });
+        deliveryTree.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
+            @Override
+            public TreeCell<String> call(TreeView<String> p) {
+                return new DeliveryTreeCell();
+            }
+        });
 
     }
 
     public void AddTimeSlot(TimeSlot ts) {
         String info = ts.getStartTime() + " - " + ts.getEndTime();
-        timeSlotBranch.put(ts.getStartTime(), makeBranch(info, rootItem));
+        timeSlotBranch.put(ts.getStartTime(), makeBranch(info, ConstView.TreeItemType.TIMESLOT, rootItem));
     }
 
     public void AddDelivery(Delivery delivery, int parentId) {
-        deliveryBranch.put(delivery.getNode().getId(), makeBranch("livraison " + delivery.getNode().getId(),
-                timeSlotBranch.get(parentId)));
+        deliveryBranch.put(delivery.getNode().getId(), makeBranch("Delivery " + delivery.getNode().getId(),
+                ConstView.TreeItemType.DELIVERY, timeSlotBranch.get(parentId)));
     }
 
     public void DeleteDelivery() {
@@ -91,8 +98,16 @@ public class DeliveryTreeView extends VBox implements Initializable {
 
     }
 
-    private TreeItem<String> makeBranch(String title, TreeItem<String> parent) {
-        TreeItem<String> item = new TreeItem<>(title);
+    private TreeItem<String> makeBranch(String title, ConstView.TreeItemType treeItemType, TreeItem<String> parent) {
+        TreeItem<String> item = null;
+        switch (treeItemType) {
+            case DELIVERY:
+                item = new TreeItem<>(title, new Glyph("FontAwesome", "TRUCK"));
+                break;
+            case TIMESLOT:
+                item = new TreeItem<>(title, new Glyph("FontAwesome", "CLOCK_ALT"));
+                break;
+        }
         item.setExpanded(true);
         parent.getChildren().add(item);
         return item;
