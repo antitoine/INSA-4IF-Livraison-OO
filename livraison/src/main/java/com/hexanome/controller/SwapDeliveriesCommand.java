@@ -24,7 +24,7 @@ public class SwapDeliveriesCommand implements ICommand {
     public ICommand execute() {
         if(ModelManager.getInstance().getRoute() != null)
         {
-            ModelManager.getInstance().getRoute().swapDeliveries(
+            ModelManager.getInstance().getPlanning().swapDeliveries(
                     ModelManager.getInstance().getPlanning().getDeliveryById(firstDeliveryId),
                     ModelManager.getInstance().getPlanning().getDeliveryById(secondDeliveryId));
         }
@@ -39,7 +39,7 @@ public class SwapDeliveriesCommand implements ICommand {
     public ICommand reverse() {
         if(ModelManager.getInstance().getRoute() != null)
         {
-            ModelManager.getInstance().getRoute().swapDeliveries(
+            ModelManager.getInstance().getPlanning().swapDeliveries(
                     ModelManager.getInstance().getPlanning().getDeliveryById(secondDeliveryId),
                     ModelManager.getInstance().getPlanning().getDeliveryById(firstDeliveryId));
         }
