@@ -1,7 +1,6 @@
 package com.hexanome.livraison;
 
-import com.hexanome.controller.UIManager;
-import static javafx.application.Application.launch;
+import com.hexanome.controller.Controller;
 
 public class MainApp {
 
@@ -11,10 +10,11 @@ public class MainApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-         
+        // Init managers by instanciating singletons
+       Controller.getInstance().initManagers();
         // launch the UI Manager to display the windows
         // This is default JavaFX behaviour
-        launch(UIManager.class, args);
+       Controller.getInstance().initUI(args);
     }
 
 }
