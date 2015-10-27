@@ -77,7 +77,7 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void quitApplication(ActionEvent event) {
-        UIManager.NotifyUI(ConstView.Action.QUIT);
+        UIManager.getInstance().NotifyUI(ConstView.Action.QUIT);
     }
 
     public MapView getMapView() {
@@ -92,7 +92,7 @@ public class MainWindow extends AnchorPane {
     private void loadMap() {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
-            UIManager.NotifyUI(ConstView.Action.LOAD_MAP, file);
+            UIManager.getInstance().NotifyUI(ConstView.Action.LOAD_MAP, file);
         }
     }
 
@@ -100,18 +100,18 @@ public class MainWindow extends AnchorPane {
     private void loadPlanning() {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
-            UIManager.NotifyUI(ConstView.Action.LOAD_PLANNING, file);
+            UIManager.getInstance().NotifyUI(ConstView.Action.LOAD_PLANNING, file);
         }
     }
 
     @FXML
     private void undo() {
-        UIManager.NotifyUI(ConstView.Action.UNDO);
+        UIManager.getInstance().NotifyUI(ConstView.Action.UNDO);
     }
 
     @FXML
     private void redo() {
-        UIManager.NotifyUI(ConstView.Action.REDO);
+        UIManager.getInstance().NotifyUI(ConstView.Action.REDO);
     }
 
     private static void configureFileChooser(final FileChooser fileChooser, String title) {
