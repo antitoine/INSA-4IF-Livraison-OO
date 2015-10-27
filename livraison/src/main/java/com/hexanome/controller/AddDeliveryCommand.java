@@ -17,7 +17,7 @@ public class AddDeliveryCommand implements ICommand {
     private Delivery prevDelivery;
     private TimeSlot timeSlot;
     /**
-     * 
+     * Construct a new AddDeliveryCommand to add a new delivery to the planning
      * @param delivery
      * @param prevDelivery
      * @param timeSlot
@@ -27,13 +27,22 @@ public class AddDeliveryCommand implements ICommand {
         this.prevDelivery = prevDelivery;
         this.timeSlot = timeSlot;
     }
-    
+    /**
+     * Execute the command
+     * @see ICommand
+     * @return 
+     */
     @Override
     public ICommand execute() {
         ModelManager.getInstance().getPlanning().addDelivery(delivery, prevDelivery, timeSlot);
         return this;
     }
     
+    /**
+     * Reverse execution of the command executing the exact opposite command
+     * @see ICommand
+     * @return 
+     */
     @Override
     public ICommand reverse() {
         ModelManager.getInstance().getPlanning().removeDelivery(delivery);

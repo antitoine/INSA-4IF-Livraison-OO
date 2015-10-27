@@ -50,28 +50,22 @@ public class UIManager extends Application {
     public static void NotifyUI(ConstView.Action action, Object arg) {
         switch (action) {
             case QUIT:
-                System.exit(0); // Not undoable
+                ContextManager.getInstance().exit(); // Special undoable
                 break;
-            case UNDO :
-                //ContextManager.getInstance().undo(); // Special redoable
-                break;
-            case REDO :
-                //ContextManager.getInstance().redo(); // Special undoable
-                break;
-            case ADD_NODE:
+            case ADD_DELIVERY:
                 // Create an AddDeliveryCommand and give it to context manager
                 break;
-            case DELETE_NODE :
+            case DELETE_DELIVERY :
                 // Create a RemoveDeliveryCommand and give it to context manager
                 break;
-            case SWAP_NODE :
+            case SWAP_DELIVERIES :
                 // Create a SwapDeliveryCommand and give it to context manager
                 break;
             case LOAD_MAP :
-                //ContextManager.getInstance().loadMap(); // Not undoable
+                //ContextManager.getInstance().loadMap(file); // Not undoable
                 break;
             case LOAD_PLANNING :
-                //ContextManager.getInstance().loadPlanning(); // Not undoable
+                //ContextManager.getInstance().loadPlanning(file); // Not undoable
                 break;
         }
     }   

@@ -1,5 +1,6 @@
 package com.hexanome.controller;
 
+import java.io.File;
 import java.util.Stack;
 /**
  *
@@ -55,8 +56,8 @@ public class ContextManager {
     void undo() {
         // \todo (security) check if undo possible
         undone.push(done.pop().execute());
-        updateUndoStateMachine();
-        updateRedoStateMachine();
+        // \todo updateUndoStateMachine();
+        // \todo updateRedoStateMachine();
     }
     /**
      * 
@@ -64,35 +65,25 @@ public class ContextManager {
     void redo() {
         // \todo (security) check if redo possible
         done.push(undone.pop().execute());
-        updateUndoStateMachine();
-        updateRedoStateMachine();
+        // \todo updateUndoStateMachine();
+        // \todo updateRedoStateMachine();
     }
 
-    void loadMap() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void loadMap(File file) {
+        // \todo (security) check if load map is possible
+        ModelManager.getInstance().initModelMap(IOManager.getInstance().getMapDocument(file));
+        // \todo update application state
     }
 
-    void loadPlanning() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void loadPlanning(File file) {
+        // \todo (security) check if load planning is possible
+        ModelManager.getInstance().initModelPlanning(IOManager.getInstance().getPlanningDocument(file));
+        // \todo update application state
     }
-    /**
-     * This method updates undo statemachine state
-     */
-    private void updateUndoStateMachine() {
-        if(done.isEmpty()) {
-            // \todo go to undo impossible state
-        } else {
-            // \todo go to undo possible state
-        }
-    }
-    /**
-     * This method updates redo statemachine state
-     */
-    private void updateRedoStateMachine() {
-        if(undone.isEmpty()) {
-            // \todo go to redo impossible state
-        } else {
-            // \todo go to redo possible state
-        }
+
+    void exit() {
+        // \todo Check if Route should be saved
+        // EXIT application
+        System.exit(0);
     }
 }

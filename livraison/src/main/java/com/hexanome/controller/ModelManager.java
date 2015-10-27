@@ -38,7 +38,7 @@ public class ModelManager {
      * @param planDoc
      * @return 
      */
-    boolean initModel(MapDocument mapDoc, PlanningDocument planDoc) {
+    boolean initModelMap(MapDocument mapDoc) {
         // Map creation
         map = new Map();
         if(mapDoc.checkIntegrity())
@@ -50,6 +50,11 @@ public class ModelManager {
             // \todo treat error case
             return false;
         }
+        // removeMeLater : démarrer directement un premier calcul de route ?
+        return true;
+    }
+    
+    boolean initModelPlanning(PlanningDocument planDoc) {
         // Planning creation
         if(planDoc.checkIntegrity(map))
         {
