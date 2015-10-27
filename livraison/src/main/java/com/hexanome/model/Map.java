@@ -99,4 +99,20 @@ public class Map {
     public void clear() {
         // \todo implement here
     }
+
+    @Override
+    public String toString() {
+        String strarcs = "{";
+        for (Arc arc : arcs) {
+            strarcs += arc.toString() + ",";
+        }
+        strarcs = strarcs.substring(0, strarcs.length()-1) + "}";
+        String strnodes = "{";
+        for (Node n : nodes) {
+            strnodes += n.toString() + ",";
+        }
+        strnodes = strnodes.substring(0, strnodes.length()-1) + "}";
+        return String.format("{ \"Map\" : { \"nodes\":{\n%s\n}, \"arcs\":{\n%s\n} } }", strnodes, strarcs);
+    }
+    
 }

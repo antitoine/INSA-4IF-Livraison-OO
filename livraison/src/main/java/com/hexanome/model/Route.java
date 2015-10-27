@@ -14,15 +14,25 @@ public class Route {
     }
     
     public void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
-        
+        // \todo implement
     }
     
     public void removeDelivery(Delivery delivery) {
-        
+        // \todo implement
     }
     
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
-        
+        // \todo implement
+    }
+
+    @Override
+    public String toString() {
+        String strpaths = "{";
+        for (Path path : paths) {
+            strpaths += path.toString() + ",";
+        }
+        strpaths = strpaths.substring(0, strpaths.length()-1) + "}";
+        return String.format("{ \"Route\" : { \"paths\":%s } }", strpaths);
     }
     
 }
