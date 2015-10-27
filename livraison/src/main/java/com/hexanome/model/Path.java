@@ -42,4 +42,17 @@ public class Path {
         // \todo implement here
         return false;
     }
+
+    @Override
+    public String toString() {
+        String strarcs = "{";
+        for (Arc arc : arcs) {
+            strarcs += arc.toString() + ",";
+        }
+        strarcs += strarcs.substring(0, strarcs.length()-1) + "}";
+        return String.format("\"Path\" : {\n"
+                + "\"pathDuration\":%s, \"arcs\":\"%s\"\n"
+                + "}", strarcs, pathDuration);
+    }
+    
 }

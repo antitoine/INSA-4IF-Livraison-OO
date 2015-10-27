@@ -20,13 +20,14 @@ public class Node {
     public Node(int id, Point location) {
         this.id = id;
         this.location = location;
+        this.outgoings = new ArrayList<>();
     }
     /**
      * 
      * @param arc 
      */
     public void AttachOutgoingArc(Arc arc) {
-        // \todo implement here
+        outgoings.add(arc);
     }
 
     public int getId() {
@@ -35,6 +36,18 @@ public class Node {
 
     public Point getLocation() {
         return location;
+    }
+
+    @Override
+    public String toString() {
+        String arcs = "{";
+        for (Arc outgoing : outgoings) {
+            arcs += outgoing.toString() + ",";
+        }
+        arcs += arcs.substring(0, arcs.length()-1) + "}";
+        return String.format("\"Node\" : {\n"
+                + "\"id\":%s, \"location\":\"%s\", \"outgoings\":\"%s\"\n"
+                + "}", id, location.toString(), arcs);
     }
     
 }

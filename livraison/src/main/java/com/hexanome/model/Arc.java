@@ -24,4 +24,12 @@ public class Arc {
     public float getDuration() {
         return duration;
     }
+
+    @Override
+    public String toString() {
+        return String.format("\"Arc\" :{\n"
+                + "\"streetName\":\"%s\", \"length\":%s, \"avgSpeed\":%s, \"duration\":%s, \"destNodeId\":%s, \"srcNodeId\":%s\n"
+                + "}", streetName, length, avgSpeed, duration, dest.getId(), src.getId());
+    }
+    
 }

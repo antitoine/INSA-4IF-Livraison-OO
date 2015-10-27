@@ -1,6 +1,7 @@
 package com.hexanome.livraison;
 
 import com.hexanome.controller.Controller;
+import com.hexanome.model.ModelTest;
 
 public class MainApp {
 
@@ -10,6 +11,8 @@ public class MainApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        // TEST
+       ModelTest mt = new ModelTest();
         // Init managers by instanciating singletons
        Controller.getInstance().initManagers();
         // launch the UI Manager to display the windows
