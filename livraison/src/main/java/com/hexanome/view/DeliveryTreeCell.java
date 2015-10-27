@@ -43,6 +43,36 @@ final class DeliveryTreeCell extends TreeCell<String> {
             }
         });
 
+        // DRAG SOURCE
+        setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                /* drag was detected, start a drag-and-drop gesture*/
+                /* allow any transfer mode */
+                DeliveryTreeCell source = ((DeliveryTreeCell) (event.getSource()));
+                Dragboard db = source.startDragAndDrop(TransferMode.MOVE);
+
+                /* Put a string on a dragboard */
+                ClipboardContent content = new ClipboardContent();
+                content.putString(source.getString());
+                db.setContent(content);
+
+                event.consume();
+            }
+        });
+
+        setOnDragDone(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                /* the drag and drop gesture ended */
+                /* if the data was successfully moved, clear it */
+                if (event.getTransferMode() == TransferMode.MOVE) {
+                    System.out.println("Drag done");
+                }
+                event.consume();
+            }
+        });
+
+        // DRAG TARGET    
         setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
@@ -62,23 +92,6 @@ final class DeliveryTreeCell extends TreeCell<String> {
             }
         });
 
-        setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                /* drag was detected, start a drag-and-drop gesture*/
-                /* allow any transfer mode */
-                DeliveryTreeCell source = ((DeliveryTreeCell) (event.getSource()));
-                Dragboard db = source.startDragAndDrop(TransferMode.ANY);
-
-                /* Put a string on a dragboard */
-                ClipboardContent content = new ClipboardContent();
-                content.putString(source.getString());
-                db.setContent(content);
-
-                event.consume();
-            }
-        });
-
         setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
@@ -89,9 +102,7 @@ final class DeliveryTreeCell extends TreeCell<String> {
                     /* allow for both copying and moving, whatever user chooses */
                     event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
                 }
-
                 event.consume();
-
             }
         });
 
@@ -102,7 +113,6 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 if (event.getDragboard().hasString()) {
                     System.out.println("ON drag entered");
                 }
-
                 event.consume();
             }
         });
@@ -113,17 +123,6 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 /* mouse moved away, remove the graphical cues */
                 System.out.println("ON drag exited");
 
-                event.consume();
-            }
-        });
-        
-        setOnDragDone(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                /* the drag and drop gesture ended */
-                /* if the data was successfully moved, clear it */
-                if (event.getTransferMode() == TransferMode.MOVE) {
-                    System.out.println("Drag done");
-                }
                 event.consume();
             }
         });

@@ -27,8 +27,14 @@ public class Arc {
 
     @Override
     public String toString() {
-        return String.format("\"Arc\" :{\n"
-                + "\"streetName\":\"%s\", \"length\":%s, \"avgSpeed\":%s, \"duration\":%s, \"destNodeId\":%s, \"srcNodeId\":%s\n"
+        return String.format(""
+                + "{\n"
+                + "\"streetName\":\"%s\",\n"
+                + "\"length\":%s,\n"
+                + "\"avgSpeed\":%s,\n"
+                + "\"duration\":%s,\n"
+                + "\"destNodeId\":%s,\n"
+                + "\"srcNodeId\":%s\n"
                 + "}", streetName, length, avgSpeed, duration, dest.getId(), src.getId());
     }
     

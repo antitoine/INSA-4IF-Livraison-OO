@@ -2,13 +2,14 @@ package com.hexanome.model;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author paul
  */
 public class Map {
-    private ArrayList<Node> nodes;
+    private HashMap<Integer, Node> nodes;
     private ArrayList<Arc> arcs;
     
     /**
@@ -17,6 +18,8 @@ public class Map {
      * @param arcs 
      */
     public Map() { 
+        nodes = new HashMap<>();
+        arcs = new ArrayList<>();
     }
     /**
      * Factory method to build nodes in map
@@ -28,7 +31,7 @@ public class Map {
         // Create a new node 
         Node n = new Node(id, location);
         // Add the new node to the local collection
-        nodes.add(n);
+        nodes.put(id, n);
         // Return the new node
         return n;
     }
@@ -68,8 +71,7 @@ public class Map {
      * @return 
      */
     public Node getNodeById(int id) {
-       // \todo implement here
-        return null; 
+        return nodes.get(id);
     }
     /**
      * 
@@ -83,7 +85,7 @@ public class Map {
      * @return 
      */
     public ArrayList<Node> getNodes() {
-        return nodes;
+        return null;
     }
     /**
      * 
@@ -102,17 +104,25 @@ public class Map {
 
     @Override
     public String toString() {
-        String strarcs = "{";
+        String strarcs = "";
         for (Arc arc : arcs) {
             strarcs += arc.toString() + ",";
         }
-        strarcs = strarcs.substring(0, strarcs.length()-1) + "}";
-        String strnodes = "{";
-        for (Node n : nodes) {
-            strnodes += n.toString() + ",";
+        strarcs = strarcs.substring(0, strarcs.length()-1);
+        String strnodes = "";
+        for(java.util.Map.Entry<Integer, Node> n : nodes.entrySet()) {
+            strnodes += n.getValue().toString() + ",";
         }
-        strnodes = strnodes.substring(0, strnodes.length()-1) + "}";
-        return String.format("{ \"Map\" : { \"nodes\":{\n%s\n}, \"arcs\":{\n%s\n} } }", strnodes, strarcs);
+        strnodes = strnodes.substring(0, strnodes.length()-1) + "";
+        return String.format(""
+                + "{"
+                + "\"nodes\":[\n"
+                + "%s\n"
+                + "],\n"
+                + "\"arcs\":[\n"
+                + "%s\n"
+                + "]\n"
+                + "}", strnodes, strarcs);
     }
     
 }
