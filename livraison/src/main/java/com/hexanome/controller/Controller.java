@@ -38,6 +38,7 @@ public class Controller {
     }
     
     public void initUI(String[] args) {
+        // Launch can only be done once
         Application.launch(UIManager.class, args);
     }
 
