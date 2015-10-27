@@ -30,5 +30,16 @@ public class TimeSlot {
         return false;
     }
 
+    @Override
+    public String toString() {
+        String strdeliveries = "{";
+        for (Delivery delivery : deliveries) {
+            strdeliveries += delivery.toString() + ",";
+        }
+        strdeliveries += strdeliveries.substring(0, strdeliveries.length()-1) + "}";
+        return String.format("\"TimeSlot\" : {\n"
+                + "\"startTime\":%s, \"endTime\":%s, \"deliveries\":%s\n"
+                + "}", startTime, endTime, strdeliveries);
+    }
 
 }

@@ -33,4 +33,14 @@ public class Delivery {
     public Node getNode() {
         return node;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[Delivery]{\n"
+                + "id:%s,\n"
+                + "deliveryTime:%s,\n"
+                + "node:%s\n"
+                + "}", id, deliveryTime, node.toString());
+    }
+    
 }
