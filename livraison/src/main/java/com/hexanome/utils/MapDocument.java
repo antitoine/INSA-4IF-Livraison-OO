@@ -1,5 +1,6 @@
 package com.hexanome.utils;
 
+import com.hexanome.controller.UIManager;
 import com.hexanome.model.Map;
 import java.awt.Point;
 import java.util.List;
@@ -56,7 +57,6 @@ public class MapDocument {
                 Logger.getLogger(MapDocument.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
     }
 
     /**

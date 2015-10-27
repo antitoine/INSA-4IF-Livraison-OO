@@ -15,15 +15,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * This controller manage all the view
- * and is notify when something happens on the view
+ * This controller manage all the view and is notify when something happens on
+ * the view
  */
 public class UIManager extends Application {
 
-    MainWindow mainWindow;
+    static MainWindow mainWindow;
 
     public UIManager() {
-        
+
     }
 
     @Override
@@ -39,18 +39,18 @@ public class UIManager extends Application {
         stage.show();
 
         // small test for the view components
-        testMapDisplay(mainWindow.getMapView());
-        testTreeView(mainWindow.getDeliveryTreeView());
+        // testMapDisplay(mainWindow.getMapView());
+        // testTreeView(mainWindow.getDeliveryTreeView());
     }
-    
+
     /**
      * Method that allow to notify the UIController
+     *
      * @param action Action to be executed
      * @param arg Optional argument
-     * 
-     * Expected @param arg for the following action
-     *      Load_MAP : File file (valid xml file) 
-     *      Load_PLANNING : File file (valid xml file)
+     *
+     * Expected @param arg for the following action Load_MAP : File file (valid
+     * xml file) Load_PLANNING : File file (valid xml file)
      */
     public static void NotifyUI(ConstView.Action action, Object arg) {
         switch (action) {
@@ -60,35 +60,35 @@ public class UIManager extends Application {
             case ADD_DELIVERY:
                 // Create an AddDeliveryCommand and give it to context manager
                 break;
-            case DELETE_DELIVERY :
+            case DELETE_DELIVERY:
                 // Create a RemoveDeliveryCommand and give it to context manager
                 break;
-            case SWAP_DELIVERIES :
+            case SWAP_DELIVERIES:
                 // Create a SwapDeliveryCommand and give it to context manager
                 break;
-            case LOAD_MAP :
-                ContextManager.getInstance().loadMap((File)arg); // Not undoable
+            case LOAD_MAP:
+                ContextManager.getInstance().loadMap((File) arg); // Not undoable
+                ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
                 break;
-            case LOAD_PLANNING :
-                ContextManager.getInstance().loadPlanning((File)arg); // Not undoable
+            case LOAD_PLANNING:
+                ContextManager.getInstance().loadPlanning((File) arg); // Not undoable
                 break;
         }
-    }   
+    }
 
     /**
      * Method that allow to notify the UIController
+     *
      * @param action action to be executed
      */
     public static void NotifyUI(ConstView.Action action) {
         NotifyUI(action, null);
     }
-    
-
 
     /**
-     * Test for the treeview
-     * Add delivery and timeslot
-     * @param dv 
+     * Test for the treeview Add delivery and timeslot
+     *
+     * @param dv
      */
     private void testTreeView(DeliveryTreeView dv) {
         Random r = new Random();
@@ -97,15 +97,15 @@ public class UIManager extends Application {
             dv.AddTimeSlot(new TimeSlot(start, r.nextInt(24), null));
 
             for (int j = 0; j < 10; j++) {
-                dv.AddDelivery(new Delivery(i+j, new Node(r.nextInt(10000), new Point(i, j))), start);
+                dv.AddDelivery(new Delivery(i + j, new Node(r.nextInt(10000), new Point(i, j))), start);
             }
         }
     }
 
     /**
-     * Test for the MapView
-     * Add Node and arc 
-     * @param mv 
+     * Test for the MapView Add Node and arc
+     *
+     * @param mv
      */
     private void testMapDisplay(MapView mv) {
         Random r = new Random();

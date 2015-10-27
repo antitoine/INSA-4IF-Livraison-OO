@@ -47,7 +47,7 @@ public class Node {
             for (Arc outgoing : outgoings) {
                 arcs += outgoing.toString() + ",";
             }
-            arcs += arcs.substring(0, arcs.length() - 1);
+            arcs = arcs.substring(0, arcs.length() - 1);
         }
 
         return String.format(""

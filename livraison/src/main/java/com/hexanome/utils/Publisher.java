@@ -15,6 +15,6 @@ package com.hexanome.utils;
 public interface Publisher {
     public void addSubscriber(Subscriber s);
     public void removeSubscriber(Subscriber s);
-    public void notifySubsrciber();
+    public void notifySubsrcibers();
     public void clearSubscribers();
 }

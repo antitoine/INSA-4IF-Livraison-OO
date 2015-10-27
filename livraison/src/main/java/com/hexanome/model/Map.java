@@ -1,17 +1,21 @@
 package com.hexanome.model;
 
+import com.hexanome.utils.Publisher;
+import com.hexanome.utils.Subscriber;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
  * @author paul
  */
-public class Map {
+public class Map implements Publisher {
 
     private HashMap<Integer, Node> nodes;
     private ArrayList<Arc> arcs;
+    private ArrayList<Subscriber> subscribers;
 
     /**
      *
@@ -21,6 +25,14 @@ public class Map {
     public Map() {
         nodes = new HashMap<>();
         arcs = new ArrayList<>();
+    }
+
+    public Map(List<Node> newNodes, List<Arc> arcs) {
+        nodes = new HashMap<>();
+        this.arcs = (ArrayList<Arc>) arcs;
+        for (Node n : newNodes) {
+            nodes.put(n.getId(), n);
+        }
     }
 
     /**
@@ -141,6 +153,31 @@ public class Map {
                 + "%s\n"
                 + "]\n"
                 + "}", strnodes, strarcs);
+    }
+
+    @Override
+    public void addSubscriber(Subscriber s) {
+        subscribers.add(s);
+        s.update(this, null);
+    }
+
+    @Override
+    public void removeSubscriber(Subscriber s) {
+        // TODO
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void notifySubsrcibers() {
+        for (Subscriber s : subscribers) {
+            s.update(this, null);
+        }
+    }
+
+    @Override
+    public void clearSubscribers() {
+        // TODO
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

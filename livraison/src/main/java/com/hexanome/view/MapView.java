@@ -5,6 +5,9 @@
  */
 package com.hexanome.view;
 
+import com.hexanome.model.Map;
+import com.hexanome.utils.Publisher;
+import com.hexanome.utils.Subscriber;
 import java.awt.Point;
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +25,7 @@ import javafx.scene.layout.AnchorPane;
  * FXML Controller class
  *
  */
-public class MapView extends AnchorPane implements Observer, Initializable{
+public class MapView extends AnchorPane implements Subscriber, Initializable{
 
     static HashMap<Point, NodeView> nodeList;
     static HashMap<Point, ArcView> arcList;
@@ -43,11 +46,7 @@ public class MapView extends AnchorPane implements Observer, Initializable{
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        // TODO
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+
 
     /**
      * Add a node a the position pt.x & pt.y
@@ -106,6 +105,13 @@ public class MapView extends AnchorPane implements Observer, Initializable{
         nodeList = new HashMap<>();
         arcList = new HashMap<>();
         
+    }
+
+    @Override
+    public void update(Publisher p, Object arg) {
+        if(p instanceof Map){
+            System.out.println(p);
+        }
     }
 
 }
