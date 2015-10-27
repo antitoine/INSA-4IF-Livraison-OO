@@ -1,19 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hexanome.view;
 
+import com.hexanome.model.Arc;
 import com.hexanome.model.Map;
+import com.hexanome.model.Node;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import java.awt.Point;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,12 +18,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * FXML Controller class
+ * Reprensents a view of the map
+ * with nodes and arc
  *
+ * This is a one-to-one representation of the
+ * Map model
  */
 public class MapView extends AnchorPane implements Subscriber, Initializable{
 
-    static HashMap<Point, NodeView> nodeList;
+    static HashMap<Node, NodeView> nodeList;
     static HashMap<Point, ArcView> arcList;
 
     /**
@@ -47,36 +46,36 @@ public class MapView extends AnchorPane implements Subscriber, Initializable{
     }
 
 
-
     /**
      * Add a node a the position pt.x & pt.y
      *
      * @param Type Node Type
-     * @param pt node position
+     * @param node node as describes in the model 
      */
-    public void AddNode(String Type, Point pt) {
-        NodeView n = null;
+    public void AddNode(String Type, Node node) {
+        NodeView nodeview = null;
 
         switch (Type) {
             case ConstView.EMPTYNODE:
-                n = new EmptyNodeView(pt);
+                nodeview = new EmptyNodeView(node.getLocation());
                 break;
             case ConstView.DELIVERYNODE:
-                n = new DeliveryNodeView(pt);
+                nodeview = new DeliveryNodeView(node.getLocation());
                 break;
             case ConstView.WAREHOUSENODE:
-                n = new WarehouseNodeView(pt);
+                nodeview = new WarehouseNodeView(node.getLocation());
                 break;
         }
 
-        this.getChildren().add(n);
-        n.toFront();
-        n.relocate(pt.x - n.getPrefWidth() / 2, pt.y - n.getPrefHeight() / 2);
-        nodeList.put(pt, n);
+        this.getChildren().add(nodeview);
+        nodeview.toFront();
+        nodeview.relocate(node.getLocation().x - nodeview.getPrefWidth() / 2,
+                node.getLocation().y - nodeview.getPrefHeight() / 2);
+        nodeList.put(node, nodeview);
     }
 
     public void SwapNode(Point pt1, Point pt2) {
-
+        // TODO
     }
 
     /**
@@ -102,6 +101,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         nodeList = new HashMap<>();
         arcList = new HashMap<>();
         
@@ -110,8 +110,20 @@ public class MapView extends AnchorPane implements Subscriber, Initializable{
     @Override
     public void update(Publisher p, Object arg) {
         if(p instanceof Map){
-            System.out.println(p);
+            for(Entry<Integer, Node> n : ((Map)(p)).getNodes().entrySet()){
+                AddNode(ConstView.EMPTYNODE, n.getValue());
+            }
+            for(Arc a : ((Map)(p)).getArcs()){
+                AddArc(a.getSrc().getLocation(), a.getDest().getLocation());
+            }
         }
     }
+
+    public void ClearMap() {
+        nodeList.clear();
+        arcList.clear();
+        getChildren().clear();
+    }
+
 
 }

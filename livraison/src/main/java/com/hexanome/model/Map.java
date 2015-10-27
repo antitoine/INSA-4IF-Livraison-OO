@@ -15,7 +15,7 @@ public class Map implements Publisher {
 
     private HashMap<Integer, Node> nodes;
     private ArrayList<Arc> arcs;
-    private ArrayList<Subscriber> subscribers;
+    private ArrayList<Subscriber> subscribers ;
 
     /**
      *
@@ -25,14 +25,7 @@ public class Map implements Publisher {
     public Map() {
         nodes = new HashMap<>();
         arcs = new ArrayList<>();
-    }
-
-    public Map(List<Node> newNodes, List<Arc> arcs) {
-        nodes = new HashMap<>();
-        this.arcs = (ArrayList<Arc>) arcs;
-        for (Node n : newNodes) {
-            nodes.put(n.getId(), n);
-        }
+        subscribers = new ArrayList<>();
     }
 
     /**
@@ -105,8 +98,8 @@ public class Map implements Publisher {
      *
      * @return
      */
-    public ArrayList<Node> getNodes() {
-        return null;
+    public HashMap<Integer, Node> getNodes() {
+        return nodes;
     }
 
     /**

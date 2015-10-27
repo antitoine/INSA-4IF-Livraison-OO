@@ -18,7 +18,7 @@
             <bottom>
                 <BorderPane fx:id="bottomPane" prefHeight="36.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                     <right>
-                        <ProgressBar prefHeight="20.0" prefWidth="156.0" progress="0.0" BorderPane.alignment="CENTER">
+                        <ProgressBar fx:id="progressBar" prefHeight="20.0" prefWidth="156.0" progress="0.0" BorderPane.alignment="CENTER">
                             <padding>
                                 <Insets right="10.0" />
                             </padding>

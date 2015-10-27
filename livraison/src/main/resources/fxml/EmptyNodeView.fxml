@@ -11,17 +11,17 @@
 
 <fx:root minHeight="20.0" minWidth="20.0" prefHeight="20.0" prefWidth="20.0" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <Circle fx:id="nodeShape" layoutX="10.0" layoutY="10.0" radius="10.0" stroke="BLACK" strokeType="INSIDE">
-         <fill>
-            <LinearGradient endX="1.0" endY="1.0" startX="0.028846153846153848" startY="0.42788461538461536">
-               <stops>
-                  <Stop color="#0d0d0d" />
-                  <Stop color="WHITE" offset="1.0" />
-               </stops>
-            </LinearGradient>
-         </fill>
+      <Circle fx:id="nodeShape" layoutX="10.0" layoutY="10.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Circle>
+         </cursor>
+         <fill>
+            <RadialGradient centerX="0.6853932584269663" centerY="0.27403846153846156" radius="0.5">
+               <stops>
+                  <Stop color="#eee2e2f2" />
+                  <Stop color="BLACK" offset="1.0" />
+               </stops>
+            </RadialGradient>
+         </fill></Circle>
     </children>
 </fx:root>

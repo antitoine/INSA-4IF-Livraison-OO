@@ -7,10 +7,6 @@ import com.hexanome.utils.PlanningDocument;
 import com.hexanome.utils.RouteDocument;
 import java.io.File;
 
-/**
- *
- * @author paul
- */
 public class IOManager {
     private static IOManager iomanager = null;
     /**
@@ -19,10 +15,7 @@ public class IOManager {
     private IOManager() {
         // Nothing to do here for now
     }
-    /**
-     * 
-     * @return 
-     */
+
     public static IOManager getInstance() {
         if(iomanager == null)
         {

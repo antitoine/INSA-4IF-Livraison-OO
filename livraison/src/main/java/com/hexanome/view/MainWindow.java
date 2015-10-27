@@ -7,11 +7,13 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
@@ -33,6 +35,9 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private DeliveryTreeView deliveryTreeView;
+
+    @FXML
+    private ProgressBar progressBar;
 
     final FileChooser fileChooser;
 
@@ -99,6 +104,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void loadPlanning() {
         File file = fileChooser.showOpenDialog(stage);
+
         if (file != null) {
             UIManager.getInstance().NotifyUI(ConstView.Action.LOAD_PLANNING, file);
         }
@@ -124,6 +130,30 @@ public class MainWindow extends AnchorPane {
                 new FileChooser.ExtensionFilter("xml", "*.xml"),
                 new FileChooser.ExtensionFilter("All files", "*.*")
         );
+    }
+
+    public void SetWait(final String text) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                labelInfos.setText(text);
+                progressBar.setVisible(true);
+                progressBar.setProgress(-100.0);
+            }
+        });
+
+    }
+
+    public void SetDone() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisible(false);
+                progressBar.setProgress(0);
+                labelInfos.setText("");
+            }
+        });
+
     }
 
 }

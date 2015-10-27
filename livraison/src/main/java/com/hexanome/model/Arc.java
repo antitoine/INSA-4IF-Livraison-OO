@@ -10,6 +10,14 @@ public class Arc {
     private float avgSpeed;
     private float duration;
     private Node dest;
+
+    public Node getDest() {
+        return dest;
+    }
+
+    public Node getSrc() {
+        return src;
+    }
     private Node src;
     
     public Arc(String streetName, float length, float avgSpeed, Node src, Node dest) {

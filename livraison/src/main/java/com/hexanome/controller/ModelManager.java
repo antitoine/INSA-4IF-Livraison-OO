@@ -51,7 +51,6 @@ public class ModelManager {
             return false;
         }
         // removeMeLater : démarrer directement un premier calcul de route ?
-        System.out.println(map);
         return true;
     }
     
