@@ -1,30 +1,20 @@
 package com.hexanome.controller;
 
 import javafx.application.Application;
-
 /**
- *
- * @author paul
+ * MainController
  */
 public class Controller {
     private static Controller controller = null;
-    private static UIManager uimanager = null;
-    /**
-     * 
-     */
-    private Controller() {
+    
+     private Controller() {
         // Nothing to do here for now
-
     }
-    /**
-     * 
-     * @return 
-     */
+     
     public static Controller getInstance() {
         if(controller == null)
         {   
             controller = new Controller();
-            uimanager = new UIManager();
         }
         return controller;
     }
@@ -36,11 +26,13 @@ public class Controller {
         ContextManager.getInstance();
         // Force IOManager first instanciation
         IOManager.getInstance();
-    }
+        // Force UIManager first instanciation
+        UIManager.getInstance();
+    }   
     
     public void initUI(String[] args) {
         // Launch can only be done once
-        Application.launch(UIManager.class, args);
+        Application.launch(AppMediator.class, args);
     }
 
 }
