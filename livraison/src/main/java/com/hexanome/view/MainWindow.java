@@ -92,8 +92,7 @@ public class MainWindow extends AnchorPane {
     private void loadMap() {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
-            // TODO : voir comment on implémente ça
-            // openFile(file);
+            UIManager.NotifyUI(ConstView.Action.LOAD_MAP, file);
         }
     }
 
@@ -101,18 +100,18 @@ public class MainWindow extends AnchorPane {
     private void loadPlanning() {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
-            //  openFile(file);
+            UIManager.NotifyUI(ConstView.Action.LOAD_PLANNING, file);
         }
     }
 
     @FXML
     private void undo() {
-        // TODO
+        UIManager.NotifyUI(ConstView.Action.UNDO);
     }
 
     @FXML
     private void redo() {
-        // TODO
+        UIManager.NotifyUI(ConstView.Action.REDO);
     }
 
     private static void configureFileChooser(final FileChooser fileChooser, String title) {

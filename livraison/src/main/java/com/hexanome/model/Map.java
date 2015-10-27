@@ -9,23 +9,26 @@ import java.util.HashMap;
  * @author paul
  */
 public class Map {
+
     private HashMap<Integer, Node> nodes;
     private ArrayList<Arc> arcs;
-    
+
     /**
-     * 
+     *
      * @param nodes
-     * @param arcs 
+     * @param arcs
      */
-    public Map() { 
+    public Map() {
         nodes = new HashMap<>();
         arcs = new ArrayList<>();
     }
+
     /**
      * Factory method to build nodes in map
+     *
      * @param id
      * @param location
-     * @return 
+     * @return
      */
     public Node createNode(int id, Point location) {
         // Create a new node 
@@ -35,14 +38,16 @@ public class Map {
         // Return the new node
         return n;
     }
+
     /**
      * Factory method to build arcs in the map
+     *
      * @param streetName
      * @param length
      * @param avgSpeed
      * @param srcNodeId
      * @param destNodeId
-     * @return 
+     * @return
      */
     public Arc createArc(String streetName, float length, float avgSpeed, int srcNodeId, int destNodeId) {
         // Retreive source node
@@ -56,64 +61,77 @@ public class Map {
         // Return the new arc
         return a;
     }
+
     /**
-     * 
+     *
      * @param location
-     * @return 
+     * @return
      */
     public Node getNodeByLocation(Point location) {
         // \todo implement here
-        return null; 
+        return null;
     }
+
     /**
-     * 
+     *
      * @param id
-     * @return 
+     * @return
      */
     public Node getNodeById(int id) {
         return nodes.get(id);
     }
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public ArrayList<Arc> getArcs() {
         return arcs;
     }
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public ArrayList<Node> getNodes() {
         return null;
     }
+
     /**
-     * 
+     *
      * @param start
-     * @param end 
+     * @param end
      * @return
      */
     public Path getFastestPath(Node start, Node end) {
         // \todo implement here
         return null;
     }
-    
+
     public void clear() {
         // \todo implement here
     }
 
     @Override
     public String toString() {
+
         String strarcs = "";
-        for (Arc arc : arcs) {
-            strarcs += arc.toString() + ",";
+
+        if (arcs.size() > 0) {
+            for (Arc arc : arcs) {
+                strarcs += arc.toString() + ",";
+            }
+            strarcs = strarcs.substring(0, strarcs.length() - 1);
         }
-        strarcs = strarcs.substring(0, strarcs.length()-1);
+
         String strnodes = "";
-        for(java.util.Map.Entry<Integer, Node> n : nodes.entrySet()) {
-            strnodes += n.getValue().toString() + ",";
+        if (nodes.entrySet().size() > 0) {
+            for (java.util.Map.Entry<Integer, Node> n : nodes.entrySet()) {
+                strnodes += n.getValue().toString() + ",";
+            }
+            strnodes = strnodes.substring(0, strnodes.length() - 1) + "";
         }
-        strnodes = strnodes.substring(0, strnodes.length()-1) + "";
+
         return String.format(""
                 + "{"
                 + "\"nodes\":[\n"
@@ -124,5 +142,5 @@ public class Map {
                 + "]\n"
                 + "}", strnodes, strarcs);
     }
-    
+
 }

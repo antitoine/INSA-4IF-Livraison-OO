@@ -9,7 +9,7 @@ import java.awt.Point;
 public class ModelTest {
 
     public ModelTest() {
-        testDebugPrint();
+        //testDebugPrint();
     }
 
     private void testDebugPrint() {

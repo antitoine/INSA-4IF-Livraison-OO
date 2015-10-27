@@ -8,6 +8,7 @@ import com.hexanome.view.DeliveryTreeView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.MapView;
 import java.awt.Point;
+import java.io.File;
 import java.util.Random;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -46,6 +47,10 @@ public class UIManager extends Application {
      * Method that allow to notify the UIController
      * @param action Action to be executed
      * @param arg Optional argument
+     * 
+     * Expected @param arg for the following action
+     *      Load_MAP : File file (valid xml file) 
+     *      Load_PLANNING : File file (valid xml file)
      */
     public static void NotifyUI(ConstView.Action action, Object arg) {
         switch (action) {
@@ -62,10 +67,10 @@ public class UIManager extends Application {
                 // Create a SwapDeliveryCommand and give it to context manager
                 break;
             case LOAD_MAP :
-                //ContextManager.getInstance().loadMap(file); // Not undoable
+                ContextManager.getInstance().loadMap((File)arg); // Not undoable
                 break;
             case LOAD_PLANNING :
-                //ContextManager.getInstance().loadPlanning(file); // Not undoable
+                ContextManager.getInstance().loadPlanning((File)arg); // Not undoable
                 break;
         }
     }   
