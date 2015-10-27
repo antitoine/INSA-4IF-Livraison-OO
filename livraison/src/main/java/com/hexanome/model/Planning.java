@@ -56,4 +56,14 @@ public class Planning {
     }
     
     // \todo add methods here
+
+    @Override
+    public String toString() {
+        String strts = "{";
+        for (TimeSlot ts : timeSlots) {
+            strts += ts.toString() + ",";
+        }
+        strts = strts.substring(0, strts.length()-1) + "}";
+        return String.format("{ \"Planning\" : { \"warehouseId\":%s, \"timeslots\":{\n%s\n} } }", warehouse.getId(), strts);
+    }
 }
