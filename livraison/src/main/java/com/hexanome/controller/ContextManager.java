@@ -2,6 +2,9 @@ package com.hexanome.controller;
 
 import java.io.File;
 import java.util.Stack;
+
+import com.hexanome.controller.states.IState;
+import com.hexanome.controller.states.InitState;
 /**
  * This class manages both commands and state machines of the application
  * @author paul
