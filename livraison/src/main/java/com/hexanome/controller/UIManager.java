@@ -4,6 +4,10 @@ import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import java.io.File;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
 import javafx.stage.Stage;
 
 /**
@@ -74,21 +78,7 @@ public class UIManager {
                 // Create a SwapDeliveryCommand and give it to context manager
                 break;
             case LOAD_MAP:
-                new Thread() {
-                    public void run() {
-                        mainWindow.SetWait("Loading Map...");
-                        ContextManager.getInstance().loadMap((File) arg); // Not undoable
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                mainWindow.getMapView().ClearMap();
-                                ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
-                                mainWindow.SetDone();
-                            }
-                        });
-                    }
-                }.start();
-
+                loadMap(arg);
                 break;
             case LOAD_PLANNING:
                 ContextManager.getInstance().loadPlanning((File) arg); // Not undoable
@@ -103,6 +93,38 @@ public class UIManager {
      */
     public void NotifyUI(ConstView.Action action) {
         NotifyUI(action, null);
+    }
+
+    private void loadMap(Object arg) {
+        mainWindow.SetLoadingState("Loading Map...");
+
+        final Service<Void> calculateService = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        ContextManager.getInstance().loadMap((File) arg); // Not undoable
+                        return null;
+                    }
+                };
+            }
+        };
+        calculateService.stateProperty()
+                .addListener((ObservableValue<? extends Worker.State> observableValue,
+                                Worker.State oldValue, Worker.State newValue) -> {
+                    switch (newValue) {
+                        case FAILED:
+                        case CANCELLED:
+                        case SUCCEEDED:
+                            mainWindow.getMapView().ClearMap();
+                            ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+                            mainWindow.SetLoadingDone();
+                            break;
+                    }
+                });
+        calculateService.start();
+
     }
 
 }

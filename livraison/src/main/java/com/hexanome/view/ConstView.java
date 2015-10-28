@@ -17,6 +17,7 @@ public final class ConstView {
     public static final String MAPVIEW = "/fxml/MapView.fxml";
     public static final String TREEVIEW = "/fxml/DeliveryTreeView.fxml";
     public static final String MAINWINDOW = "/fxml/MainWindow.fxml";
+    public static final String ARCVIEW = "/fxml/ArcView.fxml";
 
     public static enum Action {
         QUIT, ADD_DELIVERY, DELETE_DELIVERY, SWAP_DELIVERIES, UNDO, REDO, LOAD_MAP, LOAD_PLANNING,

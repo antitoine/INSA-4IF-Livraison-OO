@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
@@ -132,27 +133,14 @@ public class MainWindow extends AnchorPane {
         );
     }
 
-    public void SetWait(final String text) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                labelInfos.setText(text);
-                progressBar.setVisible(true);
-                progressBar.setProgress(-100.0);
-            }
-        });
-
+    public void SetLoadingState(final String text) {
+        labelInfos.setText(text);
+        stage.getScene().setCursor(Cursor.WAIT);
     }
 
-    public void SetDone() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisible(false);
-                progressBar.setProgress(0);
-                labelInfos.setText("");
-            }
-        });
+    public void SetLoadingDone() {
+        labelInfos.setText("");
+        stage.getScene().setCursor(Cursor.DEFAULT);
 
     }
 

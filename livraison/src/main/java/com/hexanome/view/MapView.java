@@ -13,18 +13,18 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * Reprensents a view of the map
- * with nodes and arc
+ * Reprensents a view of the map with nodes and arc
  *
- * This is a one-to-one representation of the
- * Map model
+ * This is a one-to-one representation of the Map model
  */
-public class MapView extends AnchorPane implements Subscriber, Initializable{
+public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     static HashMap<Node, NodeView> nodeList;
     static HashMap<Point, ArcView> arcList;
@@ -32,7 +32,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable{
     /**
      * Initializes the controller class.
      */
-    public  void MapView() {
+    public void MapView() {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.MAPVIEW));
         fxmlLoader.setRoot(this);
@@ -45,14 +45,16 @@ public class MapView extends AnchorPane implements Subscriber, Initializable{
         }
     }
 
-
     /**
      * Add a node a the position pt.x & pt.y
      *
      * @param Type Node Type
-     * @param node node as describes in the model 
+     * @param node node as describes in the model
      */
     public void AddNode(String Type, Node node) {
+
+        MapView mv = this;
+
         NodeView nodeview = null;
 
         switch (Type) {
@@ -66,12 +68,13 @@ public class MapView extends AnchorPane implements Subscriber, Initializable{
                 nodeview = new WarehouseNodeView(node.getLocation());
                 break;
         }
-
-        this.getChildren().add(nodeview);
+        
+        mv.getChildren().add(nodeview);
         nodeview.toFront();
         nodeview.relocate(node.getLocation().x - nodeview.getPrefWidth() / 2,
-                node.getLocation().y - nodeview.getPrefHeight() / 2);
+        node.getLocation().y - nodeview.getPrefHeight() / 2);
         nodeList.put(node, nodeview);
+
     }
 
     public void SwapNode(Point pt1, Point pt2) {
@@ -84,13 +87,15 @@ public class MapView extends AnchorPane implements Subscriber, Initializable{
      * @param pt
      */
     public void DeleteNode(Point pt) {
+
         this.getChildren().remove((NodeView) nodeList.get(pt));
         nodeList.remove(pt);
     }
 
     public void AddArc(Point pt1, Point pt2) {
+        MapView mv = this;
         ArcView av = new ArcView(pt1, pt2);
-        this.getChildren().add(av);
+        mv.getChildren().add(av);
         arcList.put(pt1, av);
         av.toBack();
     }
@@ -104,16 +109,16 @@ public class MapView extends AnchorPane implements Subscriber, Initializable{
 
         nodeList = new HashMap<>();
         arcList = new HashMap<>();
-        
+
     }
 
     @Override
     public void update(Publisher p, Object arg) {
-        if(p instanceof Map){
-            for(Entry<Integer, Node> n : ((Map)(p)).getNodes().entrySet()){
+        if (p instanceof Map) {
+            for (Entry<Integer, Node> n : ((Map) (p)).getNodes().entrySet()) {
                 AddNode(ConstView.EMPTYNODE, n.getValue());
             }
-            for(Arc a : ((Map)(p)).getArcs()){
+            for (Arc a : ((Map) (p)).getArcs()) {
                 AddArc(a.getSrc().getLocation(), a.getDest().getLocation());
             }
         }
@@ -124,6 +129,5 @@ public class MapView extends AnchorPane implements Subscriber, Initializable{
         arcList.clear();
         getChildren().clear();
     }
-
 
 }
