@@ -55,7 +55,7 @@ public class ContextManager {
      */
     void undo() {
         // \todo (security) check if undo possible
-        undone.push(done.pop().execute());
+        undone.push(done.pop().reverse());
         // \todo updateUndoStateMachine();
         // \todo updateRedoStateMachine();
     }
