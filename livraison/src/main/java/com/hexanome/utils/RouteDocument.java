@@ -14,26 +14,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ *  This class provides a convenient interface to write a Route output file 
  * @author paul
  */
 public class RouteDocument extends File {
     private String content;
     /**
-     * 
+     * Creates a new instance of a RouteDocument using pathname
      * @param pathname 
      */
     public RouteDocument(String pathname) {
         super(pathname);
     }
     /**
-     * 
+     * Writes the route to the document content
      * @param route 
      */
     public void writeRoute(Route route) {
         // \todo implement here, file output for a route write all in content
     }
-    
+    /**
+     * Save the document writting it to the File System.
+     * @return true if the file was successfully written, else returns false
+     */
     public boolean save() {
         PrintWriter writer = null;
         try {

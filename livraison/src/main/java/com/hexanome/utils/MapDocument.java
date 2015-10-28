@@ -11,17 +11,25 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 
 /**
- *
+ * This class provides a convenient interface to extract information from the 
+ * XML description of a Map 
  * @author Estelle
  */
 public class MapDocument {
 
     private Document dom;
-
+    /**
+     * Creates a new instance of a MapDocument using the given DOM document
+     * @param dom 
+     */
     public MapDocument(Document dom) {
         this.dom = dom;
     }
-
+    /**
+     * Fills the Map object using the content of file and the Map's 
+     * factory methods 
+     * @param map 
+     */
     public void fillMap(Map map) {
         map.clear();
         Element root = dom.getRootElement();
@@ -60,7 +68,7 @@ public class MapDocument {
     }
 
     /**
-     *
+     * Checks the semantic integrity of the XML description.
      * @return
      */
     public boolean checkIntegrity() {

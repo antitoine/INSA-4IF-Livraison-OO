@@ -18,20 +18,21 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 
 /**
- *
+ * This class provides a convenient interface to extract information from the 
+ * XML description of a Planning 
  * @author paul
  */
 public class PlanningDocument {
     private Document dom;
     /**
-     * 
+     * Creates a new instance of a PlanningDocument using the given DOM document
      * @param dom 
      */
     public PlanningDocument(Document dom) {
         this.dom = dom;
     }
     /**
-     * 
+     * Returns the Node matching with the warehouse described in the XML file.
      * @param map
      * @return 
      */
@@ -50,7 +51,7 @@ public class PlanningDocument {
         return node;
     }
     /**
-     * 
+     * Returns a collection of timeslots extracted from the XML description
      * @param map
      * @return 
      */
@@ -93,8 +94,9 @@ public class PlanningDocument {
         return timeslots;
     }
     /**
-     * 
+     * Checks the semantic integrity of the XML description using the given Map
      * @param map
+     *      Map used to check the semantic
      * @return 
      */
     // RemoveMeLater : must have a map to check if nodes used in the planning 

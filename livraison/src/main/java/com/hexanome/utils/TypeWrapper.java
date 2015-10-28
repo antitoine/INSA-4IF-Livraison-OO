@@ -2,14 +2,16 @@
 package com.hexanome.utils;
 
 /**
- *
+ * This class provides type conversion static methods
  * @author paul
  */
 public class TypeWrapper {
     /**
-     * 
+     * Converts a String timestamp to its sum in seconds 
      * @param timestamp
+     *  formated string HH:mm:ss
      * @return 
+     * @see secondsToTimestamp
      */
     public static int timestampToSeconds(String timestamp) {
         int hour =  Integer.parseInt(timestamp.split(":")[0]);
@@ -18,9 +20,11 @@ public class TypeWrapper {
         return sec + 60*min + 3600*hour;
     }
     /**
-     * 
+     * Converts a sum of seconds to an formated timestamp
      * @param seconds
+     *      sum of seconds, minutes and hours to convert
      * @return 
+     * @see timestampToSeconds
      */
     public static String secondsToTimestamp(int seconds) {
         int hour = (int)(seconds/3600);
