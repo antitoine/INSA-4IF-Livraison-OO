@@ -14,19 +14,26 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 /**
- *
+ * This class is a factory used to build objects providing convenient interfaces
+ * to interact with input/output files used by the application 
  * @author paul
  */
 public class DocumentFactory {
+    /**
+     * Creates a MapDocument object from the given File object 
+     * @param file
+     *      file to interpret as a MapDocument
+     * @return null if the given file doesn't exists or is a directory
+     */
     public static MapDocument createMapDocument(File file)
     {
+        MapDocument mapdoc = null;
         if(file.exists() && !file.isDirectory())
         {
             SAXBuilder builder = new SAXBuilder();
             try {
                 Document document = (Document) builder.build(file);
-                MapDocument mapdoc = new MapDocument(document);
-                return mapdoc;
+                mapdoc = new MapDocument(document);
             } catch (IOException ex) {
                 Logger.getLogger(DocumentFactory.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JDOMException ex) {
@@ -35,12 +42,16 @@ public class DocumentFactory {
         }
         else
         {
-            // TODO : treat error case
-        }
-        
-        return null;
+            // \todo treat error case
+        }   
+        return mapdoc;
     }
-    
+    /**
+     * Creates a PlanningDocument object from the given File object 
+     * @param file
+     *      file to interpret as a PlanningDocument
+     * @return 
+     */
     public static PlanningDocument createPlanningDocument(File file)
     {
         if(file.exists() && !file.isDirectory())
@@ -58,12 +69,17 @@ public class DocumentFactory {
         }
         else
         {
-            // TODO : treat error case
+            // \todo treat error case
         }
         
         return null;
     }
-    
+    /**
+     * Returns a RouteDocument created using the given filename
+     * @param filename
+     *      Filename used to create the document
+     * @return 
+     */
     public static RouteDocument createRouteDocument(String filename)
     {
         return new RouteDocument(filename);

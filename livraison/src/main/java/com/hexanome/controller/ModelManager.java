@@ -7,22 +7,21 @@ import com.hexanome.utils.MapDocument;
 import com.hexanome.utils.PlanningDocument;
 
 /**
- *
+ * This class manages the model of the application, it is responsible of 
+ * instanciating objects of the model and guarantee model's consistency
  * @author paul
  */
 public class ModelManager {
     private static ModelManager modelManager = null;
     private Map map = null;
     private Planning planning = null;
-    private Route route = null;
-    /**
-     * 
-     */
+  
     private ModelManager() {
         // Nothing to do here for now
     }
     /**
-     * 
+     * Return the instance of the ModelManager in the application, 
+     * ModelManager is a Singleton
      * @return 
      */
     public static ModelManager getInstance() {
@@ -33,35 +32,23 @@ public class ModelManager {
         return modelManager;
     }
     /**
-     * 
+     * Initialize model's Map with the given MapDocument
      * @param mapDoc
-     * @param planDoc
-     * @return 
+     *      MapDocument used to fill Map object
+     * @return false if a map already exists in the model or the integrity of 
+     * MapDocument is compromised, else it will return true.
      */
     boolean initModelMap(MapDocument mapDoc) {
-        // Map creation
-        map = new Map();
-        if(mapDoc.checkIntegrity())
-        {   
-            mapDoc.fillMap(map);
-        }
-        else
-        {
-            // \todo treat error case
-            return false;
-        }
-        // removeMeLater : démarrer directement un premier calcul de route ?
-        return true;
-    }
-    
-    boolean initModelPlanning(PlanningDocument planDoc) {
-        // Planning creation
-        if(planDoc.checkIntegrity(map))
-        {
-            planning = new Planning(map, planDoc.getWarehouse(map), planDoc.getTimeSlots(map));
-        }
-        else
-        {
+        if(map == null) {
+            // Map creation
+            map = new Map();
+            if(mapDoc.checkIntegrity()) {   
+                mapDoc.fillMap(map);
+            } else {
+                // \todo treat error case
+                return false;
+            }
+        } else {
             // \todo treat error case
             return false;
         }
@@ -69,15 +56,38 @@ public class ModelManager {
         return true;
     }
     /**
-     * 
+     * Initialize model's Planning with the given PlanningDocument
+     * @param planDoc
+     *      PlanningDocument used to fill Planning object
+     * @return false if a map doesn't exists in the model or a planning 
+     * already exists in the model, it also returns false if the integrity 
+     * of the PlanningDocument is compromised, else it will return true.
+     */
+    boolean initModelPlanning(PlanningDocument planDoc) {
+        if(map != null && planning == null) {
+            // Planning creation
+            if(planDoc.checkIntegrity(map)) {
+                planning = new Planning(map, planDoc.getWarehouse(map), planDoc.getTimeSlots(map));
+            } else {
+                // \todo treat error case
+                return false;
+            }
+        } else {
+            // \todo treat error case
+            return false;
+        }
+        // removeMeLater : démarrer directement un premier calcul de route ?
+        return true;
+    }
+    /**
+     * Clears the model
      */
     void clearModel() {
         map = null;
         planning = null;
-        route = null;
     }
     /**
-     * 
+     * Returns model's map
      * @return 
      */
     Map getMap() {
@@ -89,13 +99,5 @@ public class ModelManager {
      */
     Planning getPlanning() {
        return planning; 
-    }
-    /**
-     * 
-     * @return 
-     */
-    Route getRoute() {
-        // \todo
-        return null;  
     }
 }
