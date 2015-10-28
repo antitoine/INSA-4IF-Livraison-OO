@@ -11,7 +11,7 @@
 
 <fx:root minHeight="20.0" minWidth="20.0" prefHeight="20.0" prefWidth="20.0" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <Circle fx:id="nodeShape" layoutX="10.0" layoutY="10.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+      <Circle fx:id="nodeShape" layoutX="10.0" layoutY="10.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

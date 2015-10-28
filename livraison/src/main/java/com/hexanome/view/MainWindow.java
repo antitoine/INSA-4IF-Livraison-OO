@@ -7,52 +7,35 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainWindow extends AnchorPane {
 
     @FXML
-    private MenuItem quitMenuItem;
-
-    @FXML
     private Label labelInfos;
-
-    @FXML
-    private BorderPane mainPane;
-
+    
     @FXML
     private MapView mapView;
-
+    
     @FXML
     private DeliveryTreeView deliveryTreeView;
-
-    @FXML
-    private ProgressBar progressBar;
-
+    
     final FileChooser fileChooser;
-
-    static BtnListener btnListener;
-
     private Stage stage;
 
     /**
      * Main window
      *
-     * @param stage Main stage for the application
+     * @param stage Application stage
      */
     public MainWindow(Stage stage) {
-        btnListener = new BtnListener();
         fileChooser = new FileChooser();
         configureFileChooser(fileChooser, "Load file...");
         this.stage = stage;
@@ -73,12 +56,9 @@ public class MainWindow extends AnchorPane {
 
     }
 
-    public static BtnListener getBtnListener() {
-        return btnListener;
-    }
-
     /**
-     *
+     * Notify the UI Manager that the user wants to 
+     * quit the application
      * @param event
      */
     @FXML

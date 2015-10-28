@@ -1,33 +1,24 @@
 package com.hexanome.view;
 
 import com.hexanome.model.Node;
-import java.util.Observable;
-import java.util.Observer;
+import com.hexanome.utils.Publisher;
+import com.hexanome.utils.Subscriber;
 
 /**
- * Wrapper around a Node
+ * Wrapper around a NodeView
  */
-public class NodeViewWrapper implements Observer {
+public class NodeViewWrapper implements Subscriber {
 
     Node node;
     NodeView nodeView;
 
+    public NodeView getNodeView() {
+        return nodeView;
+    }
+
     public NodeViewWrapper(Node node, String initialNodeType) {
         this.node = node;
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        // TODO
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    /**
-     *
-     * @param nodeView
-     */
-    public void setNode(NodeView nodeView) {
-        this.nodeView = nodeView;
+        setNodeType(initialNodeType);
     }
 
     /**
@@ -35,13 +26,23 @@ public class NodeViewWrapper implements Observer {
      *
      * @param nodeType
      */
-    private void changeNodeType(String nodeType) {
+    private void setNodeType(String nodeType) {
         switch (nodeType) {
             case ConstView.EMPTYNODE:
+                nodeView = new EmptyNodeView(node.getLocation());
                 break;
             case ConstView.DELIVERYNODE:
+                nodeView = new DeliveryNodeView(node.getLocation());
                 break;
+            case ConstView.WAREHOUSENODE:
+                nodeView = new WarehouseNodeView(node.getLocation());
         }
+    }
+
+    @Override
+    public void update(Publisher p, Object arg) {
+        // TODO
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

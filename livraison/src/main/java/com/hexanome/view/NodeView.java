@@ -8,7 +8,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import org.controlsfx.control.PopOver;
@@ -19,7 +18,7 @@ import org.controlsfx.control.PopOver;
  */
 public abstract class NodeView extends Pane {
 
-    Point position;
+    Point location;
     PopOver popover;
     
     @FXML
@@ -37,7 +36,7 @@ public abstract class NodeView extends Pane {
             Logger.getLogger(NodeView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        position = p;
+        location = p;
         configurePopOver(nodeType);
 
         nodeShape.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -52,13 +51,13 @@ public abstract class NodeView extends Pane {
     private void configurePopOver(String nodeType) {
         switch(nodeType){
             case ConstView.EMPTYNODE : 
-                popover = new PopOver(new PopOverContentEmptyNode(""+position.x+", "+position.y));
+                popover = new PopOver(new PopOverContentEmptyNode(""));
                 break;
             case ConstView.DELIVERYNODE :
-                popover = new PopOver(new PopOverContentDelivery(""+position.x+", "+position.y));
+                popover = new PopOver(new PopOverContentDelivery(""+location.x+", "+location.y));
                 break;
             case ConstView.WAREHOUSENODE :
-                popover = new PopOver(new PopOverContentWarehouse(""+position.x+", "+position.y));
+                popover = new PopOver(new PopOverContentWarehouse(""+location.x+", "+location.y));
                 break;      
         }
         popover.setAutoHide(true);
@@ -66,4 +65,8 @@ public abstract class NodeView extends Pane {
         popover.setDetachable(false);
     }
 
+    public Point getLocation() {
+        return location;
+    }
+    
 }

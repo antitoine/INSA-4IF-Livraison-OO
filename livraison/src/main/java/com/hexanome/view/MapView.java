@@ -13,8 +13,6 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
@@ -26,8 +24,7 @@ import javafx.scene.layout.AnchorPane;
  */
 public class MapView extends AnchorPane implements Subscriber, Initializable {
 
-    static HashMap<Node, NodeView> nodeList;
-    static HashMap<Point, ArcView> arcList;
+    static HashMap<Node, NodeViewWrapper> nodeList;
 
     /**
      * Initializes the controller class.
@@ -51,52 +48,31 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
      * @param Type Node Type
      * @param node node as describes in the model
      */
-    public void AddNode(String Type, Node node) {
-
-        MapView mv = this;
-
-        NodeView nodeview = null;
-
-        switch (Type) {
-            case ConstView.EMPTYNODE:
-                nodeview = new EmptyNodeView(node.getLocation());
-                break;
-            case ConstView.DELIVERYNODE:
-                nodeview = new DeliveryNodeView(node.getLocation());
-                break;
-            case ConstView.WAREHOUSENODE:
-                nodeview = new WarehouseNodeView(node.getLocation());
-                break;
-        }
-        
-        mv.getChildren().add(nodeview);
+    private void addNode(String Type, Node node) {
+        NodeViewWrapper wrapper = new NodeViewWrapper(node, Type);
+        NodeView nodeview = wrapper.getNodeView();
+        getChildren().add(nodeview);
         nodeview.toFront();
         nodeview.relocate(node.getLocation().x - nodeview.getPrefWidth() / 2,
-        node.getLocation().y - nodeview.getPrefHeight() / 2);
-        nodeList.put(node, nodeview);
+                node.getLocation().y - nodeview.getPrefHeight() / 2);
+        nodeList.put(node, wrapper);
 
-    }
-
-    public void SwapNode(Point pt1, Point pt2) {
-        // TODO
     }
 
     /**
-     * Delete a node a the position pt
+     * Swap two nodes
      *
-     * @param pt
+     * @param pt1
+     * @param pt2
      */
-    public void DeleteNode(Point pt) {
-
-        this.getChildren().remove((NodeView) nodeList.get(pt));
-        nodeList.remove(pt);
+    private void swapNode(Point pt1, Point pt2) {
+        // TODO
     }
 
-    public void AddArc(Point pt1, Point pt2) {
+    public void addArc(Arc arc) {
         MapView mv = this;
-        ArcView av = new ArcView(pt1, pt2);
+        ArcView av = new ArcView(arc);
         mv.getChildren().add(av);
-        arcList.put(pt1, av);
         av.toBack();
     }
 
@@ -106,27 +82,23 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         nodeList = new HashMap<>();
-        arcList = new HashMap<>();
-
     }
 
     @Override
     public void update(Publisher p, Object arg) {
         if (p instanceof Map) {
             for (Entry<Integer, Node> n : ((Map) (p)).getNodes().entrySet()) {
-                AddNode(ConstView.EMPTYNODE, n.getValue());
+                addNode(ConstView.EMPTYNODE, n.getValue());
             }
             for (Arc a : ((Map) (p)).getArcs()) {
-                AddArc(a.getSrc().getLocation(), a.getDest().getLocation());
+                addArc(a);
             }
         }
     }
 
     public void ClearMap() {
         nodeList.clear();
-        arcList.clear();
         getChildren().clear();
     }
 
