@@ -7,11 +7,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
+import javafx.scene.Cursor;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
-import org.controlsfx.glyphfont.Glyph;
 
 /**
  * FXML Controller class
@@ -51,7 +51,11 @@ public class ArcView extends Pane {
 
         line.setEndX(b.x - deltaX);
         line.setEndY(b.y - deltaY);
-
+        
+        Tooltip t = new Tooltip(arc.getDuration()+"");
+        t.install(line, t);
+        line.setCursor(Cursor.CROSSHAIR);
+        
         Point e = new Point((int)(b.x - deltaX), (int)(b.y - deltaY));
         
         Polygon arrow = new Polygon();

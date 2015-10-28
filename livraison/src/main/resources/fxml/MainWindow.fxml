@@ -69,7 +69,7 @@
                 </BorderPane>          
             </left>
             <center>
-                <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <ScrollPane fx:id="scrollPaneMap" pannable="true"  prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <content>
                         <MapView fx:id="mapView" />
                     </content>

@@ -8,10 +8,13 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,13 +23,16 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private Label labelInfos;
-    
+
     @FXML
     private MapView mapView;
-    
+
+    @FXML
+    ScrollPane scrollPaneMap;
+
     @FXML
     private DeliveryTreeView deliveryTreeView;
-    
+
     final FileChooser fileChooser;
     private Stage stage;
 
@@ -54,11 +60,12 @@ public class MainWindow extends AnchorPane {
 
         mapView.initialize(null, null);
 
+
     }
 
     /**
-     * Notify the UI Manager that the user wants to 
-     * quit the application
+     * Notify the UI Manager that the user wants to quit the application
+     *
      * @param event
      */
     @FXML
@@ -122,6 +129,14 @@ public class MainWindow extends AnchorPane {
         labelInfos.setText("");
         stage.getScene().setCursor(Cursor.DEFAULT);
 
+    }
+
+    public void disablePanning() {
+        scrollPaneMap.setPannable(false);
+    }
+
+    public void ennablePanning() {
+        scrollPaneMap.setPannable(true);
     }
 
 }

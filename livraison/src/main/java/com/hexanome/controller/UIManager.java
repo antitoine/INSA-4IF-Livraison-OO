@@ -1,7 +1,9 @@
 package com.hexanome.controller;
 
 import com.hexanome.view.ConstView;
+import com.hexanome.view.EmptyNodeView;
 import com.hexanome.view.MainWindow;
+import com.hexanome.view.NodeView;
 import java.io.File;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -82,6 +84,21 @@ public class UIManager {
                 break;
             case LOAD_PLANNING:
                 ContextManager.getInstance().loadPlanning((File) arg); // Not undoable
+                break;
+            case CLICK_ON_DELIVERY_NODE:
+                ((NodeView) (arg)).showPopOver();
+                mainWindow.disablePanning();
+                break;
+            case CLICK_ON_EMPTY_NODE:
+                ((EmptyNodeView) (arg)).showPopOver();
+                mainWindow.disablePanning();
+                break;
+            case CLICK_ON_WAREHOUSE:
+                ((NodeView) (arg)).showPopOver();
+                mainWindow.disablePanning();
+                break;
+            case HIDE_POPOVER:
+                mainWindow.ennablePanning();
                 break;
         }
     }

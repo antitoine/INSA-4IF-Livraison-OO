@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
@@ -9,8 +10,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" type="Pane" xmlns="http://javafx.com/javafx/8" >
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" type="Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Line fx:id="line"  endX="1.0" />
+      <Line fx:id="line" endX="100.0"  stroke="#ab52523b" strokeWidth="3.0"  />
    </children>
 </fx:root>

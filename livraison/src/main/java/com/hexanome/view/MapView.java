@@ -102,4 +102,5 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
         getChildren().clear();
     }
 
+
 }
