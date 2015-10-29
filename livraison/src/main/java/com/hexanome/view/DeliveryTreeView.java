@@ -5,6 +5,7 @@ import com.hexanome.model.Planning;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
+import com.hexanome.utils.TypeWrapper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -129,10 +130,12 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
     public void update(Publisher p, Object arg) {
         if(p instanceof Planning){
             for(TimeSlot ts :((Planning)(p)).getTimeSlots()){
-                TreeItem<String> tsItem = makeBranch(""+ts.getStartTime()+" - "+ts.getEndTime(),
+                String start = TypeWrapper.secondsToTimestamp(ts.getStartTime());
+                String end = TypeWrapper.secondsToTimestamp(ts.getEndTime());                
+                TreeItem<String> tsItem = makeBranch(start+" - "+end,
                 ConstView.TreeItemType.TIMESLOT, rootItem);
                 for(Delivery d : ts.getDeliveries()){
-                    makeBranch(d.getId()+"", ConstView.TreeItemType.DELIVERY, tsItem);
+                    makeBranch("Delivery " +d.getId(), ConstView.TreeItemType.DELIVERY, tsItem);
                 }
             }
         }
