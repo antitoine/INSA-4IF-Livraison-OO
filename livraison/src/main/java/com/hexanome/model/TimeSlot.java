@@ -20,6 +20,10 @@ public class TimeSlot {
         this.startTime = startTime;
         this.endTime = endTime;
         this.deliveries = deliveries;
+        
+        for (Delivery d : deliveries) {
+            d.attachTimeSlot(this);
+        }
     }
 
     public int getStartTime() {
