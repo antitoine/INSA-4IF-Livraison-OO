@@ -36,7 +36,8 @@ public class Delivery {
 
     @Override
     public String toString() {
-        return String.format("[Delivery]{\n"
+        return String.format(""
+                + "{\n"
                 + "id:%s,\n"
                 + "deliveryTime:%s,\n"
                 + "node:%s\n"

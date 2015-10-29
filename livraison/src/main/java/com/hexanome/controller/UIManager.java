@@ -1,6 +1,7 @@
 package com.hexanome.controller;
 
 import com.hexanome.view.ConstView;
+import com.hexanome.view.DeliveryTreeView;
 import com.hexanome.view.EmptyNodeView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
@@ -83,14 +84,14 @@ public class UIManager {
                 loadMap(arg);
                 break;
             case LOAD_PLANNING:
-                ContextManager.getInstance().loadPlanning((File) arg); // Not undoable
+                loadPlanning(arg);
                 break;
             case CLICK_ON_DELIVERY_NODE:
                 ((NodeView) (arg)).showPopOver();
                 mainWindow.disablePanning();
                 break;
             case CLICK_ON_EMPTY_NODE:
-                ((EmptyNodeView) (arg)).showPopOver();
+                ((NodeView)(arg)).showPopOver();
                 mainWindow.disablePanning();
                 break;
             case CLICK_ON_WAREHOUSE:
@@ -115,7 +116,7 @@ public class UIManager {
     private void loadMap(Object arg) {
         mainWindow.SetLoadingState("Loading Map...");
 
-        final Service<Void> calculateService = new Service<Void>() {
+        final Service<Void> loadService = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
                 return new Task<Void>() {
@@ -127,20 +128,52 @@ public class UIManager {
                 };
             }
         };
-        calculateService.stateProperty()
+        loadService.stateProperty()
                 .addListener((ObservableValue<? extends Worker.State> observableValue,
                                 Worker.State oldValue, Worker.State newValue) -> {
                     switch (newValue) {
                         case FAILED:
                         case CANCELLED:
                         case SUCCEEDED:
-                            mainWindow.getMapView().ClearMap();
+                            mainWindow.getMapView().clearMap();
                             ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
                             mainWindow.SetLoadingDone();
                             break;
                     }
                 });
-        calculateService.start();
+        loadService.start();
+
+    }
+
+    private void loadPlanning(Object arg) {
+        mainWindow.SetLoadingState("Loading Planning...");
+
+        final Service<Void> loadService = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        ((DeliveryTreeView)(mainWindow.getDeliveryTree())).clearTree();
+                        ContextManager.getInstance().loadPlanning((File) arg); // Not undoable 
+                        return null;
+                    }
+                };
+            }
+        };
+        loadService.stateProperty()
+                .addListener((ObservableValue<? extends Worker.State> observableValue,
+                                Worker.State oldValue, Worker.State newValue) -> {
+                    switch (newValue) {
+                        case FAILED:
+                        case CANCELLED:
+                        case SUCCEEDED:
+                            ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
+                            mainWindow.SetLoadingDone();
+                            break;
+                    }
+                });
+        loadService.start();
 
     }
 

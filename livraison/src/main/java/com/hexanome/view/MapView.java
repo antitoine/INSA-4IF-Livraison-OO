@@ -97,7 +97,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
         }
     }
 
-    public void ClearMap() {
+    public void clearMap() {
         nodeList.clear();
         getChildren().clear();
     }

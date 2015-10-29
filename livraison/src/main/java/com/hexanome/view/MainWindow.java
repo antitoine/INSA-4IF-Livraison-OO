@@ -1,20 +1,25 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.UIManager;
+import com.hexanome.utils.Subscriber;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -35,6 +40,7 @@ public class MainWindow extends AnchorPane {
 
     final FileChooser fileChooser;
     private Stage stage;
+    double zoomLevel = 1.0;
 
     /**
      * Main window
@@ -59,7 +65,6 @@ public class MainWindow extends AnchorPane {
         }
 
         mapView.initialize(null, null);
-
 
     }
 
@@ -137,6 +142,29 @@ public class MainWindow extends AnchorPane {
 
     public void ennablePanning() {
         scrollPaneMap.setPannable(true);
+    }
+
+    @FXML
+    public void zoomIn() {
+        zoomLevel += 0.5;
+        mapView.setScaleX(zoomLevel);
+        mapView.setScaleY(zoomLevel);
+        //TODO update scrollbar
+    }
+
+    @FXML
+    public void zoomOut() {
+        zoomLevel -= 0.25;
+        mapView.setScaleX(zoomLevel);
+        mapView.setScaleY(zoomLevel);
+
+        scrollPaneMap.setFitToWidth(true);
+        scrollPaneMap.setFitToHeight(true);
+       //TODO update scrollbar
+    }
+
+    public Subscriber getDeliveryTree() {
+        return deliveryTreeView;
     }
 
 }

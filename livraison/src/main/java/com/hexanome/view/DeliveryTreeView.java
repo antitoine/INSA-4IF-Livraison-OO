@@ -1,15 +1,16 @@
 package com.hexanome.view;
 
 import com.hexanome.model.Delivery;
+import com.hexanome.model.Planning;
 import com.hexanome.model.TimeSlot;
+import com.hexanome.utils.Publisher;
+import com.hexanome.utils.Subscriber;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TreeCell;
@@ -22,7 +23,7 @@ import org.controlsfx.glyphfont.Glyph;
 /**
  * FXML Controller class
  */
-public class DeliveryTreeView extends VBox implements Initializable {
+public class DeliveryTreeView extends VBox implements Initializable, Subscriber {
 
     TreeView<String> deliveryTree;
     TreeItem<String> rootItem;
@@ -93,11 +94,22 @@ public class DeliveryTreeView extends VBox implements Initializable {
     public void DeleteDelivery() {
 
     }
+    
+    public void clearTree(){
+        rootItem.getChildren().clear();
+    }
 
     public void SwapDeliveries() {
 
     }
 
+    /**
+     * Create a branch in the treeView
+     * @param title
+     * @param treeItemType
+     * @param parent
+     * @return 
+     */
     private TreeItem<String> makeBranch(String title, ConstView.TreeItemType treeItemType, TreeItem<String> parent) {
         TreeItem<String> item = null;
         switch (treeItemType) {
@@ -111,6 +123,19 @@ public class DeliveryTreeView extends VBox implements Initializable {
         item.setExpanded(true);
         parent.getChildren().add(item);
         return item;
+    }
+
+    @Override
+    public void update(Publisher p, Object arg) {
+        if(p instanceof Planning){
+            for(TimeSlot ts :((Planning)(p)).getTimeSlots()){
+                TreeItem<String> tsItem = makeBranch(""+ts.getStartTime()+" - "+ts.getEndTime(),
+                ConstView.TreeItemType.TIMESLOT, rootItem);
+                for(Delivery d : ts.getDeliveries()){
+                    makeBranch(d.getId()+"", ConstView.TreeItemType.DELIVERY, tsItem);
+                }
+            }
+        }
     }
 
 }

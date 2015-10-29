@@ -29,6 +29,8 @@ public abstract class NodeView extends Pane {
 
     public NodeView(String nodeType, Point p) {
 
+        NodeView self = this;
+        
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(nodeType));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -48,13 +50,13 @@ public abstract class NodeView extends Pane {
             public void handle(MouseEvent event) {
                 switch (currentNodeType) {
                     case ConstView.EMPTYNODE:
-                        UIManager.getInstance().NotifyUI(ConstView.Action.CLICK_ON_EMPTY_NODE, this);
+                        UIManager.getInstance().NotifyUI(ConstView.Action.CLICK_ON_EMPTY_NODE, self);
                         break;
                     case ConstView.DELIVERYNODE:
-                        UIManager.getInstance().NotifyUI(ConstView.Action.DELETE_DELIVERY, this);
+                        UIManager.getInstance().NotifyUI(ConstView.Action.DELETE_DELIVERY, self);
                         break;
                     case ConstView.WAREHOUSENODE:
-                        UIManager.getInstance().NotifyUI(ConstView.Action.CLICK_ON_WAREHOUSE, this);
+                        UIManager.getInstance().NotifyUI(ConstView.Action.CLICK_ON_WAREHOUSE, self);
                 }
             }
         });

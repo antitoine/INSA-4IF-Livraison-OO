@@ -10,7 +10,7 @@ import com.hexanome.model.Map;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom2.DataConversionException;
@@ -57,7 +57,7 @@ public class PlanningDocument {
      */
     public ArrayList<TimeSlot> getTimeSlots(Map map) {
         // Get all the XML nodes representing timeslots
-        LinkedList<Element> timeSlotElements = (LinkedList<Element>)dom.getRootElement().getChildren("Plage");
+        List<Element> timeSlotElements = dom.getRootElement().getChildren("PlagesHoraires").get(0).getChildren();
         // Create the list f timeslots that will be returned 
         ArrayList<TimeSlot> timeslots = new ArrayList<>();
         // Loop on timeslots XML nodes
@@ -65,7 +65,7 @@ public class PlanningDocument {
             // Create current timeslot
             TimeSlot ts = null;
             // Get all deliveries scheduled in the current timeslot
-            LinkedList<Element> deliveryElements = (LinkedList<Element>)timeSlotElement.getChildren("Livraison");
+            List<Element> deliveryElements = timeSlotElement.getChildren("Livraisons").get(0).getChildren();
             // Create a list of deliveries to attach to timeslot
             ArrayList<Delivery> deliveries = new ArrayList<>();
             // Loop on each delivery
@@ -90,6 +90,7 @@ public class PlanningDocument {
             // Add new timeslot to the collection
             timeslots.add(ts);
         }
+
         // Return the collection of timeslots
         return timeslots;
     }
@@ -103,6 +104,6 @@ public class PlanningDocument {
     //                 also exist in the map.
     public boolean checkIntegrity(Map map) {
         // \todo implement all XML checks here !
-        return false;
+        return true;
     }
 }
