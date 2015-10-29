@@ -7,10 +7,12 @@ import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
 import java.io.File;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
+import javafx.concurrent.Worker.State;
 import javafx.stage.Stage;
 
 /**
@@ -113,7 +115,7 @@ public class UIManager {
         NotifyUI(action, null);
     }
 
-    private void loadMap(Object arg) {
+    private void loadMap(final Object arg) {
         mainWindow.SetLoadingState("Loading Map...");
 
         final Service<Void> loadService = new Service<Void>() {
@@ -129,23 +131,26 @@ public class UIManager {
             }
         };
         loadService.stateProperty()
-                .addListener((ObservableValue<? extends Worker.State> observableValue,
-                                Worker.State oldValue, Worker.State newValue) -> {
-                    switch (newValue) {
-                        case FAILED:
-                        case CANCELLED:
-                        case SUCCEEDED:
-                            mainWindow.getMapView().clearMap();
-                            ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
-                            mainWindow.SetLoadingDone();
-                            break;
-                    }
+                .addListener(new ChangeListener<State>() {
+                    @Override
+                    public void changed(ObservableValue<? extends State> observableValue, State oldValue,
+                            State newValue) {
+               switch (newValue) {
+                  case FAILED:
+                  case CANCELLED:
+                  case SUCCEEDED:
+                     mainWindow.getMapView().clearMap();
+                     ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+                     mainWindow.SetLoadingDone();
+                     break;
+               }
+            }
                 });
         loadService.start();
 
     }
 
-    private void loadPlanning(Object arg) {
+    private void loadPlanning(final Object arg) {
         mainWindow.SetLoadingState("Loading Planning...");
 
         final Service<Void> loadService = new Service<Void>() {
@@ -162,17 +167,20 @@ public class UIManager {
             }
         };
         loadService.stateProperty()
-                .addListener((ObservableValue<? extends Worker.State> observableValue,
-                                Worker.State oldValue, Worker.State newValue) -> {
-                    switch (newValue) {
-                        case FAILED:
-                        case CANCELLED:
-                        case SUCCEEDED:
-                            ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
-                            ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
-                            mainWindow.SetLoadingDone();
-                            break;
-                    }
+                .addListener(new ChangeListener<State>() {
+                    @Override
+                    public void changed(ObservableValue<? extends State> observableValue, State oldValue,
+                            State newValue) {
+               switch (newValue) {
+                  case FAILED:
+                  case CANCELLED:
+                  case SUCCEEDED:
+                     ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
+                     ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
+                     mainWindow.SetLoadingDone();
+                     break;
+               }
+            }
                 });
         loadService.start();
 

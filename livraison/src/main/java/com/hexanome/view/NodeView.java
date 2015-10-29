@@ -26,7 +26,7 @@ public class NodeView extends StackPane {
 
     public NodeView(String nodeType, com.hexanome.model.Node node) {
 
-        NodeView self = this;
+        final NodeView self = this;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.NODE_VIEW));
         fxmlLoader.setRoot(this);
