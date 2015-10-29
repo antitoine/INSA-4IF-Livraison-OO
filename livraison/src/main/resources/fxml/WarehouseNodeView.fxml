@@ -9,16 +9,17 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import org.controlsfx.glyphfont.*?>
 
-<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="10" prefWidth="10" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <ImageView fx:id="nodeShape" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <image>
-            <Image  url="@../styles/img/icon_warehouse.png" />
-         </image>
-      </ImageView>
+        <Label fx:id="nodeShape"  style="-fx-background-color: RED">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <graphic>
+                <Glyph fontFamily="FontAwesome" icon="HOME" />
+            </graphic>
+        </Label>
     </children>
 </fx:root>

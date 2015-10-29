@@ -91,7 +91,7 @@ public class UIManager {
                 mainWindow.disablePanning();
                 break;
             case CLICK_ON_EMPTY_NODE:
-                ((NodeView)(arg)).showPopOver();
+                ((NodeView) (arg)).showPopOver();
                 mainWindow.disablePanning();
                 break;
             case CLICK_ON_WAREHOUSE:
@@ -154,7 +154,7 @@ public class UIManager {
                 return new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-                        ((DeliveryTreeView)(mainWindow.getDeliveryTree())).clearTree();
+                        ((DeliveryTreeView) (mainWindow.getDeliveryTree())).clearTree();
                         ContextManager.getInstance().loadPlanning((File) arg); // Not undoable 
                         return null;
                     }
@@ -169,6 +169,7 @@ public class UIManager {
                         case CANCELLED:
                         case SUCCEEDED:
                             ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
+                            ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
                             mainWindow.SetLoadingDone();
                             break;
                     }

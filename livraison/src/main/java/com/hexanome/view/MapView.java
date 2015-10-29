@@ -1,10 +1,14 @@
 package com.hexanome.view;
 
 import com.hexanome.model.Arc;
+import com.hexanome.model.Delivery;
 import com.hexanome.model.Map;
 import com.hexanome.model.Node;
+import com.hexanome.model.Planning;
+import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
+import com.hexanome.utils.TypeWrapper;
 import java.awt.Point;
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -95,12 +100,24 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
                 addArc(a);
             }
         }
+        if (p instanceof Planning) {
+            if (p instanceof Planning) {
+                for (TimeSlot ts : ((Planning) (p)).getTimeSlots()) {
+                    for (Delivery d : ts.getDeliveries()) {
+                        (nodeList.get(d.getNode())).setNodeType(ConstView.DELIVERYNODE);
+                        addNode(ConstView.DELIVERYNODE, d.getNode());
+                    }
+                }
+                addNode(ConstView.WAREHOUSENODE, ((Planning) (p)).getWarehouse());
+
+            }
+
+        }
     }
 
     public void clearMap() {
         nodeList.clear();
         getChildren().clear();
     }
-
 
 }

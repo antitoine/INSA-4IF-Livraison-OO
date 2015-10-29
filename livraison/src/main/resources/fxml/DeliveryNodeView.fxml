@@ -9,9 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="10" prefWidth="10" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle fx:id="nodeShape" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" stroke="BLACK" strokeType="INSIDE" width="15.0">
+      <Rectangle fx:id="nodeShape" fill="DODGERBLUE" height="10" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="10.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

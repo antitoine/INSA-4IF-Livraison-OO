@@ -26,7 +26,7 @@ public class NodeViewWrapper implements Subscriber {
      *
      * @param nodeType
      */
-    private void setNodeType(String nodeType) {
+    public void setNodeType(String nodeType) {
         switch (nodeType) {
             case ConstView.EMPTYNODE:
                 nodeView = new EmptyNodeView(node.getLocation());
