@@ -11,15 +11,8 @@
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.glyphfont.*?>
 
-<fx:root prefHeight="10" prefWidth="10" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <Label fx:id="nodeShape"  style="-fx-background-color: RED">
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-            <graphic>
-                <Glyph fontFamily="FontAwesome" icon="HOME" />
-            </graphic>
-        </Label>
-    </children>
+<fx:root fx:id="nodeShape"  type="Label" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <graphic>
+      <Glyph fontFamily="FontAwesome" icon="HOME" />
+   </graphic>
 </fx:root>

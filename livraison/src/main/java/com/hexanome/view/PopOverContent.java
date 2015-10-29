@@ -16,7 +16,7 @@ public abstract class PopOverContent extends BorderPane{
         try {
             fxmlLoader.load();
         } catch (IOException ex) {
-            Logger.getLogger(EmptyNodeView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopOverContent.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

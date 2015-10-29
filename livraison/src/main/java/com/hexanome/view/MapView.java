@@ -29,7 +29,7 @@ import javafx.scene.layout.AnchorPane;
  */
 public class MapView extends AnchorPane implements Subscriber, Initializable {
 
-    static HashMap<Node, NodeViewWrapper> nodeList;
+    static HashMap<Node, NodeView> nodeList;
 
     /**
      * Initializes the controller class.
@@ -50,18 +50,16 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
     /**
      * Add a node a the position pt.x & pt.y
      *
-     * @param Type Node Type
+     * @param type Node Type
      * @param node node as describes in the model
      */
-    private void addNode(String Type, Node node) {
-        NodeViewWrapper wrapper = new NodeViewWrapper(node, Type);
-        NodeView nodeview = wrapper.getNodeView();
-        getChildren().add(nodeview);
-        nodeview.toFront();
-        nodeview.relocate(node.getLocation().x - nodeview.getPrefWidth() / 2,
-                node.getLocation().y - nodeview.getPrefHeight() / 2);
-        nodeList.put(node, wrapper);
-
+    private void addNode(String type, Node node) {
+        NodeView nodeView = new NodeView(type, node);
+        getChildren().add(nodeView);
+        nodeView.toFront();
+        nodeView.relocate(node.getLocation().x - nodeView.getPrefWidth() / 2,
+                node.getLocation().y - nodeView.getPrefHeight() / 2);
+        nodeList.put(node, nodeView);
     }
 
     /**
@@ -104,12 +102,10 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
             if (p instanceof Planning) {
                 for (TimeSlot ts : ((Planning) (p)).getTimeSlots()) {
                     for (Delivery d : ts.getDeliveries()) {
-                        (nodeList.get(d.getNode())).setNodeType(ConstView.DELIVERYNODE);
-                        addNode(ConstView.DELIVERYNODE, d.getNode());
+                        (nodeList.get(d.getNode())).setType(ConstView.DELIVERYNODE);
                     }
                 }
-                addNode(ConstView.WAREHOUSENODE, ((Planning) (p)).getWarehouse());
-
+                (nodeList.get(((Planning) (p)).getWarehouse())).setType(ConstView.WAREHOUSENODE);
             }
 
         }

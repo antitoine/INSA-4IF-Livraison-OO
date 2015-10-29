@@ -1,22 +1,27 @@
 package com.hexanome.view;
 
-import java.awt.Point;
-import javafx.fxml.FXML;
-
 /**
  * FXML Controller class
  */
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-public class DeliveryNodeView extends NodeView {
 
+public class DeliveryNodeView extends Circle {
 
-    /**
-     * Initializes the controller class.
-     * @param p
-     */
-    public DeliveryNodeView(final Point p) {
-        super(ConstView.DELIVERYNODE, p);
+    public DeliveryNodeView() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.DELIVERYNODE));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(DeliveryNodeView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
 
 }
