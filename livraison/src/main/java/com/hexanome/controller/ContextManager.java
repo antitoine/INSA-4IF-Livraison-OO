@@ -97,6 +97,16 @@ public class ContextManager {
         }
         // \todo update application state
     }
+    
+    /**
+     * Clear the current model and replace the application in its initState
+     */
+    void reset() {
+        // \todo (security) check if current state allows reset
+        // Clear the model
+        ModelManager.getInstance().clearModel();
+        // \todo update application state
+    }
 
     /**
      * Closes the application
