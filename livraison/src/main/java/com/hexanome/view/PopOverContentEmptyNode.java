@@ -19,7 +19,7 @@ public class PopOverContentEmptyNode extends PopOverContent {
     Button btnValidate;
 
     @FXML
-    ComboBox prevDeliveryComboBox;
+    ComboBox<String> prevDeliveryComboBox;
 
     @FXML
     Text adressText;
