@@ -20,7 +20,7 @@ public class NodeView extends StackPane {
 
     PopOver popover;
     String currentNodeType;
-    javafx.scene.Node nodeShape;
+    INodeViewShape nodeShape;
 
     com.hexanome.model.Node node;
 
@@ -43,60 +43,33 @@ public class NodeView extends StackPane {
         setType(nodeType);
 
         setOnMouseClicked(new EventHandler<MouseEvent>() {
-            // \todo pourquoi ne pas mettre en place un simple mécanisme de polymorphisme ? Les switch c'est le mal !
             @Override
             public void handle(MouseEvent event) {
-                switch (currentNodeType) {
-                    case ConstView.EMPTYNODE:
-                        UIManager.getInstance().NotifyUI(ConstView.Action.CLICK_ON_EMPTY_NODE, self);
-                        break;
-                    case ConstView.DELIVERYNODE:
-                        UIManager.getInstance().NotifyUI(ConstView.Action.CLICK_ON_DELIVERY_NODE, self);
-                        break;
-                    case ConstView.WAREHOUSENODE:
-                        UIManager.getInstance().NotifyUI(ConstView.Action.CLICK_ON_WAREHOUSE, self);
-                }
+                nodeShape.onMouseClickedNotify(self);
             }
         });
 
     }
 
-    void setType(String nodeType) {
+    final void setType(String nodeType) {
         getChildren().clear();
-        switch (nodeType) {
-            case ConstView.EMPTYNODE:
-                nodeShape = new EmptyNodeView();
-                break;
-            case ConstView.DELIVERYNODE:
-                nodeShape = new DeliveryNodeView();
-                break;
-            case ConstView.WAREHOUSENODE:
-                nodeShape = new WarehouseNodeView();
-                break;
-        }
-        getChildren().add(nodeShape);
-        configurePopOver(nodeType);
-        setAlignment(nodeShape, Pos.CENTER);
+               
+        nodeShape = NodeViewShapeFactory.createNodeViewShape(nodeType);
+        
+        getChildren().add(nodeShape.asSceneNode());
+        configurePopOver();
+        setAlignment(nodeShape.asSceneNode(), Pos.CENTER);
+        
         currentNodeType = nodeType;
     }
 
     String getCurrentNodeType() {
         return currentNodeType;
-    }
-    
+    }    
 
-    private void configurePopOver(String nodeType) {
-        switch (nodeType) {
-            case ConstView.EMPTYNODE:
-                popover = new PopOver(new PopOverContentEmptyNode(node));
-                break;
-            case ConstView.DELIVERYNODE:
-                popover = new PopOver(new PopOverContentDelivery(node));
-                break;
-            case ConstView.WAREHOUSENODE:
-                popover = new PopOver(new PopOverContentWarehouse(node));
-                break;
-        }
+    private void configurePopOver() {
+        popover = nodeShape.createPopOver(node);
+        
         popover.setAutoHide(true);
         popover.setArrowLocation(PopOver.ArrowLocation.BOTTOM_LEFT);
         popover.setDetachable(false);

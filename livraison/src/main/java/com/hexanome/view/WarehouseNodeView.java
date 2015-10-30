@@ -1,16 +1,19 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.UIManager;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import org.controlsfx.control.PopOver;
 
 /**
  * FXML Controller class
  */
-public class WarehouseNodeView extends Label {
+public class WarehouseNodeView extends Label implements INodeViewShape {
 
     /**
      * Initializes the controller class.
@@ -27,4 +30,18 @@ public class WarehouseNodeView extends Label {
         }
     }
 
+    @Override
+    public void onMouseClickedNotify(NodeView context) {
+        UIManager.getInstance().NotifyUI(ConstView.Action.CLICK_ON_WAREHOUSE, context);
+    }
+
+    @Override
+    public Node asSceneNode() {
+        return this;
+    }
+
+    @Override
+    public PopOver createPopOver(com.hexanome.model.Node node) {
+        return new PopOver(new PopOverContentWarehouse(node));
+    }
 }
