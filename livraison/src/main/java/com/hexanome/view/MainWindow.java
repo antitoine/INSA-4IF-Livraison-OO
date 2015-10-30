@@ -82,20 +82,16 @@ public class MainWindow extends AnchorPane {
     }
 
     @FXML
-    public void loadMap() {
-        System.out.println("loadMap Main Window");
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            System.out.println("File != null");
-            ContextManager.getInstance().getCurrentState().btnValidateFile(file);
-        } else {
-            System.out.println("File == null");
-            ContextManager.getInstance().getCurrentState().btnCancel();
-        }
+    private void loadMap() {
+        ContextManager.getInstance().getCurrentState().btnLoadMap();
     }
 
     @FXML
-    public void loadPlanning() {
+    private void loadPlanning() {
+        ContextManager.getInstance().getCurrentState().btnLoadPlanning();
+    }
+
+    public void askFile() {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             ContextManager.getInstance().getCurrentState().btnValidateFile(file);

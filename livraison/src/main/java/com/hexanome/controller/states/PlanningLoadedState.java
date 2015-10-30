@@ -49,7 +49,7 @@ public class PlanningLoadedState extends DefaultState {
         modelManager.clearModel();
         modelManager.clearPlanning();
         ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
-        UIManager.getInstance().getMainWindow().loadMap();
+        UIManager.getInstance().getMainWindow().askFile();
     }
 
     /* (non-Javadoc)

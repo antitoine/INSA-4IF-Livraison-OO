@@ -21,7 +21,6 @@ public class MapSelectState extends DefaultState {
     private static MapSelectState mapSelectState = null;
 
     private MapSelectState(){
-        System.out.println("MapSelectState Created");
         // Nothing to do here
     }
 
@@ -52,7 +51,7 @@ public class MapSelectState extends DefaultState {
      */
     @Override
     public void btnValidateFile(File file) {
-        System.out.println("btnValidateFile In MapSelectState");
+
         MainWindow mainWindow = UIManager.getInstance().getMainWindow();
         mainWindow.SetLoadingState("Loading Map...");
         mainWindow.getMapView().clearMap();
@@ -60,7 +59,9 @@ public class MapSelectState extends DefaultState {
 
         if( ! ModelManager.getInstance().initModelMap(IOManager.getInstance().getMapDocument(file)) ) {
             // \todo afficher dans la vue l'erreur
+            ModelManager.getInstance().clearModel();
             ContextManager.getInstance().setCurrentState(InitState.getInstance());
+            mainWindow.SetLoadingDone();
         } else {
             ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
             ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());

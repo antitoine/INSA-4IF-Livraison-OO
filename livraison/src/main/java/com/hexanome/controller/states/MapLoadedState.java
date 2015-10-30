@@ -16,7 +16,6 @@ public class MapLoadedState extends DefaultState {
     private static MapLoadedState mapLoadedState = null;
 
     private MapLoadedState(){
-        System.out.println("MapLoadedState Created");
         // Nothing to do here
     }
 
@@ -40,7 +39,7 @@ public class MapLoadedState extends DefaultState {
     public void btnLoadMap() {
         ModelManager.getInstance().clearModel();
         ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
-        UIManager.getInstance().getMainWindow().loadMap();
+        UIManager.getInstance().getMainWindow().askFile();
     }
 
     /* (non-Javadoc)
@@ -49,7 +48,7 @@ public class MapLoadedState extends DefaultState {
     @Override
     public void btnLoadPlanning() {
         ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
-        UIManager.getInstance().getMainWindow().loadPlanning();
+        UIManager.getInstance().getMainWindow().askFile();
     }
 
     /* (non-Javadoc)
