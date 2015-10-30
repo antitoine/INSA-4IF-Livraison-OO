@@ -11,6 +11,25 @@ import com.hexanome.model.Delivery;
  */
 public class SwapDeliveriesState extends DefaultState {
 
+    private static SwapDeliveriesState swapDeliveriesState = null;
+
+    private SwapDeliveriesState(){
+        // Nothing to do here
+    }
+
+    /**
+     * Returns the instance of the SwapDeliveriesState,
+     * it is a singleton
+     * @return The instance of SwapDeliveriesState
+     */
+    public static SwapDeliveriesState getInstance() {
+        if(swapDeliveriesState == null)
+        {
+            swapDeliveriesState = new SwapDeliveriesState();
+        }
+        return swapDeliveriesState;
+    }
+
     /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#leftClickReleased(com.hexanome.model.Delivery)
      */

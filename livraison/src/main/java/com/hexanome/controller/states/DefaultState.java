@@ -3,6 +3,8 @@
  */
 package com.hexanome.controller.states;
 
+import java.io.File;
+
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 
@@ -41,6 +43,14 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnCancel() {
+        // Nothing to do here
+    }
+
+    /* (non-Javadoc)
+     * @see com.hexanome.controller.states.IState#btnValidateFile(java.io.File)
+     */
+    @Override
+    public void btnValidateFile(File file) {
         // Nothing to do here
     }
 

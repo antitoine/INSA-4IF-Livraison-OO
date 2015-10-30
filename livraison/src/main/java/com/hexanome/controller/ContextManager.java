@@ -16,12 +16,12 @@ public class ContextManager {
     private IState currentState;
     private Stack<ICommand> done;
     private Stack<ICommand> undone;
-    
+
     /**
      * 
      */
     private ContextManager() {
-        this.currentState = new InitState();
+        this.setCurrentState(InitState.getInstance());
         this.done = new Stack<>();
         this.undone = new Stack<>();
     }
@@ -100,11 +100,17 @@ public class ContextManager {
     }
     
     /**
-     * Clear the current model and replace the application in its initState
+     * Clear the current id planning loaded in the model
      */
-    void reset() {
+    void resetPlanning() {
         // \todo (security) check if current state allows reset
-        // Clear the model
+        // Clear the planning
+        ModelManager.getInstance().clearPlanning();
+        // \todo update application state
+    }
+    
+    void resetModel() {
+        // \todo (security) check if current state allows reset
         ModelManager.getInstance().clearModel();
         // \todo update application state
     }
@@ -116,5 +122,19 @@ public class ContextManager {
         // \todo Check if Route should be saved
         // EXIT application
         System.exit(0);
+    }
+
+    /**
+     * @return the currentState
+     */
+    public IState getCurrentState() {
+        return currentState;
+    }
+
+    /**
+     * @param currentState the currentState to set
+     */
+    public void setCurrentState(IState currentState) {
+        this.currentState = currentState;
     }
 }

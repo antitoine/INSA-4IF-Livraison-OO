@@ -1,5 +1,6 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
 import java.io.File;
 import java.io.IOException;
@@ -81,6 +82,11 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private void loadMap() {
+        // \todo TODO : Changer le fonctionnement ici ->
+        // Appeler -> ContextManager.getInstance().getCurrentState().btnLoadMap();
+        // Qui appelera en conséquence une méthode à faire ici pour ouvrir le file chooser
+        // Une fois le fichier récupéré, appeler : -> ContextManager.getInstance().getCurrentState().btnCancel(); 
+        // Si le fichier est null, sinon appeler : -> ContextManager.getInstance().getCurrentState().btnValidateFile();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             UIManager.getInstance().NotifyUI(ConstView.Action.LOAD_MAP, file);
@@ -89,6 +95,11 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private void loadPlanning() {
+        // \todo TODO : Changer le fonctionnement ici ->
+        // Appeler -> ContextManager.getInstance().getCurrentState().btnLoadPlanning();
+        // Qui appelera en conséquence une méthode à faire ici pour ouvrir le file chooser
+        // Une fois le fichier récupéré, appeler : -> ContextManager.getInstance().getCurrentState().btnCancel(); 
+        // Si le fichier est null, sinon appeler : -> ContextManager.getInstance().getCurrentState().btnValidateFile();
         File file = fileChooser.showOpenDialog(stage);
 
         if (file != null) {
