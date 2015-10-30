@@ -59,6 +59,7 @@ public class UIManager {
      * xml file) Load_PLANNING : File file (valid xml file)
      */
     public void NotifyUI(ConstView.Action action, Object arg) {
+        // \todo implémenter toutes les méthodes dans les states pour plus avoir ce switch !!!
         switch (action) {
             case QUIT:
                 ContextManager.getInstance().exit(); // Special undoable

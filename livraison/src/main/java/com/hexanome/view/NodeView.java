@@ -43,6 +43,7 @@ public class NodeView extends StackPane {
         setType(nodeType);
 
         setOnMouseClicked(new EventHandler<MouseEvent>() {
+            // \todo pourquoi ne pas mettre en place un simple mécanisme de polymorphisme ? Les switch c'est le mal !
             @Override
             public void handle(MouseEvent event) {
                 switch (currentNodeType) {
