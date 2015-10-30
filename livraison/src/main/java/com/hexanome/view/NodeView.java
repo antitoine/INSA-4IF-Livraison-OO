@@ -79,6 +79,11 @@ public class NodeView extends StackPane {
         currentNodeType = nodeType;
     }
 
+    String getCurrentNodeType() {
+        return currentNodeType;
+    }
+    
+
     private void configurePopOver(String nodeType) {
         switch (nodeType) {
             case ConstView.EMPTYNODE:

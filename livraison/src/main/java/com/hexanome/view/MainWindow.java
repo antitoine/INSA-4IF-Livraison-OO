@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -164,11 +165,19 @@ public class MainWindow extends AnchorPane {
 
         scrollPaneMap.setFitToWidth(true);
         scrollPaneMap.setFitToHeight(true);
-       //TODO update scrollbar
+        //TODO update scrollbar
     }
 
     public DeliveryTreeView getDeliveryTree() {
         return deliveryTreeView;
+    }
+
+    public void displayError(String msg) {
+        SetLoadingDone();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error - "+msg);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 
 }
