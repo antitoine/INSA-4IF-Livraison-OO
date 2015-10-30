@@ -57,10 +57,10 @@ public class MapSelectState extends DefaultState {
         mainWindow.getDeliveryTree().clearTree();
 
         if( ! ModelManager.getInstance().initModelMap(IOManager.getInstance().getMapDocument(file)) ) {
-            // \todo afficher dans la vue l'erreur
             ModelManager.getInstance().clearModel();
             ContextManager.getInstance().setCurrentState(InitState.getInstance());
             mainWindow.SetLoadingDone();
+            mainWindow.displayError("The file can't be loaded !");
         } else {
             ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
             ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());

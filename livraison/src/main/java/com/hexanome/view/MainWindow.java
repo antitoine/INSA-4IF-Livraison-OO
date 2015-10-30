@@ -165,7 +165,6 @@ public class MainWindow extends AnchorPane {
     }
 
     public void displayError(String msg) {
-        SetLoadingDone();
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error - "+msg);
         alert.setContentText(msg);

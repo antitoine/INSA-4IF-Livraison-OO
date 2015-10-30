@@ -56,10 +56,10 @@ public class PlanningSelectState extends DefaultState {
         mainWindow.getMapView().clearDeliveries();
 
         if( ! ModelManager.getInstance().initModelPlanning(IOManager.getInstance().getPlanningDocument(file)) ) {
-            // \todo treat error case
             ModelManager.getInstance().clearPlanning();
             ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
             mainWindow.SetLoadingDone();
+            mainWindow.displayError("The file can't be loaded !");
         } else {
             ContextManager.getInstance().setCurrentState(PlanningLoadedState.getInstance());
             ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
