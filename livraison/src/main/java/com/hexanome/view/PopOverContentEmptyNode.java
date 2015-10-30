@@ -39,5 +39,7 @@ public class PopOverContentEmptyNode extends PopOverContent {
     private void addDelivery() {
         UIManager.getInstance().NotifyUI(ConstView.Action.ADD_DELIVERY);
     }
+    
+    
 
 }

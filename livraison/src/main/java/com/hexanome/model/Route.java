@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 /**
  *
- * @author paul
  */
 public class Route {
     private ArrayList<Path> paths;
