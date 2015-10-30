@@ -100,11 +100,17 @@ public class ContextManager {
     }
     
     /**
-     * Clear the current model and replace the application in its initState
+     * Clear the current id planning loaded in the model
      */
-    void reset() {
+    void resetPlanning() {
         // \todo (security) check if current state allows reset
-        // Clear the model
+        // Clear the planning
+        ModelManager.getInstance().clearPlanning();
+        // \todo update application state
+    }
+    
+    void resetModel() {
+        // \todo (security) check if current state allows reset
         ModelManager.getInstance().clearModel();
         // \todo update application state
     }
