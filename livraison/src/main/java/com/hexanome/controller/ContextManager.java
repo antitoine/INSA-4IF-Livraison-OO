@@ -1,5 +1,6 @@
 package com.hexanome.controller;
 
+import com.hexanome.controller.command.ICommand;
 import java.io.File;
 import java.util.Stack;
 
@@ -95,6 +96,16 @@ public class ContextManager {
         if( ! ModelManager.getInstance().initModelPlanning(IOManager.getInstance().getPlanningDocument(file)) ) {
             // \todo treat error case
         }
+        // \todo update application state
+    }
+    
+    /**
+     * Clear the current model and replace the application in its initState
+     */
+    void reset() {
+        // \todo (security) check if current state allows reset
+        // Clear the model
+        ModelManager.getInstance().clearModel();
         // \todo update application state
     }
 
