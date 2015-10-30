@@ -10,6 +10,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker.State;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 /**
@@ -114,13 +116,15 @@ public class UIManager {
 
     private void loadMap(final Object arg) {
         mainWindow.SetLoadingState("Loading Map...");
-
+        mainWindow.getMapView().clearMap();
+        mainWindow.getDeliveryTree().clearTree();
         final Service<Void> loadService = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
                 return new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
+                        ModelManager.getInstance().clearModel();
                         ContextManager.getInstance().loadMap((File) arg); // Not undoable
                         return null;
                     }
@@ -134,9 +138,10 @@ public class UIManager {
                             State newValue) {
                         switch (newValue) {
                             case FAILED:
+                                mainWindow.displayError("Unable to load this file");
+                                break;
                             case CANCELLED:
                             case SUCCEEDED:
-                                mainWindow.getMapView().clearMap();
                                 ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
                                 mainWindow.SetLoadingDone();
                                 break;
@@ -149,14 +154,15 @@ public class UIManager {
 
     private void loadPlanning(final Object arg) {
         mainWindow.SetLoadingState("Loading Planning...");
-
+        mainWindow.getDeliveryTree().clearTree();
+        mainWindow.getMapView().clearDeliveries();
         final Service<Void> loadService = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
                 return new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-                        ((DeliveryTreeView) (mainWindow.getDeliveryTree())).clearTree();
+                        ModelManager.getInstance().clearPlanning();
                         ContextManager.getInstance().loadPlanning((File) arg); // Not undoable 
                         return null;
                     }
@@ -170,7 +176,11 @@ public class UIManager {
                             State newValue) {
                         switch (newValue) {
                             case FAILED:
+                                mainWindow.displayError("Unable to load this file");
+                                break;
                             case CANCELLED:
+                                mainWindow.SetLoadingDone();
+                                break;
                             case SUCCEEDED:
                                 ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
                                 ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());

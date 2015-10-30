@@ -65,14 +65,15 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     /**
      * Swap two nodes
-     *
-     * @param pt1
-     * @param pt2
      */
-    private void swapNode(Point pt1, Point pt2) {
+    private void swapNode(Node node1, Node node2) {
         // TODO
     }
 
+    /**
+     * Add an arc in the view
+     * @param arc arc as described in the model
+     */
     public void addArc(Arc arc) {
         MapView mv = this;
         ArcView av = new ArcView(arc);
@@ -114,9 +115,24 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
         }
     }
 
+    /**
+     * Remove all nodeview from the mapView
+     */
     public void clearMap() {
         nodeList.clear();
         getChildren().clear();
+    }
+
+    /**
+     * Reset all nodeView to emptyNode
+     */
+    public void clearDeliveries() {
+        for(Entry<Node, NodeView> n : nodeList.entrySet()){
+            if(n.getValue().getCurrentNodeType().equals(ConstView.DELIVERYNODE) || 
+                    n.getValue().getCurrentNodeType().equals(ConstView.WAREHOUSENODE)){
+                n.getValue().setType(ConstView.EMPTYNODE);
+            }
+        }
     }
 
 }
