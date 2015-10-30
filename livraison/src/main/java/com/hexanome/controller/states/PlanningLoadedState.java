@@ -37,14 +37,7 @@ public class PlanningLoadedState extends DefaultState {
      */
     @Override
     public void btnLoadMap() {
-        // \todo TODO
-    }
-
-    /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#btnLoadPlanning()
-     */
-    @Override
-    public void btnLoadPlanning() {
+        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         ModelManager modelManager = ModelManager.getInstance(); 
         modelManager.clearModel();
         modelManager.clearPlanning();
@@ -53,10 +46,22 @@ public class PlanningLoadedState extends DefaultState {
     }
 
     /* (non-Javadoc)
+     * @see com.hexanome.controller.states.IState#btnLoadPlanning()
+     */
+    @Override
+    public void btnLoadPlanning() {
+        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
+        ModelManager.getInstance().clearPlanning();
+        ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
+        UIManager.getInstance().getMainWindow().askFile();
+    }
+
+    /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#btnCloseMap()
      */
     @Override
     public void btnCloseMap() {
+        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         ModelManager modelManager = ModelManager.getInstance(); 
         modelManager.clearModel();
         modelManager.clearPlanning();
@@ -68,6 +73,7 @@ public class PlanningLoadedState extends DefaultState {
      */
     @Override
     public void btnClearPlanning() {
+        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         ModelManager.getInstance().clearPlanning();
         ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
     }

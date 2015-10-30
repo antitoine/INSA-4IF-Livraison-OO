@@ -37,6 +37,7 @@ public class MapLoadedState extends DefaultState {
      */
     @Override
     public void btnLoadMap() {
+        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         ModelManager.getInstance().clearModel();
         ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
         UIManager.getInstance().getMainWindow().askFile();
@@ -56,6 +57,7 @@ public class MapLoadedState extends DefaultState {
      */
     @Override
     public void btnCloseMap() {
+        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         ModelManager.getInstance().clearModel();
         ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
