@@ -3,6 +3,8 @@
  */
 package com.hexanome.controller.states;
 
+import java.io.File;
+
 /**
  * @author antitoine
  * \todo TODO
@@ -33,6 +35,14 @@ public class PlanningSelectState extends DefaultState {
      */
     @Override
     public void btnCancel() {
+        // \todo TODO
+    }
+
+    /* (non-Javadoc)
+     * @see com.hexanome.controller.states.IState#btnValidateFile(java.io.File)
+     */
+    @Override
+    public void btnValidateFile(File file) {
         // \todo TODO
     }
 

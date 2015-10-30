@@ -1,5 +1,7 @@
 package com.hexanome.controller.states;
 
+import java.io.File;
+
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 
@@ -28,6 +30,11 @@ public interface IState {
      * Click on button to cancel an loading action
      */
     public void btnCancel();
+
+    /**
+     * Click on button to load file
+     */
+    public void btnValidateFile(File file);
 
     /**
      * Left click pressed on a delivery
