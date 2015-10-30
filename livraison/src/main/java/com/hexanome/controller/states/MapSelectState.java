@@ -21,6 +21,7 @@ public class MapSelectState extends DefaultState {
     private static MapSelectState mapSelectState = null;
 
     private MapSelectState(){
+        System.out.println("MapSelectState Created");
         // Nothing to do here
     }
 
@@ -42,6 +43,7 @@ public class MapSelectState extends DefaultState {
      */
     @Override
     public void btnCancel() {
+        System.out.println("btnCancel In MapSelectState");
         ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
 
@@ -50,48 +52,21 @@ public class MapSelectState extends DefaultState {
      */
     @Override
     public void btnValidateFile(File file) {
+        System.out.println("btnValidateFile In MapSelectState");
         MainWindow mainWindow = UIManager.getInstance().getMainWindow();
         mainWindow.SetLoadingState("Loading Map...");
         mainWindow.getMapView().clearMap();
         mainWindow.getDeliveryTree().clearTree();
-        /* \todo Revoir toute cette partie qui doit, normalement, être fait dans la vue !!
-        final Service<Void> loadService = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        ModelManager.getInstance().clearModel();
-                        ContextManager.getInstance().loadMap((File) arg); // Not undoable
-                        return null;
-                    }
-                };
-            }
-        };
-        loadService.stateProperty()
-                .addListener(new ChangeListener<State>() {
-                    @Override
-                    public void changed(ObservableValue<? extends State> observableValue, State oldValue,
-                            State newValue) {
-                        switch (newValue) {
-                            case FAILED:
-                                mainWindow.displayError("Unable to load this file");
-                                break;
-                            case CANCELLED:
-                            case SUCCEEDED:
-                                ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
-                                mainWindow.SetLoadingDone();
-                                break;
-                        }
-                    }
-                });
-        loadService.start();
-        */
-        // \todo (security) check if load map is possible
+
         if( ! ModelManager.getInstance().initModelMap(IOManager.getInstance().getMapDocument(file)) ) {
-            // \todo treat error case
+            // \todo afficher dans la vue l'erreur
+            ContextManager.getInstance().setCurrentState(InitState.getInstance());
+        } else {
+            ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
+            ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+            ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+            mainWindow.SetLoadingDone();
         }
-        ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
     }
 
 }

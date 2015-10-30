@@ -16,6 +16,7 @@ public class MapLoadedState extends DefaultState {
     private static MapLoadedState mapLoadedState = null;
 
     private MapLoadedState(){
+        System.out.println("MapLoadedState Created");
         // Nothing to do here
     }
 
