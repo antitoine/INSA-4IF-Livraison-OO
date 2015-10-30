@@ -86,10 +86,17 @@ public class ModelManager {
     }
 
     /**
-     * Clears the model
+     * Clears the Model
      */
     public void clearModel() {
         map = null;
+        planning = null;
+    }
+    
+    /**
+     * Clears the map
+     */
+    public void clearPlanning() {
         planning = null;
     }
 
