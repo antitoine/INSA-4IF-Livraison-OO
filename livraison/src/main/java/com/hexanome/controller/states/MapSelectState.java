@@ -50,7 +50,6 @@ public class MapSelectState extends DefaultState {
      */
     @Override
     public void btnValidateFile(File file) {
-        ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
         MainWindow mainWindow = UIManager.getInstance().getMainWindow();
         mainWindow.SetLoadingState("Loading Map...");
         mainWindow.getMapView().clearMap();
@@ -92,7 +91,7 @@ public class MapSelectState extends DefaultState {
         if( ! ModelManager.getInstance().initModelMap(IOManager.getInstance().getMapDocument(file)) ) {
             // \todo treat error case
         }
-        // \todo update application state
+        ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
     }
 
 }

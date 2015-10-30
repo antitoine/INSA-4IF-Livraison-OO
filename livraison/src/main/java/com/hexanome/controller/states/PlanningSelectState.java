@@ -93,7 +93,7 @@ public class PlanningSelectState extends DefaultState {
         if( ! ModelManager.getInstance().initModelPlanning(IOManager.getInstance().getPlanningDocument(file)) ) {
             // \todo treat error case
         }
-        // \todo update application state
+        ContextManager.getInstance().setCurrentState(PlanningLoadedState.getInstance());
     }
 
 }

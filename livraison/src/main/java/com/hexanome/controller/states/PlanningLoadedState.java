@@ -3,6 +3,10 @@
  */
 package com.hexanome.controller.states;
 
+import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.ModelManager;
+import com.hexanome.controller.UIManager;
+
 /**
  * @author antitoine
  *
@@ -41,7 +45,11 @@ public class PlanningLoadedState extends DefaultState {
      */
     @Override
     public void btnLoadPlanning() {
-        // \todo TODO
+        ModelManager modelManager = ModelManager.getInstance(); 
+        modelManager.clearModel();
+        modelManager.clearPlanning();
+        ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
+        UIManager.getInstance().getMainWindow().loadMap();
     }
 
     /* (non-Javadoc)
@@ -49,7 +57,10 @@ public class PlanningLoadedState extends DefaultState {
      */
     @Override
     public void btnCloseMap() {
-        // \todo TODO
+        ModelManager modelManager = ModelManager.getInstance(); 
+        modelManager.clearModel();
+        modelManager.clearPlanning();
+        ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
 
     /* (non-Javadoc)
@@ -57,7 +68,8 @@ public class PlanningLoadedState extends DefaultState {
      */
     @Override
     public void btnClearPlanning() {
-        // \todo TODO
+        ModelManager.getInstance().clearPlanning();
+        ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
     }
 
     /* (non-Javadoc)
