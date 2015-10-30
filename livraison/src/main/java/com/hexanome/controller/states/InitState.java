@@ -1,5 +1,8 @@
 package com.hexanome.controller.states;
 
+import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.UIManager;
+
 /**
  * @author antitoine
  *
@@ -30,6 +33,7 @@ public class InitState extends DefaultState {
      */
     @Override
     public void btnLoadMap() {
-        // \todo TODO
+        ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
+        UIManager.getInstance().getMainWindow().loadMap();
     }
 }

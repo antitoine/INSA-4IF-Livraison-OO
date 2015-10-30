@@ -28,7 +28,7 @@ public class UIManager {
     /**
      * Main Window of the application see MainWindow class for more information
      */
-    MainWindow mainWindow;
+    private MainWindow mainWindow;
 
     private static UIManager uimanager = null;
 
@@ -81,12 +81,6 @@ public class UIManager {
             case SWAP_DELIVERIES:
                 // Create a SwapDeliveryCommand and give it to context manager
                 break;
-            case LOAD_MAP:
-                loadMap(arg);
-                break;
-            case LOAD_PLANNING:
-                loadPlanning(arg);
-                break;
             case CLICK_ON_DELIVERY_NODE:
                 ((NodeView) (arg)).showPopOver();
                 mainWindow.disablePanning();
@@ -114,83 +108,10 @@ public class UIManager {
         NotifyUI(action, null);
     }
 
-    private void loadMap(final Object arg) {
-        mainWindow.SetLoadingState("Loading Map...");
-        mainWindow.getMapView().clearMap();
-        mainWindow.getDeliveryTree().clearTree();
-        final Service<Void> loadService = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        ModelManager.getInstance().clearModel();
-                        ContextManager.getInstance().loadMap((File) arg); // Not undoable
-                        return null;
-                    }
-                };
-            }
-        };
-        loadService.stateProperty()
-                .addListener(new ChangeListener<State>() {
-                    @Override
-                    public void changed(ObservableValue<? extends State> observableValue, State oldValue,
-                            State newValue) {
-                        switch (newValue) {
-                            case FAILED:
-                                mainWindow.displayError("Unable to load this file");
-                                break;
-                            case CANCELLED:
-                            case SUCCEEDED:
-                                ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
-                                mainWindow.SetLoadingDone();
-                                break;
-                        }
-                    }
-                });
-        loadService.start();
-
+    /**
+     * @return the mainWindow
+     */
+    public MainWindow getMainWindow() {
+        return mainWindow;
     }
-
-    private void loadPlanning(final Object arg) {
-        mainWindow.SetLoadingState("Loading Planning...");
-        mainWindow.getDeliveryTree().clearTree();
-        mainWindow.getMapView().clearDeliveries();
-        final Service<Void> loadService = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        ModelManager.getInstance().clearPlanning();
-                        ContextManager.getInstance().loadPlanning((File) arg); // Not undoable 
-                        return null;
-                    }
-                };
-            }
-        };
-        loadService.stateProperty()
-                .addListener(new ChangeListener<State>() {
-                    @Override
-                    public void changed(ObservableValue<? extends State> observableValue, State oldValue,
-                            State newValue) {
-                        switch (newValue) {
-                            case FAILED:
-                                mainWindow.displayError("Unable to load this file");
-                                break;
-                            case CANCELLED:
-                                mainWindow.SetLoadingDone();
-                                break;
-                            case SUCCEEDED:
-                                ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
-                                ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
-                                mainWindow.SetLoadingDone();
-                                break;
-                        }
-                    }
-                });
-        loadService.start();
-
-    }
-
 }

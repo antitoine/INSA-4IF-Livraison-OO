@@ -75,31 +75,6 @@ public class ContextManager {
     }
 
     /**
-     * Load the map calling the ModelManager and the IOManager
-     * @param file 
-     *      file containing the XML description of the Map
-     */
-    void loadMap(File file) {
-        // \todo (security) check if load map is possible
-        if( ! ModelManager.getInstance().initModelMap(IOManager.getInstance().getMapDocument(file)) ) {
-            // \todo treat error case
-        }
-        // \todo update application state
-    }
-    /**
-     * Load the planning calling the ModelManager and the IOManager
-     * @param file 
-     *      file containing the XML description of the Planning
-     */
-    void loadPlanning(File file) {
-        // \todo (security) check if load planning is possible
-        if( ! ModelManager.getInstance().initModelPlanning(IOManager.getInstance().getPlanningDocument(file)) ) {
-            // \todo treat error case
-        }
-        // \todo update application state
-    }
-    
-    /**
      * Clear the current id planning loaded in the model
      */
     void resetPlanning() {

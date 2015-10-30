@@ -82,29 +82,22 @@ public class MainWindow extends AnchorPane {
     }
 
     @FXML
-    private void loadMap() {
-        // \todo TODO : Changer le fonctionnement ici ->
-        // Appeler -> ContextManager.getInstance().getCurrentState().btnLoadMap();
-        // Qui appelera en conséquence une méthode à faire ici pour ouvrir le file chooser
-        // Une fois le fichier récupéré, appeler : -> ContextManager.getInstance().getCurrentState().btnCancel(); 
-        // Si le fichier est null, sinon appeler : -> ContextManager.getInstance().getCurrentState().btnValidateFile();
+    public void loadMap() {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
-            UIManager.getInstance().NotifyUI(ConstView.Action.LOAD_MAP, file);
+            ContextManager.getInstance().getCurrentState().btnValidateFile(file);
+        } else {
+            ContextManager.getInstance().getCurrentState().btnCancel();
         }
     }
 
     @FXML
-    private void loadPlanning() {
-        // \todo TODO : Changer le fonctionnement ici ->
-        // Appeler -> ContextManager.getInstance().getCurrentState().btnLoadPlanning();
-        // Qui appelera en conséquence une méthode à faire ici pour ouvrir le file chooser
-        // Une fois le fichier récupéré, appeler : -> ContextManager.getInstance().getCurrentState().btnCancel(); 
-        // Si le fichier est null, sinon appeler : -> ContextManager.getInstance().getCurrentState().btnValidateFile();
+    public void loadPlanning() {
         File file = fileChooser.showOpenDialog(stage);
-
         if (file != null) {
-            UIManager.getInstance().NotifyUI(ConstView.Action.LOAD_PLANNING, file);
+            ContextManager.getInstance().getCurrentState().btnValidateFile(file);
+        } else {
+            ContextManager.getInstance().getCurrentState().btnCancel();
         }
     }
 
