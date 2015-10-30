@@ -1,7 +1,6 @@
 package com.hexanome.controller;
 
 import com.hexanome.controller.command.ICommand;
-import java.io.File;
 import java.util.Stack;
 
 import com.hexanome.controller.states.IState;

@@ -3,9 +3,6 @@
  */
 package com.hexanome.controller.states;
 
-import com.hexanome.controller.ContextManager;
-import com.hexanome.controller.IOManager;
-
 /**
  * @author antitoine
  * \todo TODO

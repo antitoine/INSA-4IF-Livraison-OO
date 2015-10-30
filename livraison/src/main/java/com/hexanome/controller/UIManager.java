@@ -1,18 +1,9 @@
 package com.hexanome.controller;
 
 import com.hexanome.view.ConstView;
-import com.hexanome.view.DeliveryTreeView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
-import java.io.File;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.concurrent.Worker.State;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
+import javafx.stage.Stage; // \todo Doit disparaitre !
 
 /**
  * This controller manage all the view and is notify when something happens on
@@ -95,6 +86,8 @@ public class UIManager {
                 break;
             case HIDE_POPOVER:
                 mainWindow.ennablePanning();
+                break;
+            default:
                 break;
         }
     }
