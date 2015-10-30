@@ -42,7 +42,6 @@ public class MapSelectState extends DefaultState {
      */
     @Override
     public void btnCancel() {
-        System.out.println("btnCancel In MapSelectState");
         ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
 
