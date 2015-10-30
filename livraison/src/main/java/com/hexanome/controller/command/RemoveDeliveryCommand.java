@@ -1,5 +1,7 @@
-package com.hexanome.controller;
+package com.hexanome.controller.command;
 
+import com.hexanome.controller.ModelManager;
+import com.hexanome.controller.command.ICommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.TimeSlot;
 

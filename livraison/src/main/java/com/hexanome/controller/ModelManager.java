@@ -42,7 +42,7 @@ public class ModelManager {
      * @return false if a map already exists in the model or the integrity of
      * MapDocument is compromised, else it will return true.
      */
-    boolean initModelMap(MapDocument mapDoc) {
+    public boolean initModelMap(MapDocument mapDoc) {
         if (map == null) {
             // Map creation
             map = new Map();
@@ -68,7 +68,7 @@ public class ModelManager {
      * exists in the model, it also returns false if the integrity of the
      * PlanningDocument is compromised, else it will return true.
      */
-    boolean initModelPlanning(PlanningDocument planDoc) {
+    public boolean initModelPlanning(PlanningDocument planDoc) {
         if (map != null && planning == null) {
             // Planning creation
             if (planDoc.checkIntegrity(map)) { // TODO : always true  
@@ -88,7 +88,7 @@ public class ModelManager {
     /**
      * Clears the model
      */
-    void clearModel() {
+    public void clearModel() {
         map = null;
         planning = null;
     }
@@ -98,7 +98,7 @@ public class ModelManager {
      *
      * @return
      */
-    Map getMap() {
+    public Map getMap() {
         return map;
     }
 
@@ -106,7 +106,7 @@ public class ModelManager {
      *
      * @return
      */
-    Planning getPlanning() {
+    public Planning getPlanning() {
         return planning;
     }
 }

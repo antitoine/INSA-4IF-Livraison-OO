@@ -1,4 +1,4 @@
-package com.hexanome.controller;
+package com.hexanome.controller.command;
 
 /**
  * @author antoine

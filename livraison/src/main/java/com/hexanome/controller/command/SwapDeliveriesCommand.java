@@ -1,4 +1,7 @@
-package com.hexanome.controller;
+package com.hexanome.controller.command;
+
+import com.hexanome.controller.ModelManager;
+import com.hexanome.controller.command.ICommand;
 
 /**
  * This class represent the action of swaping two deliveries in the planning
