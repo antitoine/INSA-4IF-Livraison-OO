@@ -12,6 +12,25 @@ import com.hexanome.model.Node;
  */
 public class NothingSelectedState extends SelectionsStates {
 
+    private static NothingSelectedState nothingSelectedState = null;
+
+    private NothingSelectedState(){
+        // Nothing to do here
+    }
+
+    /**
+     * Returns the instance of the NothingSelectedState,
+     * it is a singleton
+     * @return The instance of NothingSelectedState
+     */
+    public static NothingSelectedState getInstance() {
+        if(nothingSelectedState == null)
+        {
+            nothingSelectedState = new NothingSelectedState();
+        }
+        return nothingSelectedState;
+    }
+
     /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#clickOnDelivery(com.hexanome.model.Delivery)
      */

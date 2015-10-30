@@ -16,12 +16,12 @@ public class ContextManager {
     private IState currentState;
     private Stack<ICommand> done;
     private Stack<ICommand> undone;
-    
+
     /**
      * 
      */
     private ContextManager() {
-        this.currentState = new InitState();
+        this.setCurrentState(InitState.getInstance());
         this.done = new Stack<>();
         this.undone = new Stack<>();
     }
@@ -122,5 +122,19 @@ public class ContextManager {
         // \todo Check if Route should be saved
         // EXIT application
         System.exit(0);
+    }
+
+    /**
+     * @return the currentState
+     */
+    public IState getCurrentState() {
+        return currentState;
+    }
+
+    /**
+     * @param currentState the currentState to set
+     */
+    public void setCurrentState(IState currentState) {
+        this.currentState = currentState;
     }
 }

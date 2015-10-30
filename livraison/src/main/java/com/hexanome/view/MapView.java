@@ -5,6 +5,7 @@ import com.hexanome.model.Delivery;
 import com.hexanome.model.Map;
 import com.hexanome.model.Node;
 import com.hexanome.model.Planning;
+import com.hexanome.model.Route;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
@@ -107,7 +108,9 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
                 }
                 (nodeList.get(((Planning) (p)).getWarehouse())).setType(ConstView.WAREHOUSENODE);
             }
-
+        }
+        if(p instanceof Route){
+            
         }
     }
 

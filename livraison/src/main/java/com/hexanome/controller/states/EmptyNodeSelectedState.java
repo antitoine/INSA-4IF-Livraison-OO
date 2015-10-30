@@ -12,6 +12,25 @@ import com.hexanome.model.Node;
  */
 public class EmptyNodeSelectedState extends SelectionsStates {
 
+    private static EmptyNodeSelectedState emptyNodeSelectedState = null;
+
+    private EmptyNodeSelectedState(){
+        // Nothing to do here
+    }
+
+    /**
+     * Returns the instance of the EmptyNodeSelectedState,
+     * it is a singleton
+     * @return The instance of EmptyNodeSelectedState
+     */
+    public static EmptyNodeSelectedState getInstance() {
+        if(emptyNodeSelectedState == null)
+        {
+            emptyNodeSelectedState = new EmptyNodeSelectedState();
+        }
+        return emptyNodeSelectedState;
+    }
+
     /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#btnRemoveDelivery(com.hexanome.model.Delivery)
      */

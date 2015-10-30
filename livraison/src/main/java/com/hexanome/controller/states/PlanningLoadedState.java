@@ -9,6 +9,25 @@ package com.hexanome.controller.states;
  */
 public class PlanningLoadedState extends DefaultState {
 
+    private static PlanningLoadedState planningLoadedState = null;
+
+    private PlanningLoadedState(){
+        // Nothing to do here
+    }
+
+    /**
+     * Returns the instance of the PlanningLoadedState,
+     * it is a singleton
+     * @return The instance of PlanningLoadedState
+     */
+    public static PlanningLoadedState getInstance() {
+        if(planningLoadedState == null)
+        {
+            planningLoadedState = new PlanningLoadedState();
+        }
+        return planningLoadedState;
+    }
+
     /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#btnLoadMap()
      */

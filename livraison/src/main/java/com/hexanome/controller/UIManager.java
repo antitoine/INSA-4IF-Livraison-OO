@@ -2,16 +2,13 @@ package com.hexanome.controller;
 
 import com.hexanome.view.ConstView;
 import com.hexanome.view.DeliveryTreeView;
-import com.hexanome.view.EmptyNodeView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
 import java.io.File;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 import javafx.concurrent.Worker.State;
 import javafx.stage.Stage;
 
@@ -135,16 +132,16 @@ public class UIManager {
                     @Override
                     public void changed(ObservableValue<? extends State> observableValue, State oldValue,
                             State newValue) {
-               switch (newValue) {
-                  case FAILED:
-                  case CANCELLED:
-                  case SUCCEEDED:
-                     mainWindow.getMapView().clearMap();
-                     ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
-                     mainWindow.SetLoadingDone();
-                     break;
-               }
-            }
+                        switch (newValue) {
+                            case FAILED:
+                            case CANCELLED:
+                            case SUCCEEDED:
+                                mainWindow.getMapView().clearMap();
+                                ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+                                mainWindow.SetLoadingDone();
+                                break;
+                        }
+                    }
                 });
         loadService.start();
 
@@ -171,20 +168,19 @@ public class UIManager {
                     @Override
                     public void changed(ObservableValue<? extends State> observableValue, State oldValue,
                             State newValue) {
-               switch (newValue) {
-                  case FAILED:
-                  case CANCELLED:
-                  case SUCCEEDED:
-                     ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
-                     ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
-                     mainWindow.SetLoadingDone();
-                     break;
-               }
-            }
+                        switch (newValue) {
+                            case FAILED:
+                            case CANCELLED:
+                            case SUCCEEDED:
+                                ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
+                                ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
+                                mainWindow.SetLoadingDone();
+                                break;
+                        }
+                    }
                 });
         loadService.start();
 
     }
 
 }
-

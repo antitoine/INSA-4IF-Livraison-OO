@@ -12,6 +12,25 @@ import com.hexanome.model.Node;
  */
 public class DeliverySelectedState extends SelectionsStates {
 
+    private static DeliverySelectedState deliverySelectedState = null;
+
+    private DeliverySelectedState(){
+        // Nothing to do here
+    }
+
+    /**
+     * Returns the instance of the DeliverySelectedState,
+     * it is a singleton
+     * @return The instance of DeliverySelectedState
+     */
+    public static DeliverySelectedState getInstance() {
+        if(deliverySelectedState == null)
+        {
+            deliverySelectedState = new DeliverySelectedState();
+        }
+        return deliverySelectedState;
+    }
+
     /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#btnRemoveDelivery(com.hexanome.model.Delivery)
      */
