@@ -114,13 +114,15 @@ public class UIManager {
 
     private void loadMap(final Object arg) {
         mainWindow.SetLoadingState("Loading Map...");
-
+        mainWindow.getMapView().clearMap();
+        mainWindow.getDeliveryTree().clearTree();
         final Service<Void> loadService = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
                 return new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
+                        ModelManager.getInstance().clearModel();
                         ContextManager.getInstance().loadMap((File) arg); // Not undoable
                         return null;
                     }
@@ -136,7 +138,6 @@ public class UIManager {
                             case FAILED:
                             case CANCELLED:
                             case SUCCEEDED:
-                                mainWindow.getMapView().clearMap();
                                 ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
                                 mainWindow.SetLoadingDone();
                                 break;
@@ -156,7 +157,8 @@ public class UIManager {
                 return new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-                        ((DeliveryTreeView) (mainWindow.getDeliveryTree())).clearTree();
+                        mainWindow.getDeliveryTree().clearTree();
+                        ModelManager.getInstance().clearModel();
                         ContextManager.getInstance().loadPlanning((File) arg); // Not undoable 
                         return null;
                     }

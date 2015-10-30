@@ -1,25 +1,18 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.UIManager;
-import com.hexanome.utils.Subscriber;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -163,7 +156,7 @@ public class MainWindow extends AnchorPane {
        //TODO update scrollbar
     }
 
-    public Subscriber getDeliveryTree() {
+    public DeliveryTreeView getDeliveryTree() {
         return deliveryTreeView;
     }
 
