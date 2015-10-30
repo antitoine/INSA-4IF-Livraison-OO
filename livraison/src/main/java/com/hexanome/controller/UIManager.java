@@ -1,9 +1,18 @@
 package com.hexanome.controller;
 
 import com.hexanome.view.ConstView;
+import com.hexanome.view.DeliveryTreeView;
+import com.hexanome.view.EmptyNodeView;
 import com.hexanome.view.MainWindow;
+import com.hexanome.view.NodeView;
 import java.io.File;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
+import javafx.concurrent.Worker.State;
 import javafx.stage.Stage;
 
 /**
@@ -74,24 +83,25 @@ public class UIManager {
                 // Create a SwapDeliveryCommand and give it to context manager
                 break;
             case LOAD_MAP:
-                new Thread() {
-                    public void run() {
-                        mainWindow.SetWait("Loading Map...");
-                        ContextManager.getInstance().loadMap((File) arg); // Not undoable
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                mainWindow.getMapView().ClearMap();
-                                ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
-                                mainWindow.SetDone();
-                            }
-                        });
-                    }
-                }.start();
-
+                loadMap(arg);
                 break;
             case LOAD_PLANNING:
-                ContextManager.getInstance().loadPlanning((File) arg); // Not undoable
+                loadPlanning(arg);
+                break;
+            case CLICK_ON_DELIVERY_NODE:
+                ((NodeView) (arg)).showPopOver();
+                mainWindow.disablePanning();
+                break;
+            case CLICK_ON_EMPTY_NODE:
+                ((NodeView) (arg)).showPopOver();
+                mainWindow.disablePanning();
+                break;
+            case CLICK_ON_WAREHOUSE:
+                ((NodeView) (arg)).showPopOver();
+                mainWindow.disablePanning();
+                break;
+            case HIDE_POPOVER:
+                mainWindow.ennablePanning();
                 break;
         }
     }
@@ -105,50 +115,76 @@ public class UIManager {
         NotifyUI(action, null);
     }
 
+    private void loadMap(final Object arg) {
+        mainWindow.SetLoadingState("Loading Map...");
+
+        final Service<Void> loadService = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        ContextManager.getInstance().loadMap((File) arg); // Not undoable
+                        return null;
+                    }
+                };
+            }
+        };
+        loadService.stateProperty()
+                .addListener(new ChangeListener<State>() {
+                    @Override
+                    public void changed(ObservableValue<? extends State> observableValue, State oldValue,
+                            State newValue) {
+               switch (newValue) {
+                  case FAILED:
+                  case CANCELLED:
+                  case SUCCEEDED:
+                     mainWindow.getMapView().clearMap();
+                     ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+                     mainWindow.SetLoadingDone();
+                     break;
+               }
+            }
+                });
+        loadService.start();
+
+    }
+
+    private void loadPlanning(final Object arg) {
+        mainWindow.SetLoadingState("Loading Planning...");
+
+        final Service<Void> loadService = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        ((DeliveryTreeView) (mainWindow.getDeliveryTree())).clearTree();
+                        ContextManager.getInstance().loadPlanning((File) arg); // Not undoable 
+                        return null;
+                    }
+                };
+            }
+        };
+        loadService.stateProperty()
+                .addListener(new ChangeListener<State>() {
+                    @Override
+                    public void changed(ObservableValue<? extends State> observableValue, State oldValue,
+                            State newValue) {
+               switch (newValue) {
+                  case FAILED:
+                  case CANCELLED:
+                  case SUCCEEDED:
+                     ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
+                     ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
+                     mainWindow.SetLoadingDone();
+                     break;
+               }
+            }
+                });
+        loadService.start();
+
+    }
+
 }
 
-/////////////// WILL BE DELETED
-/**
- * Test for the treeview Add delivery and timeslot
- *
- * @param dv
- */
-//    private void testTreeView(DeliveryTreeView dv) {
-//        Random r = new Random();
-//        for (int i = 0; i < 10; i++) {
-//            int start = r.nextInt(24);
-//            dv.AddTimeSlot(new TimeSlot(start, r.nextInt(24), null));
-//
-//            for (int j = 0; j < 10; j++) {
-//                dv.AddDelivery(new Delivery(i + j, new Node(r.nextInt(10000), new Point(i, j))), start);
-//            }
-//        }
-//    }
-/**
- * Test for the MapView Add Node and arc
- *
- * @param mv
- */
-//    private void testMapDisplay(MapView mv) {
-//        Random r = new Random();
-//
-//        Point pttemp = new Point(r.nextInt(1000), r.nextInt(1000));
-//
-//        for (int i = 0; i < 10; i++) {
-//            Point pt1 = pttemp;
-//            Point pt2 = new Point(r.nextInt(1000), r.nextInt(1000));
-//
-//            mv.AddNode(ConstView.EMPTYNODE, pt1);
-//            mv.AddNode(ConstView.EMPTYNODE, pt2);
-//
-//            mv.AddArc(pt1, pt2);
-//
-//            pttemp = pt2;
-//        }
-//
-//        for (int i = 0; i < 10; i++) {
-//            mv.AddNode(ConstView.DELIVERYNODE, new Point(r.nextInt(1000), r.nextInt(1000)));
-//        }
-//
-//        mv.AddNode(ConstView.WAREHOUSENODE, new Point(r.nextInt(1000), r.nextInt(1000)));
-//    }

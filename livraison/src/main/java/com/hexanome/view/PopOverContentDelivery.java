@@ -1,38 +1,36 @@
 package com.hexanome.view;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.hexanome.controller.UIManager;
+import com.hexanome.model.Node;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import org.controlsfx.glyphfont.Glyph;
 
 /**
- * FXML Controller class
+ * 
  */
 public class PopOverContentDelivery extends PopOverContent {
-    
+
     @FXML
     Button btnDelete;
 
     @FXML
     Text adressText;
-    
-    public PopOverContentDelivery(String adress) {
+
+    /**
+     * 
+     * @param node 
+     */
+    public PopOverContentDelivery(Node node) {
         super(ConstView.POPOVERDELIVERY);
-                
         btnDelete.setGraphic(new Glyph("FontAwesome", "TRASH"));
-        btnDelete.setOnAction(MainWindow.getBtnListener());
-        adressText.setText(adress);
+        adressText.setText(node.toString());
     }
-    
+
     @FXML
-    private void delete(){
-        // TODO : Call Controller
-        
+    private void delete() {
+        UIManager.getInstance().NotifyUI(ConstView.Action.DELETE_DELIVERY);
     }
 
 }

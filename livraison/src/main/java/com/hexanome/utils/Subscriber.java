@@ -11,4 +11,5 @@ package com.hexanome.utils;
  */
 public interface Subscriber {
     void update(Publisher p, Object arg);
+
 }

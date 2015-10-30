@@ -60,7 +60,7 @@ public class Map implements Publisher {
         // Creating a new arc
         Arc a = new Arc(streetName, length, avgSpeed, srcNode, getNodeById(destNodeId));
         // Attaching the arc to its source node
-        srcNode.AttachOutgoingArc(a);
+        srcNode.attachOutgoingArc(a);
         // Adding arc to the internal collection
         arcs.add(a);
         // Return the new arc

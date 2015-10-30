@@ -1,13 +1,12 @@
 package com.hexanome.view;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.hexanome.controller.ModelManager;
+import com.hexanome.controller.UIManager;
+import com.hexanome.model.Node;
+import java.util.List;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import org.controlsfx.glyphfont.Glyph;
 
@@ -15,30 +14,30 @@ import org.controlsfx.glyphfont.Glyph;
  * FXML Controller class
  */
 public class PopOverContentEmptyNode extends PopOverContent {
-    
+
     @FXML
     Button btnValidate;
-    
+
     @FXML
-    ComboBox prevDeliveryComboBox; 
+    ComboBox prevDeliveryComboBox;
 
     @FXML
     Text adressText;
-    
-    public PopOverContentEmptyNode(String adress) {
-        
+
+    /**
+     * 
+     * @param node Node as described in the model 
+     */
+    public PopOverContentEmptyNode(Node node) {
         super(ConstView.POPOVEREMPTY);
-        
         btnValidate.setGraphic(new Glyph("FontAwesome", "CHECK"));
-        btnValidate.setOnAction(MainWindow.getBtnListener());
         prevDeliveryComboBox.getItems().addAll("livraison 1", "livraison 2");
-        adressText.setText(adress);
+        adressText.setText(node.toString());
     }
     
     @FXML
-    private void validate(){
-        // TODO : Call Controller
-        
+    private void addDelivery() {
+        UIManager.getInstance().NotifyUI(ConstView.Action.ADD_DELIVERY);
     }
 
 }

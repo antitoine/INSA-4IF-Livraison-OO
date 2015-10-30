@@ -29,6 +29,15 @@ public class Arc {
         this.src = src;
     }
     
+    /**
+     * Returns the time slot associated with the arc, if it exists.
+     * @return The time slot if it exists, null otherwise.
+     */
+    public TimeSlot getAssociatedTimeSlot() {
+        Delivery delivery = dest.getDelivery();
+        return (delivery == null) ? null : delivery.getTimeSlot();
+    }
+    
     public float getDuration() {
         return duration;
     }

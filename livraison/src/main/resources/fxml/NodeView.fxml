@@ -9,4 +9,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fill="RED" radius="5.0" stroke="BLACK" strokeType="INSIDE" type="Circle" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+<fx:root prefHeight="20.0" prefWidth="20.0" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <cursor>
+        <Cursor fx:constant="HAND" />
+    </cursor>   
+</fx:root>

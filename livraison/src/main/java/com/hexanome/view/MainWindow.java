@@ -1,57 +1,53 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.UIManager;
+import com.hexanome.utils.Subscriber;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainWindow extends AnchorPane {
 
     @FXML
-    private MenuItem quitMenuItem;
-
-    @FXML
     private Label labelInfos;
-
-    @FXML
-    private BorderPane mainPane;
 
     @FXML
     private MapView mapView;
 
     @FXML
-    private DeliveryTreeView deliveryTreeView;
+    ScrollPane scrollPaneMap;
 
     @FXML
-    private ProgressBar progressBar;
+    private DeliveryTreeView deliveryTreeView;
 
     final FileChooser fileChooser;
-
-    static BtnListener btnListener;
-
     private Stage stage;
+    double zoomLevel = 1.0;
 
     /**
      * Main window
      *
-     * @param stage Main stage for the application
+     * @param stage Application stage
      */
     public MainWindow(Stage stage) {
-        btnListener = new BtnListener();
         fileChooser = new FileChooser();
         configureFileChooser(fileChooser, "Load file...");
         this.stage = stage;
@@ -72,11 +68,8 @@ public class MainWindow extends AnchorPane {
 
     }
 
-    public static BtnListener getBtnListener() {
-        return btnListener;
-    }
-
     /**
+     * Notify the UI Manager that the user wants to quit the application
      *
      * @param event
      */
@@ -132,28 +125,46 @@ public class MainWindow extends AnchorPane {
         );
     }
 
-    public void SetWait(final String text) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                labelInfos.setText(text);
-                progressBar.setVisible(true);
-                progressBar.setProgress(-100.0);
-            }
-        });
+    public void SetLoadingState(final String text) {
+        labelInfos.setText(text);
+        stage.getScene().setCursor(Cursor.WAIT);
+    }
+
+    public void SetLoadingDone() {
+        labelInfos.setText("");
+        stage.getScene().setCursor(Cursor.DEFAULT);
 
     }
 
-    public void SetDone() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisible(false);
-                progressBar.setProgress(0);
-                labelInfos.setText("");
-            }
-        });
+    public void disablePanning() {
+        scrollPaneMap.setPannable(false);
+    }
 
+    public void ennablePanning() {
+        scrollPaneMap.setPannable(true);
+    }
+
+    @FXML
+    public void zoomIn() {
+        zoomLevel += 0.5;
+        mapView.setScaleX(zoomLevel);
+        mapView.setScaleY(zoomLevel);
+        //TODO update scrollbar
+    }
+
+    @FXML
+    public void zoomOut() {
+        zoomLevel -= 0.25;
+        mapView.setScaleX(zoomLevel);
+        mapView.setScaleY(zoomLevel);
+
+        scrollPaneMap.setFitToWidth(true);
+        scrollPaneMap.setFitToHeight(true);
+       //TODO update scrollbar
+    }
+
+    public Subscriber getDeliveryTree() {
+        return deliveryTreeView;
     }
 
 }

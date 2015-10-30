@@ -4,14 +4,16 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 /**
- *
+ * 
  * @author paul
  */
 public class Node {
 
     private int id;
-    ArrayList<Arc> outgoings;
+    private ArrayList<Arc> outgoings;
     private Point location;
+    
+    private Delivery delivery;
 
     /**
      *
@@ -22,13 +24,14 @@ public class Node {
         this.id = id;
         this.location = location;
         this.outgoings = new ArrayList<>();
+        this.delivery = null;
     }
 
     /**
      *
      * @param arc
      */
-    public void AttachOutgoingArc(Arc arc) {
+    public void attachOutgoingArc(Arc arc) {
         outgoings.add(arc);
     }
 
@@ -38,6 +41,14 @@ public class Node {
 
     public Point getLocation() {
         return location;
+    }
+    
+    void attachDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+    
+    public Delivery getDelivery() {
+        return delivery;
     }
 
     @Override
