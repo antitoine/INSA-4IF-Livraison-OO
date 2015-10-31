@@ -86,7 +86,8 @@ public class PlanningLoadedState extends DefaultState {
         // \todo Afficher une boite de dialogue d'attente pendant le calcul de la route 
         ModelManager.getInstance().getPlanning().computeRoute();
         // \todo Récupérer eventuellement une erreur de l'instruction précédente si aucune route n'a été trouvée.
-        ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
+        // We jump to computingRoute state
+        ContextManager.getInstance().setCurrentState(ComputingRouteState.getInstance());
     }
 
 }
