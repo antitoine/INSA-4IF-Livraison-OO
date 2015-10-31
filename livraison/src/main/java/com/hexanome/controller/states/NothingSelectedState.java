@@ -60,13 +60,6 @@ public class NothingSelectedState extends SelectionsStates {
     @Override
     public void btnRemoveDelivery(Delivery delivery) {
         // \todo TODO
-        Delivery prevDelivery = ModelManager.getInstance().getPlanning().getPreviousDelivery(delivery);
-        // \todo treat case if delivery is the first of the list
-        RemoveDeliveryCommand rmDeliveryCmd = new RemoveDeliveryCommand(delivery, prevDelivery);
-        // ContextManager is asked to execute the command
-        ContextManager.getInstance().executeCommand(rmDeliveryCmd);
-        // We jump to emptyNodeSelected state
-        ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
 
 }
