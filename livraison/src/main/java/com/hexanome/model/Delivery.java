@@ -29,9 +29,14 @@ public class Delivery {
         return id;
     }
 
-    public void setDelivery(float deliveryTime){
+    public void setDeliveryTime(float deliveryTime){
         this.deliveryTime = deliveryTime;
     }
+    
+    public float getDeliveryTime() {
+        return deliveryTime;
+    }
+    
     /**
      * 
      */

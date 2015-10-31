@@ -2,6 +2,8 @@ package com.hexanome.model;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 
@@ -33,6 +35,19 @@ public class Node {
      */
     public void attachOutgoingArc(Arc arc) {
         outgoings.add(arc);
+    }
+    
+    public List<Arc> getOutgoingArcs() {
+        return Collections.unmodifiableList(outgoings);
+    }
+    
+    Arc getOutgoingArc(Node dest) {
+        for (Arc arc : outgoings) {
+            if (arc.getDest().equals(dest)) {
+                return arc;
+            }
+        }
+        return null;
     }
 
     public int getId() {

@@ -1,8 +1,12 @@
 package com.hexanome.model;
 
+import com.hexanome.utils.ITSP;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Planning implements Publisher {
 
@@ -11,23 +15,40 @@ public class Planning implements Publisher {
     private Route route;
     private ArrayList<TimeSlot> timeSlots;
     private ArrayList<Subscriber> subscribers;
+    
+    private PlanningComputeRouteWorker planningComputeRouteWorker;
 
     public Planning(Map map, Node warehouse, ArrayList<TimeSlot> timeSlots) {
         this.map = map;
         this.warehouse = warehouse;
         this.route = null; // On initialise à null pour l'instant
         this.timeSlots = timeSlots;
-        
+
         subscribers = new ArrayList<>();
     }
-
-    public void computeRoute() {
-        // \todo implement here
+    
+    /**
+     * Abort the route computing if it is running.
+     */
+    public void abortComputeRoute() {
+        planningComputeRouteWorker.interrupt();
     }
 
-    public Route getFastestRoute(Planning planning) {
-        // \todo implement here
-        return null;
+    /**
+     * Start the route computing. The observers will be notified when the route
+     * is set. Update the deliveries time as well.
+     */
+    public void computeRoute() {
+        planningComputeRouteWorker = new PlanningComputeRouteWorker(this);
+        planningComputeRouteWorker.start();
+    }
+
+    /**
+     * Returns the route, or null if any route was calculated before.
+     * @return The fastest route.
+     */
+    public Route getFastestRoute() {
+        return route;
     }
 
     public Delivery getDeliveryById(int id) {
@@ -47,8 +68,8 @@ public class Planning implements Publisher {
         // \todo implement here
     }
 
-    public ArrayList<TimeSlot> getTimeSlots() {
-        return timeSlots;
+    public List<TimeSlot> getTimeSlots() {
+        return Collections.unmodifiableList(timeSlots);
     }
 
     public Map getMap() {
@@ -61,6 +82,15 @@ public class Planning implements Publisher {
 
     public Route getRoute() {
         return route;
+    }
+    
+    /**
+     * Update the route and notify the subscribers.
+     * @param route The new route tu use.
+     */
+    void setRoute(Route route) {
+        this.route = route;
+        notifySubsrcibers();
     }
 
     // \todo add methods here
@@ -83,25 +113,23 @@ public class Planning implements Publisher {
     @Override
     public void addSubscriber(Subscriber s) {
         subscribers.add(s);
-        s.update(this, null);
+        s.update(this, route);
     }
 
     @Override
     public void removeSubscriber(Subscriber s) {
-        // TODO
-        throw new UnsupportedOperationException("Not supported yet.");
+        subscribers.remove(s);
     }
 
     @Override
     public void notifySubsrcibers() {
         for (Subscriber s : subscribers) {
-            s.update(this, null);
+            s.update(this, route);
         }
     }
 
     @Override
     public void clearSubscribers() {
-        // TODO
-        throw new UnsupportedOperationException("Not supported yet.");
+        subscribers.clear();
     }
 }

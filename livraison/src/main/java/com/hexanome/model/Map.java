@@ -4,8 +4,11 @@ import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  *
@@ -15,7 +18,10 @@ public class Map implements Publisher {
 
     private HashMap<Integer, Node> nodes;
     private ArrayList<Arc> arcs;
-    private ArrayList<Subscriber> subscribers ;
+    private ArrayList<Subscriber> subscribers;
+
+    private HashMap<Integer, HashMap<Integer, Double>> globalMinDistances; // int = node id, double = distance from source to this node
+    private HashMap<Integer, HashMap<Integer, Node>> globalPreviousNodes; // int = id of the current node, Node = the previous node
 
     /**
      *
@@ -26,6 +32,9 @@ public class Map implements Publisher {
         nodes = new HashMap<>();
         arcs = new ArrayList<>();
         subscribers = new ArrayList<>();
+
+        globalMinDistances = new HashMap<>();
+        globalPreviousNodes = new HashMap<>();
     }
 
     /**
@@ -102,15 +111,87 @@ public class Map implements Publisher {
         return nodes;
     }
 
-    /**
-     *
-     * @param start
-     * @param end
-     * @return
-     */
-    public Path getFastestPath(Node start, Node end) {
-        // \todo implement here
-        return null;
+    public Path getFastestPath(Node start, Node target) {
+        ArrayList<Arc> arcs = new ArrayList<>();
+        
+        if (!globalPreviousNodes.containsKey(start.getId())) {
+            computePathsFromSource(start);
+        }
+        
+        HashMap<Integer, Node> previousNodes = globalPreviousNodes.get(start.getId());
+
+        Node src = previousNodes.get(target.getId());
+        Node dest = target;
+        
+        while (dest != start) {
+            arcs.add(src.getOutgoingArc(dest));
+            
+            dest = src;
+            src = previousNodes.get(dest.getId());
+        }
+
+        Collections.reverse(arcs); // reversing it so that the arcs are in the right order
+        Path path = new Path(arcs);
+
+        return path;
+    }
+
+    private void computePathsFromSource(final Node firstNode) {
+        
+        HashMap<Integer, Node> previousNodes = new HashMap<>();
+        HashMap<Integer, Double> minDistances = new HashMap<>();
+        globalPreviousNodes.put(firstNode.getId(), previousNodes);
+        globalMinDistances.put(firstNode.getId(), minDistances);
+        
+        PriorityQueue<Node> nodesQueue = new PriorityQueue<>(new Comparator<Node>() {
+
+            @Override
+            public int compare(Node node1, Node node2) {
+                if (!globalMinDistances.containsKey(firstNode.getId())) {
+                    return 0;
+                }
+                
+                if (!globalMinDistances.get(firstNode.getId()).containsKey(node1.getId())) {
+                    return -1;
+                }
+                if (!globalMinDistances.get(firstNode.getId()).containsKey(node2.getId())) {
+                    return 1;
+                }
+
+                return (int) (globalMinDistances.get(firstNode.getId()).get(node1.getId()) - globalMinDistances.get(firstNode.getId()).get(node2.getId()));
+            }
+        });
+
+        // Initialize data        
+        previousNodes.put(firstNode.getId(), firstNode);
+        for (Node n : nodes.values()) {
+            minDistances.put(n.getId(), Double.MAX_VALUE);
+            nodesQueue.add(n);
+        }
+        minDistances.put(firstNode.getId(), 0.);
+
+        while (!nodesQueue.isEmpty()) {
+            Node source = nodesQueue.poll();
+
+            if (minDistances.containsKey(source.getId())) {
+
+                for (Arc outgoing : source.getOutgoingArcs()) // visiting each arc exiting the source node
+                {
+                    Node dest = outgoing.getDest();
+                    double newDist = minDistances.get(source.getId()) + outgoing.getDuration();
+
+                    // if minimal distance from the firstNode to the source node + the duration of the outgoing arc < minimal distance from the firstNode to the dest node
+                    if (!minDistances.containsKey(dest.getId()) || newDist < minDistances.get(dest.getId())) {
+                        // then we update the destination node
+                        nodesQueue.remove(dest);
+                        minDistances.put(dest.getId(), newDist);
+                        previousNodes.put(dest.getId(), source);
+                        nodesQueue.add(dest);
+                    }
+                }
+            }
+
+        }
     }
 
     public void clear() {

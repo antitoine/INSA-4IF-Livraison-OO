@@ -1,6 +1,8 @@
 package com.hexanome.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -25,22 +27,28 @@ public class Path {
      * @return 
      */
     public Node getFirstNode() {
-        // \todo implement here
-        return null;
+        return arcs.get(0).getSrc();
     }
     /**
      * 
      * @return 
      */
     public Node getLastNode() {
-        // \todo implement here
-        return null;
+        return arcs.get(arcs.size() - 1).getDest();
     }
     
     public boolean constainsNode(Node node)
     {
         // \todo implement here
         return false;
+    }
+    
+    public float getPathDuration() {
+        return pathDuration;
+    }
+    
+    public List<Arc> getArcs() {
+        return Collections.unmodifiableList(arcs);
     }
 
     @Override
