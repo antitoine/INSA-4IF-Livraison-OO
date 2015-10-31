@@ -1,25 +1,20 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
-import com.hexanome.utils.Subscriber;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -88,18 +83,20 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private void loadMap() {
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            UIManager.getInstance().NotifyUI(ConstView.Action.LOAD_MAP, file);
-        }
+        ContextManager.getInstance().getCurrentState().btnLoadMap();
     }
 
     @FXML
     private void loadPlanning() {
-        File file = fileChooser.showOpenDialog(stage);
+        ContextManager.getInstance().getCurrentState().btnLoadPlanning();
+    }
 
+    public void askFile() {
+        File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
-            UIManager.getInstance().NotifyUI(ConstView.Action.LOAD_PLANNING, file);
+            ContextManager.getInstance().getCurrentState().btnValidateFile(file);
+        } else {
+            ContextManager.getInstance().getCurrentState().btnCancel();
         }
     }
 
@@ -160,11 +157,18 @@ public class MainWindow extends AnchorPane {
 
         scrollPaneMap.setFitToWidth(true);
         scrollPaneMap.setFitToHeight(true);
-       //TODO update scrollbar
+        //TODO update scrollbar
     }
 
-    public Subscriber getDeliveryTree() {
+    public DeliveryTreeView getDeliveryTree() {
         return deliveryTreeView;
+    }
+
+    public void displayError(String msg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error - "+msg);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 
 }

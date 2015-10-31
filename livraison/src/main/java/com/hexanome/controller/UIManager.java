@@ -1,19 +1,9 @@
 package com.hexanome.controller;
 
 import com.hexanome.view.ConstView;
-import com.hexanome.view.DeliveryTreeView;
-import com.hexanome.view.EmptyNodeView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
-import java.io.File;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
-import javafx.concurrent.Worker.State;
-import javafx.stage.Stage;
+import javafx.stage.Stage; // \todo Doit disparaitre !
 
 /**
  * This controller manage all the view and is notify when something happens on
@@ -29,7 +19,7 @@ public class UIManager {
     /**
      * Main Window of the application see MainWindow class for more information
      */
-    MainWindow mainWindow;
+    private MainWindow mainWindow;
 
     private static UIManager uimanager = null;
 
@@ -69,6 +59,7 @@ public class UIManager {
      * xml file) Load_PLANNING : File file (valid xml file)
      */
     public void NotifyUI(ConstView.Action action, Object arg) {
+        // \todo implémenter toutes les méthodes dans les states pour plus avoir ce switch !!!
         switch (action) {
             case QUIT:
                 ContextManager.getInstance().exit(); // Special undoable
@@ -81,12 +72,6 @@ public class UIManager {
                 break;
             case SWAP_DELIVERIES:
                 // Create a SwapDeliveryCommand and give it to context manager
-                break;
-            case LOAD_MAP:
-                loadMap(arg);
-                break;
-            case LOAD_PLANNING:
-                loadPlanning(arg);
                 break;
             case CLICK_ON_DELIVERY_NODE:
                 ((NodeView) (arg)).showPopOver();
@@ -103,6 +88,8 @@ public class UIManager {
             case HIDE_POPOVER:
                 mainWindow.ennablePanning();
                 break;
+            default:
+                break;
         }
     }
 
@@ -115,76 +102,10 @@ public class UIManager {
         NotifyUI(action, null);
     }
 
-    private void loadMap(final Object arg) {
-        mainWindow.SetLoadingState("Loading Map...");
-
-        final Service<Void> loadService = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        ContextManager.getInstance().loadMap((File) arg); // Not undoable
-                        return null;
-                    }
-                };
-            }
-        };
-        loadService.stateProperty()
-                .addListener(new ChangeListener<State>() {
-                    @Override
-                    public void changed(ObservableValue<? extends State> observableValue, State oldValue,
-                            State newValue) {
-               switch (newValue) {
-                  case FAILED:
-                  case CANCELLED:
-                  case SUCCEEDED:
-                     mainWindow.getMapView().clearMap();
-                     ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
-                     mainWindow.SetLoadingDone();
-                     break;
-               }
-            }
-                });
-        loadService.start();
-
+    /**
+     * @return the mainWindow
+     */
+    public MainWindow getMainWindow() {
+        return mainWindow;
     }
-
-    private void loadPlanning(final Object arg) {
-        mainWindow.SetLoadingState("Loading Planning...");
-
-        final Service<Void> loadService = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        ((DeliveryTreeView) (mainWindow.getDeliveryTree())).clearTree();
-                        ContextManager.getInstance().loadPlanning((File) arg); // Not undoable 
-                        return null;
-                    }
-                };
-            }
-        };
-        loadService.stateProperty()
-                .addListener(new ChangeListener<State>() {
-                    @Override
-                    public void changed(ObservableValue<? extends State> observableValue, State oldValue,
-                            State newValue) {
-               switch (newValue) {
-                  case FAILED:
-                  case CANCELLED:
-                  case SUCCEEDED:
-                     ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
-                     ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
-                     mainWindow.SetLoadingDone();
-                     break;
-               }
-            }
-                });
-        loadService.start();
-
-    }
-
 }
-

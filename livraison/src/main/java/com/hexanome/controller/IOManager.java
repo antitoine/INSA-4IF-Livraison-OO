@@ -35,7 +35,7 @@ public class IOManager {
      *      file to used to build MapDocument object
      * @return 
      */
-    MapDocument getMapDocument(File file) {
+    public MapDocument getMapDocument(File file) {
         return DocumentFactory.createMapDocument(file);
     }
     /**
@@ -44,7 +44,7 @@ public class IOManager {
      *      file used to build PlanningDocument object
      * @return 
      */
-    PlanningDocument getPlanningDocument(File file) {
+    public PlanningDocument getPlanningDocument(File file) {
         return DocumentFactory.createPlanningDocument(file);
     }
     /**

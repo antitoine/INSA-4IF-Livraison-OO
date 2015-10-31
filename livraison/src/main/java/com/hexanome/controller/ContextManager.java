@@ -1,7 +1,6 @@
 package com.hexanome.controller;
 
 import com.hexanome.controller.command.ICommand;
-import java.io.File;
 import java.util.Stack;
 
 import com.hexanome.controller.states.IState;
@@ -16,12 +15,12 @@ public class ContextManager {
     private IState currentState;
     private Stack<ICommand> done;
     private Stack<ICommand> undone;
-    
+
     /**
      * 
      */
     private ContextManager() {
-        this.currentState = new InitState();
+        this.setCurrentState(InitState.getInstance());
         this.done = new Stack<>();
         this.undone = new Stack<>();
     }
@@ -75,36 +74,17 @@ public class ContextManager {
     }
 
     /**
-     * Load the map calling the ModelManager and the IOManager
-     * @param file 
-     *      file containing the XML description of the Map
+     * Clear the current id planning loaded in the model
      */
-    void loadMap(File file) {
-        // \todo (security) check if load map is possible
-        if( ! ModelManager.getInstance().initModelMap(IOManager.getInstance().getMapDocument(file)) ) {
-            // \todo treat error case
-        }
-        // \todo update application state
-    }
-    /**
-     * Load the planning calling the ModelManager and the IOManager
-     * @param file 
-     *      file containing the XML description of the Planning
-     */
-    void loadPlanning(File file) {
-        // \todo (security) check if load planning is possible
-        if( ! ModelManager.getInstance().initModelPlanning(IOManager.getInstance().getPlanningDocument(file)) ) {
-            // \todo treat error case
-        }
+    void resetPlanning() {
+        // \todo (security) check if current state allows reset
+        // Clear the planning
+        ModelManager.getInstance().clearPlanning();
         // \todo update application state
     }
     
-    /**
-     * Clear the current model and replace the application in its initState
-     */
-    void reset() {
+    void resetModel() {
         // \todo (security) check if current state allows reset
-        // Clear the model
         ModelManager.getInstance().clearModel();
         // \todo update application state
     }
@@ -116,5 +96,19 @@ public class ContextManager {
         // \todo Check if Route should be saved
         // EXIT application
         System.exit(0);
+    }
+
+    /**
+     * @return the currentState
+     */
+    public IState getCurrentState() {
+        return currentState;
+    }
+
+    /**
+     * @param currentState the currentState to set
+     */
+    public void setCurrentState(IState currentState) {
+        this.currentState = currentState;
     }
 }

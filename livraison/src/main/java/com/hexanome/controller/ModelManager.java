@@ -2,7 +2,6 @@ package com.hexanome.controller;
 
 import com.hexanome.model.Map;
 import com.hexanome.model.Planning;
-import com.hexanome.model.Route;
 import com.hexanome.utils.MapDocument;
 import com.hexanome.utils.PlanningDocument;
 
@@ -86,10 +85,17 @@ public class ModelManager {
     }
 
     /**
-     * Clears the model
+     * Clears the Model
      */
     public void clearModel() {
         map = null;
+        planning = null;
+    }
+    
+    /**
+     * Clears the map
+     */
+    public void clearPlanning() {
         planning = null;
     }
 
