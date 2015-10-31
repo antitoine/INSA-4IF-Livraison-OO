@@ -3,6 +3,7 @@
  */
 package com.hexanome.controller.states;
 
+import com.hexanome.controller.ContextManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 
@@ -31,20 +32,14 @@ public class WarehouseSelectedState extends SelectionsStates {
         return warehouseSelectedState;
     }
 
-    /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#btnRemoveDelivery(com.hexanome.model.Delivery)
-     */
-    @Override
-    public void btnRemoveDelivery(Delivery delivery) {
-        // \todo TODO
-    }
 
     /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#clickOnDelivery(com.hexanome.model.Delivery)
      */
     @Override
     public void clickOnDelivery(Delivery delivery) {
-        // \todo TODO
+        // Jump to DeliverySelectedState
+        ContextManager.getInstance().setCurrentState(DeliverySelectedState.getInstance());
     }
 
     /* (non-Javadoc)
@@ -52,7 +47,8 @@ public class WarehouseSelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnEmptyNode(Node node) {
-        // \todo TODO
+        // Jump to EmptyNodeSelectedState
+        ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
 
     /* (non-Javadoc)
@@ -60,7 +56,8 @@ public class WarehouseSelectedState extends SelectionsStates {
      */
     @Override
     public void clickSomewhereElse() {
-        // \todo TODO
+        // Jump to NothingSelectedState
+        ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
     }
 
     /* (non-Javadoc)

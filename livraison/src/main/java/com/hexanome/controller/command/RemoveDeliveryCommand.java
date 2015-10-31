@@ -23,10 +23,10 @@ public class RemoveDeliveryCommand implements ICommand {
      * @param timeSlot
      *      timeSlot of the delivery to be removed
      */
-    public RemoveDeliveryCommand(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
+    public RemoveDeliveryCommand(Delivery delivery, Delivery prevDelivery) {
         this.delivery = delivery;
         this.prevDelivery = prevDelivery;
-        this.timeSlot = timeSlot;
+        this.timeSlot = delivery.getTimeSlot();
     }
     
     /**

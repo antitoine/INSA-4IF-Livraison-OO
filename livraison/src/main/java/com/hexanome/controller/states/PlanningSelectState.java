@@ -41,6 +41,7 @@ public class PlanningSelectState extends DefaultState {
      */
     @Override
     public void btnCancel() {
+        // Jump to MapLoadedState
         ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
     }
 
@@ -49,21 +50,29 @@ public class PlanningSelectState extends DefaultState {
      */
     @Override
     public void btnValidateFile(File file) {
-        
+        // Retreive mainWindow instance
         MainWindow mainWindow = UIManager.getInstance().getMainWindow();
+        // Update mainwindow
         mainWindow.SetLoadingState("Loading Planning...");
         mainWindow.getDeliveryTree().clearTree();
         mainWindow.getMapView().clearDeliveries();
 
+        // If an error occured while loading the planning,
         if( ! ModelManager.getInstance().initModelPlanning(IOManager.getInstance().getPlanningDocument(file)) ) {
+            // Clear current model's planning
             ModelManager.getInstance().clearPlanning();
+            // Jump to MapLoadedState
             ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
+            // Update mainwindow
             mainWindow.SetLoadingDone();
             mainWindow.displayError("The file can't be loaded !");
         } else {
+            // Jump to PlanningLoadedState
             ContextManager.getInstance().setCurrentState(PlanningLoadedState.getInstance());
+            // Add view subscribers to the model
             ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
             ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
+            // Update mainwindow
             mainWindow.SetLoadingDone();
         }
     }

@@ -3,6 +3,9 @@
  */
 package com.hexanome.controller.states;
 
+import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.ModelManager;
+import com.hexanome.controller.command.RemoveDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 
@@ -36,15 +39,15 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void btnRemoveDelivery(Delivery delivery) {
-        // \todo TODO
-    }
-
-    /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#clickOnDelivery(com.hexanome.model.Delivery)
-     */
-    @Override
-    public void clickOnDelivery(Delivery delivery) {
-        // \todo TODO
+        // Retreive previous delivery
+        Delivery prevDelivery = ModelManager.getInstance().getPlanning().getPreviousDelivery(delivery);
+        // \todo treat limit case if delivery is the first of the list
+        // Create a new instance of RemoveDeliveryCommand
+        RemoveDeliveryCommand rmDeliveryCmd = new RemoveDeliveryCommand(delivery, prevDelivery);
+        // ContextManager is asked to execute the command
+        ContextManager.getInstance().executeCommand(rmDeliveryCmd);
+        // Jump to EmptyNodeSelectedState
+        ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
 
     /* (non-Javadoc)
@@ -52,7 +55,8 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnEmptyNode(Node node) {
-        // \todo TODO
+        // Jump to EmptyNodeSelectedState
+        ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
 
     /* (non-Javadoc)
@@ -60,7 +64,8 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickSomewhereElse() {
-        // \todo TODO
+        // Jump to NothingSelectedState
+        ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
     }
 
     /* (non-Javadoc)
@@ -68,7 +73,8 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnWarehouse(Node warehouse) {
-        // \todo TODO
+        // Jump to WarehouseSelectedState
+        ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
     }
 
     /* (non-Javadoc)

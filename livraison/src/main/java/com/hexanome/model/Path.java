@@ -5,15 +5,22 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * This class represents the path to follow to execute all the deliveries.
  * @author paul
  */
 public class Path {
-    private ArrayList<Arc> arcs;
-    private float pathDuration;
     /**
-     * 
-     * @param arcs 
+     * All the arcs to take, in the right order.
+     */
+    private ArrayList<Arc> arcs;
+    /**
+     * The total duration of the path.
+     */
+    private float pathDuration;
+    
+    /**
+     * Constructor.
+     * @param arcs the list of arcs of the path.
      */
     public Path(ArrayList<Arc> arcs) {
         this.arcs = arcs;
@@ -22,22 +29,29 @@ public class Path {
             this.pathDuration += arc.getDuration();
         }
     }
+    
     /**
-     * 
-     * @return 
+     * Returns the first node of the path.
+     * @return the first node of the path.
      */
     public Node getFirstNode() {
         return arcs.get(0).getSrc();
     }
+    
     /**
-     * 
-     * @return 
+     * Returns the last node of the path.
+     * @return the last node of the path.
      */
     public Node getLastNode() {
         return arcs.get(arcs.size() - 1).getDest();
     }
     
-    public boolean constainsNode(Node node)
+    /**
+     * Determines if the path contains the node given in parameter.
+     * @param node the node to look for.
+     * @return true if the node is contained in the path.
+     */
+    public boolean containsNode(Node node)
     {
         // \todo implement here
         return false;

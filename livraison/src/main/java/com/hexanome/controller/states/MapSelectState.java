@@ -42,6 +42,7 @@ public class MapSelectState extends DefaultState {
      */
     @Override
     public void btnCancel() {
+        // Jump back to InitState
         ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
 
@@ -50,21 +51,30 @@ public class MapSelectState extends DefaultState {
      */
     @Override
     public void btnValidateFile(File file) {
-
+        
+        // Get mainWindow instance
         MainWindow mainWindow = UIManager.getInstance().getMainWindow();
+        // Update mainWindow
         mainWindow.SetLoadingState("Loading Map...");
         mainWindow.getMapView().clearMap();
         mainWindow.getDeliveryTree().clearTree();
 
+        // Model's map initialization failed,  
         if( ! ModelManager.getInstance().initModelMap(IOManager.getInstance().getMapDocument(file)) ) {
+            // Full clear of the model
             ModelManager.getInstance().clearModel();
+            // Jump to InitState
             ContextManager.getInstance().setCurrentState(InitState.getInstance());
+            // Update mainWindow
             mainWindow.SetLoadingDone();
             mainWindow.displayError("The file can't be loaded !");
         } else {
+            // Jump to MapLoadedState
             ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
+            // Add view subscribers to model
             ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
             ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+            // Update mainWindow
             mainWindow.SetLoadingDone();
         }
     }
