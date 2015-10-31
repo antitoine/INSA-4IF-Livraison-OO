@@ -33,7 +33,10 @@ public class InitState extends DefaultState {
      */
     @Override
     public void btnLoadMap() {
-        ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
+        // WARNING : calls order matters
+        // Jump to MapSelectedState
+        ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());        
+        // Ask user for the file to load
         UIManager.getInstance().getMainWindow().askFile();
     }
 }

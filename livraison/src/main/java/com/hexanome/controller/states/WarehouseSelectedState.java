@@ -38,7 +38,7 @@ public class WarehouseSelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnDelivery(Delivery delivery) {
-        // We jump to DeliverySelectedState
+        // Jump to DeliverySelectedState
         ContextManager.getInstance().setCurrentState(DeliverySelectedState.getInstance());
     }
 
@@ -47,7 +47,7 @@ public class WarehouseSelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnEmptyNode(Node node) {
-        // We jump to EmptyNodeSelectedState
+        // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
 
@@ -56,7 +56,7 @@ public class WarehouseSelectedState extends SelectionsStates {
      */
     @Override
     public void clickSomewhereElse() {
-        // We jump to NothingSelectedState
+        // Jump to NothingSelectedState
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
     }
 

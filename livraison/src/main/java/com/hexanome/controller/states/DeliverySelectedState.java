@@ -39,12 +39,14 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void btnRemoveDelivery(Delivery delivery) {
+        // Retreive previous delivery
         Delivery prevDelivery = ModelManager.getInstance().getPlanning().getPreviousDelivery(delivery);
-        // \todo treat case if delivery is the first of the list
+        // \todo treat limit case if delivery is the first of the list
+        // Create a new instance of RemoveDeliveryCommand
         RemoveDeliveryCommand rmDeliveryCmd = new RemoveDeliveryCommand(delivery, prevDelivery);
         // ContextManager is asked to execute the command
         ContextManager.getInstance().executeCommand(rmDeliveryCmd);
-        // We jump to emptyNodeSelected state
+        // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
 
@@ -53,7 +55,7 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnEmptyNode(Node node) {
-        // We jump to emptyNodeSelected state
+        // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
 
@@ -62,7 +64,7 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickSomewhereElse() {
-        // We jump to nothingSelected state
+        // Jump to NothingSelectedState
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
     }
 
@@ -71,7 +73,7 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnWarehouse(Node warehouse) {
-        // We jump to warehouseSelected state
+        // Jump to WarehouseSelectedState
         ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
     }
 

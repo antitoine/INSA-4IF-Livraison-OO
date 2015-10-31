@@ -37,9 +37,13 @@ public class MapLoadedState extends DefaultState {
      */
     @Override
     public void btnLoadMap() {
+        // WARNING : calls order matters
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
+        // Full clear of the model
         ModelManager.getInstance().clearModel();
+        // Jump to MapSelectState
         ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
+        // Ask user for a file to load
         UIManager.getInstance().getMainWindow().askFile();
     }
 
@@ -48,7 +52,10 @@ public class MapLoadedState extends DefaultState {
      */
     @Override
     public void btnLoadPlanning() {
+        // WARNING : calls order matters
+        // Jump to PlanningSelectState
         ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
+        // Ask user for a file to load
         UIManager.getInstance().getMainWindow().askFile();
     }
 
@@ -58,7 +65,9 @@ public class MapLoadedState extends DefaultState {
     @Override
     public void btnCloseMap() {
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
+        // Full clear of the model
         ModelManager.getInstance().clearModel();
+        // Jump to InitState
         ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
 }
