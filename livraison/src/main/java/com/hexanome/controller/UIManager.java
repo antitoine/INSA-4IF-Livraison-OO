@@ -108,4 +108,38 @@ public class UIManager {
     public MainWindow getMainWindow() {
         return mainWindow;
     }
+
+    public void beginLoadMap() {
+        mainWindow.SetLoadingState("Loading Map...");
+        mainWindow.getMapView().clearMap();
+        mainWindow.getDeliveryTree().clearTree();
+    }
+
+    public void endLoadMap() {
+        mainWindow.getMapView().clearMap();
+        ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+        mainWindow.SetLoadingDone();
+        ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+        ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+    }
+
+    public void beginLoadPlanning() {
+        mainWindow.SetLoadingState("Loading Planning...");
+        mainWindow.getDeliveryTree().clearTree();
+        mainWindow.getMapView().clearDeliveries();
+    }
+
+    public void loadError() {
+        mainWindow.SetLoadingDone();
+        mainWindow.displayError("The file can't be loaded !");
+    }
+
+    public void endLoadPlanning() {
+        // Add view subscribers to the model
+        ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
+        ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
+        // Update mainwindow
+        mainWindow.SetLoadingDone();
+    }
+
 }

@@ -164,13 +164,17 @@ public class MainWindow extends AnchorPane {
         return deliveryTreeView;
     }
 
+    /**
+     * Display an error
+     * @param msg error msg
+     */
     public void displayError(String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error - "+msg);
         alert.setContentText(msg);
         /**
          * Java 8 : alert.showAndWait(); 
-         * Java 7 : */
+         * Java 7 : --> showAndWait() should work too*/
         alert.show();
     }
 

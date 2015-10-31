@@ -1,5 +1,6 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.UIManager;
 import com.hexanome.model.Arc;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Map;
@@ -9,7 +10,6 @@ import com.hexanome.model.Route;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
-import com.hexanome.utils.TypeWrapper;
 import java.awt.Point;
 import java.io.IOException;
 import java.net.URL;
@@ -20,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TreeItem;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -72,6 +71,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     /**
      * Add an arc in the view
+     *
      * @param arc arc as described in the model
      */
     public void addArc(Arc arc) {
@@ -81,9 +81,6 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
         av.toBack();
     }
 
-    public void deleteArc(Point pt1, Point pt2) {
-
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -110,8 +107,8 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
                 (nodeList.get(((Planning) (p)).getWarehouse())).setType(ConstView.WAREHOUSENODE);
             }
         }
-        if(p instanceof Route){
-            
+        if (p instanceof Route) {
+
         }
     }
 
@@ -127,9 +124,9 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
      * Reset all nodeView to emptyNode
      */
     public void clearDeliveries() {
-        for(Entry<Node, NodeView> n : nodeList.entrySet()){
-            if(n.getValue().getCurrentNodeType().equals(ConstView.DELIVERYNODE) || 
-                    n.getValue().getCurrentNodeType().equals(ConstView.WAREHOUSENODE)){
+        for (Entry<Node, NodeView> n : nodeList.entrySet()) {
+            if (n.getValue().getCurrentNodeType().equals(ConstView.DELIVERYNODE)
+                    || n.getValue().getCurrentNodeType().equals(ConstView.WAREHOUSENODE)) {
                 n.getValue().setType(ConstView.EMPTYNODE);
             }
         }
