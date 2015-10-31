@@ -3,7 +3,9 @@ package com.hexanome.controller;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -26,7 +28,18 @@ public class AppMediator extends Application{
         // Contructs the main scene that will include all the UI
         stage.setTitle(ConstView.APP_TITLE);
         stage.setScene(scene);
-        stage.setMaximized(true);
+        
+        
+        /* For Java 8 :
+        stage.setMaximized(true); */
+        /* For Java 7 : */
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+        stage.setWidth(bounds.getWidth());
+        stage.setHeight(bounds.getHeight());
+        
         stage.show();
 
     }

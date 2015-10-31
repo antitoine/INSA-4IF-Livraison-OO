@@ -143,7 +143,7 @@ public class Map implements Publisher {
         globalPreviousNodes.put(firstNode.getId(), previousNodes);
         globalMinDistances.put(firstNode.getId(), minDistances);
         
-        PriorityQueue<Node> nodesQueue = new PriorityQueue<>(new Comparator<Node>() {
+        PriorityQueue<Node> nodesQueue = new PriorityQueue<>(1, new Comparator<Node>() {
 
             @Override
             public int compare(Node node1, Node node2) {

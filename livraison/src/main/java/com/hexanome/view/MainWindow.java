@@ -168,7 +168,10 @@ public class MainWindow extends AnchorPane {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error - "+msg);
         alert.setContentText(msg);
-        alert.showAndWait();
+        /**
+         * Java 8 : alert.showAndWait(); 
+         * Java 7 : */
+        alert.show();
     }
 
 }
