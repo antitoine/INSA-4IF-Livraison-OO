@@ -40,7 +40,7 @@ public class PlanningLoadedState extends DefaultState {
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         ModelManager modelManager = ModelManager.getInstance(); 
         modelManager.clearModel();
-        modelManager.clearPlanning();
+        modelManager.clearPlanning(); //removeMeLater : redundancy : clearModel also clears the planning
         ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
         UIManager.getInstance().getMainWindow().askFile();
     }
@@ -64,7 +64,7 @@ public class PlanningLoadedState extends DefaultState {
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         ModelManager modelManager = ModelManager.getInstance(); 
         modelManager.clearModel();
-        modelManager.clearPlanning();
+        modelManager.clearPlanning(); //removeMeLater : redundancy : clearModel also clears the planning
         ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
 
@@ -83,7 +83,10 @@ public class PlanningLoadedState extends DefaultState {
      */
     @Override
     public void btnGenerateRoute() {
-        // \todo TODO
+        // \todo Afficher une boite de dialogue d'attente pendant le calcul de la route 
+        ModelManager.getInstance().getPlanning().computeRoute();
+        // \todo Récupérer eventuellement une erreur de l'instruction précédente si aucune route n'a été trouvée.
+        ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
     }
 
 }
