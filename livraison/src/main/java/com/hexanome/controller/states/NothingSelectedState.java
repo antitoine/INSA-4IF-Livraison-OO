@@ -3,6 +3,9 @@
  */
 package com.hexanome.controller.states;
 
+import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.ModelManager;
+import com.hexanome.controller.command.RemoveDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 
@@ -37,6 +40,8 @@ public class NothingSelectedState extends SelectionsStates {
     @Override
     public void clickOnDelivery(Delivery delivery) {
         // \todo TODO
+        // We jump to deliverySelected state
+        ContextManager.getInstance().setCurrentState(DeliverySelectedState.getInstance());
     }
 
     /* (non-Javadoc)
@@ -45,6 +50,8 @@ public class NothingSelectedState extends SelectionsStates {
     @Override
     public void clickOnEmptyNode(Node node) {
         // \todo TODO
+        // We jump to emptyNodeSelected state
+        ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
 
     /* (non-Javadoc)
@@ -53,6 +60,13 @@ public class NothingSelectedState extends SelectionsStates {
     @Override
     public void btnRemoveDelivery(Delivery delivery) {
         // \todo TODO
+        Delivery prevDelivery = ModelManager.getInstance().getPlanning().getPreviousDelivery(delivery);
+        // \todo treat case if delivery is the first of the list
+        RemoveDeliveryCommand rmDeliveryCmd = new RemoveDeliveryCommand(delivery, prevDelivery);
+        // ContextManager is asked to execute the command
+        ContextManager.getInstance().executeCommand(rmDeliveryCmd);
+        // We jump to emptyNodeSelected state
+        ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
 
 }

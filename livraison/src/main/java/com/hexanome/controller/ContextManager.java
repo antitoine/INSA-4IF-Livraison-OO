@@ -41,7 +41,7 @@ public class ContextManager {
      * Execute the given command and add it to commands history
      * @param cmd 
      */
-    void executeCommand(ICommand cmd) {
+    public void executeCommand(ICommand cmd) {
         // Executing command
         cmd.execute();
         // Add command to done commands history
@@ -50,7 +50,7 @@ public class ContextManager {
     /**
      * Clears commands history
      */
-    void clearCommandsHistory () {
+    public void clearCommandsHistory () {
         done.clear();
         undone.clear();
     }
