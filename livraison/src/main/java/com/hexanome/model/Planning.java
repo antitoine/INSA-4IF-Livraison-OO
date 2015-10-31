@@ -104,4 +104,8 @@ public class Planning implements Publisher {
         // TODO
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public Delivery getPreviousDelivery(Delivery delivery) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
