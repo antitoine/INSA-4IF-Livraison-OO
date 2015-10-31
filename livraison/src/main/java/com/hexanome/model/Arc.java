@@ -1,25 +1,60 @@
 package com.hexanome.model;
 
 /**
- *
+ * This class represents a road, that goes from a node to another one.
  * @author paul
  */
 public class Arc {
+    /**
+     * Name of the street.
+     */
     private String streetName;
+    /**
+     * Length of the street.
+     */
     private float length;
+    /**
+     * Average speed of the street.
+     */
     private float avgSpeed;
+    /**
+     * The time (seconds) needed to go from the start to the end of the arc.
+     */
     private float duration;
+    /**
+     * The node at the end of the arc.
+     */
     private Node dest;
+    /**
+     * The node at the beginning of the arc.
+     */
+    private Node src;
 
+    /**
+     * Returns the node that ends the arc.
+     * @return the node "dest".
+     */
     public Node getDest() {
         return dest;
     }
 
+    /**
+     * Returns the node that starts the arc.
+     * @return the node "src".
+     */
     public Node getSrc() {
         return src;
     }
-    private Node src;
     
+    
+    /**
+     * Constructor.
+     * @param streetName the name of the street
+     * @param length the length of the street
+     * @param avgSpeed the average speed on this street
+     * @param src the node from where the street starts
+     * @param dest the node where the street ends
+     */
     public Arc(String streetName, float length, float avgSpeed, Node src, Node dest) {
         this.streetName = streetName;
         this.length = length;
@@ -38,6 +73,10 @@ public class Arc {
         return (delivery == null) ? null : delivery.getTimeSlot();
     }
     
+    /**
+     * Returns the duration (seconds) needed to go from the start to the end of the arc.
+     * @return the attribute "duration".
+     */
     public float getDuration() {
         return duration;
     }
