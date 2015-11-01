@@ -3,7 +3,7 @@ package com.hexanome.model;
 import java.util.LinkedList;
 
 /**
- * 
+ * This class represents a route, with the entire path to follow to execute every delivery.
  * @author pierre
  */
 public class Route {
@@ -51,14 +51,29 @@ public class Route {
         }
     }
     
+    /**
+     * Adds a delivery to the route.
+     * @param delivery the delivery to add.
+     * @param prevDelivery the delivery that will be executed before the one to add.
+     * @param timeSlot the time slot to which the new delivery will belong.
+     */
     public void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
         // \todo implement
     }
     
+    /**
+     * Removes a delivery from the route.
+     * @param delivery the delivery to remove.
+     */
     public void removeDelivery(Delivery delivery) {
         // \todo implement
     }
     
+    /**
+     * Swaps two deliveries.
+     * @param delivery1 the first delivery to swap.
+     * @param delivery2 the second delivery to swap.
+     */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
         // \todo implement
     }
