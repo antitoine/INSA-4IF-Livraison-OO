@@ -5,8 +5,10 @@ import java.util.Stack;
 
 import com.hexanome.controller.states.IState;
 import com.hexanome.controller.states.InitState;
+
 /**
  * This class manages both commands and state machines of the application
+ *
  * @author paul
  */
 public class ContextManager {
@@ -17,7 +19,7 @@ public class ContextManager {
     private Stack<ICommand> undone;
 
     /**
-     * 
+     *
      */
     private ContextManager() {
         this.setCurrentState(InitState.getInstance());
@@ -26,20 +28,22 @@ public class ContextManager {
     }
 
     /**
-     * Returns the instance of ContextManager in the application,
-     * it is a Singleton
-     * @return 
+     * Returns the instance of ContextManager in the application, it is a
+     * Singleton
+     *
+     * @return
      */
     public static ContextManager getInstance() {
-        if(contextManager == null)
-        {
+        if (contextManager == null) {
             contextManager = new ContextManager();
         }
         return contextManager;
     }
+
     /**
      * Execute the given command and add it to commands history
-     * @param cmd 
+     *
+     * @param cmd
      */
     public void executeCommand(ICommand cmd) {
         // Executing command
@@ -47,13 +51,15 @@ public class ContextManager {
         // Add command to done commands history
         done.push(cmd);
     }
+
     /**
      * Clears commands history
      */
-    public void clearCommandsHistory () {
+    public void clearCommandsHistory() {
         done.clear();
         undone.clear();
     }
+
     /**
      * Undo the last command added to done commands stack
      */
@@ -63,6 +69,7 @@ public class ContextManager {
         // \todo updateUndoStateMachine();
         // \todo updateRedoStateMachine();
     }
+
     /**
      * Redo the last command added to undone commands stack
      */
@@ -82,7 +89,7 @@ public class ContextManager {
         ModelManager.getInstance().clearPlanning();
         // \todo update application state
     }
-    
+
     void resetModel() {
         // \todo (security) check if current state allows reset
         ModelManager.getInstance().clearModel();

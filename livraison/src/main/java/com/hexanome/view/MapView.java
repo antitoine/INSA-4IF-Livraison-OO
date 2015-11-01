@@ -1,16 +1,15 @@
 package com.hexanome.view;
 
-import com.hexanome.controller.UIManager;
 import com.hexanome.model.Arc;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Map;
 import com.hexanome.model.Node;
+import com.hexanome.model.Path;
 import com.hexanome.model.Planning;
 import com.hexanome.model.Route;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
-import java.awt.Point;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -81,7 +80,6 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
         av.toBack();
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         nodeList = new HashMap<>();
@@ -94,7 +92,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
                 addNode(ConstView.EMPTYNODE, n.getValue());
             }
             for (Arc a : ((Map) (p)).getArcs()) {
-                addArc(a);
+             //   addArc(a);
             }
         }
         if (p instanceof Planning) {
@@ -108,7 +106,11 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
             }
         }
         if (p instanceof Route) {
-
+            for (Path path : ((Route) (p)).getPaths()) {
+                for (Arc a : path.getArcs()) {
+                    addArc(a);
+                }
+            }
         }
     }
 
@@ -130,6 +132,10 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
                 n.getValue().setType(ConstView.EMPTYNODE);
             }
         }
+    }
+
+    public void selectDelivery(Delivery delivery) {
+        nodeList.get(delivery.getNode()).showPopOver();
     }
 
 }

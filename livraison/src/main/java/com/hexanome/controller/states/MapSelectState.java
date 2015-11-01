@@ -59,12 +59,11 @@ public class MapSelectState extends DefaultState {
         UIManager.getInstance().beginLoadMap();
 
         /**
-         * The task is created in a different thread
-         * A listenner listen the result of the thread and executes
-         * the right commands if the task succeds
-         * 
-         * Otherwise, all the task listed here will be executed in the UI
-         * Thread
+         * The task is created in a different thread A listenner listen the
+         * result of the thread and executes the right commands if the task
+         * succeds
+         *
+         * Otherwise, all the task listed here will be executed in the UI Thread
          */
         final Service<Void> loadService = new Service<Void>() {
             @Override

@@ -22,15 +22,6 @@ final class DeliveryTreeCell extends TreeCell<String> {
 
     public DeliveryTreeCell() {
         MenuItem addMenuItem = new MenuItem("Add Delivery");
-        addMenu.getItems().add(addMenuItem);
-        addMenuItem.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                TreeItem newDelivery
-                        = new TreeItem<>("New Delivery", new Glyph("FontAwesome", "TRUCK"));
-                getTreeItem().getChildren().add(newDelivery);
-            }
-        });
 
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

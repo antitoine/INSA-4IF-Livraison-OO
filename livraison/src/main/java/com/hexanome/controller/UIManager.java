@@ -1,5 +1,6 @@
 package com.hexanome.controller;
 
+import com.hexanome.model.Delivery;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
@@ -87,6 +88,9 @@ public class UIManager {
                 break;
             case HIDE_POPOVER:
                 mainWindow.ennablePanning();
+                break;
+            case DELEVERY_SELECTED:
+                mainWindow.getMapView().selectDelivery(((Delivery)(arg)));
                 break;
             default:
                 break;

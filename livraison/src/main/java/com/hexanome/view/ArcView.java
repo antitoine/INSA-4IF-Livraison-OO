@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 
@@ -51,24 +52,30 @@ public class ArcView extends Pane {
 
         line.setEndX(b.x - deltaX);
         line.setEndY(b.y - deltaY);
-        
-        Tooltip t = new Tooltip(arc.getDuration()+"");
+
+        Tooltip t = new Tooltip(arc.getDuration() + "");
         t.install(line, t);
         line.setCursor(Cursor.CROSSHAIR);
-        
-        Point e = new Point((int)(b.x - deltaX), (int)(b.y - deltaY));
-        
+
+        Point e = new Point((int) (b.x - deltaX), (int) (b.y - deltaY));
+
         Polygon arrow = new Polygon();
         arrow.getPoints().addAll(new Double[]{
-            (double)(e.x - 1), (double)(e.y + 2),
-            (double)(e.x + 2), (double)(e.y),
-            (double)(e.x - 1), (double)(e.y - 2)
+            (double) (e.x - 1), (double) (e.y + 2),
+            (double) (e.x + 2), (double) (e.y),
+            (double) (e.x - 1), (double) (e.y - 2)
         });
-        
+
         arrow.setScaleX(2);
         arrow.setScaleY(2);
         getChildren().add(arrow);
         arrow.setRotate(Math.toDegrees(angle));
+
+        if (arc.getAssociatedTimeSlot() != null) {
+            String color = String.format("#%X", arc.getAssociatedTimeSlot().toString().hashCode());
+            System.out.println(""+color);
+          line.setStroke(Color.web("blue"));
+        }
 
     }
 

@@ -4,8 +4,6 @@
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
-import com.hexanome.controller.ModelManager;
-import com.hexanome.controller.command.RemoveDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 

@@ -98,4 +98,5 @@ public class NodeView extends StackPane {
         popover.show(this);
     }
 
+
 }

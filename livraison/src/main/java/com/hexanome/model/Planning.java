@@ -1,12 +1,20 @@
 package com.hexanome.model;
 
-import com.hexanome.utils.ITSP;
+import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.ModelManager;
+import com.hexanome.controller.UIManager;
+import com.hexanome.controller.states.InitState;
+import com.hexanome.controller.states.MapLoadedState;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
 
 public class Planning implements Publisher {
 
@@ -15,7 +23,7 @@ public class Planning implements Publisher {
     private Route route;
     private ArrayList<TimeSlot> timeSlots;
     private ArrayList<Subscriber> subscribers;
-    
+
     private PlanningComputeRouteWorker planningComputeRouteWorker;
 
     public Planning(Map map, Node warehouse, ArrayList<TimeSlot> timeSlots) {
@@ -26,12 +34,12 @@ public class Planning implements Publisher {
 
         subscribers = new ArrayList<>();
     }
-    
+
     /**
      * Abort the route computing if it is running.
      */
     public void abortComputeRoute() {
-        planningComputeRouteWorker.interrupt();
+        //planningComputeRouteWorker.interrupt();
     }
 
     /**
@@ -40,11 +48,32 @@ public class Planning implements Publisher {
      */
     public void computeRoute() {
         planningComputeRouteWorker = new PlanningComputeRouteWorker(this);
-        planningComputeRouteWorker.start();
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return planningComputeRouteWorker;
+            }
+        };
+        service.stateProperty()
+                .addListener(new ChangeListener<Worker.State>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldValue,
+                            Worker.State newValue) {
+                        switch (newValue) {
+                            case FAILED:
+                            case CANCELLED:
+                            case SUCCEEDED:
+                                ModelManager.getInstance().getPlanning().getRoute().addSubscriber(UIManager.getInstance().getMainWindow().getMapView());
+                                break;
+                        }
+                    }
+                });
+        service.start();
     }
 
     /**
      * Returns the route, or null if any route was calculated before.
+     *
      * @return The fastest route.
      */
     public Route getFastestRoute() {
@@ -83,9 +112,10 @@ public class Planning implements Publisher {
     public Route getRoute() {
         return route;
     }
-    
+
     /**
      * Update the route and notify the subscribers.
+     *
      * @param route The new route tu use.
      */
     void setRoute(Route route) {

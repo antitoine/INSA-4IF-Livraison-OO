@@ -101,6 +101,21 @@ public class MainWindow extends AnchorPane {
     }
 
     @FXML
+    private void computeRoute() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ContextManager.getInstance().getCurrentState().btnGenerateRoute();
+            }
+        }).start();
+    }
+
+    @FXML
+    private void generateRoadMap() {
+        // ContextManager.getInstance().getCurrentState().
+    }
+
+    @FXML
     private void undo() {
         UIManager.getInstance().NotifyUI(ConstView.Action.UNDO);
     }
@@ -166,15 +181,17 @@ public class MainWindow extends AnchorPane {
 
     /**
      * Display an error
+     *
      * @param msg error msg
      */
     public void displayError(String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error - "+msg);
+        alert.setTitle("Error - " + msg);
         alert.setContentText(msg);
         /**
-         * Java 8 : alert.showAndWait(); 
-         * Java 7 : --> showAndWait() should work too*/
+         * Java 8 : alert.showAndWait(); Java 7 : --> showAndWait() should work
+         * too
+         */
         alert.show();
     }
 

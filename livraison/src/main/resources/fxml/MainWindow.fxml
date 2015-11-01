@@ -18,11 +18,7 @@
             <bottom>
                 <BorderPane fx:id="bottomPane" prefHeight="36.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                     <left>
-                        <Label text="%app_title" BorderPane.alignment="CENTER">
-                            <padding>
-                                <Insets left="10.0" />
-                            </padding>
-                        </Label>
+                        <Label text="%app_title" BorderPane.alignment="CENTER" />
                     </left>
                     <center>
                         <Label fx:id="labelInfos" text="%waiting" BorderPane.alignment="CENTER" />
@@ -46,7 +42,7 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="%compute_route">
+                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="%compute_route" onAction="#computeRoute" >
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="COGS" />
                                     </graphic>
