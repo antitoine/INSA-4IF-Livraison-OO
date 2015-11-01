@@ -104,17 +104,8 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
     }
 
     /**
-     * Add a delivery in the TreeView
-     * @param delivery delivery
-     * @param parentId TimeSlot for the delivery
-     */
-    public void AddDelivery(Delivery delivery, int parentId) {
-        deliveryBranch.put(delivery, makeBranch("Delivery " + delivery.getNode().getId(),
-                ConstView.TreeItemType.DELIVERY, timeSlotBranch.get(parentId)));
-    }
-
-    /**
      * Delete a delivery in the TreeView
+     * @param delivery
      */
     public void DeleteDelivery(Delivery delivery) {
         rootItem.getChildren().remove(deliveryBranch.get(delivery));
