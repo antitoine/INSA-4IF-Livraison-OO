@@ -3,19 +3,38 @@ package com.hexanome.model;
 import java.util.ArrayList;
 
 /**
- *
+ * This class represents a time slot, with a start time and an end time.
  * @author paul
  */
 public class TimeSlot {
 
+    /**
+     * Start time of the time slot.
+     */
     private int startTime; // Unit : seconds
+    /**
+     * End time of the time slot.
+     */
     private int endTime; // Unit : seconds 
+    /**
+     * Deliveries contained in the time slot.
+     */
     private ArrayList<Delivery> deliveries;
 
+    /**
+     * Returns all the deliveries contained in the time slot.
+     * @return a list of deliveries.
+     */
     public ArrayList<Delivery> getDeliveries() {
         return deliveries;
     }
 
+    /**
+     * Constructor.
+     * @param startTime the start time of the time slot.
+     * @param endTime the end time of the time slot.
+     * @param deliveries the deliveries contained in the time slot.
+     */
     public TimeSlot(int startTime, int endTime, ArrayList<Delivery> deliveries) {
         this.startTime = startTime;
         this.endTime = endTime;
@@ -26,10 +45,18 @@ public class TimeSlot {
         }
     }
 
+    /**
+     * Returns the start time of the time slot.
+     * @return the start time.
+     */
     public int getStartTime() {
         return startTime;
     }
 
+    /**
+     * Returns the end time of the time slot.
+     * @return the end time.
+     */
     public int getEndTime() {
         return endTime;
     }

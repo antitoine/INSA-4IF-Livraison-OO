@@ -14,16 +14,44 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 
+/**
+ * 
+ * @author 
+ */
 public class Planning implements Publisher {
 
+    /**
+     * The map associated with this planning.
+     */
     private Map map;
+    /**
+     * The unique warehouse of the map.
+     */
     private Node warehouse;
+    /**
+     * The route created from this planning.
+     */
     private Route route;
+    /**
+     * All the timeslots where a delivery can be executed.
+     */
     private ArrayList<TimeSlot> timeSlots;
+    /**
+     * The subscribers of this class.
+     */
     private ArrayList<Subscriber> subscribers;
 
+    /**
+     * Computes the route from this planning.
+     */
     private PlanningComputeRouteWorker planningComputeRouteWorker;
 
+    /**
+     * Constructor.
+     * @param map the map related to this planning.
+     * @param warehouse the warehouse.
+     * @param timeSlots all the timeslots where a delivery can be executed.
+     */
     public Planning(Map map, Node warehouse, ArrayList<TimeSlot> timeSlots) {
         this.map = map;
         this.warehouse = warehouse;
@@ -78,35 +106,71 @@ public class Planning implements Publisher {
         return route;
     }
 
+    /**
+     * Returns the delivery thanks to its id.
+     * @param id the id of the delivery.
+     * @return the delivery corresponding to this id.
+     */
     public Delivery getDeliveryById(int id) {
         // \todo implement here
         return null;
     }
 
+    /**
+     * Adds a delivery to the planning, after another delivery.
+     * @param delivery the delivery we want to add.
+     * @param previousDelivery the delivery that will be before the one we want to add.
+     * @param timeSlot the time slot in which we want the new delivery to be.
+     */
     public void addDelivery(Delivery delivery, Delivery previousDelivery, TimeSlot timeSlot) {
         // \todo implement here
     }
 
+    /**
+     * Removes a delivery from the planning.
+     * @param delivery the delivery to remove.
+     */
     public void removeDelivery(Delivery delivery) {
         // \todo implement here
     }
 
+    /**
+     * Swaps two deliveries.
+     * @param delivery1 the first delivery to swap.
+     * @param delivery2  the second delivery to swap.
+     */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
         // \todo implement here
     }
 
+    /**
+     * Returns all the time slots.
+     * @return the list of all the time slots.
+     */
     public List<TimeSlot> getTimeSlots() {
         return Collections.unmodifiableList(timeSlots);
     }
 
+    /**
+     * Returns the map corresponding to this planning.
+     * @return the map.
+     */
     public Map getMap() {
         return map;
     }
 
+    /**
+     * Returns the unique warehouse of this planning.
+     * @return the warehouse.
+     */
     public Node getWarehouse() {
         return warehouse;
     }
 
+    /**
+     * Returns the route created from this planning.
+     * @return the route.
+     */
     public Route getRoute() {
         return route;
     }
@@ -161,6 +225,11 @@ public class Planning implements Publisher {
         subscribers.clear();
     }
 
+    /**
+     * Returns the delivery that is before the one in parameter.
+     * @param delivery the delivery that is right after the one we are looking for.
+     * @return the delivery before the one in parameter.
+     */
     public Delivery getPreviousDelivery(Delivery delivery) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
