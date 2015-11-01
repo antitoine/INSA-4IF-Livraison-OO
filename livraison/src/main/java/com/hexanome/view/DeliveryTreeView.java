@@ -94,30 +94,48 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
                 });
     }
 
+    /**
+     * Add a timeSlot in the TreeView
+     * @param ts TimeSlot
+     */
     public void AddTimeSlot(TimeSlot ts) {
         String info = ts.getStartTime() + " - " + ts.getEndTime();
         timeSlotBranch.put(ts, makeBranch(info, ConstView.TreeItemType.TIMESLOT, rootItem));
     }
 
+    /**
+     * Add a delivery in the TreeView
+     * @param delivery delivery
+     * @param parentId TimeSlot for the delivery
+     */
     public void AddDelivery(Delivery delivery, int parentId) {
         deliveryBranch.put(delivery, makeBranch("Delivery " + delivery.getNode().getId(),
                 ConstView.TreeItemType.DELIVERY, timeSlotBranch.get(parentId)));
     }
 
-    public void DeleteDelivery() {
-
+    /**
+     * Delete a delivery in the TreeView
+     */
+    public void DeleteDelivery(Delivery delivery) {
+        rootItem.getChildren().remove(deliveryBranch.get(delivery));
+        deliveryBranch.remove(delivery);
     }
 
+    /**
+     * Remove all the items in the TreeView
+     */
     public void clearTree() {
         rootItem.getChildren().clear();
         deliveryBranch.clear();
         timeSlotBranch.clear();
     }
-
-    public void SwapDeliveries() {
-
-    }
-
+    
+    /**
+     * Return a delivery from an item 
+     * in the treeView
+     * @param treeItem
+     * @return 
+     */
     private Delivery getDeliveryFromTreeItem(TreeItem<String> treeItem) {
         Delivery result = null;
         for (Map.Entry<Delivery, TreeItem<String>> entrySet : deliveryBranch.entrySet()) {
@@ -174,6 +192,11 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
         }
     }
 
+    /**
+     * Select the appropriate delevery in the 
+     * TreeView
+     * @param nodeView NodeView, delivery on the map
+     */
     public void selectDelivery(NodeView nodeView) {
         for (Map.Entry<Delivery, TreeItem<String>> entrySet : deliveryBranch.entrySet()) {
             if (entrySet.getKey().getNode() == nodeView.getNode()) {
