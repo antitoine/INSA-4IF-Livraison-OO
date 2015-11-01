@@ -20,8 +20,8 @@ final class DeliveryTreeCell extends TreeCell<String> {
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.PRIMARY) {
-                    // TODO
+                if (event.getButton() == MouseButton.SECONDARY) {
+                    
                 }
             }
         });

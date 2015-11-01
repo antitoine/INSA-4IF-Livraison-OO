@@ -64,10 +64,11 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
     }
 
     /**
-     * Swap two nodes
+     * Delete a delivery from the map
+     * @param delivery 
      */
-    private void swapNode(Node node1, Node node2) {
-        // TODO
+    void deleteDelivery(Delivery delivery){
+        nodeList.get(delivery.getNode()).setType(ConstView.EMPTYNODE);
     }
 
     /**

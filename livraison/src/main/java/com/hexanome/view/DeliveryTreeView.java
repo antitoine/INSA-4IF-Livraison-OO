@@ -137,7 +137,8 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
      * @param parent
      * @return
      */
-    private TreeItem<String> makeBranch(String title, ConstView.TreeItemType treeItemType, TreeItem<String> parent) {
+    private TreeItem<String> makeBranch(String title, ConstView.TreeItemType treeItemType,
+            TreeItem<String> parent) {
         TreeItem<String> item = null;
         switch (treeItemType) {
             case DELIVERY:
@@ -165,7 +166,8 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
                         ConstView.TreeItemType.TIMESLOT, rootItem);
                 timeSlotBranch.put(ts, tsItem);
                 for (Delivery d : ts.getDeliveries()) {
-                    TreeItem<String> dItem = makeBranch("Delivery " + d.getId(), ConstView.TreeItemType.DELIVERY, tsItem);
+                    TreeItem<String> dItem = makeBranch("Delivery " + d.getId(),
+                            ConstView.TreeItemType.DELIVERY, tsItem);
                     deliveryBranch.put(d, dItem);
                 }
             }
@@ -173,11 +175,10 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
     }
 
     public void selectDelivery(NodeView nodeView) {
-        System.out.println("ici");
         for (Map.Entry<Delivery, TreeItem<String>> entrySet : deliveryBranch.entrySet()) {
-            if(entrySet.getKey().getNode() == nodeView.getNode()){
-                deliveryTree.getTreeItem(deliveryTree.getRow(entrySet.getValue()))
-                        .setValue("ici");
+            if (entrySet.getKey().getNode() == nodeView.getNode()) {
+                deliveryTree.getSelectionModel()
+                        .clearAndSelect(deliveryTree.getRow(entrySet.getValue()));
                 break;
             }
         }

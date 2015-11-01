@@ -24,8 +24,8 @@ public class PopOverContentDelivery extends PopOverContent {
      */
     public PopOverContentDelivery(Node node) {
         super(ConstView.POPOVERDELIVERY);
-        btnDelete.setGraphic(new Glyph("FontAwesome", "TRASH"));
-        adressText.setText(node.getLocation().toString());
+        adressText.setText("Adress : (" + node.getLocation().x +
+                ", " + node.getLocation().y + ")");
     }
 
     @FXML

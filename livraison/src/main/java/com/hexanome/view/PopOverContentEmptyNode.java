@@ -30,9 +30,8 @@ public class PopOverContentEmptyNode extends PopOverContent {
      */
     public PopOverContentEmptyNode(Node node) {
         super(ConstView.POPOVEREMPTY);
-        btnValidate.setGraphic(new Glyph("FontAwesome", "CHECK"));
-        prevDeliveryComboBox.getItems().add("No planning");
-        adressText.setText(node.toString());
+       // prevDeliveryComboBox.getItems().add("No planning");
+        adressText.setText("Adress : (" + node.getLocation().x + ", " + node.getLocation().y + ")");
     }
 
     @FXML
