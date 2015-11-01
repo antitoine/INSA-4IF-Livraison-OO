@@ -171,4 +171,15 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
             }
         }
     }
+
+    public void selectDelivery(NodeView nodeView) {
+        System.out.println("ici");
+        for (Map.Entry<Delivery, TreeItem<String>> entrySet : deliveryBranch.entrySet()) {
+            if(entrySet.getKey().getNode() == nodeView.getNode()){
+                deliveryTree.getTreeItem(deliveryTree.getRow(entrySet.getValue()))
+                        .setValue("ici");
+                break;
+            }
+        }
+    }
 }

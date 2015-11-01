@@ -76,6 +76,8 @@ public class ArcView extends Pane {
             System.out.println(""+color);
           line.setStroke(Color.web("blue"));
         }
+        
+        setMouseTransparent(true);
 
     }
 

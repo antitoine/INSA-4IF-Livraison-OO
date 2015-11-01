@@ -4,6 +4,7 @@ import com.hexanome.model.Delivery;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
+import com.hexanome.view.PopOverContentEmptyNode;
 import javafx.stage.Stage; // \todo Doit disparaitre !
 
 /**
@@ -76,10 +77,16 @@ public class UIManager {
                 break;
             case CLICK_ON_DELIVERY_NODE:
                 ((NodeView) (arg)).showPopOver();
+                mainWindow.getDeliveryTreeView().selectDelivery((NodeView) (arg));
                 mainWindow.disablePanning();
                 break;
             case CLICK_ON_EMPTY_NODE:
-                ((NodeView) (arg)).showPopOver();
+                NodeView nv = (NodeView) arg;
+                if (ModelManager.getInstance().getPlanning() != null) {
+                    PopOverContentEmptyNode pop = (PopOverContentEmptyNode) nv.getPopoverContent();
+                    pop.setComboxBox(ModelManager.getInstance().getPlanning().getDeliveries());
+                }
+                nv.showPopOver();
                 mainWindow.disablePanning();
                 break;
             case CLICK_ON_WAREHOUSE:
@@ -90,7 +97,7 @@ public class UIManager {
                 mainWindow.ennablePanning();
                 break;
             case DELEVERY_SELECTED:
-                mainWindow.getMapView().selectDelivery(((Delivery)(arg)));
+                mainWindow.getMapView().selectDelivery(((Delivery) (arg)));
                 break;
             default:
                 break;
@@ -116,7 +123,7 @@ public class UIManager {
     public void beginLoadMap() {
         mainWindow.SetLoadingState("Loading Map...");
         mainWindow.getMapView().clearMap();
-        mainWindow.getDeliveryTree().clearTree();
+        mainWindow.getDeliveryTreeView().clearTree();
     }
 
     public void endLoadMap() {
@@ -129,7 +136,7 @@ public class UIManager {
 
     public void beginLoadPlanning() {
         mainWindow.SetLoadingState("Loading Planning...");
-        mainWindow.getDeliveryTree().clearTree();
+        mainWindow.getDeliveryTreeView().clearTree();
         mainWindow.getMapView().clearDeliveries();
     }
 
@@ -140,7 +147,7 @@ public class UIManager {
 
     public void endLoadPlanning() {
         // Add view subscribers to the model
-        ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTree());
+        ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTreeView());
         ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
         // Update mainwindow
         mainWindow.SetLoadingDone();

@@ -1,13 +1,11 @@
 package com.hexanome.model;
 
-import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
-import com.hexanome.controller.states.InitState;
-import com.hexanome.controller.states.MapLoadedState;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
@@ -165,5 +163,13 @@ public class Planning implements Publisher {
 
     public Delivery getPreviousDelivery(Delivery delivery) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Collection<Delivery> getDeliveries() {
+        ArrayList<Delivery> deliveries = new ArrayList();
+        for(TimeSlot ts : timeSlots){
+            deliveries.addAll(ts.getDeliveries());
+        }
+        return deliveries;
     }
 }

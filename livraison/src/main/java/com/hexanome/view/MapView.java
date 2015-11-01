@@ -12,6 +12,7 @@ import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -29,6 +30,7 @@ import javafx.scene.layout.AnchorPane;
 public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     static HashMap<Node, NodeView> nodeList;
+    ArrayList<ArcView> arcslist;
 
     /**
      * Initializes the controller class.
@@ -77,12 +79,13 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
         MapView mv = this;
         ArcView av = new ArcView(arc);
         mv.getChildren().add(av);
-        av.toBack();
+        arcslist.add(av);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         nodeList = new HashMap<>();
+        arcslist = new ArrayList<>();
     }
 
     @Override
@@ -92,7 +95,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
                 addNode(ConstView.EMPTYNODE, n.getValue());
             }
             for (Arc a : ((Map) (p)).getArcs()) {
-             //   addArc(a);
+                addArc(a);
             }
         }
         if (p instanceof Planning) {
@@ -106,6 +109,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
             }
         }
         if (p instanceof Route) {
+            clearArc();
             for (Path path : ((Route) (p)).getPaths()) {
                 for (Arc a : path.getArcs()) {
                     addArc(a);
@@ -115,11 +119,21 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
     }
 
     /**
-     * Remove all nodeview from the mapView
+     * Remove all nodeview and arview
+     * from the mapView
      */
     public void clearMap() {
         nodeList.clear();
+        arcslist.clear();
         getChildren().clear();
+    }
+    
+    /**
+     * Remove all arcView
+     */
+    public void clearArc() {
+        getChildren().removeAll(arcslist);
+        arcslist.clear();
     }
 
     /**

@@ -175,9 +175,6 @@ public class MainWindow extends AnchorPane {
         //TODO update scrollbar
     }
 
-    public DeliveryTreeView getDeliveryTree() {
-        return deliveryTreeView;
-    }
 
     /**
      * Display an error
