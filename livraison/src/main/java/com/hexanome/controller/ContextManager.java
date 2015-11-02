@@ -25,8 +25,6 @@ public class ContextManager {
         this.setCurrentState(InitState.getInstance());
         this.done = new Stack<>();
         this.undone = new Stack<>();
-        // Call to clear commands history to disable buttons
-        clearCommandsHistory();
     }
 
     /**

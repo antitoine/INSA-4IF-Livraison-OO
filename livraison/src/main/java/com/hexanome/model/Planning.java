@@ -1,5 +1,6 @@
 package com.hexanome.model;
 
+import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.utils.Publisher;
@@ -72,7 +73,7 @@ public class Planning implements Publisher {
      * Start the route computing. The observers will be notified when the route
      * is set. Update the deliveries time as well.
      */
-    public void computeRoute() {
+    public void computeRoute(ChangeListener<Worker.State> listenerComputeRoute) {
         planningComputeRouteWorker = new PlanningComputeRouteWorker(this);
         Service<Void> service = new Service<Void>() {
             @Override
@@ -81,19 +82,7 @@ public class Planning implements Publisher {
             }
         };
         service.stateProperty()
-                .addListener(new ChangeListener<Worker.State>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldValue,
-                            Worker.State newValue) {
-                        switch (newValue) {
-                            case FAILED:
-                            case CANCELLED:
-                            case SUCCEEDED:
-                                ModelManager.getInstance().getPlanning().getRoute().addSubscriber(UIManager.getInstance().getMainWindow().getMapView());
-                                break;
-                        }
-                    }
-                });
+                .addListener(listenerComputeRoute);
         service.start();
     }
 
