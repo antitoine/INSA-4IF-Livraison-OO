@@ -58,7 +58,7 @@ public class PopOverContentEmptyNode extends PopOverContent {
         String s = prevDeliveryComboBox.getSelectionModel().getSelectedItem();
         Object[] obj = new Object[2];
         obj[0] = node;
-        obj[1] = deliveryNames.get(s);
+        obj[1] = deliveryNames.get(s).getNode();
         UIManager.getInstance().NotifyUI(ConstView.Action.ADD_DELIVERY, obj);
     }
 
