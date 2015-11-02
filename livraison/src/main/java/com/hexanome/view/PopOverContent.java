@@ -12,15 +12,15 @@ public abstract class PopOverContent extends BorderPane{
     Node node;
 
     public PopOverContent(String popOverType, Node node) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(popOverType));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(PopOverContent.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(popOverType));
+//        fxmlLoader.setRoot(this);
+//        fxmlLoader.setController(this);
+//
+//        try {
+//            fxmlLoader.load();
+//        } catch (IOException ex) {
+//            Logger.getLogger(PopOverContent.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
         this.node = node;
 

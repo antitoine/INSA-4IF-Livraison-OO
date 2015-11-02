@@ -2,39 +2,55 @@ package com.hexanome.view;
 
 import com.hexanome.controller.UIManager;
 import com.hexanome.model.Node;
-import javafx.fxml.FXML;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import org.controlsfx.glyphfont.Glyph;
 
 /**
- * 
+ *
  */
 public class PopOverContentDelivery extends PopOverContent {
 
-    @FXML
     Button btnDelete;
-
-    @FXML
     Text adressText;
 
     /**
-     * 
-     * @param node 
+     *
+     * @param node
      */
     public PopOverContentDelivery(Node node) {
         super(ConstView.POPOVERDELIVERY, node);
-        adressText.setText("Adress : (" + node.getLocation().x +
-                ", " + node.getLocation().y + ")");
-        if(node.getDelivery() != null && node.getDelivery().getDeliveryTime() != 0){
-            adressText.setText(adressText.getText()+"\n"
-                    + "Delivery Time : "+node.getDelivery().getDeliveryTime());
+        adressText = new Text();
+        btnDelete = new Button(null, new Glyph("FontAwesome", "REMOVE"));
+        BorderPane.setMargin(adressText, new Insets(12, 12, 12, 12));
+        BorderPane.setMargin(btnDelete, new Insets(12, 12, 12, 12));
+        BorderPane.setAlignment(btnDelete, Pos.CENTER);
+        setRight(btnDelete);
+        setCenter(adressText);
+
+        adressText.setText("Adress : (" + node.getLocation().x
+                + ", " + node.getLocation().y + ")");
+
+        btnDelete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                delete();
+            }
+        });
+
+        if (node.getDelivery() != null && node.getDelivery().getDeliveryTime() != 0) {
+            adressText.setText(adressText.getText() + "\n"
+                    + "Delivery Time : " + node.getDelivery().getDeliveryTime());
         }
     }
 
-    @FXML
     private void delete() {
-        UIManager.getInstance().NotifyUI(ConstView.Action.DELETE_DELIVERY, 
+        UIManager.getInstance().NotifyUI(ConstView.Action.DELETE_DELIVERY,
                 node.getDelivery());
     }
 

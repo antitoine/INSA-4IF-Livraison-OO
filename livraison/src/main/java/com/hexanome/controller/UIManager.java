@@ -8,6 +8,7 @@ import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
 import com.hexanome.view.PopOverContentEmptyNode;
+import javafx.concurrent.Task;
 import javafx.stage.Stage; // \todo Doit disparaitre !
 
 /**
@@ -74,11 +75,18 @@ public class UIManager {
                 AddDeliveryCommand ac = new AddDeliveryCommand((Node) objs[0],
                         (Delivery) objs[1]);
                 ContextManager.getInstance().executeCommand(ac);
+                mainWindow.getMapView().hidePopOver((Node) objs[0]);
                 break;
             case DELETE_DELIVERY:
                 Delivery d = (Delivery) arg;
-                RemoveDeliveryCommand rdc = new RemoveDeliveryCommand(d);
-                ContextManager.getInstance().executeCommand(rdc);
+                final RemoveDeliveryCommand rdc = new RemoveDeliveryCommand(d);
+                new Thread(new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        ContextManager.getInstance().executeCommand(rdc);
+                        return null;
+                    }
+                }).start();
                 break;
             case SWAP_DELIVERIES:
                 // Create a SwapDeliveryCommand and give it to context manager
@@ -147,7 +155,6 @@ public class UIManager {
         mainWindow.getDeliveryTreeView().clearTree();
         mainWindow.getMapView().clearDeliveries();
     }
-
 
     public void endLoadPlanning() {
         // Add view subscribers to the model
