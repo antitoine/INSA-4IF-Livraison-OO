@@ -146,10 +146,7 @@ public class Route implements Publisher {
             paths.remove(indexPreviousPath);
             paths.add(indexPreviousPath, nextPath);
             paths.add(indexPreviousPath, previousPath);
-            
-            // Set the time slot and update the deliveries times
-            delivery.attachTimeSlot(timeSlot);
-            
+                        
             updateDeliveriesTime();
             updateArcTimeSlots();
         }

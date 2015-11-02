@@ -28,6 +28,15 @@ public class TimeSlot {
     public ArrayList<Delivery> getDeliveries() {
         return deliveries;
     }
+    
+    /**
+     * Add a delivery to the current time slot
+     * @param delivery The delivery to add
+     */
+    void addDelivery(Delivery delivery) {
+        deliveries.add(delivery);
+        delivery.attachTimeSlot(this);
+    }
 
     /**
      * Constructor.
