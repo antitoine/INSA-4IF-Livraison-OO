@@ -114,6 +114,7 @@ public class Planning implements Publisher {
     public void addDelivery(Delivery delivery, Delivery previousDelivery, TimeSlot timeSlot) {
         if (route != null) {
             route.addDelivery(delivery, previousDelivery, timeSlot);
+            notifySubsrcibers();
         }
     }
 
@@ -196,7 +197,7 @@ public class Planning implements Publisher {
     @Override
     public void addSubscriber(Subscriber s) {
         subscribers.add(s);
-        s.update(this, route);
+        s.update(this, null);
     }
 
     @Override
@@ -207,7 +208,7 @@ public class Planning implements Publisher {
     @Override
     public void notifySubsrcibers() {
         for (Subscriber s : subscribers) {
-            s.update(this, route);
+            s.update(this, null);
         }
     }
 

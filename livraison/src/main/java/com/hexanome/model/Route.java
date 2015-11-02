@@ -113,7 +113,41 @@ public class Route implements Publisher {
      */
     public void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
         // Find the previous delivery in the list of paths
+        int indexPreviousPath = -1;
+        Path pathToReplace = null;
         
+        boolean previousPathFound = false;
+        for (int indexPath = 0, maxIndexPath = paths.size() - 1; !previousPathFound && indexPath <= maxIndexPath; ++indexPreviousPath) {
+            Path p = paths.get(indexPath);
+            
+            Delivery currentDelivery = p.getFirstNode().getDelivery();
+            
+            if (currentDelivery != null && currentDelivery.equals(prevDelivery)) {
+                previousPathFound = true;
+                indexPreviousPath = indexPath;
+                pathToReplace = p;
+            }            
+        }
+        
+        // Previous path with the previous delivery found
+        if (pathToReplace != null) {
+            // Compute the path between the previous delivery and the new delivery
+            Path previousPath = planning.getMap().getFastestPath(pathToReplace.getFirstNode(), delivery.getNode());
+            
+            // Compute the path between the next delivery and the new delivery
+            Path nextPath = planning.getMap().getFastestPath(delivery.getNode(), pathToReplace.getLastNode());
+            
+            // Replace the paths in the list
+            paths.remove(indexPreviousPath);
+            paths.add(indexPreviousPath, nextPath);
+            paths.add(indexPreviousPath, previousPath);
+            
+            // Set the time slot and update the deliveries times
+            delivery.attachTimeSlot(timeSlot);
+            
+            updateDeliveriesTime();
+            updateArcTimeSlots();
+        }
     }
     
     /**
@@ -130,7 +164,7 @@ public class Route implements Publisher {
      * @param delivery2 the second delivery to swap.
      */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
-        // \todo implement
+        // \todo implementh
     }
 
     @Override
