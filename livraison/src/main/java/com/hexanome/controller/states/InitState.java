@@ -39,4 +39,10 @@ public class InitState extends DefaultState {
         // Ask user for the file to load
         UIManager.getInstance().getMainWindow().askFile();
     }
+
+    @Override
+    public String toString() {
+        return "InitState"; //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

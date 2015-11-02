@@ -104,4 +104,9 @@ public class MapSelectState extends DefaultState {
 
     }
 
+    @Override
+    public String toString() {
+        return "MapSelectState"; //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

@@ -70,4 +70,10 @@ public class MapLoadedState extends DefaultState {
         // Jump to InitState
         ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
+
+    @Override
+    public String toString() {
+        return "MapLoadedState"; //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

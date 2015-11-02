@@ -103,4 +103,10 @@ public class PlanningSelectState extends DefaultState {
         loadService.start();
 
     }
+
+    @Override
+    public String toString() {
+        return "PlanningSelectState"; //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }
