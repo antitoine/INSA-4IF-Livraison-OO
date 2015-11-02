@@ -32,6 +32,7 @@ public class Route implements Publisher {
         subscribers = new ArrayList<>();
 
         updateDeliveriesTime();
+        updateArcTimeSlots();
     }
 
     /**
@@ -64,16 +65,50 @@ public class Route implements Publisher {
             }
         }
     }
-
     
     /**
+     * Update the associated time slots of the arcs contained in the path.
+     */
+    private void updateArcTimeSlots() {
+        for (Path p : paths) {
+            Delivery delivery = p.getLastNode().getDelivery();
+            
+            if (delivery != null) {
+                for (Arc arc : p.getArcs()) {
+                    arc.setAssociatedTimeSlot(delivery.getTimeSlot());
+                }
+            }
+        }
+    }
+    
+    /**
+     * Find the delivery passed by parameter and return the next delivery if
+     * exists.
+     * @param delivery The delivery to find in the route.
+     * @return The next delivery, or null if it doesn't exist.
+     */
+    public Delivery getNextDelivery(Delivery delivery) {
+        for (Path p : paths) {
+            Delivery currentDelivery = p.getFirstNode().getDelivery();
+            
+            if (currentDelivery != null) {
+                if (currentDelivery.equals(delivery)) {
+                    return p.getLastNode().getDelivery();
+                }
+            }
+        }
+        
+        return null;
+    }
+    
+    /*
      * Adds a delivery to the route.
      * @param delivery the delivery to add.
      * @param prevDelivery the delivery that will be executed before the one to add.
      * @param timeSlot the time slot to which the new delivery will belong.
      */
     public void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
-        // \todo implement
+        
     }
     
     /**
@@ -125,6 +160,5 @@ public class Route implements Publisher {
     public void clearSubscribers() {
         subscribers.clear();
     }
-
 
 }

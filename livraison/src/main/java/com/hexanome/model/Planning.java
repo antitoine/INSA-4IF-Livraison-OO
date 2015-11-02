@@ -112,7 +112,9 @@ public class Planning implements Publisher {
      * @param timeSlot the time slot in which we want the new delivery to be.
      */
     public void addDelivery(Delivery delivery, Delivery previousDelivery, TimeSlot timeSlot) {
-        // \todo implement here
+        if (route != null) {
+            route.addDelivery(delivery, previousDelivery, timeSlot);
+        }
     }
 
     /**
