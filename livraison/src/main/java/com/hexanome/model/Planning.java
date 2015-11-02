@@ -57,7 +57,9 @@ public class Planning implements Publisher {
     }
 
     public void addDelivery(Delivery delivery, Delivery previousDelivery, TimeSlot timeSlot) {
-        // \todo implement here
+        if (route != null) {
+            route.addDelivery(delivery, previousDelivery, timeSlot);
+        }
     }
 
     public void removeDelivery(Delivery delivery) {

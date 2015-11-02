@@ -19,6 +19,7 @@ public class Route {
     public Route(LinkedList<Path> paths) {
         this.paths = paths;
         updateDeliveriesTime();
+        updateArcTimeSlots();
     }
     
     /**
@@ -51,8 +52,45 @@ public class Route {
         }
     }
     
+    /**
+     * Update the associated time slots of the arcs contained in the path.
+     */
+    private void updateArcTimeSlots() {
+        for (Path p : paths) {
+            Delivery delivery = p.getLastNode().getDelivery();
+            
+            if (delivery != null) {
+                for (Arc arc : p.getArcs()) {
+                    arc.setAssociatedTimeSlot(delivery.getTimeSlot());
+                }
+            }
+        }
+    }
+    
+    /**
+     * Find the delivery passed by parameter and return the next delivery if
+     * exists.
+     * @param delivery The delivery to find in the route.
+     * @return The next delivery, or null if it doesn't exist.
+     */
+    public Delivery getNextDelivery(Delivery delivery) {
+        for (Path p : paths) {
+            Delivery currentDelivery = p.getFirstNode().getDelivery();
+            
+            if (currentDelivery != null) {
+                if (currentDelivery.equals(delivery)) {
+                    return p.getLastNode().getDelivery();
+                }
+            }
+        }
+        
+        return null;
+    }
+    
     public void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
-        // \todo implement
+        
+        
+        
     }
     
     public void removeDelivery(Delivery delivery) {
@@ -72,5 +110,7 @@ public class Route {
         strpaths = strpaths.substring(0, strpaths.length()-1) + "}";
         return String.format("{ \"Route\" : { \"paths\":%s } }", strpaths);
     }
+
+    
     
 }

@@ -51,7 +51,7 @@ public class Delivery {
      * Set the delivery time.
      * @param deliveryTime when the delivery will be executed.
      */
-    public void setDeliveryTime(float deliveryTime){
+    void setDeliveryTime(float deliveryTime){
         this.deliveryTime = deliveryTime;
     }
     
