@@ -3,6 +3,7 @@ package com.hexanome.controller.command;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.command.ICommand;
 import com.hexanome.model.Delivery;
+import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 
 /**
@@ -14,6 +15,7 @@ public class RemoveDeliveryCommand implements ICommand {
     private Delivery delivery;
     private Delivery prevDelivery;
     private TimeSlot timeSlot;
+    private Node node;
     /**
      * Constructs a new instance of a RemoveDeliveryCommand
      * @param delivery
@@ -25,6 +27,7 @@ public class RemoveDeliveryCommand implements ICommand {
         this.delivery = delivery;
         this.prevDelivery = prevDelivery;
         this.timeSlot = delivery.getTimeSlot();
+        this.node = delivery.getNode();
     }
     
     /**
@@ -49,7 +52,7 @@ public class RemoveDeliveryCommand implements ICommand {
     @Override
     public ICommand reverse() {
         if(ModelManager.getInstance().getPlanning() != null) {
-        ModelManager.getInstance().getPlanning().addDelivery(delivery, prevDelivery, timeSlot);
+        delivery = ModelManager.getInstance().getPlanning().addDelivery(node, prevDelivery, timeSlot);
         } else {
             // \todo treat error case
         }
