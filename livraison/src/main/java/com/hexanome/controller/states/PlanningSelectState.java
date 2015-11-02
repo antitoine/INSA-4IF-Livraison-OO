@@ -10,7 +10,6 @@ import com.hexanome.controller.IOManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.view.ConstView;
-import com.hexanome.view.MainWindow;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
@@ -73,7 +72,9 @@ public class PlanningSelectState extends DefaultState {
                 return new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-                        ModelManager.getInstance().initModelPlanning(IOManager.getInstance().getPlanningDocument(file));
+                        ModelManager.getInstance()
+                                .initModelPlanning(IOManager.getInstance()
+                                        .getPlanningDocument(file));
                         return null;
                     }
                 };
@@ -91,7 +92,7 @@ public class PlanningSelectState extends DefaultState {
                                 // Jump to MapLoadedState
                                 ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
                                 // Update mainWindow
-                                UIManager.getInstance().loadError();
+                                UIManager.getInstance().showError("File can(t be loaded");
                                 break;
                             case CANCELLED:
                                 // File selection cancel is not managed here

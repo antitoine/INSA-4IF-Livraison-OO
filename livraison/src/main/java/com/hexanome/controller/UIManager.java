@@ -4,13 +4,10 @@ import com.hexanome.controller.command.AddDeliveryCommand;
 import com.hexanome.controller.command.RemoveDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
-import com.hexanome.model.Planning;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
 import com.hexanome.view.PopOverContentEmptyNode;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.stage.Stage; // \todo Doit disparaitre !
 
 /**
@@ -80,8 +77,7 @@ public class UIManager {
                 break;
             case DELETE_DELIVERY:
                 Delivery d = (Delivery) arg;
-                RemoveDeliveryCommand rdc = new RemoveDeliveryCommand(d, 
-                        ModelManager.getInstance().getPlanning().getPreviousDelivery(d));
+                RemoveDeliveryCommand rdc = new RemoveDeliveryCommand(d);
                 ContextManager.getInstance().executeCommand(rdc);
                 break;
             case SWAP_DELIVERIES:
@@ -152,10 +148,6 @@ public class UIManager {
         mainWindow.getMapView().clearDeliveries();
     }
 
-    public void loadError() {
-        mainWindow.SetLoadingDone();
-        mainWindow.displayError("The file can't be loaded !");
-    }
 
     public void endLoadPlanning() {
         // Add view subscribers to the model
@@ -163,6 +155,12 @@ public class UIManager {
         ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
         // Update mainwindow
         mainWindow.SetLoadingDone();
+    }
+
+    public void showError(String msg) {
+        mainWindow.SetLoadingDone();
+        // Ask main window to display error
+        mainWindow.displayError(msg);
     }
 
 }

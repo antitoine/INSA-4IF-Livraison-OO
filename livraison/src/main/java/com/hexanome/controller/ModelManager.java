@@ -41,22 +41,20 @@ public class ModelManager {
      * @return false if a map already exists in the model or the integrity of
      * MapDocument is compromised, else it will return true.
      */
-    public boolean initModelMap(MapDocument mapDoc) {
+    public String initModelMap(MapDocument mapDoc) {
+        String s = null;
         if (map == null) {
             // Map creation
             map = new Map();
             if (mapDoc.checkIntegrity()) {
                 mapDoc.fillMap(map);
             } else {
-                // \todo treat error case
-                return false;
+                s = mapDoc.getErrorMsg();
             }
         } else {
-            // \todo treat error case
-            return false;
+            s = "ModelManager: a map already exists !";
         }
-        // removeMeLater : démarrer directement un premier calcul de route ?
-        return true;
+        return s;
     }
 
     /**
@@ -73,11 +71,11 @@ public class ModelManager {
             if (planDoc.checkIntegrity(map)) { // TODO : always true  
                 planning = new Planning(map, planDoc.getWarehouse(map), planDoc.getTimeSlots(map));
             } else {
-                // \todo treat error case
+                UIManager.getInstance().showError(planDoc.getErrorMsg());
                 return false;
             }
         } else {
-            // \todo treat error case
+            UIManager.getInstance().showError("ModelManager: map wasn't initialized or a planning already exists !");
             return false;
         }
         // removeMeLater : démarrer directement un premier calcul de route ?
@@ -91,7 +89,7 @@ public class ModelManager {
         map = null;
         planning = null;
     }
-    
+
     /**
      * Clears the map
      */

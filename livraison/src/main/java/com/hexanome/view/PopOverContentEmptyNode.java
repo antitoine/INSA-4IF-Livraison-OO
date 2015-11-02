@@ -34,6 +34,7 @@ public class PopOverContentEmptyNode extends PopOverContent {
      */
     public PopOverContentEmptyNode(Node node) {
         super(ConstView.POPOVEREMPTY, node);
+        deliveryNames = new HashMap<>();
         adressText.setText("Adress : (" + node.getLocation().x + ", " + node.getLocation().y + ")");
     }
 
@@ -55,9 +56,9 @@ public class PopOverContentEmptyNode extends PopOverContent {
         prevDeliveryComboBox.getItems().clear();
         deliveries = collection;
         for (Delivery d : collection) {
-            String info = "Delivery " + d.getId() + 
-                    " (" + d.getTimeSlot().getStartTime() + " - " +
-                    d.getTimeSlot().getEndTime() + ")";
+            String info = "Delivery " + d.getId()
+                    + " (" + d.getTimeSlot().getStartTime() + " - "
+                    + d.getTimeSlot().getEndTime() + ")";
             deliveryNames.put(info, d);
             prevDeliveryComboBox.getItems().add(info);
         }
