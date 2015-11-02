@@ -125,6 +125,7 @@ public class Planning implements Publisher {
         if(route != null)
         {
             route.removeDelivery(delivery);
+            notifySubscribers();
         }
     }
 
@@ -176,7 +177,7 @@ public class Planning implements Publisher {
      */
     void setRoute(Route route) {
         this.route = route;
-        notifySubsrcibers();
+        notifySubscribers();
     }
 
     // \todo add methods here
@@ -208,7 +209,7 @@ public class Planning implements Publisher {
     }
 
     @Override
-    public void notifySubsrcibers() {
+    public void notifySubscribers() {
         for (Subscriber s : subscribers) {
             s.update(this, route);
         }
