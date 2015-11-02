@@ -114,6 +114,7 @@ public class Planning implements Publisher {
     public void addDelivery(Delivery delivery, Delivery previousDelivery, TimeSlot timeSlot) {
         if (route != null) {
             route.addDelivery(delivery, previousDelivery, timeSlot);
+            notifySubscribers();
         }
     }
 
@@ -122,7 +123,11 @@ public class Planning implements Publisher {
      * @param delivery the delivery to remove.
      */
     public void removeDelivery(Delivery delivery) {
-        // \todo implement here
+        if(route != null)
+        {
+            route.removeDelivery(delivery);
+            notifySubscribers();
+        }
     }
 
     /**
@@ -131,7 +136,11 @@ public class Planning implements Publisher {
      * @param delivery2  the second delivery to swap.
      */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
-        // \todo implement here
+        if(route != null)
+        {
+            route.swapDeliveries(delivery1, delivery2);
+            notifySubscribers();
+        }
     }
 
     /**
@@ -173,7 +182,7 @@ public class Planning implements Publisher {
      */
     void setRoute(Route route) {
         this.route = route;
-        notifySubsrcibers();
+        notifySubscribers();
     }
 
     // \todo add methods here
@@ -196,7 +205,7 @@ public class Planning implements Publisher {
     @Override
     public void addSubscriber(Subscriber s) {
         subscribers.add(s);
-        s.update(this, route);
+        s.update(this, null);
     }
 
     @Override
@@ -205,9 +214,9 @@ public class Planning implements Publisher {
     }
 
     @Override
-    public void notifySubsrcibers() {
+    public void notifySubscribers() {
         for (Subscriber s : subscribers) {
-            s.update(this, route);
+            s.update(this, null);
         }
     }
 

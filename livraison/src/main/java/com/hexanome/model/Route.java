@@ -3,7 +3,9 @@ package com.hexanome.model;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class represents a route, with the entire path to follow to execute every delivery.
@@ -16,18 +18,25 @@ public class Route implements Publisher {
      */
     private LinkedList<Path> paths;
 
-    public LinkedList<Path> getPaths() {
-        return paths;
-    }
+    /**
+     * List of the subscribers.
+     */
     private ArrayList<Subscriber> subscribers;
+    
+    /**
+     * Planning associated with this route.
+     */
+    private Planning planning;
 
     /**
      * Construct the route with the paths passed by parameter and update the
      * deliveries times.
      *
+     * @param planning
      * @param paths The paths representing the route.
      */
-    public Route(LinkedList<Path> paths) {
+    public Route(Planning planning, LinkedList<Path> paths) {
+        this.planning = planning;
         this.paths = paths;
         subscribers = new ArrayList<>();
 
@@ -108,7 +117,42 @@ public class Route implements Publisher {
      * @param timeSlot the time slot to which the new delivery will belong.
      */
     public void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
+        // Find the previous delivery in the list of paths
+        int indexPreviousPath = -1;
+        Path pathToReplace = null;
         
+        boolean previousPathFound = false;
+        for (int indexPath = 0, maxIndexPath = paths.size() - 1; !previousPathFound && indexPath <= maxIndexPath; ++indexPath) {
+            Path p = paths.get(indexPath);
+            
+            Delivery currentDelivery = p.getFirstNode().getDelivery();
+            
+            if (currentDelivery != null && currentDelivery.equals(prevDelivery)) {
+                previousPathFound = true;
+                indexPreviousPath = indexPath;
+                pathToReplace = p;
+            }            
+        }
+        
+        // Previous path with the previous delivery found
+        if (pathToReplace != null) {
+            // Compute the path between the previous delivery and the new delivery
+            Path previousPath = planning.getMap().getFastestPath(pathToReplace.getFirstNode(), delivery.getNode());
+            
+            // Compute the path between the next delivery and the new delivery
+            Path nextPath = planning.getMap().getFastestPath(delivery.getNode(), pathToReplace.getLastNode());
+            
+            // Replace the paths in the list
+            paths.remove(indexPreviousPath);
+            paths.add(indexPreviousPath, nextPath);
+            paths.add(indexPreviousPath, previousPath);
+            
+            // Set the time slot and update the deliveries times
+            delivery.attachTimeSlot(timeSlot);
+            
+            updateDeliveriesTime();
+            updateArcTimeSlots();
+        }
     }
     
     /**
@@ -116,7 +160,39 @@ public class Route implements Publisher {
      * @param delivery the delivery to remove.
      */
     public void removeDelivery(Delivery delivery) {
-        // \todo implement
+        // retrieving the index of the paths where delivery is the source node or the end node 
+        int deliveryIsSourcePath = -1;
+        int deliveryIsDestPath = -1;
+        int i = 0;
+        while(i < paths.size() || (deliveryIsSourcePath != -1 && deliveryIsDestPath != -1))
+        {
+            Path path = paths.get(i);
+            if(path.getLastNode() == delivery.getNode())
+            {
+                deliveryIsDestPath = i;
+            }
+            else if(path.getFirstNode() == delivery.getNode())
+            {
+                deliveryIsSourcePath = i;
+            }
+            i++;
+        }
+        
+        // creating the new path
+        Path newPath = null;
+        Node prevNode = paths.get(deliveryIsDestPath).getFirstNode();
+        Node nextNode = paths.get(deliveryIsSourcePath).getLastNode();
+        newPath = planning.getMap().getFastestPath(prevNode, nextNode);
+        
+        // removing the old paths
+        paths.remove(deliveryIsDestPath);
+        paths.remove(deliveryIsSourcePath);
+        
+        // adding the new path
+        paths.add(deliveryIsDestPath, newPath);
+        
+        updateDeliveriesTime();
+        updateArcTimeSlots();
     }
     
     /**
@@ -125,7 +201,22 @@ public class Route implements Publisher {
      * @param delivery2 the second delivery to swap.
      */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
-        // \todo implement
+        // Find the first path with delivery 1 or delivery 2 as source
+        int indexPreviousPath = -1, indexNextPath = -1;
+        Path previousPath = null, nextPath = null;
+        
+        boolean pathsFound = false;
+        for (int indexPath = 0, maxIndexPath = paths.size() - 1; !pathsFound && indexPath <= maxIndexPath; ++indexPreviousPath) {
+            Path p = paths.get(indexPath);
+            
+            Delivery currentDelivery = p.getFirstNode().getDelivery();
+            
+            if (currentDelivery != null && currentDelivery.equals(prevDelivery)) {
+               /* previousPathFound = true;
+                indexPreviousPath = indexPath;
+                pathToReplace = p;*/
+            }            
+        }
     }
 
     @Override
@@ -150,7 +241,7 @@ public class Route implements Publisher {
     }
 
     @Override
-    public void notifySubsrcibers() {
+    public void notifySubscribers() {
         for (Subscriber s : subscribers) {
             s.update(this, null);
         }
@@ -159,6 +250,10 @@ public class Route implements Publisher {
     @Override
     public void clearSubscribers() {
         subscribers.clear();
+    }
+    
+    public List<Path> getPaths() {
+        return Collections.unmodifiableList(paths);
     }
 
 }
