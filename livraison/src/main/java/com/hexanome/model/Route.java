@@ -3,7 +3,9 @@ package com.hexanome.model;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class represents a route, with the entire path to follow to execute every delivery.
@@ -16,18 +18,20 @@ public class Route implements Publisher {
      */
     private LinkedList<Path> paths;
 
-    public LinkedList<Path> getPaths() {
-        return paths;
-    }
+    
     private ArrayList<Subscriber> subscribers;
+    
+    private Planning planning;
 
     /**
      * Construct the route with the paths passed by parameter and update the
      * deliveries times.
      *
+     * @param planning
      * @param paths The paths representing the route.
      */
-    public Route(LinkedList<Path> paths) {
+    public Route(Planning planning, LinkedList<Path> paths) {
+        this.planning = planning;
         this.paths = paths;
         subscribers = new ArrayList<>();
 
@@ -108,6 +112,7 @@ public class Route implements Publisher {
      * @param timeSlot the time slot to which the new delivery will belong.
      */
     public void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
+        // Find the previous delivery in the list of paths
         
     }
     
@@ -159,6 +164,10 @@ public class Route implements Publisher {
     @Override
     public void clearSubscribers() {
         subscribers.clear();
+    }
+    
+    public List<Path> getPaths() {
+        return Collections.unmodifiableList(paths);
     }
 
 }
