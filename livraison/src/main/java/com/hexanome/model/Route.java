@@ -276,6 +276,24 @@ public class Route implements Publisher {
             updateArcTimeSlots();
         }
     }
+    
+    /**
+     * Find and return the previous delivery done before the delivery passed
+     * by parameter.
+     * @param delivery The delivery to find.
+     * @return The previous delivery in the current route.
+     */
+    Delivery getPreviousDelivery(Delivery delivery) {
+        for (Path p : paths) {
+            if (p.getLastNode().getDelivery() != null 
+             && p.getLastNode().getDelivery().equals(delivery))
+            {
+                return p.getFirstNode().getDelivery();
+                // \todo Vraiment la livraison ? Pas le noeud ? Comment gérer quand il s'agit de l'entreprot (un simple noeud)
+            }
+        }
+        return null;
+    }
 
     @Override
     public String toString() {
@@ -313,5 +331,7 @@ public class Route implements Publisher {
     public List<Path> getPaths() {
         return Collections.unmodifiableList(paths);
     }
+
+    
 
 }
