@@ -5,7 +5,7 @@ import java.util.Stack;
 
 import com.hexanome.controller.states.IState;
 import com.hexanome.controller.states.InitState;
-
+import com.hexanome.view.ConstView;
 /**
  * This class manages both commands and state machines of the application
  *
