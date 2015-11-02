@@ -96,28 +96,21 @@ public class Planning implements Publisher {
     }
 
     /**
-     * Returns the delivery thanks to its id.
-     * @param id the id of the delivery.
-     * @return the delivery corresponding to this id.
-     */
-    public Delivery getDeliveryById(int id) {
-        // \todo implement here
-        return null;
-    }
-
-    /**
      * Adds a delivery to the planning, after another delivery.
      * @param node The node where we want to add a delivery
-     * @param previousDelivery the delivery that will be before the one we want to add.
-     * @param timeSlot the time slot in which we want the new delivery to be.
+     * @param nodePreviousDelivery The node where is the delivery to do before the
+     * new one we want to add.
+     * @param timeSlot The time slot in which we want the new delivery to be.
      * @return The delivery newly created.
      */
-    public Delivery addDelivery(Node node, Delivery previousDelivery, TimeSlot timeSlot) {
+    public Delivery addDelivery(Node node, Node nodePreviousDelivery, TimeSlot timeSlot) {
         if (route != null) {            
             Delivery newDelivery = new Delivery(timeSlot.getDeliveries().size() + 1, node);            
             timeSlot.addDelivery(newDelivery);
-            route.addDelivery(newDelivery, previousDelivery, timeSlot);
+            
+            route.addDelivery(newDelivery, nodePreviousDelivery, timeSlot);
             notifySubscribers();
+            
             return newDelivery;
         }
         
@@ -134,6 +127,19 @@ public class Planning implements Publisher {
             route.removeDelivery(delivery);
             notifySubscribers();
         }
+    }
+    
+    /**
+     * Finds the delivery passed by parameter and returns the node which contains
+     * the delivery done before.
+     * @param delivery The delivery to find in the current planning.
+     * @return The node of the previous delivery.
+     */
+    public Node getNodePreviousDelivery(Delivery delivery) {
+        if (route != null) {
+            return route.getNodePreviousDelivery(delivery);
+        }
+        return null;
     }
 
     /**
@@ -155,6 +161,14 @@ public class Planning implements Publisher {
      */
     public List<TimeSlot> getTimeSlots() {
         return Collections.unmodifiableList(timeSlots);
+    }
+    
+    /**
+     * Returns the first time slot, with the lowest start date.
+     * @return The first time slot, or null if it doesn't exist.
+     */
+    public TimeSlot getFirstTimeSlot() {
+        return (timeSlots.isEmpty()) ? null : timeSlots.get(0);
     }
 
     /**
@@ -231,20 +245,14 @@ public class Planning implements Publisher {
         subscribers.clear();
     }
 
-    /**
-     * Returns the delivery that is before the one in parameter.
-     * @param delivery the delivery that is right after the one we are looking for.
-     * @return the delivery before the one in parameter.
-     */
-    public Delivery getPreviousDelivery(Delivery delivery) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    public Collection<Delivery> getDeliveries() {
+    public List<Delivery> getDeliveries() {
         ArrayList<Delivery> deliveries = new ArrayList();
         for(TimeSlot ts : timeSlots){
             deliveries.addAll(ts.getDeliveries());
         }
         return deliveries;
     }
+
+    
 }

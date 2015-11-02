@@ -73,7 +73,7 @@ public class UIManager {
             case ADD_DELIVERY:
                 Object[] objs = (Object[]) arg;
                 AddDeliveryCommand ac = new AddDeliveryCommand((Node) objs[0],
-                        (Delivery) objs[1]);
+                        (Node) objs[1]);
                 ContextManager.getInstance().executeCommand(ac);
                 mainWindow.getMapView().hidePopOver((Node) objs[0]);
                 break;

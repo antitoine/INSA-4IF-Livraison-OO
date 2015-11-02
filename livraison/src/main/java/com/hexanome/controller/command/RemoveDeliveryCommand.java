@@ -16,7 +16,7 @@ import com.hexanome.model.TimeSlot;
 public class RemoveDeliveryCommand implements ICommand {
 
     private Delivery delivery;
-    private Delivery prevDelivery;
+    private Node nodePreviousDelivery;
     private TimeSlot timeSlot;
     private Node node;
 
@@ -40,7 +40,7 @@ public class RemoveDeliveryCommand implements ICommand {
     @Override
     public ICommand execute() {
         if (ModelManager.getInstance().getPlanning() != null) {
-            prevDelivery = ModelManager.getInstance().getPlanning().getPreviousDelivery(delivery);
+            nodePreviousDelivery = ModelManager.getInstance().getPlanning().getNodePreviousDelivery(delivery);
             ModelManager.getInstance().getPlanning().removeDelivery(delivery);
         } else {
             // \todo treat error case
@@ -57,7 +57,7 @@ public class RemoveDeliveryCommand implements ICommand {
     @Override
     public ICommand reverse() {
         if (ModelManager.getInstance().getPlanning() != null) {
-            delivery = ModelManager.getInstance().getPlanning().addDelivery(node, prevDelivery, timeSlot);
+            delivery = ModelManager.getInstance().getPlanning().addDelivery(node, nodePreviousDelivery, timeSlot);
         } else {
             // \todo treat error case
         }
