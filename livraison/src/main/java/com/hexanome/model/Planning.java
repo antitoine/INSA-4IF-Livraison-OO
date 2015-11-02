@@ -114,7 +114,7 @@ public class Planning implements Publisher {
     public void addDelivery(Delivery delivery, Delivery previousDelivery, TimeSlot timeSlot) {
         if (route != null) {
             route.addDelivery(delivery, previousDelivery, timeSlot);
-            notifySubsrcibers();
+            notifySubscribers();
         }
     }
 
@@ -136,7 +136,11 @@ public class Planning implements Publisher {
      * @param delivery2  the second delivery to swap.
      */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
-        // \todo implement here
+        if(route != null)
+        {
+            route.swapDeliveries(delivery1, delivery2);
+            notifySubscribers();
+        }
     }
 
     /**

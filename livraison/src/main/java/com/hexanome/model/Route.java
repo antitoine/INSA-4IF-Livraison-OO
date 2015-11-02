@@ -122,7 +122,7 @@ public class Route implements Publisher {
         Path pathToReplace = null;
         
         boolean previousPathFound = false;
-        for (int indexPath = 0, maxIndexPath = paths.size() - 1; !previousPathFound && indexPath <= maxIndexPath; ++indexPreviousPath) {
+        for (int indexPath = 0, maxIndexPath = paths.size() - 1; !previousPathFound && indexPath <= maxIndexPath; ++indexPath) {
             Path p = paths.get(indexPath);
             
             Delivery currentDelivery = p.getFirstNode().getDelivery();
@@ -201,7 +201,22 @@ public class Route implements Publisher {
      * @param delivery2 the second delivery to swap.
      */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
-        // \todo implementh
+        // Find the first path with delivery 1 or delivery 2 as source
+        int indexPreviousPath = -1, indexNextPath = -1;
+        Path previousPath = null, nextPath = null;
+        
+        boolean pathsFound = false;
+        for (int indexPath = 0, maxIndexPath = paths.size() - 1; !pathsFound && indexPath <= maxIndexPath; ++indexPreviousPath) {
+            Path p = paths.get(indexPath);
+            
+            Delivery currentDelivery = p.getFirstNode().getDelivery();
+            
+            if (currentDelivery != null && currentDelivery.equals(prevDelivery)) {
+               /* previousPathFound = true;
+                indexPreviousPath = indexPath;
+                pathToReplace = p;*/
+            }            
+        }
     }
 
     @Override
