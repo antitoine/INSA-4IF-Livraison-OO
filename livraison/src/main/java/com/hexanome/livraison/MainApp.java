@@ -10,7 +10,7 @@ public class MainApp {
      * launch the main controller and the view
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         // TEST
        ModelTest mt = new ModelTest();
         // Init managers by instanciating singletons
@@ -18,6 +18,11 @@ public class MainApp {
         // launch the UI Manager to display the windows
         // This is default JavaFX behaviour
        Controller.getInstance().initUI(args);
+    }*/
+    
+    public static void main(String[]args)
+    {
+        System.out.print("\n\n\nBLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH\n\n\n");
     }
 
 }

@@ -81,7 +81,29 @@ public class Route implements Publisher {
      * @param delivery the delivery to remove.
      */
     public void removeDelivery(Delivery delivery) {
-        // \todo implement
+        int deliveryIsSourcePath = -1;
+        int deliveryIsDestPath = -1;
+        
+        int i = 0;
+        while(i < paths.size() || (deliveryIsSourcePath != -1 && deliveryIsDestPath != -1))
+        {
+            Path path = paths.get(i);
+            if(path.getLastNode() == delivery.getNode())
+            {
+                deliveryIsDestPath = i;
+            }
+            else if(path.getFirstNode() == delivery.getNode())
+            {
+                deliveryIsSourcePath = i;
+            }
+            i++;
+        }
+        
+        Path newPath = null;
+        Node prevNode = paths.get(deliveryIsDestPath).getFirstNode();
+        Node nextNode = paths.get(deliveryIsSourcePath).getLastNode();
+        //newPath = getFastestPath(prevNode, nextNode);
+        
     }
     
     /**

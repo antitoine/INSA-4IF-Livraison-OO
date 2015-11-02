@@ -131,7 +131,10 @@ public class Planning implements Publisher {
      * @param delivery the delivery to remove.
      */
     public void removeDelivery(Delivery delivery) {
-        // \todo implement here
+        if(route != null)
+        {
+            route.removeDelivery(delivery);
+        }
     }
 
     /**
