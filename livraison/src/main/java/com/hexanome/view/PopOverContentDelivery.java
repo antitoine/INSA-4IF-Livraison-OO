@@ -34,7 +34,8 @@ public class PopOverContentDelivery extends PopOverContent {
 
     @FXML
     private void delete() {
-        UIManager.getInstance().NotifyUI(ConstView.Action.DELETE_DELIVERY);
+        UIManager.getInstance().NotifyUI(ConstView.Action.DELETE_DELIVERY, 
+                node.getDelivery());
     }
 
 }

@@ -1,8 +1,10 @@
 package com.hexanome.controller;
 
 import com.hexanome.controller.command.AddDeliveryCommand;
+import com.hexanome.controller.command.RemoveDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
+import com.hexanome.model.Planning;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
@@ -72,13 +74,15 @@ public class UIManager {
                 break;
             case ADD_DELIVERY:
                 Object[] objs = (Object[]) arg;
-                AddDeliveryCommand ac = new AddDeliveryCommand((Node) objs[0], 
-                        (Delivery) objs[1] );
+                AddDeliveryCommand ac = new AddDeliveryCommand((Node) objs[0],
+                        (Delivery) objs[1]);
                 ContextManager.getInstance().executeCommand(ac);
-                // Create an AddDeliveryCommand and give it to context manager
                 break;
             case DELETE_DELIVERY:
-                // Create a RemoveDeliveryCommand and give it to context manager
+                Delivery d = (Delivery) arg;
+                RemoveDeliveryCommand rdc = new RemoveDeliveryCommand(d, 
+                        ModelManager.getInstance().getPlanning().getPreviousDelivery(d));
+                ContextManager.getInstance().executeCommand(rdc);
                 break;
             case SWAP_DELIVERIES:
                 // Create a SwapDeliveryCommand and give it to context manager

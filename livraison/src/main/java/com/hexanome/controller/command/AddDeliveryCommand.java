@@ -16,6 +16,7 @@ public class AddDeliveryCommand implements ICommand {
     private Node node;
     private Delivery prevDelivery;
     private TimeSlot timeSlot;
+    private Delivery deliveryAdded;
 
     /**
      * Construct a new AddDeliveryCommand to add a new delivery to the planning
@@ -38,7 +39,8 @@ public class AddDeliveryCommand implements ICommand {
     @Override
     public ICommand execute() {
         if (ModelManager.getInstance().getPlanning() != null) {
-            ModelManager.getInstance().getPlanning().addDelivery(node, prevDelivery, timeSlot);
+            deliveryAdded = ModelManager.getInstance().getPlanning().
+                    addDelivery(node, prevDelivery, timeSlot);
         } else {
             // \todo treat error case
         }
@@ -55,7 +57,7 @@ public class AddDeliveryCommand implements ICommand {
     @Override
     public ICommand reverse() {
         if (ModelManager.getInstance().getPlanning() != null) {
-            ModelManager.getInstance().getPlanning().removeDelivery(delivery);
+            ModelManager.getInstance().getPlanning().removeDelivery(deliveryAdded);
         } else {
             // \todo treat error case
         }
