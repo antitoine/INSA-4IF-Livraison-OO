@@ -26,6 +26,10 @@ public class PopOverContentDelivery extends PopOverContent {
         super(ConstView.POPOVERDELIVERY);
         adressText.setText("Adress : (" + node.getLocation().x +
                 ", " + node.getLocation().y + ")");
+        if(node.getDelivery() != null && node.getDelivery().getDeliveryTime() != 0){
+            adressText.setText(adressText.getText()+"\n"
+                    + "Delivery Time : "+node.getDelivery().getDeliveryTime());
+        }
     }
 
     @FXML
