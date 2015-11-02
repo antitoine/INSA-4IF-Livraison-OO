@@ -4,7 +4,7 @@
     <PlagesHoraires>
         <Plage heureDebut="8:0:0" heureFin="12:0:0">
             <Livraisons>
-                <Livraison id="1" client="611" adresse="13"/>
+                <Livraison id="1" client="611" />
                 <Livraison id="2" client="276" adresse="14"/>
                 <Livraison id="3" client="300" adresse="68"/>
                 <Livraison id="4" client="591" adresse="43"/>

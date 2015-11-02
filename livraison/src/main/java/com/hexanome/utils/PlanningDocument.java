@@ -132,6 +132,9 @@ public class PlanningDocument extends XMLParser {
             }
             // TEST : check if each timeSlot contains at least one delivery
             for( Element ts : root.getChildren("Plage") ) {
+                
+// \todo add timeslot attributes checks !!!
+                
                 List<Element> deliveries = root.getChildren("Livraison");
                 if(deliveries.size() < 1) {
                     setErrorMsg("All timeslots must specify at least one delivery !");
@@ -140,6 +143,9 @@ public class PlanningDocument extends XMLParser {
                 ArrayList<Integer> ids = new ArrayList<>();
                 // TEST : if each delivery reference an existing node in the map
                 for(Element delivery : deliveries) {
+                    
+// \todo check if two or more deliveries doesn't share the same adresse in a single timeslot !!!
+                    
                     if(delivery.getAttributeValue("adresse") == null) {
                         setErrorMsg("At least one delivery doesn't reference it's node id !");
                         return false; // Interrupt check here
