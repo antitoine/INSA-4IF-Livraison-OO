@@ -2,59 +2,64 @@ package com.hexanome.controller.command;
 
 import com.hexanome.controller.ModelManager;
 import com.hexanome.model.Delivery;
+import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 
 /**
  * This class represent the action of adding a delivery to the planning
+ *
  * @author paul
  * @see ICommand
  */
 public class AddDeliveryCommand implements ICommand {
-    private Delivery delivery;
+
+    private Node node;
     private Delivery prevDelivery;
     private TimeSlot timeSlot;
+
     /**
      * Construct a new AddDeliveryCommand to add a new delivery to the planning
-     * @param delivery
-     *      Delivery to add
-     * @param prevDelivery
-     *      Delivery preceding the delivery to add
-     * @param timeSlot
-     *      timeSlot of the delivery to add
+     *
+     * @param node Delivery to add
+     * @param prevDelivery Delivery preceding the delivery to add
      */
-    public AddDeliveryCommand(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
-        this.delivery = delivery;
+    public AddDeliveryCommand(Node node, Delivery prevDelivery) {
+        this.node = node;
         this.prevDelivery = prevDelivery;
-        this.timeSlot = timeSlot;
+        this.timeSlot = prevDelivery.getTimeSlot();
     }
+
     /**
      * Execute the command by adding a delivery to the planning
+     *
      * @see ICommand
-     * @return 
+     * @return
      */
     @Override
     public ICommand execute() {
-        if(ModelManager.getInstance().getPlanning() != null) {
-        ModelManager.getInstance().getPlanning().addDelivery(delivery, prevDelivery, timeSlot);
+        if (ModelManager.getInstance().getPlanning() != null) {
+            ModelManager.getInstance().getPlanning().addDelivery(node, prevDelivery, timeSlot);
         } else {
             // \todo treat error case
         }
         return this;
     }
-    
+
     /**
-     * Reverse execution of the command by removing the delivery from the planning
+     * Reverse execution of the command by removing the delivery from the
+     * planning
+     *
      * @see ICommand
-     * @return 
+     * @return
      */
     @Override
     public ICommand reverse() {
-        if(ModelManager.getInstance().getPlanning() != null) {
-        ModelManager.getInstance().getPlanning().removeDelivery(delivery);
+        if (ModelManager.getInstance().getPlanning() != null) {
+            ModelManager.getInstance().getPlanning().removeDelivery(delivery);
         } else {
             // \todo treat error case
         }
         return this;
     }
-    
+
 }
