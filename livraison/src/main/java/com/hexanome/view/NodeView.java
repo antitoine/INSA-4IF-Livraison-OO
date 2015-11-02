@@ -62,9 +62,8 @@ public class NodeView extends StackPane {
      */
     final void setType(String nodeType) {
         getChildren().clear();
-               
-        nodeShape = NodeViewShapeFactory.createNodeViewShape(nodeType);
         
+        nodeShape = NodeViewShapeFactory.createNodeViewShape(nodeType);
         getChildren().add(nodeShape.asSceneNode());
         configurePopOver();
         setAlignment(nodeShape.asSceneNode(), Pos.CENTER);

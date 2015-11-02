@@ -1,10 +1,14 @@
 package com.hexanome.controller;
 
+import com.hexanome.controller.command.AddDeliveryCommand;
 import com.hexanome.model.Delivery;
+import com.hexanome.model.Node;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
 import com.hexanome.view.PopOverContentEmptyNode;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.stage.Stage; // \todo Doit disparaitre !
 
 /**
@@ -67,6 +71,10 @@ public class UIManager {
                 ContextManager.getInstance().exit(); // Special undoable
                 break;
             case ADD_DELIVERY:
+                Object[] objs = (Object[]) arg;
+                AddDeliveryCommand ac = new AddDeliveryCommand((Node) objs[0], 
+                        (Delivery) objs[1] );
+                ContextManager.getInstance().executeCommand(ac);
                 // Create an AddDeliveryCommand and give it to context manager
                 break;
             case DELETE_DELIVERY:

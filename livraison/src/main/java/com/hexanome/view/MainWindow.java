@@ -218,7 +218,8 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Disable the button 
+     * Disable the button
+     *
      * @param btn
      */
     public void disableButton(ConstView.Button btn) {
@@ -238,13 +239,16 @@ public class MainWindow extends AnchorPane {
                 btnRoadMap.setDisable(true);
                 break;
             case LOAD_PLANNING:
+                mntmLoadPlanning.setDisable(true);
+                btnLoadPlanning.setDisable(true);
                 break;
         }
     }
 
     /**
      * Enable the button
-     * @param btn 
+     *
+     * @param btn
      */
     public void enableButton(ConstView.Button btn) {
         switch (btn) {
@@ -263,6 +267,8 @@ public class MainWindow extends AnchorPane {
                 btnRoadMap.setDisable(false);
                 break;
             case LOAD_PLANNING:
+                mntmLoadPlanning.setDisable(false);
+                btnLoadPlanning.setDisable(false);
                 break;
         }
     }

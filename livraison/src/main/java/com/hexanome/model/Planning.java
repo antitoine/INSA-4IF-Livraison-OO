@@ -1,5 +1,6 @@
 package com.hexanome.model;
 
+import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.utils.Publisher;
@@ -72,7 +73,7 @@ public class Planning implements Publisher {
      * Start the route computing. The observers will be notified when the route
      * is set. Update the deliveries time as well.
      */
-    public void computeRoute() {
+    public void computeRoute(ChangeListener<Worker.State> listenerComputeRoute) {
         planningComputeRouteWorker = new PlanningComputeRouteWorker(this);
         Service<Void> service = new Service<Void>() {
             @Override
@@ -81,19 +82,7 @@ public class Planning implements Publisher {
             }
         };
         service.stateProperty()
-                .addListener(new ChangeListener<Worker.State>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldValue,
-                            Worker.State newValue) {
-                        switch (newValue) {
-                            case FAILED:
-                            case CANCELLED:
-                            case SUCCEEDED:
-                                ModelManager.getInstance().getPlanning().getRoute().addSubscriber(UIManager.getInstance().getMainWindow().getMapView());
-                                break;
-                        }
-                    }
-                });
+                .addListener(listenerComputeRoute);
         service.start();
     }
 
@@ -118,12 +107,21 @@ public class Planning implements Publisher {
 
     /**
      * Adds a delivery to the planning, after another delivery.
-     * @param delivery the delivery we want to add.
+     * @param node The node where we want to add a delivery
      * @param previousDelivery the delivery that will be before the one we want to add.
      * @param timeSlot the time slot in which we want the new delivery to be.
+     * @return The delivery newly created.
      */
-    public void addDelivery(Delivery delivery, Delivery previousDelivery, TimeSlot timeSlot) {
-        // \todo implement here
+    public Delivery addDelivery(Node node, Delivery previousDelivery, TimeSlot timeSlot) {
+        if (route != null) {            
+            Delivery newDelivery = new Delivery(timeSlot.getDeliveries().size() + 1, node);            
+            timeSlot.addDelivery(newDelivery);
+            route.addDelivery(newDelivery, previousDelivery, timeSlot);
+            notifySubscribers();
+            return newDelivery;
+        }
+        
+        return null;
     }
 
     /**
@@ -131,7 +129,11 @@ public class Planning implements Publisher {
      * @param delivery the delivery to remove.
      */
     public void removeDelivery(Delivery delivery) {
-        // \todo implement here
+        if(route != null)
+        {
+            route.removeDelivery(delivery);
+            notifySubscribers();
+        }
     }
 
     /**
@@ -140,7 +142,11 @@ public class Planning implements Publisher {
      * @param delivery2  the second delivery to swap.
      */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
-        // \todo implement here
+        if(route != null)
+        {
+            route.swapDeliveries(delivery1, delivery2);
+            notifySubscribers();
+        }
     }
 
     /**
@@ -182,7 +188,7 @@ public class Planning implements Publisher {
      */
     void setRoute(Route route) {
         this.route = route;
-        notifySubsrcibers();
+        notifySubscribers();
     }
 
     // \todo add methods here
@@ -205,7 +211,7 @@ public class Planning implements Publisher {
     @Override
     public void addSubscriber(Subscriber s) {
         subscribers.add(s);
-        s.update(this, route);
+        s.update(this, null);
     }
 
     @Override
@@ -214,9 +220,9 @@ public class Planning implements Publisher {
     }
 
     @Override
-    public void notifySubsrcibers() {
+    public void notifySubscribers() {
         for (Subscriber s : subscribers) {
-            s.update(this, route);
+            s.update(this, null);
         }
     }
 

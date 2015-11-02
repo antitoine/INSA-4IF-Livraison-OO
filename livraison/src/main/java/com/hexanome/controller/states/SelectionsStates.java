@@ -1,8 +1,11 @@
 /**
- * 
+ * Meta-state for all interactions on map nodes 
  */
 package com.hexanome.controller.states;
 
+import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.ModelManager;
+import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 
 /**
@@ -16,7 +19,14 @@ public abstract class SelectionsStates extends DefaultState {
      */
     @Override
     public void btnLoadMap() {
-        // \todo TODO
+        // WARNING : calls order matters
+        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
+        // Full clear of the model
+        ModelManager.getInstance().clearModel();
+        // Jump to MapSelectState
+        ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
+        // Ask user for a file to load
+        UIManager.getInstance().getMainWindow().askFile();
     }
 
     /* (non-Javadoc)
@@ -24,7 +34,14 @@ public abstract class SelectionsStates extends DefaultState {
      */
     @Override
     public void btnLoadPlanning() {
-        // \todo TODO
+        // WARNING : calls order matters
+        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
+        // Clear current model's planning
+        ModelManager.getInstance().clearPlanning();
+        // Jump to PlanningSelectState
+        ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
+        // Ask user for planning file to load
+        UIManager.getInstance().getMainWindow().askFile();
     }
 
     /* (non-Javadoc)
@@ -32,7 +49,13 @@ public abstract class SelectionsStates extends DefaultState {
      */
     @Override
     public void btnCloseMap() {
-        // \todo TODO
+        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
+        // Get model manager instance
+        ModelManager modelManager = ModelManager.getInstance(); 
+        // Full clear model
+        modelManager.clearModel();
+        // Jump to InitState
+        ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
 
     /* (non-Javadoc)
@@ -40,7 +63,11 @@ public abstract class SelectionsStates extends DefaultState {
      */
     @Override
     public void btnClearPlanning() {
-        // \todo TODO
+        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
+        // Clear model's current planning
+        ModelManager.getInstance().clearPlanning();
+        // Jump to MapLoadedState
+        ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
     }
 
     /* (non-Javadoc)
@@ -48,7 +75,8 @@ public abstract class SelectionsStates extends DefaultState {
      */
     @Override
     public void leftClickPressedOnDelivery(Delivery delivery) {
-        // \todo TODO
+        // Jump to SwapDeliveryState
+        ContextManager.getInstance().setCurrentState(SwapDeliveriesState.getInstance());
     }
 
 }

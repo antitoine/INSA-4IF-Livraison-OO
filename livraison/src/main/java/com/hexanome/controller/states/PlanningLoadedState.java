@@ -1,11 +1,15 @@
 /**
- * 
+ *
  */
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
+import com.hexanome.view.ConstView;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 
 /**
  * @author antitoine
@@ -15,20 +19,21 @@ public class PlanningLoadedState extends DefaultState {
 
     private static PlanningLoadedState planningLoadedState = null;
 
-    private PlanningLoadedState(){
+    private PlanningLoadedState() {
         // Nothing to do here
     }
 
     /**
-     * Returns the instance of the PlanningLoadedState,
-     * it is a singleton
+     * Returns the instance of the PlanningLoadedState, it is a singleton
+     *
      * @return The instance of PlanningLoadedState
      */
     public static PlanningLoadedState getInstance() {
-        if(planningLoadedState == null)
-        {
+        if (planningLoadedState == null) {
             planningLoadedState = new PlanningLoadedState();
         }
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.COMPUTE_ROUTE);
+        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.ROAD_MAP);
         return planningLoadedState;
     }
 
@@ -40,7 +45,7 @@ public class PlanningLoadedState extends DefaultState {
         // WARNING : calls order matters
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         // Get ModelManager instance
-        ModelManager modelManager = ModelManager.getInstance(); 
+        ModelManager modelManager = ModelManager.getInstance();
         // Full clear model
         modelManager.clearModel();
         // Jump to MapSelectState
@@ -71,7 +76,7 @@ public class PlanningLoadedState extends DefaultState {
     public void btnCloseMap() {
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         // Get model manager instance
-        ModelManager modelManager = ModelManager.getInstance(); 
+        ModelManager modelManager = ModelManager.getInstance();
         // Full clear model
         modelManager.clearModel();
         // Jump to InitState
@@ -95,8 +100,27 @@ public class PlanningLoadedState extends DefaultState {
      */
     @Override
     public void btnGenerateRoute() {
+        ChangeListener<Worker.State> listenerComputeRoute
+                = new ChangeListener<Worker.State>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Worker.State> 
+                            observableValue, Worker.State oldValue,
+                            Worker.State newValue) {
+                        switch (newValue) {
+                            case FAILED:
+                            case CANCELLED:
+                            case SUCCEEDED:
+                                ModelManager.getInstance().getPlanning().getRoute().
+                                addSubscriber(UIManager.getInstance().
+                                        getMainWindow().getMapView());
+                                ContextManager.getInstance()
+                                .setCurrentState(NothingSelectedState.getInstance());
+                                break;
+                        }
+                    }
+                };
         // Launch asynchronous Route computation algorithm
-        ModelManager.getInstance().getPlanning().computeRoute();
+        ModelManager.getInstance().getPlanning().computeRoute(listenerComputeRoute);
         // \todo Catch potential errors, for instance, no Route found 
         // Jump to ComputingRouteState
         ContextManager.getInstance().setCurrentState(ComputingRouteState.getInstance());

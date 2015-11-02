@@ -17,9 +17,6 @@
         <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <bottom>
                 <BorderPane fx:id="bottomPane" prefHeight="36.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                    <left>
-                        <Label text="%app_title" BorderPane.alignment="CENTER" />
-                    </left>
                     <center>
                         <Label fx:id="labelInfos" text="%waiting" BorderPane.alignment="CENTER" />
                     </center>
@@ -94,12 +91,12 @@
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="%actions">
                                     <items>
-                                        <MenuItem fx:id="mntmUndo" mnemonicParsing="false" onAction="#undo" text="%undo">
+                                        <MenuItem fx:id="mntmUndo" disable="true" mnemonicParsing="false" onAction="#undo" text="%undo">
                                             <accelerator>
                                                 <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                             </accelerator>
                                         </MenuItem>
-                                        <MenuItem fx:id="mntmRedo" mnemonicParsing="false" onAction="#redo" text="%redo">
+                                        <MenuItem fx:id="mntmRedo" disable="true" mnemonicParsing="false" onAction="#redo" text="%redo">
                                             <accelerator>
                                                 <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                             </accelerator>
@@ -120,12 +117,12 @@
                                         <Glyph fontFamily="FontAwesome" icon="FILE" />
                                     </graphic>
                                 </Button>
-                                <Button fx:id="btnUndo" mnemonicParsing="false" onAction="#undo">
+                                <Button fx:id="btnUndo" disable="true" mnemonicParsing="false" onAction="#undo">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="UNDO" />
                                     </graphic>
                                 </Button>
-                                <Button fx:id="btnRedo" mnemonicParsing="false" onAction="#redo">
+                                <Button fx:id="btnRedo" disable="true" mnemonicParsing="false" onAction="#redo">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="REPEAT" />
                                     </graphic>
