@@ -5,7 +5,16 @@ import java.util.Stack;
 
 import com.hexanome.controller.states.IState;
 import com.hexanome.controller.states.InitState;
+import com.hexanome.controller.states.MapLoadedState;
+import com.hexanome.controller.states.PlanningLoadedState;
 import com.hexanome.view.ConstView;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
+
 /**
  * This class manages both commands and state machines of the application
  *
@@ -45,13 +54,18 @@ public class ContextManager {
      *
      * @param cmd
      */
-    public void executeCommand(ICommand cmd) {
-        // Executing command
+    public void executeCommand(final ICommand cmd) {
         cmd.execute();
         // Add command to done commands history
         done.push(cmd);
         // Enable undo button
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.UNDO);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.UNDO);
+            }
+        });
+
     }
 
     /**
@@ -73,7 +87,7 @@ public class ContextManager {
         undone.push(done.pop().reverse());
         // Enable redo button
         UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.REDO);
-        if(done.empty()) {
+        if (done.empty()) {
             // Disable undo button if done stack is empty
             UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.UNDO);
         }
@@ -87,7 +101,7 @@ public class ContextManager {
         done.push(undone.pop().execute());
         // Enable undo button
         UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.UNDO);
-        if(undone.empty()) {
+        if (undone.empty()) {
             // Disable redo button if undone stack is empty
             UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.REDO);
         }

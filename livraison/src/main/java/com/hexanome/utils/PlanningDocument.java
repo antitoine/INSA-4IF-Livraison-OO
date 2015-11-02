@@ -10,6 +10,7 @@ import com.hexanome.model.Map;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,14 +23,13 @@ import org.jdom2.Element;
  * XML description of a Planning 
  * @author paul
  */
-public class PlanningDocument {
-    private Document dom;
+public class PlanningDocument extends XMLParser {
     /**
      * Creates a new instance of a PlanningDocument using the given DOM document
      * @param dom 
      */
     public PlanningDocument(Document dom) {
-        this.dom = dom;
+        super(dom);
     }
     /**
      * Returns the Node matching with the warehouse described in the XML file.
@@ -38,7 +38,7 @@ public class PlanningDocument {
      */
     public Node getWarehouse(Map map) {
         // Retreive warehouse element 
-        Element warehouse = dom.getRootElement().getChild("Entrepot");
+        Element warehouse = getDom().getRootElement().getChild("Entrepot");
         Node node = null;
         try {
             // Retreive the Id of the node
@@ -57,7 +57,7 @@ public class PlanningDocument {
      */
     public ArrayList<TimeSlot> getTimeSlots(Map map) {
         // Get all the XML nodes representing timeslots
-        List<Element> timeSlotElements = dom.getRootElement().getChildren("PlagesHoraires").get(0).getChildren();
+        List<Element> timeSlotElements = getDom().getRootElement().getChildren("PlagesHoraires").get(0).getChildren();
         // Create the list f timeslots that will be returned 
         ArrayList<TimeSlot> timeslots = new ArrayList<>();
         // Loop on timeslots XML nodes
@@ -103,7 +103,69 @@ public class PlanningDocument {
     // RemoveMeLater : must have a map to check if nodes used in the planning 
     //                 also exist in the map.
     public boolean checkIntegrity(Map map) {
-        // \todo implement all XML checks here !
+        Element root = getDom().getRootElement();
+        // TEST : check if there is only one warehouse
+        if(root.getChildren("Entrepot").size() != 1) {
+            setErrorMsg("The planning specifies zero or more than one warehouse !");
+            return false; // Interrupt check here
+        } else {
+            // TEST : check warehouse id
+            if(root.getChild("Entrepot").getAttributeValue("adresse") != null) {
+                try {
+                    // TEST : check if id of the node referenced by the warehouse exists in the map 
+                    int id = root.getChild("Entrepot").getAttribute("adresse").getIntValue();
+                    if(map.getNodeById(id) == null) {
+                        setErrorMsg("The node referenced by the warehouse is missing in the map !");
+                        return false; // Interrupt check here
+                    }
+                } catch (DataConversionException ex) {
+                    Logger.getLogger(PlanningDocument.class.getName()).log(Level.SEVERE, null, ex);
+                }                
+            } else {
+                setErrorMsg("Missing <adresse> attribute in warehouse node !");
+                return false; // Interrupt check here
+            }
+            // TEST : check if planning file specifies one or more timeslots
+            if(root.getChildren("PlagesHoraires").size() < 1) {
+                setErrorMsg("At least one timeslot should be specified by planning file !");
+                return false; // Interrupt check here
+            }
+            // TEST : check if each timeSlot contains at least one delivery
+            for( Element ts : root.getChildren("Plage") ) {
+                List<Element> deliveries = root.getChildren("Livraison");
+                if(deliveries.size() < 1) {
+                    setErrorMsg("All timeslots must specify at least one delivery !");
+                    return false; // Interrupt check here
+                }
+                ArrayList<Integer> ids = new ArrayList<>();
+                // TEST : if each delivery reference an existing node in the map
+                for(Element delivery : deliveries) {
+                    if(delivery.getAttributeValue("adresse") == null) {
+                        setErrorMsg("At least one delivery doesn't reference it's node id !");
+                        return false; // Interrupt check here
+                    } else {
+                        try {
+                            int id = delivery.getAttribute("adresse").getIntValue();
+                            ids.add(new Integer(id));
+                            if(map.getNodeById(id) == null) {
+                                setErrorMsg("At least one delivery has its node missing in the map !");
+                                return false; // Interrupt check here
+                            }
+                        } catch (DataConversionException ex) {
+                            Logger.getLogger(PlanningDocument.class.getName()).log(Level.SEVERE, null, ex);
+                        }                        
+                    }
+                }
+                // TEST : check if two nodes share the same id in the timeslot
+                for (Integer id : ids) {
+                    if(Collections.frequency(ids, id) > 1) {
+                        setErrorMsg("At least two deliveries share the same id !");
+                        return false; // Interrupt check here
+                    }
+                }
+            }
+        }
+        
         return true;
     }
 }

@@ -22,6 +22,8 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 
 /**
  * Reprensents a view of the map with nodes and arc
@@ -97,6 +99,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
             nv.relocate(node.getLocation().x - nv.getPrefWidth() / 2,
                     node.getLocation().y - nv.getPrefHeight() / 2);
         }
+
         getChildren().addAll(arcslist);
         getChildren().addAll(nodeList.values());
     }
@@ -114,6 +117,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
             addEmptyArcsAndNodes(map.getArcs(), map.getNodes().values());
         }
         if (p instanceof Planning) {
+            clearArc();
             Planning planning = (Planning) p;
             clearDeliveries();
             ColorsGenerator.getInstance(planning.getTimeSlots());
@@ -166,6 +170,10 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     public void selectDelivery(Delivery delivery) {
         nodeList.get(delivery.getNode()).showPopOver();
+    }
+
+    public void hidePopOver(Node node) {
+        nodeList.get(node).hidePopOver();
     }
 
 }

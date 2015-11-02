@@ -23,7 +23,7 @@ public final class ConstView {
     public static final String TREEVIEW = "/fxml/DeliveryTreeView.fxml";
     public static final String MAINWINDOW = "/fxml/MainWindow.fxml";
 
-    public static final double SIZE_NODE = 8.0;
+    public static final double SIZE_NODE = 10.0;
    
     public static enum Button {
         REDO, UNDO, LOAD_PLANNING, COMPUTE_ROUTE, ROAD_MAP

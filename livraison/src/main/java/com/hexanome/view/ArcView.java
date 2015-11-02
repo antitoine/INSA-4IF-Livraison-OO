@@ -2,41 +2,28 @@ package com.hexanome.view;
 
 import com.hexanome.model.Arc;
 import java.awt.Point;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 
-/**
- * FXML Controller class
- *
- * @author hverlin
- */
+
 public class ArcView extends Pane {
 
-    @FXML
     Line line;
 
     /**
      * Initializes the controller class.
      *
      * @param arc
+     * @param type
      */
     public ArcView(Arc arc, ConstView.ArcViewType type) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.ARCVIEW));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(EmptyNodeView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        line = new Line();
+        line.setStrokeWidth(3.0);
+        line.setStroke(Color.GRAY);
+        getChildren().add(line);
 
         Point a = arc.getSrc().getLocation();
         Point b = arc.getDest().getLocation();
@@ -45,19 +32,23 @@ public class ArcView extends Pane {
         double deltaX = Math.cos(angle) * ConstView.SIZE_NODE;
         double deltaY = Math.sin(angle) * ConstView.SIZE_NODE;
 
-        line.setStartX(a.x + deltaX);
-        line.setStartY(a.y + deltaY);
+        double deltaX2 = Math.cos(angle) * (ConstView.SIZE_NODE + 4);
+        double deltaY2 = Math.sin(angle) * (ConstView.SIZE_NODE + 4);
 
-        line.setEndX(b.x - deltaX);
-        line.setEndY(b.y - deltaY);
+        line.setStartX(a.x + deltaX2);
+        line.setStartY(a.y + deltaY2);
 
-        Point e = new Point((int) (b.x - deltaX), (int) (b.y - deltaY));
+        line.setEndX(b.x - deltaX2);
+        line.setEndY(b.y - deltaY2);
 
+        double endX = b.x - deltaX;
+        double endY = b.y -deltaY;
+        
         Polygon arrow = new Polygon();
         arrow.getPoints().addAll(new Double[]{
-            (double) (e.x - 1), (double) (e.y + 2),
-            (double) (e.x + 2), (double) (e.y),
-            (double) (e.x - 1), (double) (e.y - 2)
+             (endX - 1), (endY + 2),
+             (endX + 2), (endY),
+             (endX - 1), (endY - 2)
         });
 
         arrow.setScaleX(2);
@@ -73,7 +64,7 @@ public class ArcView extends Pane {
                 line.setStroke(Color.BLACK);
             }
         } else {
-            arrow.setFill(Color.LIGHTGRAY);
+            arrow.setFill(Color.GRAY);
         }
 
         setMouseTransparent(true);

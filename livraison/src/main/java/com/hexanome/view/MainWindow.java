@@ -2,6 +2,7 @@ package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
+import com.hexanome.model.Node;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -272,5 +273,7 @@ public class MainWindow extends AnchorPane {
                 break;
         }
     }
+
+
 
 }

@@ -69,14 +69,14 @@ public class MapSelectState extends DefaultState {
          *
          * Otherwise, all the task listed here will be executed in the UI Thread
          */
-        final Service<Void> loadService = new Service<Void>() {
+        final Service<String> loadService = new Service<String>() {
             @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
+            protected Task<String> createTask() {
+                return new Task<String>() {
                     @Override
-                    protected Void call() throws Exception {
-                        ModelManager.getInstance().initModelMap(IOManager.getInstance().getMapDocument(file));
-                        return null;
+                    protected String call() throws Exception {
+                        return ModelManager.getInstance().initModelMap(IOManager
+                                .getInstance().getMapDocument(file));
                     }
                 };
             }
@@ -84,23 +84,21 @@ public class MapSelectState extends DefaultState {
         loadService.stateProperty()
                 .addListener(new ChangeListener<State>() {
                     @Override
-                    public void changed(ObservableValue<? extends State> observableValue, State oldValue,
-                            State newValue) {
+                    public void changed(ObservableValue<? extends State> observableValue,
+                            State oldValue, State newValue) {
                         switch (newValue) {
-                            case FAILED:
-                                // Full clear of the model
-                                ModelManager.getInstance().clearModel();
-                                // Jump to InitState
-                                ContextManager.getInstance().setCurrentState(InitState.getInstance());
-                                // Update mainWindow
-                                UIManager.getInstance().loadError();
-                                break;
-                            case CANCELLED:
-                                // File selection cancel is not managed here
-                                break;
                             case SUCCEEDED:
-                                ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
-                                UIManager.getInstance().endLoadMap();
+                                if (loadService.getValue() != null) {
+                                    // Full clear of the model
+                                    ModelManager.getInstance().clearModel();
+                                    // Jump to InitState
+                                    ContextManager.getInstance().setCurrentState(InitState.getInstance());
+                                    // Update mainWindow
+                                    UIManager.getInstance().showError(loadService.getValue());
+                                } else {
+                                    ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
+                                    UIManager.getInstance().endLoadMap();
+                                }
                                 break;
                         }
                     }
@@ -113,5 +111,5 @@ public class MapSelectState extends DefaultState {
     public String toString() {
         return "MapSelectState"; //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
