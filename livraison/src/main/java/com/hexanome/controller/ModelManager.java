@@ -48,11 +48,11 @@ public class ModelManager {
             if (mapDoc.checkIntegrity()) {
                 mapDoc.fillMap(map);
             } else {
-                // \todo treat error case
+                UIManager.getInstance().showError(mapDoc.getErrorMsg());
                 return false;
             }
         } else {
-            // \todo treat error case
+            UIManager.getInstance().showError("ModelManager: a map already exists !");
             return false;
         }
         // removeMeLater : démarrer directement un premier calcul de route ?
@@ -73,11 +73,11 @@ public class ModelManager {
             if (planDoc.checkIntegrity(map)) { // TODO : always true  
                 planning = new Planning(map, planDoc.getWarehouse(map), planDoc.getTimeSlots(map));
             } else {
-                // \todo treat error case
+                UIManager.getInstance().showError(planDoc.getErrorMsg());
                 return false;
             }
         } else {
-            // \todo treat error case
+            UIManager.getInstance().showError("ModelManager: map wasn't initialized or a planning already exists !");
             return false;
         }
         // removeMeLater : démarrer directement un premier calcul de route ?

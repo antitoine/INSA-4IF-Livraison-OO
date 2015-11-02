@@ -153,4 +153,9 @@ public class UIManager {
         mainWindow.SetLoadingDone();
     }
 
+    public void showError(String msg) {
+        // Ask main window to display error
+        mainWindow.displayError(msg);
+    }
+    
 }
