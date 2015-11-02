@@ -20,8 +20,6 @@ public class RemoveDeliveryCommand implements ICommand {
      *      Delivery to be removed
      * @param prevDelivery
      *      Delivery preceding the delivery to be removed
-     * @param timeSlot
-     *      timeSlot of the delivery to be removed
      */
     public RemoveDeliveryCommand(Delivery delivery, Delivery prevDelivery) {
         this.delivery = delivery;
