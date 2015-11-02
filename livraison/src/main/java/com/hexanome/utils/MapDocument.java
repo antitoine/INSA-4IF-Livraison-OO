@@ -157,31 +157,23 @@ public class MapDocument extends XMLParser {
                 setErrorMsg("Missing attribute <vitesse> in at least one arc !");
                 return false; // Interrupt check here
             } else {
-                try {
-                    float avgSpeed = arc.getAttribute("vitesse").getFloatValue();
-                    // TEST : check if arc's avgSpeed is strictly above 0
-                    if(avgSpeed <= 0f) {
-                        setErrorMsg("At least one arc has its average speed <= 0 !");
-                        return false; // Interrupt check here
-                    }
-                } catch (DataConversionException ex) {
-                    Logger.getLogger(MapDocument.class.getName()).log(Level.SEVERE, null, ex);
+                float avgSpeed = Float.parseFloat(arc.getAttribute("vitesse").getValue().replaceAll(",","."));
+                // TEST : check if arc's avgSpeed is strictly above 0
+                if(avgSpeed <= 0f) {
+                    setErrorMsg("At least one arc has its average speed <= 0 !");
+                    return false; // Interrupt check here
                 }
             }
             if(arc.getAttributeValue("longueur") == null) {   
                 setErrorMsg("Missing attribute <longueur> in at least one arc !");
                 return false; // Interrupt check here
             } else {
-               try {
-                    float length = arc.getAttribute("longueur").getFloatValue();
-                    // TEST : check if arc's length is strictly above 0
-                    if(length <= 0f) {
-                        setErrorMsg("At least one arc has its length <= 0 !");
-                        return false; // Interrupt check here
-                    }
-                } catch (DataConversionException ex) {
-                    Logger.getLogger(MapDocument.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                float length = Float.parseFloat(arc.getAttribute("longueur").getValue().replaceAll(",","."));
+                // TEST : check if arc's length is strictly above 0
+                if(length <= 0f) {
+                    setErrorMsg("At least one arc has its length <= 0 !");
+                    return false; // Interrupt check here
+                }   
             }
             if(arc.getAttributeValue("idNoeudDestination") == null) {   
                 setErrorMsg("Missing attribute <idNoeudDestination> in at least one arc !");
