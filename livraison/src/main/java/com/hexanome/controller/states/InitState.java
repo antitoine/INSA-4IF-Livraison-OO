@@ -2,6 +2,7 @@ package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
+import com.hexanome.view.ConstView;
 
 /**
  * @author antitoine
@@ -25,6 +26,7 @@ public class InitState extends DefaultState {
         {
             initState = new InitState();
         }
+        // Do NOT disable any button in this state
         return initState;
     }
 

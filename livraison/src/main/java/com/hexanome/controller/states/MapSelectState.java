@@ -9,6 +9,7 @@ import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.IOManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
+import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.sun.javafx.property.adapter.PropertyDescriptor;
 import javafx.beans.value.ChangeListener;
@@ -38,6 +39,7 @@ public class MapSelectState extends DefaultState {
         if (mapSelectState == null) {
             mapSelectState = new MapSelectState();
         }
+        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.LOAD_PLANNING);
         return mapSelectState;
     }
 
@@ -92,6 +94,8 @@ public class MapSelectState extends DefaultState {
                                 UIManager.getInstance().loadError();
                                 break;
                             case CANCELLED:
+                                // File selection cancel is not managed here
+                                break;
                             case SUCCEEDED:
                                 ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
                                 UIManager.getInstance().endLoadMap();

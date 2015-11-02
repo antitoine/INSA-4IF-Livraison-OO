@@ -238,6 +238,7 @@ public class MainWindow extends AnchorPane {
                 btnRoadMap.setDisable(true);
                 break;
             case LOAD_PLANNING:
+                btnLoadPlanning.setDisable(true);
                 break;
         }
     }
@@ -263,6 +264,7 @@ public class MainWindow extends AnchorPane {
                 btnRoadMap.setDisable(false);
                 break;
             case LOAD_PLANNING:
+                btnLoadPlanning.setDisable(false);
                 break;
         }
     }

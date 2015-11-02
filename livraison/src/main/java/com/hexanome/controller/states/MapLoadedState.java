@@ -6,6 +6,7 @@ package com.hexanome.controller.states;
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
+import com.hexanome.view.ConstView;
 
 /**
  * @author antitoine
@@ -29,6 +30,7 @@ public class MapLoadedState extends DefaultState {
         {
             mapLoadedState = new MapLoadedState();
         }
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
         return mapLoadedState;
     }
 

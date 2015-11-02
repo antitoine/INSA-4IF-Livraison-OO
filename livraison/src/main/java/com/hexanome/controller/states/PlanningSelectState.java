@@ -91,6 +91,8 @@ public class PlanningSelectState extends DefaultState {
                                 UIManager.getInstance().loadError();
                                 break;
                             case CANCELLED:
+                                // File selection cancel is not managed here
+                                break;
                             case SUCCEEDED:
                                 // Jump to PlanningLoadedState
                                 ContextManager.getInstance().setCurrentState(PlanningLoadedState.getInstance());
