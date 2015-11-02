@@ -39,12 +39,12 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="btnComputeRoute" mnemonicParsing="false" onAction="#computeRoute" prefHeight="26.0" prefWidth="150.0" text="%compute_route">
+                                <Button fx:id="btnComputeRoute" disable="true" mnemonicParsing="false" onAction="#computeRoute" prefHeight="26.0" prefWidth="150.0" text="%compute_route">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="COGS" />
                                     </graphic>
                                 </Button>
-                                <Button fx:id="btnRoadMap" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="%roadmap" GridPane.columnIndex="1">
+                                <Button fx:id="btnRoadMap" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="%roadmap" GridPane.columnIndex="1">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="PRINT" />
                                     </graphic>
@@ -75,13 +75,13 @@
                                                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                             </accelerator>
                                         </MenuItem>
-                                        <MenuItem fx:id="mntmLoadPlanning" mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
+                                        <MenuItem fx:id="mntmLoadPlanning" disable="true" mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
                                             <accelerator>
                                                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                                             </accelerator>
                                         </MenuItem>
-                                        <MenuItem mnemonicParsing="false" text="%clear_map" />
-                                        <MenuItem mnemonicParsing="false" text="%delete_planning" />
+                                        <MenuItem disable="true" mnemonicParsing="false" text="%clear_map" />
+                                        <MenuItem disable="true" mnemonicParsing="false" text="%delete_planning" />
                                         <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="%exit">
                                             <accelerator>
                                                 <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -112,7 +112,7 @@
                                         <Glyph fontFamily="FontAwesome" icon="FOLDER_OPEN" />
                                     </graphic>
                                 </Button>
-                                <Button fx:id="btnLoadPlanning" mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
+                                <Button fx:id="btnLoadPlanning" disable="true" mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="FILE" />
                                     </graphic>

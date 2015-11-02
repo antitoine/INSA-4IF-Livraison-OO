@@ -73,7 +73,7 @@ public class ArcView extends Pane {
                 line.setStroke(Color.BLACK);
             }
         } else {
-            arrow.setFill(Color.LIGHTGRAY);
+            arrow.setFill(Color.web("#ab52523b"));
         }
 
         setMouseTransparent(true);
