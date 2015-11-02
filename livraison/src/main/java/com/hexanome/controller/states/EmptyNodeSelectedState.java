@@ -67,4 +67,9 @@ public class EmptyNodeSelectedState extends SelectionsStates {
         // \todo TODO
     }
 
+    @Override
+    public String toString() {
+        return "EmptyNodeSelectedState"; //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

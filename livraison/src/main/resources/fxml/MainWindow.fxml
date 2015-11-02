@@ -42,12 +42,12 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="%compute_route" onAction="#computeRoute" >
+                                <Button fx:id="btnComputeRoute" mnemonicParsing="false" onAction="#computeRoute" prefHeight="26.0" prefWidth="150.0" text="%compute_route">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="COGS" />
                                     </graphic>
                                 </Button>
-                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="%roadmap" GridPane.columnIndex="1">
+                                <Button fx:id="btnRoadMap" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="%roadmap" GridPane.columnIndex="1">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="PRINT" />
                                     </graphic>
@@ -78,7 +78,7 @@
                                                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                             </accelerator>
                                         </MenuItem>
-                                        <MenuItem mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
+                                        <MenuItem fx:id="mntmLoadPlanning" mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
                                             <accelerator>
                                                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                                             </accelerator>
@@ -94,12 +94,12 @@
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="%actions">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#undo" text="%undo">
+                                        <MenuItem fx:id="mntmUndo" disable="true" mnemonicParsing="false" onAction="#undo" text="%undo">
                                             <accelerator>
                                                 <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                             </accelerator>
                                         </MenuItem>
-                                        <MenuItem mnemonicParsing="false" onAction="#redo" text="%redo">
+                                        <MenuItem fx:id="mntmRedo" disable="true" mnemonicParsing="false" onAction="#redo" text="%redo">
                                             <accelerator>
                                                 <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                             </accelerator>
@@ -115,17 +115,17 @@
                                         <Glyph fontFamily="FontAwesome" icon="FOLDER_OPEN" />
                                     </graphic>
                                 </Button>
-                                <Button mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
+                                <Button fx:id="btnLoadPlanning" mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="FILE" />
                                     </graphic>
                                 </Button>
-                                <Button mnemonicParsing="false" onAction="#undo">
+                                <Button fx:id="btnUndo" disable="true" mnemonicParsing="false" onAction="#undo">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="UNDO" />
                                     </graphic>
                                 </Button>
-                                <Button mnemonicParsing="false" onAction="#redo">
+                                <Button fx:id="btnRedo" disable="true" mnemonicParsing="false" onAction="#redo">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="REPEAT" />
                                     </graphic>

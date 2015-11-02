@@ -58,6 +58,10 @@ public class NothingSelectedState extends SelectionsStates {
         // Jump to WarehouseSelectedState
         ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
     }
-    
 
+    @Override
+    public String toString() {
+        return "NothingSelectedState"; //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

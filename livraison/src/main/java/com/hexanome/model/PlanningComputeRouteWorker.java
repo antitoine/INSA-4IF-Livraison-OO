@@ -101,7 +101,7 @@ public class PlanningComputeRouteWorker extends Task<Void> {
             System.out.print(solutions[i] + " ");
         }
 
-        Route route = new Route(paths);
+        Route route = new Route(planning, paths);
 
         planning.setRoute(route);
         return null;

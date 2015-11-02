@@ -3,7 +3,9 @@ package com.hexanome.model;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class represents a route, with the entire path to follow to execute every delivery.
@@ -16,22 +18,25 @@ public class Route implements Publisher {
      */
     private LinkedList<Path> paths;
 
-    public LinkedList<Path> getPaths() {
-        return paths;
-    }
+    
     private ArrayList<Subscriber> subscribers;
+    
+    private Planning planning;
 
     /**
      * Construct the route with the paths passed by parameter and update the
      * deliveries times.
      *
+     * @param planning
      * @param paths The paths representing the route.
      */
-    public Route(LinkedList<Path> paths) {
+    public Route(Planning planning, LinkedList<Path> paths) {
+        this.planning = planning;
         this.paths = paths;
         subscribers = new ArrayList<>();
 
         updateDeliveriesTime();
+        updateArcTimeSlots();
     }
 
     /**
@@ -64,16 +69,51 @@ public class Route implements Publisher {
             }
         }
     }
-
     
     /**
+     * Update the associated time slots of the arcs contained in the path.
+     */
+    private void updateArcTimeSlots() {
+        for (Path p : paths) {
+            Delivery delivery = p.getLastNode().getDelivery();
+            
+            if (delivery != null) {
+                for (Arc arc : p.getArcs()) {
+                    arc.setAssociatedTimeSlot(delivery.getTimeSlot());
+                }
+            }
+        }
+    }
+    
+    /**
+     * Find the delivery passed by parameter and return the next delivery if
+     * exists.
+     * @param delivery The delivery to find in the route.
+     * @return The next delivery, or null if it doesn't exist.
+     */
+    public Delivery getNextDelivery(Delivery delivery) {
+        for (Path p : paths) {
+            Delivery currentDelivery = p.getFirstNode().getDelivery();
+            
+            if (currentDelivery != null) {
+                if (currentDelivery.equals(delivery)) {
+                    return p.getLastNode().getDelivery();
+                }
+            }
+        }
+        
+        return null;
+    }
+    
+    /*
      * Adds a delivery to the route.
      * @param delivery the delivery to add.
      * @param prevDelivery the delivery that will be executed before the one to add.
      * @param timeSlot the time slot to which the new delivery will belong.
      */
     public void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
-        // \todo implement
+        // Find the previous delivery in the list of paths
+        
     }
     
     /**
@@ -147,6 +187,9 @@ public class Route implements Publisher {
     public void clearSubscribers() {
         subscribers.clear();
     }
-
+    
+    public List<Path> getPaths() {
+        return Collections.unmodifiableList(paths);
+    }
 
 }

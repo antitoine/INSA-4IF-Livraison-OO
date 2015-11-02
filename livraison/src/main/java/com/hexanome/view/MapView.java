@@ -65,9 +65,10 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     /**
      * Delete a delivery from the map
-     * @param delivery 
+     *
+     * @param delivery
      */
-    void deleteDelivery(Delivery delivery){
+    void deleteDelivery(Delivery delivery) {
         nodeList.get(delivery.getNode()).setType(ConstView.EMPTYNODE);
     }
 
@@ -120,15 +121,14 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
     }
 
     /**
-     * Remove all nodeview and arview
-     * from the mapView
+     * Remove all nodeview and arview from the mapView
      */
     public void clearMap() {
         nodeList.clear();
         arcslist.clear();
         getChildren().clear();
     }
-    
+
     /**
      * Remove all arcView
      */

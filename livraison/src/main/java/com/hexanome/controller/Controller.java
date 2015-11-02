@@ -20,14 +20,17 @@ public class Controller {
     }
     
     public void initManagers() {
+        // <!>
+        // WARNING : Calls' order matters ! 
+        // <!>
         // Force ModelManager first instanciation
         ModelManager.getInstance();
-        // Force ContextManager first instanciation
-        ContextManager.getInstance();
         // Force IOManager first instanciation
         IOManager.getInstance();
         // Force UIManager first instanciation
         UIManager.getInstance();
+        // Force ContextManager first instanciation
+        ContextManager.getInstance();
     }   
     
     public void initUI(String[] args) {

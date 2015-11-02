@@ -68,4 +68,9 @@ public class WarehouseSelectedState extends SelectionsStates {
         // \todo TODO
     }
 
+    @Override
+    public String toString() {
+        return "WarehouseSelectedState"; //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
