@@ -7,8 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -29,7 +27,7 @@ public class ArcView extends Pane {
      *
      * @param arc
      */
-    public ArcView(Arc arc) {
+    public ArcView(Arc arc, ConstView.ArcViewType type) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.ARCVIEW));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -53,10 +51,6 @@ public class ArcView extends Pane {
         line.setEndX(b.x - deltaX);
         line.setEndY(b.y - deltaY);
 
-        Tooltip t = new Tooltip(arc.getDuration() + "");
-        t.install(line, t);
-        line.setCursor(Cursor.CROSSHAIR);
-
         Point e = new Point((int) (b.x - deltaX), (int) (b.y - deltaY));
 
         Polygon arrow = new Polygon();
@@ -71,14 +65,18 @@ public class ArcView extends Pane {
         getChildren().add(arrow);
         arrow.setRotate(Math.toDegrees(angle));
 
-        if (arc.getAssociatedTimeSlot() != null) {
-            String color = String.format("#%X", arc.getAssociatedTimeSlot().toString().hashCode());
-            System.out.println(""+color);
-          line.setStroke(Color.web("blue"));
+        if (type == ConstView.ArcViewType.ROUTE) {
+            if (arc.getAssociatedTimeSlot() != null) {
+                line.setStroke(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlot()));
+                arrow.setFill(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlot()));
+            } else {
+                line.setStroke(Color.BLACK);
+            }
+        } else {
+            arrow.setFill(Color.LIGHTGRAY);
         }
-        
-        setMouseTransparent(true);
 
+        setMouseTransparent(true);
     }
 
 }
