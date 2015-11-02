@@ -6,6 +6,7 @@ package com.hexanome.controller.states;
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
+import com.hexanome.view.ConstView;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
@@ -31,6 +32,8 @@ public class PlanningLoadedState extends DefaultState {
         if (planningLoadedState == null) {
             planningLoadedState = new PlanningLoadedState();
         }
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.COMPUTE_ROUTE);
+        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.ROAD_MAP);
         return planningLoadedState;
     }
 

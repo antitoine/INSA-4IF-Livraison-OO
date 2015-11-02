@@ -78,13 +78,11 @@ public class MapTest {
     @Test
     public void testGetNodeByLocation() {
         System.out.println("getNodeByLocation");
-        Point location = null;
-        Map instance = new Map();
-        Node expResult = null;
-        Node result = instance.getNodeByLocation(location);
+        Point location = new Point(20,30);
+        Map map = new Map();     
+        Node expResult = map.createNode(1, new Point(20,30));
+        Node result = map.getNodeByLocation(location);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -93,13 +91,10 @@ public class MapTest {
     @Test
     public void testGetNodeById() {
         System.out.println("getNodeById");
-        int id = 0;
-        Map instance = new Map();
-        Node expResult = null;
-        Node result = instance.getNodeById(id);
+        Map map = new Map();
+        Node expResult = map.createNode(1, new Point(20,30));
+        Node result = map.getNodeById(1);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -108,12 +103,27 @@ public class MapTest {
     @Test
     public void testGetArcs() {
         System.out.println("getArcs");
-        Map instance = new Map();
-        ArrayList<Arc> expResult = null;
-        ArrayList<Arc> result = instance.getArcs();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Map map = new Map();
+        Node node1 = map.createNode(1, new Point(20,30));
+        Node node2 = map.createNode(2, new Point(30,20));
+        Node node3 = map.createNode(3, new Point(20,20));
+        Arc arc1 = map.createArc("hollywood", 12, 31, 1, 2);       
+        
+        //For one arc 
+        ArrayList<Arc> expResult = new ArrayList<>();
+        expResult.add(arc1);
+        
+        ArrayList<Arc> result = map.getArcs();
+        
+        result.get(0).toString();
+        assertEquals(result.get(0).toString(), arc1.toString());
+        assertEquals(result, expResult);
+        //For several arc
+        Arc arc2 = map.createArc("doowylloh", 12, 31, 2, 1);
+        Arc arc3 = map.createArc("Insa", 12, 31, 1, 3);
+        expResult.add(arc2);
+        expResult.add(arc3);
+        assertEquals(result, expResult);
     }
 
     /**
@@ -122,12 +132,12 @@ public class MapTest {
     @Test
     public void testGetNodes() {
         System.out.println("getNodes");
-        Map instance = new Map();
-        HashMap<Integer, Node> expResult = null;
-        HashMap<Integer, Node> result = instance.getNodes();
+        Map map = new Map();
+        Node node1 = map.createNode(1, new Point(20,30));
+        HashMap<Integer, Node> expResult = new HashMap<>();
+        expResult.put(1, node1);
+        HashMap<Integer, Node> result = map.getNodes();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -136,25 +146,20 @@ public class MapTest {
     @Test
     public void testGetFastestPath() {
         System.out.println("getFastestPath");
-        Node start = null;
-        Node end = null;
-        Map instance = new Map();
-        Path expResult = null;
-        Path result = instance.getFastestPath(start, end);
+        Map map = new Map();
+        Node start = map.createNode(1, new Point(20,30));
+        Node inter = map.createNode(3, new Point(20,20));
+        Node end = map.createNode(2, new Point(10,20));    
+        
+        Arc arc1 = map.createArc("route1", 12, 31, 1, 3);
+        Arc arc2 = map.createArc("route2", 6, 31, 1, 2);
+        Arc arc3 = map.createArc("route3", 5, 31, 2, 3);
+        
+        ArrayList<Arc> arcs = new ArrayList<>();
+        arcs.add(arc2);
+        arcs.add(arc3);
+        Path expResult = new Path(arcs);
+        Path result = map.getFastestPath(start, end);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of clear method, of class Map.
-     */
-    @Test
-    public void testClear() {
-        System.out.println("clear");
-        Map instance = new Map();
-        instance.clear();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    }  
 }
