@@ -31,6 +31,7 @@ public class MapLoadedState extends DefaultState {
             mapLoadedState = new MapLoadedState();
         }
         UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
+        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.COMPUTE_ROUTE);
         return mapLoadedState;
     }
 

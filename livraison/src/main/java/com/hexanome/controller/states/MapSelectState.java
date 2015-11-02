@@ -40,6 +40,8 @@ public class MapSelectState extends DefaultState {
             mapSelectState = new MapSelectState();
         }
         UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.LOAD_PLANNING);
+        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.COMPUTE_ROUTE);
+        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.ROAD_MAP);
         return mapSelectState;
     }
 

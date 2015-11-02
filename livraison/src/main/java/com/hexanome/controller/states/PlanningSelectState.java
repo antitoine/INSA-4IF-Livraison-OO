@@ -9,6 +9,7 @@ import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.IOManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
+import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,6 +37,8 @@ public class PlanningSelectState extends DefaultState {
         if (planningSelectState == null) {
             planningSelectState = new PlanningSelectState();
         }
+        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.COMPUTE_ROUTE);
+        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.ROAD_MAP);
         return planningSelectState;
     }
 
