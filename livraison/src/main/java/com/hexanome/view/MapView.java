@@ -34,6 +34,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     static HashMap<Node, NodeView> nodeList;
     HashSet<ArcView> arcslist;
+    HashMap<PairPoint, ArcView> arcsMap;
 
     /**
      * Initializes the controller class.
@@ -168,10 +169,19 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
         }
     }
 
+    /**
+     * Select the delivery passed as parameter
+     * @param delivery 
+     */
     public void selectDelivery(Delivery delivery) {
         nodeList.get(delivery.getNode()).showPopOver();
     }
 
+    /**
+     * Add the PopOver which corresponds the 
+     * node passed as paramater
+     * @param node 
+     */
     public void hidePopOver(Node node) {
         nodeList.get(node).hidePopOver();
     }

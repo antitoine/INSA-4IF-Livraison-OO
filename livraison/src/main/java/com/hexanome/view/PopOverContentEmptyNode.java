@@ -3,6 +3,7 @@ package com.hexanome.view;
 import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
+import com.hexanome.utils.TypeWrapper;
 import java.util.Collection;
 import java.util.HashMap;
 import javafx.event.ActionEvent;
@@ -75,9 +76,12 @@ public class PopOverContentEmptyNode extends PopOverContent {
         prevDeliveryComboBox.getItems().clear();
         deliveries = collection;
         for (Delivery d : collection) {
+            String start = TypeWrapper.secondsToTimestamp(d.getTimeSlot().getStartTime());
+            String end = TypeWrapper.secondsToTimestamp(d.getTimeSlot().getEndTime());
+
             String info = "Delivery " + d.getId()
-                    + " (" + d.getTimeSlot().getStartTime() + " - "
-                    + d.getTimeSlot().getEndTime() + ")";
+                    + " (" + start + " - "
+                    + end + ")";
             deliveryNames.put(info, d);
             prevDeliveryComboBox.getItems().add(info);
         }

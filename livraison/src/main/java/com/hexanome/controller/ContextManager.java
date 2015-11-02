@@ -65,7 +65,6 @@ public class ContextManager {
                 UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.UNDO);
             }
         });
-
     }
 
     /**
