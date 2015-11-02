@@ -18,9 +18,14 @@ public class Route implements Publisher {
      */
     private LinkedList<Path> paths;
 
-    
+    /**
+     * List of the subscribers.
+     */
     private ArrayList<Subscriber> subscribers;
     
+    /**
+     * Planning associated with this route.
+     */
     private Planning planning;
 
     /**
@@ -155,7 +160,39 @@ public class Route implements Publisher {
      * @param delivery the delivery to remove.
      */
     public void removeDelivery(Delivery delivery) {
-        // \todo implement
+        // retrieving the index of the paths where delivery is the source node or the end node 
+        int deliveryIsSourcePath = -1;
+        int deliveryIsDestPath = -1;
+        int i = 0;
+        while(i < paths.size() || (deliveryIsSourcePath != -1 && deliveryIsDestPath != -1))
+        {
+            Path path = paths.get(i);
+            if(path.getLastNode() == delivery.getNode())
+            {
+                deliveryIsDestPath = i;
+            }
+            else if(path.getFirstNode() == delivery.getNode())
+            {
+                deliveryIsSourcePath = i;
+            }
+            i++;
+        }
+        
+        // creating the new path
+        Path newPath = null;
+        Node prevNode = paths.get(deliveryIsDestPath).getFirstNode();
+        Node nextNode = paths.get(deliveryIsSourcePath).getLastNode();
+        newPath = planning.getMap().getFastestPath(prevNode, nextNode);
+        
+        // removing the old paths
+        paths.remove(deliveryIsDestPath);
+        paths.remove(deliveryIsSourcePath);
+        
+        // adding the new path
+        paths.add(deliveryIsDestPath, newPath);
+        
+        updateDeliveriesTime();
+        updateArcTimeSlots();
     }
     
     /**
@@ -189,7 +226,7 @@ public class Route implements Publisher {
     }
 
     @Override
-    public void notifySubsrcibers() {
+    public void notifySubscribers() {
         for (Subscriber s : subscribers) {
             s.update(this, null);
         }
