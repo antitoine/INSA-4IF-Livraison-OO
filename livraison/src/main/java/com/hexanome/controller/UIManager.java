@@ -1,8 +1,10 @@
 package com.hexanome.controller;
 
+import com.hexanome.model.Delivery;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
+import com.hexanome.view.PopOverContentEmptyNode;
 import javafx.stage.Stage; // \todo Doit disparaitre !
 
 /**
@@ -75,10 +77,16 @@ public class UIManager {
                 break;
             case CLICK_ON_DELIVERY_NODE:
                 ((NodeView) (arg)).showPopOver();
+                mainWindow.getDeliveryTreeView().selectDelivery((NodeView) (arg));
                 mainWindow.disablePanning();
                 break;
             case CLICK_ON_EMPTY_NODE:
-                ((NodeView) (arg)).showPopOver();
+                NodeView nv = (NodeView) arg;
+                if (ModelManager.getInstance().getPlanning() != null) {
+                    PopOverContentEmptyNode pop = (PopOverContentEmptyNode) nv.getPopoverContent();
+                    pop.setComboxBox(ModelManager.getInstance().getPlanning().getDeliveries());
+                }
+                nv.showPopOver();
                 mainWindow.disablePanning();
                 break;
             case CLICK_ON_WAREHOUSE:
@@ -87,6 +95,9 @@ public class UIManager {
                 break;
             case HIDE_POPOVER:
                 mainWindow.ennablePanning();
+                break;
+            case DELEVERY_SELECTED:
+                mainWindow.getMapView().selectDelivery(((Delivery) (arg)));
                 break;
             default:
                 break;
@@ -108,4 +119,38 @@ public class UIManager {
     public MainWindow getMainWindow() {
         return mainWindow;
     }
+
+    public void beginLoadMap() {
+        mainWindow.SetLoadingState("Loading Map...");
+        mainWindow.getMapView().clearMap();
+        mainWindow.getDeliveryTreeView().clearTree();
+    }
+
+    public void endLoadMap() {
+        mainWindow.getMapView().clearMap();
+        ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+        mainWindow.SetLoadingDone();
+        ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+        ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
+    }
+
+    public void beginLoadPlanning() {
+        mainWindow.SetLoadingState("Loading Planning...");
+        mainWindow.getDeliveryTreeView().clearTree();
+        mainWindow.getMapView().clearDeliveries();
+    }
+
+    public void loadError() {
+        mainWindow.SetLoadingDone();
+        mainWindow.displayError("The file can't be loaded !");
+    }
+
+    public void endLoadPlanning() {
+        // Add view subscribers to the model
+        ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTreeView());
+        ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
+        // Update mainwindow
+        mainWindow.SetLoadingDone();
+    }
+
 }

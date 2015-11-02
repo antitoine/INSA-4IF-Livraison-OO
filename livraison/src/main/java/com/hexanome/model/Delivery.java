@@ -9,7 +9,7 @@ public class Delivery {
     /**
      * The time when the delivery will be executed.
      */
-    private float deliveryTime ;
+    private float deliveryTime;
     /**
      * The node where this delivery will be executed.
      */
@@ -33,6 +33,7 @@ public class Delivery {
         this.id = id;
         this.node = node;
         this.node.attachDelivery(this);
+        deliveryTime = 0.0f;
     }
 
     /**

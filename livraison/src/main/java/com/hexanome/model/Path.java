@@ -1,8 +1,6 @@
 package com.hexanome.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * This class represents the path to follow to execute all the deliveries.
@@ -13,6 +11,10 @@ public class Path {
      * All the arcs to take, in the right order.
      */
     private ArrayList<Arc> arcs;
+
+    public ArrayList<Arc> getArcs() {
+        return arcs;
+    }
     /**
      * The total duration of the path.
      */
@@ -61,9 +63,6 @@ public class Path {
         return pathDuration;
     }
     
-    public List<Arc> getArcs() {
-        return Collections.unmodifiableList(arcs);
-    }
 
     @Override
     public String toString() {

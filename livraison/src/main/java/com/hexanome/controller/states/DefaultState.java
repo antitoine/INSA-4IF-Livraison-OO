@@ -158,4 +158,9 @@ public abstract class DefaultState implements IState {
         // Nothing to do here
     }
 
+    @Override
+    public String toString() {
+        return "DefaultState";
+    }
+
 }

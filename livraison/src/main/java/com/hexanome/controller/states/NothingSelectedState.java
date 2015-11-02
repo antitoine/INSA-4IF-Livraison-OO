@@ -4,8 +4,6 @@
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
-import com.hexanome.controller.ModelManager;
-import com.hexanome.controller.command.RemoveDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 
@@ -60,6 +58,10 @@ public class NothingSelectedState extends SelectionsStates {
         // Jump to WarehouseSelectedState
         ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
     }
-    
 
+    @Override
+    public String toString() {
+        return "NothingSelectedState"; //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

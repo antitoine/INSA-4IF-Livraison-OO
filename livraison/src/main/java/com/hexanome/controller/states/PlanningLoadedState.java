@@ -102,4 +102,9 @@ public class PlanningLoadedState extends DefaultState {
         ContextManager.getInstance().setCurrentState(ComputingRouteState.getInstance());
     }
 
+    @Override
+    public String toString() {
+        return "PlanningLoadedState"; //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

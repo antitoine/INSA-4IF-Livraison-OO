@@ -1,19 +1,15 @@
 package com.hexanome.view;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import org.controlsfx.glyphfont.Glyph;
 
 final class DeliveryTreeCell extends TreeCell<String> {
 
@@ -21,22 +17,11 @@ final class DeliveryTreeCell extends TreeCell<String> {
     private ContextMenu addMenu = new ContextMenu();
 
     public DeliveryTreeCell() {
-        MenuItem addMenuItem = new MenuItem("Add Delivery");
-        addMenu.getItems().add(addMenuItem);
-        addMenuItem.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                TreeItem newDelivery
-                        = new TreeItem<>("New Delivery", new Glyph("FontAwesome", "TRUCK"));
-                getTreeItem().getChildren().add(newDelivery);
-            }
-        });
-
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.PRIMARY) {
-                    // TODO
+                if (event.getButton() == MouseButton.SECONDARY) {
+                    
                 }
             }
         });
