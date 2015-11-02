@@ -40,8 +40,8 @@ public class AddDeliveryCommand implements ICommand {
     @Override
     public ICommand execute() {
         if (ModelManager.getInstance().getPlanning() != null) {
-            delivery = ModelManager.getInstance().getPlanning().addDelivery(node,
-                    prevDelivery, timeSlot);
+            delivery = ModelManager.getInstance().getPlanning()
+                    .addDelivery(node, prevDelivery, timeSlot);
         } else {
             // \todo treat error case
         }
