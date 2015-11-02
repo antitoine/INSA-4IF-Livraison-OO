@@ -23,7 +23,7 @@ public class PopOverContentDelivery extends PopOverContent {
      * @param node 
      */
     public PopOverContentDelivery(Node node) {
-        super(ConstView.POPOVERDELIVERY);
+        super(ConstView.POPOVERDELIVERY, node);
         adressText.setText("Adress : (" + node.getLocation().x +
                 ", " + node.getLocation().y + ")");
         if(node.getDelivery() != null && node.getDelivery().getDeliveryTime() != 0){

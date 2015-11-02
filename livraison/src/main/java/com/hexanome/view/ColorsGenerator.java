@@ -30,8 +30,9 @@ public class ColorsGenerator {
 
         colors.add(Color.RED);
         colors.add(Color.BLUE);
-        colors.add(Color.YELLOW);
+        colors.add(Color.ORANGE);
         colors.add(Color.web("#89CFF0"));
+        colors.add(Color.YELLOW);
         colors.add(Color.ORANGE);
         colors.add(Color.BROWN);
         colors.add(Color.GREEN);

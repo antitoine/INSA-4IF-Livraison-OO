@@ -146,10 +146,7 @@ public class Route implements Publisher {
             paths.remove(indexPreviousPath);
             paths.add(indexPreviousPath, nextPath);
             paths.add(indexPreviousPath, previousPath);
-            
-            // Set the time slot and update the deliveries times
-            delivery.attachTimeSlot(timeSlot);
-            
+                        
             updateDeliveriesTime();
             updateArcTimeSlots();
         }
@@ -206,7 +203,9 @@ public class Route implements Publisher {
         Delivery previousDelivery = null, nextDelivery = null;
         Path previousPath = null, nextPath = null;
         
-        for (int indexPath = 0, maxIndexPath = paths.size() - 1; (previousPath == null || nextPath == null) && indexPath <= maxIndexPath; ++indexPath) {
+        for (int indexPath = 0, maxIndexPath = paths.size() - 1; 
+                (previousPath == null || nextPath == null) && 
+                indexPath <= maxIndexPath; ++indexPath) {
             Path p = paths.get(indexPath);
             
             // Find the path which begins with delivery1 or delivery2 

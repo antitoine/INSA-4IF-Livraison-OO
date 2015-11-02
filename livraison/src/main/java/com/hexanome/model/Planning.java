@@ -107,13 +107,15 @@ public class Planning implements Publisher {
 
     /**
      * Adds a delivery to the planning, after another delivery.
-     * @param delivery the delivery we want to add.
+     * @param node The node where we want to add a delivery
      * @param previousDelivery the delivery that will be before the one we want to add.
      * @param timeSlot the time slot in which we want the new delivery to be.
      */
-    public void addDelivery(Delivery delivery, Delivery previousDelivery, TimeSlot timeSlot) {
-        if (route != null) {
-            route.addDelivery(delivery, previousDelivery, timeSlot);
+    public void addDelivery(Node node, Delivery previousDelivery, TimeSlot timeSlot) {
+        if (route != null) {            
+            Delivery newDelivery = new Delivery(timeSlot.getDeliveries().size() + 1, node);            
+            timeSlot.addDelivery(newDelivery);
+            route.addDelivery(newDelivery, previousDelivery, timeSlot);
             notifySubscribers();
         }
     }

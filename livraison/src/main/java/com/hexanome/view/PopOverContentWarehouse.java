@@ -8,7 +8,7 @@ import com.hexanome.model.Node;
 public class PopOverContentWarehouse extends PopOverContent{
         
     public PopOverContentWarehouse(Node node) {
-        super(ConstView.POPOVERWAREHOUSE);
+        super(ConstView.POPOVERWAREHOUSE, node);
     }
     
 
