@@ -1,7 +1,9 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.UIManager;
+import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
+import java.util.Collection;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -23,21 +25,30 @@ public class PopOverContentEmptyNode extends PopOverContent {
     Text adressText;
 
     /**
-     * 
-     * @param node Node as described in the model 
+     *
+     * @param node Node as described in the model
      */
     public PopOverContentEmptyNode(Node node) {
         super(ConstView.POPOVEREMPTY);
-        btnValidate.setGraphic(new Glyph("FontAwesome", "CHECK"));
-        prevDeliveryComboBox.getItems().addAll("livraison 1", "livraison 2");
-        adressText.setText(node.toString());
+       // prevDeliveryComboBox.getItems().add("No planning");
+        adressText.setText("Adress : (" + node.getLocation().x + ", " + node.getLocation().y + ")");
     }
-    
+
     @FXML
     private void addDelivery() {
         UIManager.getInstance().NotifyUI(ConstView.Action.ADD_DELIVERY);
     }
-    
-    
+
+    /**
+     * Add deliveries to the combox box
+     *
+     * @param collection
+     */
+    public void setComboxBox(Collection<Delivery> collection) {
+        prevDeliveryComboBox.getItems().clear();
+        for (Delivery d : collection) {
+            prevDeliveryComboBox.getItems().add("Delivery " + d.getId());
+        }
+    }
 
 }

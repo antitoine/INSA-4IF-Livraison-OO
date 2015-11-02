@@ -43,5 +43,6 @@ public class EmptyNodeView extends Circle implements INodeViewShape {
     public PopOver createPopOver(com.hexanome.model.Node node) {
         return new PopOver(new PopOverContentEmptyNode(node));
     }
+    
 
 }

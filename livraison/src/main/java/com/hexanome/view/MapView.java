@@ -1,18 +1,18 @@
 package com.hexanome.view;
 
-import com.hexanome.controller.UIManager;
 import com.hexanome.model.Arc;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Map;
 import com.hexanome.model.Node;
+import com.hexanome.model.Path;
 import com.hexanome.model.Planning;
 import com.hexanome.model.Route;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
-import java.awt.Point;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -30,6 +30,7 @@ import javafx.scene.layout.AnchorPane;
 public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     static HashMap<Node, NodeView> nodeList;
+    ArrayList<ArcView> arcslist;
 
     /**
      * Initializes the controller class.
@@ -63,10 +64,12 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
     }
 
     /**
-     * Swap two nodes
+     * Delete a delivery from the map
+     *
+     * @param delivery
      */
-    private void swapNode(Node node1, Node node2) {
-        // TODO
+    void deleteDelivery(Delivery delivery) {
+        nodeList.get(delivery.getNode()).setType(ConstView.EMPTYNODE);
     }
 
     /**
@@ -78,13 +81,13 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
         MapView mv = this;
         ArcView av = new ArcView(arc);
         mv.getChildren().add(av);
-        av.toBack();
+        arcslist.add(av);
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         nodeList = new HashMap<>();
+        arcslist = new ArrayList<>();
     }
 
     @Override
@@ -108,16 +111,30 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
             }
         }
         if (p instanceof Route) {
-
+            clearArc();
+            for (Path path : ((Route) (p)).getPaths()) {
+                for (Arc a : path.getArcs()) {
+                    addArc(a);
+                }
+            }
         }
     }
 
     /**
-     * Remove all nodeview from the mapView
+     * Remove all nodeview and arview from the mapView
      */
     public void clearMap() {
         nodeList.clear();
+        arcslist.clear();
         getChildren().clear();
+    }
+
+    /**
+     * Remove all arcView
+     */
+    public void clearArc() {
+        getChildren().removeAll(arcslist);
+        arcslist.clear();
     }
 
     /**
@@ -130,6 +147,10 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
                 n.getValue().setType(ConstView.EMPTYNODE);
             }
         }
+    }
+
+    public void selectDelivery(Delivery delivery) {
+        nodeList.get(delivery.getNode()).showPopOver();
     }
 
 }

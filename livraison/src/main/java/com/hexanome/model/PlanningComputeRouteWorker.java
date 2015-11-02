@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hexanome.model;
 
 import com.hexanome.utils.ITSP;
 import java.util.LinkedList;
 import java.util.List;
+import javafx.concurrent.Task;
 
 /**
  * Worker Thread used to compute a route of a planning. Can be interrupted.
  *
  * @author Pierre Jarsaillon
  */
-public class PlanningComputeRouteWorker extends Thread {
+public class PlanningComputeRouteWorker extends Task<Void> {
 
     /**
      * The planning to work with.
@@ -31,7 +27,7 @@ public class PlanningComputeRouteWorker extends Thread {
     }
 
     @Override
-    public void run() {
+    protected Void call() throws Exception {
         PathGraph graph = new PathGraph();
 
         List<TimeSlot> timeSlots = planning.getTimeSlots();
@@ -40,17 +36,11 @@ public class PlanningComputeRouteWorker extends Thread {
 
         // Time slots processing
         for (int numTimeSlot = 0, maxTimeSlot = timeSlots.size() - 1; numTimeSlot <= maxTimeSlot; ++numTimeSlot) {
-            if (isInterrupted()) {
-                return;
-            }
 
             TimeSlot ts = timeSlots.get(numTimeSlot);
 
             // Compute each delivery of the current time slot
             for (Delivery startDelivery : ts.getDeliveries()) {
-                if (isInterrupted()) {
-                    return;
-                }
 
                 Node startNode = startDelivery.getNode();
 
@@ -74,9 +64,6 @@ public class PlanningComputeRouteWorker extends Thread {
                 // Find the fastest path between the current delivery and the
                 // other deliveries in the same time slot
                 for (Delivery nextDelivery : ts.getDeliveries()) {
-                    if (isInterrupted()) {
-                        return;
-                    }
 
                     if (!startDelivery.equals(nextDelivery)) {
                         Path fastestPath = map.getFastestPath(startNode, nextDelivery.getNode());
@@ -84,10 +71,6 @@ public class PlanningComputeRouteWorker extends Thread {
                     }
                 }
             }
-        }
-
-        if (isInterrupted()) {
-            return;
         }
 
         // Compute the TSP algorithm on the new path graph
@@ -99,7 +82,7 @@ public class PlanningComputeRouteWorker extends Thread {
         try {
             solutions = tsp.computeSolution(3600000, graph);
         } catch (InterruptedException ex) {
-            return;
+            return null;
         }
 
         System.out.print("Solution de longueur " + tsp.getSolutionCost() + " trouvee en " + (System.currentTimeMillis() - tempsDebut) + "ms : ");
@@ -109,31 +92,25 @@ public class PlanningComputeRouteWorker extends Thread {
         LinkedList<Path> paths = new LinkedList<>();
 
         for (int i = 0, j = 1; j < nbEdges; ++i, ++j) {
-            if (isInterrupted()) {
-                return;
-            }
             paths.add(graph.indexAsPath(solutions[i], solutions[j]));
         }
-        if (isInterrupted()) {
-            return;
-        }
+
         paths.add(graph.indexAsPath(solutions[nbEdges - 1], solutions[0]));
 
         for (int i = 0; i < graph.getNbEdges(); ++i) {
             System.out.print(solutions[i] + " ");
         }
 
-        if (isInterrupted()) {
-            return;
-        }
-
         Route route = new Route(paths);
 
-        if (isInterrupted()) {
-            return;
-        }
-
         planning.setRoute(route);
+        return null;
+    }
+
+    @Override
+    protected void succeeded() {
+        super.succeeded();
+        System.out.println("Done!");
     }
 
 }

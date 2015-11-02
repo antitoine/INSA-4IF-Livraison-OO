@@ -51,6 +51,15 @@ public class NodeView extends StackPane {
 
     }
 
+    public PopOverContent getPopoverContent() {
+        return (PopOverContent) popover.getContentNode();
+    }
+
+    /**
+     * Set the type of the node
+     * See Constview in order to see the node types
+     * @param nodeType 
+     */
     final void setType(String nodeType) {
         getChildren().clear();
                
@@ -97,5 +106,6 @@ public class NodeView extends StackPane {
     public void showPopOver() {
         popover.show(this);
     }
+
 
 }

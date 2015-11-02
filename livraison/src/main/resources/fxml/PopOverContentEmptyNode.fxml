@@ -8,6 +8,7 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import org.controlsfx.glyphfont.*?>
 
 <fx:root type="BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <center>
@@ -22,6 +23,9 @@
     </center>
     <right>
         <Button fx:id="btnValidate" defaultButton="true" mnemonicParsing="false" text="" BorderPane.alignment="CENTER" onAction="#addDelivery" >
+            <graphic>
+                <Glyph fontFamily="FontAwesome" icon="CHECK" />
+            </graphic>
             <BorderPane.margin>
                 <Insets bottom="10.0" right="10.0" top="10.0" />
             </BorderPane.margin>

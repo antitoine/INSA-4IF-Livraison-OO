@@ -1,5 +1,6 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Planning;
 import com.hexanome.model.TimeSlot;
@@ -9,9 +10,12 @@ import com.hexanome.utils.TypeWrapper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TreeCell;
@@ -29,8 +33,10 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
     TreeView<String> deliveryTree;
     TreeItem<String> rootItem;
 
-    HashMap<Integer, TreeItem<String>> timeSlotBranch;
-    HashMap<Integer, TreeItem<String>> deliveryBranch;
+    HashMap<TimeSlot, TreeItem<String>> timeSlotBranch;
+    HashMap<TimeSlot, Integer> timeSlotRow;
+
+    HashMap<Delivery, TreeItem<String>> deliveryBranch;
 
     public DeliveryTreeView() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.TREEVIEW));
@@ -67,12 +73,6 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
 
         deliveryTree.setPrefHeight(1000);
 
-//        deliveryTree.getSelectionModel().selectedItemProperty().
-//                addListener(new ChangeListener<TreeItem<String>>() {
-//                    @Override
-//                    public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> oldValue, TreeItem<String> newValue) {
-//                    }
-//                });
         deliveryTree.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
             @Override
             public TreeCell<String> call(TreeView<String> p) {
@@ -80,38 +80,74 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
             }
         });
 
+        // Ask the map to show a popover over the selected delivery
+        deliveryTree.getSelectionModel().selectedItemProperty().
+                addListener(new ChangeListener<TreeItem<String>>() {
+                    @Override
+                    public void changed(ObservableValue<? extends TreeItem<String>> observable,
+                            TreeItem<String> oldValue, TreeItem<String> newValue) {
+                        if (newValue.isLeaf()) {
+                            UIManager.getInstance().NotifyUI(ConstView.Action.DELEVERY_SELECTED,
+                                    getDeliveryFromTreeItem(newValue));
+                        }
+                    }
+                });
     }
 
+    /**
+     * Add a timeSlot in the TreeView
+     * @param ts TimeSlot
+     */
     public void AddTimeSlot(TimeSlot ts) {
         String info = ts.getStartTime() + " - " + ts.getEndTime();
-        timeSlotBranch.put(ts.getStartTime(), makeBranch(info, ConstView.TreeItemType.TIMESLOT, rootItem));
+        timeSlotBranch.put(ts, makeBranch(info, ConstView.TreeItemType.TIMESLOT, rootItem));
     }
 
-    public void AddDelivery(Delivery delivery, int parentId) {
-        deliveryBranch.put(delivery.getNode().getId(), makeBranch("Delivery " + delivery.getNode().getId(),
-                ConstView.TreeItemType.DELIVERY, timeSlotBranch.get(parentId)));
+    /**
+     * Delete a delivery in the TreeView
+     * @param delivery
+     */
+    public void DeleteDelivery(Delivery delivery) {
+        rootItem.getChildren().remove(deliveryBranch.get(delivery));
+        deliveryBranch.remove(delivery);
     }
 
-    public void DeleteDelivery() {
-
+    /**
+     * Remove all the items in the TreeView
+     */
+    public void clearTree() {
+        rootItem.getChildren().clear();
+        deliveryBranch.clear();
+        timeSlotBranch.clear();
     }
     
-    public void clearTree(){
-        rootItem.getChildren().clear();
-    }
-
-    public void SwapDeliveries() {
-
+    /**
+     * Return a delivery from an item 
+     * in the treeView
+     * @param treeItem
+     * @return 
+     */
+    private Delivery getDeliveryFromTreeItem(TreeItem<String> treeItem) {
+        Delivery result = null;
+        for (Map.Entry<Delivery, TreeItem<String>> entrySet : deliveryBranch.entrySet()) {
+            if (entrySet.getValue() == treeItem) {
+                result = entrySet.getKey();
+                break;
+            }
+        }
+        return result;
     }
 
     /**
      * Create a branch in the treeView
+     *
      * @param title
      * @param treeItemType
      * @param parent
-     * @return 
+     * @return
      */
-    private TreeItem<String> makeBranch(String title, ConstView.TreeItemType treeItemType, TreeItem<String> parent) {
+    private TreeItem<String> makeBranch(String title, ConstView.TreeItemType treeItemType,
+            TreeItem<String> parent) {
         TreeItem<String> item = null;
         switch (treeItemType) {
             case DELIVERY:
@@ -128,17 +164,37 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
 
     @Override
     public void update(Publisher p, Object arg) {
-        if(p instanceof Planning){
-            for(TimeSlot ts :((Planning)(p)).getTimeSlots()){
+        clearTree();
+        if (p instanceof Planning) {
+            for (TimeSlot ts : ((Planning) (p)).getTimeSlots()) {
                 String start = TypeWrapper.secondsToTimestamp(ts.getStartTime());
-                String end = TypeWrapper.secondsToTimestamp(ts.getEndTime());                
-                TreeItem<String> tsItem = makeBranch(start+" - "+end,
-                ConstView.TreeItemType.TIMESLOT, rootItem);
-                for(Delivery d : ts.getDeliveries()){
-                    makeBranch("Delivery " +d.getId(), ConstView.TreeItemType.DELIVERY, tsItem);
+                String end = TypeWrapper.secondsToTimestamp(ts.getEndTime());
+
+                TreeItem<String> tsItem = null;
+                tsItem = makeBranch(start + " - " + end,
+                        ConstView.TreeItemType.TIMESLOT, rootItem);
+                timeSlotBranch.put(ts, tsItem);
+                for (Delivery d : ts.getDeliveries()) {
+                    TreeItem<String> dItem = makeBranch("Delivery " + d.getId(),
+                            ConstView.TreeItemType.DELIVERY, tsItem);
+                    deliveryBranch.put(d, dItem);
                 }
             }
         }
     }
 
+    /**
+     * Select the appropriate delevery in the 
+     * TreeView
+     * @param nodeView NodeView, delivery on the map
+     */
+    public void selectDelivery(NodeView nodeView) {
+        for (Map.Entry<Delivery, TreeItem<String>> entrySet : deliveryBranch.entrySet()) {
+            if (entrySet.getKey().getNode() == nodeView.getNode()) {
+                deliveryTree.getSelectionModel()
+                        .clearAndSelect(deliveryTree.getRow(entrySet.getValue()));
+                break;
+            }
+        }
+    }
 }
