@@ -36,4 +36,9 @@ public class ComputingRouteState extends DefaultState {
         // \todo TODO
     }
 
+    @Override
+    public String toString() {
+        return "ComputingRouteState"; //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

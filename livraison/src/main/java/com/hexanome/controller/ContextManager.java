@@ -5,7 +5,7 @@ import java.util.Stack;
 
 import com.hexanome.controller.states.IState;
 import com.hexanome.controller.states.InitState;
-
+import com.hexanome.view.ConstView;
 /**
  * This class manages both commands and state machines of the application
  *
@@ -50,6 +50,8 @@ public class ContextManager {
         cmd.execute();
         // Add command to done commands history
         done.push(cmd);
+        // Enable undo button
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.UNDO);
     }
 
     /**
@@ -58,6 +60,9 @@ public class ContextManager {
     public void clearCommandsHistory() {
         done.clear();
         undone.clear();
+        // Disable undo/redo buttons
+        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.UNDO);
+        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.REDO);
     }
 
     /**
@@ -66,8 +71,12 @@ public class ContextManager {
     void undo() {
         // \todo (security) check if undo possible
         undone.push(done.pop().reverse());
-        // \todo updateUndoStateMachine();
-        // \todo updateRedoStateMachine();
+        // Enable redo button
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.REDO);
+        if(done.empty()) {
+            // Disable undo button if done stack is empty
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.UNDO);
+        }
     }
 
     /**
@@ -76,8 +85,12 @@ public class ContextManager {
     void redo() {
         // \todo (security) check if redo possible
         done.push(undone.pop().execute());
-        // \todo updateUndoStateMachine();
-        // \todo updateRedoStateMachine();
+        // Enable undo button
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.UNDO);
+        if(undone.empty()) {
+            // Disable redo button if undone stack is empty
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.REDO);
+        }
     }
 
     /**
@@ -117,5 +130,8 @@ public class ContextManager {
      */
     public void setCurrentState(IState currentState) {
         this.currentState = currentState;
+        // removeMeLater DEBUG --------------
+        System.out.println(currentState.toString());
+        // ----------------------------------
     }
 }

@@ -38,4 +38,9 @@ public class SwapDeliveriesState extends DefaultState {
         // \todo TODO
     }
 
+    @Override
+    public String toString() {
+        return "SwapDeliveriesState"; //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

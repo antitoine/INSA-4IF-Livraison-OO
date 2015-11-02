@@ -13,7 +13,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -32,6 +34,30 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private DeliveryTreeView deliveryTreeView;
+
+    @FXML
+    private MenuItem mntmLoadPlanning;
+
+    @FXML
+    private Button btnLoadPlanning;
+
+    @FXML
+    private Button btnRedo;
+
+    @FXML
+    private Button btnUndo;
+
+    @FXML
+    private MenuItem mntmUndo;
+
+    @FXML
+    private MenuItem mntmRedo;
+
+    @FXML
+    private Button btnComputeRoute;
+
+    @FXML
+    private Button btnRoadMap;
 
     final FileChooser fileChooser;
     private Stage stage;
@@ -175,7 +201,6 @@ public class MainWindow extends AnchorPane {
         //TODO update scrollbar
     }
 
-
     /**
      * Display an error
      *
@@ -190,6 +215,62 @@ public class MainWindow extends AnchorPane {
          * too
          */
         alert.show();
+    }
+
+    /**
+     * Disable the button
+     *
+     * @param btn
+     */
+    public void disableButton(ConstView.Button btn) {
+        switch (btn) {
+            case UNDO:
+                mntmUndo.setDisable(true);
+                btnUndo.setDisable(true);
+                break;
+            case REDO:
+                mntmRedo.setDisable(true);
+                btnRedo.setDisable(true);
+                break;
+            case COMPUTE_ROUTE:
+                btnComputeRoute.setDisable(true);
+                break;
+            case ROAD_MAP:
+                btnRoadMap.setDisable(true);
+                break;
+            case LOAD_PLANNING:
+                mntmLoadPlanning.setDisable(true);
+                btnLoadPlanning.setDisable(true);
+                break;
+        }
+    }
+
+    /**
+     * Enable the button
+     *
+     * @param btn
+     */
+    public void enableButton(ConstView.Button btn) {
+        switch (btn) {
+            case UNDO:
+                mntmUndo.setDisable(false);
+                btnUndo.setDisable(false);
+                break;
+            case REDO:
+                mntmRedo.setDisable(false);
+                btnRedo.setDisable(false);
+                break;
+            case COMPUTE_ROUTE:
+                btnComputeRoute.setDisable(false);
+                break;
+            case ROAD_MAP:
+                btnRoadMap.setDisable(false);
+                break;
+            case LOAD_PLANNING:
+                mntmLoadPlanning.setDisable(false);
+                btnLoadPlanning.setDisable(false);
+                break;
+        }
     }
 
 }

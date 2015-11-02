@@ -29,6 +29,11 @@ public class Arc {
      * The node at the beginning of the arc.
      */
     private Node src;
+    
+    /**
+     * The time slot associated with the arc when the arc is in a route.
+     */
+    private TimeSlot associatedTimeSlot;
 
     /**
      * Returns the node that ends the arc.
@@ -44,8 +49,7 @@ public class Arc {
      */
     public Node getSrc() {
         return src;
-    }
-    
+    }    
     
     /**
      * Constructor.
@@ -62,6 +66,7 @@ public class Arc {
         this.duration = length*avgSpeed; // Unit : s
         this.dest = dest;
         this.src = src;
+        this.associatedTimeSlot = null;
     }
     
     /**
@@ -69,8 +74,15 @@ public class Arc {
      * @return The time slot if it exists, null otherwise.
      */
     public TimeSlot getAssociatedTimeSlot() {
-        Delivery delivery = dest.getDelivery();
-        return (delivery == null) ? null : delivery.getTimeSlot();
+        return associatedTimeSlot;
+    }
+    
+    /**
+     * Set a time slot to the current arc. 
+     * @param timeSlot The time slot to attach.
+     */
+    void setAssociatedTimeSlot(TimeSlot timeSlot) {
+        this.associatedTimeSlot = timeSlot;
     }
     
     /**

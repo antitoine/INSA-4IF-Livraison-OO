@@ -241,7 +241,7 @@ public class Map implements Publisher {
     }
 
     @Override
-    public void notifySubsrcibers() {
+    public void notifySubscribers() {
         for (Subscriber s : subscribers) {
             s.update(this, null);
         }

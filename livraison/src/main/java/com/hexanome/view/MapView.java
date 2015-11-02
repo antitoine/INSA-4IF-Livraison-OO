@@ -12,8 +12,9 @@ import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -30,7 +31,7 @@ import javafx.scene.layout.AnchorPane;
 public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     static HashMap<Node, NodeView> nodeList;
-    ArrayList<ArcView> arcslist;
+    HashSet<ArcView> arcslist;
 
     /**
      * Initializes the controller class.
@@ -65,9 +66,10 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     /**
      * Delete a delivery from the map
-     * @param delivery 
+     *
+     * @param delivery
      */
-    void deleteDelivery(Delivery delivery){
+    void deleteDelivery(Delivery delivery) {
         nodeList.get(delivery.getNode()).setType(ConstView.EMPTYNODE);
     }
 
@@ -76,59 +78,72 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
      *
      * @param arc arc as described in the model
      */
-    public void addArc(Arc arc) {
+    public void addRouteArc(Arc arc) {
         MapView mv = this;
-        ArcView av = new ArcView(arc);
+        ArcView av = new ArcView(arc, ConstView.ArcViewType.ROUTE);
         mv.getChildren().add(av);
         arcslist.add(av);
+    }
+
+    public void addEmptyArcsAndNodes(Collection<Arc> arcs, Collection<Node> nodes) {
+        arcslist.clear();
+        for (Arc arc : arcs) {
+            ArcView av = new ArcView(arc, ConstView.ArcViewType.STANDARD);
+            arcslist.add(av);
+        }
+        for (Node node : nodes) {
+            NodeView nv = new NodeView(ConstView.EMPTYNODE, node);
+            nodeList.put(node, nv);
+            nv.relocate(node.getLocation().x - nv.getPrefWidth() / 2,
+                    node.getLocation().y - nv.getPrefHeight() / 2);
+        }
+        getChildren().addAll(arcslist);
+        getChildren().addAll(nodeList.values());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         nodeList = new HashMap<>();
-        arcslist = new ArrayList<>();
+        arcslist = new HashSet<>();
     }
 
     @Override
     public void update(Publisher p, Object arg) {
         if (p instanceof Map) {
-            for (Entry<Integer, Node> n : ((Map) (p)).getNodes().entrySet()) {
-                addNode(ConstView.EMPTYNODE, n.getValue());
-            }
-            for (Arc a : ((Map) (p)).getArcs()) {
-                addArc(a);
-            }
+            Map map = (Map) p;
+            addEmptyArcsAndNodes(map.getArcs(), map.getNodes().values());
         }
         if (p instanceof Planning) {
-            if (p instanceof Planning) {
-                for (TimeSlot ts : ((Planning) (p)).getTimeSlots()) {
-                    for (Delivery d : ts.getDeliveries()) {
-                        (nodeList.get(d.getNode())).setType(ConstView.DELIVERYNODE);
-                    }
+            Planning planning = (Planning) p;
+            clearDeliveries();
+            ColorsGenerator.getInstance(planning.getTimeSlots());
+            for (TimeSlot ts : planning.getTimeSlots()) {
+                for (Delivery d : ts.getDeliveries()) {
+                    (nodeList.get(d.getNode())).setType(ConstView.DELIVERYNODE);
                 }
-                (nodeList.get(((Planning) (p)).getWarehouse())).setType(ConstView.WAREHOUSENODE);
             }
+            (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSENODE);
         }
         if (p instanceof Route) {
+            Route route = (Route) p;
             clearArc();
-            for (Path path : ((Route) (p)).getPaths()) {
+            for (Path path : route.getPaths()) {
                 for (Arc a : path.getArcs()) {
-                    addArc(a);
+                    addRouteArc(a);
                 }
             }
         }
     }
 
     /**
-     * Remove all nodeview and arview
-     * from the mapView
+     * Remove all nodeview and arview from the mapView
      */
     public void clearMap() {
         nodeList.clear();
         arcslist.clear();
         getChildren().clear();
     }
-    
+
     /**
      * Remove all arcView
      */

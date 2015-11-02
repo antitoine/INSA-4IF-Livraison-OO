@@ -24,16 +24,23 @@ public final class ConstView {
     public static final String MAINWINDOW = "/fxml/MainWindow.fxml";
 
     public static final double SIZE_NODE = 8.0;
+   
+    public static enum Button {
+        REDO, UNDO, LOAD_PLANNING, COMPUTE_ROUTE, ROAD_MAP
+    }
 
     public static enum Action {
 
         QUIT, ADD_DELIVERY, DELETE_DELIVERY, SWAP_DELIVERIES, UNDO, REDO,
-        COMPUTE_ROUTE, GENERATE_ROADMAP, CLICK_ON_EMPTY_NODE, CLICK_ON_DELIVERY_NODE, CLICK_ON_WAREHOUSE, HIDE_POPOVER, DELEVERY_SELECTED
+        COMPUTE_ROUTE, GENERATE_ROADMAP, CLICK_ON_EMPTY_NODE, CLICK_ON_DELIVERY_NODE,
+        CLICK_ON_WAREHOUSE, HIDE_POPOVER, DELEVERY_SELECTED
     }
 
     public static enum TreeItemType {
-
         TIMESLOT, DELIVERY
+    }
+    public static enum ArcViewType{
+        STANDARD, ROUTE
     }
 
     /**
