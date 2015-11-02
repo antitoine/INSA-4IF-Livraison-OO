@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
@@ -132,6 +133,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
         if (p instanceof Route) {
             Route route = (Route) p;
             clearArc();
+            System.out.println(""+route.getPaths().toString());
             for (Path path : route.getPaths()) {
                 for (Arc a : path.getArcs()) {
                     addRouteArc(a);
@@ -171,16 +173,17 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
 
     /**
      * Select the delivery passed as parameter
-     * @param delivery 
+     *
+     * @param delivery
      */
     public void selectDelivery(Delivery delivery) {
         nodeList.get(delivery.getNode()).showPopOver();
     }
 
     /**
-     * Add the PopOver which corresponds the 
-     * node passed as paramater
-     * @param node 
+     * Add the PopOver which corresponds the node passed as paramater
+     *
+     * @param node
      */
     public void hidePopOver(Node node) {
         nodeList.get(node).hidePopOver();

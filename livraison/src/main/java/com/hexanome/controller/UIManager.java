@@ -72,9 +72,15 @@ public class UIManager {
                 break;
             case ADD_DELIVERY:
                 Object[] objs = (Object[]) arg;
-                AddDeliveryCommand ac = new AddDeliveryCommand((Node) objs[0],
+                final AddDeliveryCommand ac = new AddDeliveryCommand((Node) objs[0],
                         (Node) objs[1]);
-                ContextManager.getInstance().executeCommand(ac);
+                new Thread(new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        ContextManager.getInstance().executeCommand(ac);
+                        return null;
+                    }
+                }).start();
                 mainWindow.getMapView().hidePopOver((Node) objs[0]);
                 break;
             case DELETE_DELIVERY:

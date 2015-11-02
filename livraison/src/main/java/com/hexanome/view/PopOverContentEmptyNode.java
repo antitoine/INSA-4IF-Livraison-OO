@@ -78,10 +78,8 @@ public class PopOverContentEmptyNode extends PopOverContent {
         for (Delivery d : collection) {
             String start = TypeWrapper.secondsToTimestamp(d.getTimeSlot().getStartTime());
             String end = TypeWrapper.secondsToTimestamp(d.getTimeSlot().getEndTime());
-
             String info = "Delivery " + d.getId()
-                    + " (" + start + " - "
-                    + end + ")";
+                    + " (" + start + " - " + end + ")";
             deliveryNames.put(info, d);
             prevDeliveryComboBox.getItems().add(info);
         }

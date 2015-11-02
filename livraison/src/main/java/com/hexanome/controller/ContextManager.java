@@ -59,12 +59,7 @@ public class ContextManager {
         // Add command to done commands history
         done.push(cmd);
         // Enable undo button
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.UNDO);
-            }
-        });
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.UNDO);
     }
 
     /**
