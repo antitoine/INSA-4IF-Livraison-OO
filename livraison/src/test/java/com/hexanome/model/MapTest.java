@@ -161,7 +161,5 @@ public class MapTest {
         Path expResult = new Path(arcs);
         Path result = map.getFastestPath(start, end);
         assertEquals(expResult, result);
-    }
-
-    
+    }  
 }
