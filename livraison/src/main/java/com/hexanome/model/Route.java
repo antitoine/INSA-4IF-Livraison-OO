@@ -203,19 +203,78 @@ public class Route implements Publisher {
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
         // Find the first path with delivery 1 or delivery 2 as source
         int indexPreviousPath = -1, indexNextPath = -1;
+        Delivery previousDelivery = null, nextDelivery = null;
         Path previousPath = null, nextPath = null;
         
-        boolean pathsFound = false;
-        for (int indexPath = 0, maxIndexPath = paths.size() - 1; !pathsFound && indexPath <= maxIndexPath; ++indexPreviousPath) {
+        for (int indexPath = 0, maxIndexPath = paths.size() - 1; (previousPath == null || nextPath == null) && indexPath <= maxIndexPath; ++indexPath) {
             Path p = paths.get(indexPath);
             
-            Delivery currentDelivery = p.getFirstNode().getDelivery();
+            // Find the path which begins with delivery1 or delivery2 
+            if (previousPath == null) {
+                Delivery srcDelivery = p.getFirstNode().getDelivery();
+                if (srcDelivery != null) {
+                    if (srcDelivery.equals(delivery1)) {
+                        previousPath = p;
+                        previousDelivery = delivery1;
+                        indexPreviousPath = indexPath;
+                    } else if (srcDelivery.equals(delivery2)) {
+                        previousPath = p;
+                        previousDelivery = delivery2;
+                        indexPreviousPath = indexPath;
+                    }
+                }
+            }
             
-            if (currentDelivery != null && currentDelivery.equals(prevDelivery)) {
-               /* previousPathFound = true;
-                indexPreviousPath = indexPath;
-                pathToReplace = p;*/
-            }            
+            // Find the path which ends with delivery1 or delivery2
+            if (nextPath == null) {
+                Delivery destDelivery = p.getLastNode().getDelivery();
+                if (destDelivery != null) {
+                    if (destDelivery.equals(delivery1)) {
+                        nextPath = p;
+                        nextDelivery = delivery1;
+                        indexNextPath = indexPath;
+                    } else if (destDelivery.equals(delivery2)) {
+                        nextPath = p;
+                        nextDelivery = delivery2;
+                        indexNextPath = indexPath;
+                    }
+                }
+            }       
+        }
+        
+        if (previousPath != null && nextPath != null) {
+            
+            Path pathToNewFirstDelivery = planning.getMap().getFastestPath(
+                paths.get(indexPreviousPath - 1).getFirstNode(),
+                nextPath.getLastNode()
+            );
+            
+            Path newFirstDeliveryToNextDelivery = planning.getMap().getFastestPath(
+                nextPath.getLastNode(),
+                previousPath.getLastNode()            
+            );
+            
+            Path previousNewFirstDeliveryToNewLastDelivery = planning.getMap().getFastestPath(
+                nextPath.getFirstNode(),
+                previousPath.getFirstNode()
+            );
+            
+            Path newLastDeliveryToNewFirstDeliveryNext = planning.getMap().getFastestPath(
+                previousPath.getFirstNode(),
+                paths.get(indexNextPath + 1).getLastNode()
+            );            
+            
+            paths.remove(indexPreviousPath - 1);
+            paths.add(indexPreviousPath - 1, pathToNewFirstDelivery);
+            paths.remove(indexPreviousPath);
+            paths.add(indexPreviousPath, newFirstDeliveryToNextDelivery);
+            paths.remove(indexNextPath);
+            paths.add(indexNextPath, previousNewFirstDeliveryToNewLastDelivery);
+            paths.remove(indexNextPath + 1);
+            paths.add(indexNextPath + 1, newLastDeliveryToNewFirstDeliveryNext);
+            
+            updateDeliveriesTime();
+            updateArcTimeSlots();
         }
     }
 
