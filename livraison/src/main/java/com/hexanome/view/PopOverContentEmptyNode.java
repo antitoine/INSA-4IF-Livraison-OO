@@ -15,9 +15,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import org.controlsfx.glyphfont.Glyph;
 
-/**
- * FXML Controller class
- */
 public class PopOverContentEmptyNode extends PopOverContent {
 
     Button btnValidate;

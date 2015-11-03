@@ -10,47 +10,28 @@ import com.hexanome.model.Route;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
-import java.io.IOException;
-import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 
 /**
  * Reprensents a view of the map with nodes and arc
  *
  * This is a one-to-one representation of the Map model
  */
-public class MapView extends AnchorPane implements Subscriber, Initializable {
+public class MapView extends AnchorPane implements Subscriber {
 
-    static HashMap<Node, NodeView> nodeList;
-    HashSet<ArcView> arcslist;
-    HashMap<PairPoint, ArcView> arcsMap;
+    HashMap<Node, NodeView> nodeList = new HashMap<>();
+    HashSet<ArcView> arcslist = new HashSet<>();
+    HashMap<PairPoint, ArcView> arcsMap = new HashMap<>();
 
     /**
      * Initializes the controller class.
      */
     public void MapView() {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.MAPVIEW));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(EmptyNodeView.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**
@@ -74,7 +55,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
      * @param delivery
      */
     void deleteDelivery(Delivery delivery) {
-        nodeList.get(delivery.getNode()).setType(ConstView.EMPTYNODE);
+        nodeList.get(delivery.getNode()).setType(ConstView.EMPTY_NODE);
     }
 
     /**
@@ -96,7 +77,7 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
             arcslist.add(av);
         }
         for (Node node : nodes) {
-            NodeView nv = new NodeView(ConstView.EMPTYNODE, node);
+            NodeView nv = new NodeView(ConstView.EMPTY_NODE, node);
             nodeList.put(node, nv);
             nv.relocate(node.getLocation().x - nv.getPrefWidth() / 2,
                     node.getLocation().y - nv.getPrefHeight() / 2);
@@ -104,12 +85,6 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
 
         getChildren().addAll(arcslist);
         getChildren().addAll(nodeList.values());
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        nodeList = new HashMap<>();
-        arcslist = new HashSet<>();
     }
 
     @Override
@@ -125,15 +100,15 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
             ColorsGenerator.getInstance(planning.getTimeSlots());
             for (TimeSlot ts : planning.getTimeSlots()) {
                 for (Delivery d : ts.getDeliveries()) {
-                    (nodeList.get(d.getNode())).setType(ConstView.DELIVERYNODE);
+                    (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE);
                 }
             }
-            (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSENODE);
+            (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSE_NODE);
         }
         if (p instanceof Route) {
             Route route = (Route) p;
             clearArc();
-            System.out.println(""+route.getPaths().toString());
+            System.out.println("" + route.getPaths().toString());
             for (Path path : route.getPaths()) {
                 for (Arc a : path.getArcs()) {
                     addRouteArc(a);
@@ -164,9 +139,9 @@ public class MapView extends AnchorPane implements Subscriber, Initializable {
      */
     public void clearDeliveries() {
         for (Entry<Node, NodeView> n : nodeList.entrySet()) {
-            if (n.getValue().getCurrentNodeType().equals(ConstView.DELIVERYNODE)
-                    || n.getValue().getCurrentNodeType().equals(ConstView.WAREHOUSENODE)) {
-                n.getValue().setType(ConstView.EMPTYNODE);
+            if (n.getValue().getCurrentNodeType().equals(ConstView.DELIVERY_NODE)
+                    || n.getValue().getCurrentNodeType().equals(ConstView.WAREHOUSE_NODE)) {
+                n.getValue().setType(ConstView.EMPTY_NODE);
             }
         }
     }

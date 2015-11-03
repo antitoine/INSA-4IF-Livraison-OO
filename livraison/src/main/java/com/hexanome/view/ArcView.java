@@ -2,7 +2,6 @@ package com.hexanome.view;
 
 import com.hexanome.model.Arc;
 import java.awt.Point;
-import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;

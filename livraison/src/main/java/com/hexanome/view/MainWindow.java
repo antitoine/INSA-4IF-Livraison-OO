@@ -2,7 +2,6 @@ package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
-import com.hexanome.model.Node;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -19,22 +18,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainWindow extends AnchorPane {
 
+    private MapView mapView;
+
+    private DeliveryTreeView deliveryTreeView;
+
     @FXML
     private Label labelInfos;
 
     @FXML
-    private MapView mapView;
-
-    @FXML
     ScrollPane scrollPaneMap;
-
-    @FXML
-    private DeliveryTreeView deliveryTreeView;
 
     @FXML
     private MenuItem mntmLoadPlanning;
@@ -59,6 +57,9 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private Button btnRoadMap;
+
+    @FXML
+    private BorderPane deliveriesPane;
 
     final FileChooser fileChooser;
     private Stage stage;
@@ -86,7 +87,10 @@ public class MainWindow extends AnchorPane {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        mapView.initialize(null, null);
+        deliveryTreeView = new DeliveryTreeView();
+        deliveriesPane.setCenter(deliveryTreeView);
+        mapView = new MapView();
+        scrollPaneMap.setContent(mapView);
 
     }
 
@@ -273,7 +277,5 @@ public class MainWindow extends AnchorPane {
                 break;
         }
     }
-
-
 
 }

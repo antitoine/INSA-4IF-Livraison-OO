@@ -25,10 +25,7 @@
                 </BorderPane>
             </bottom>
             <left>
-                <BorderPane> 
-                    <center>
-                        <DeliveryTreeView fx:id="deliveryTreeView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                    </center>
+                <BorderPane fx:id="deliveriesPane">
                     <bottom>
                         <GridPane prefHeight="30.0" prefWidth="250.0">
                             <columnConstraints>
@@ -55,11 +52,7 @@
                 </BorderPane>          
             </left>
             <center>
-                <ScrollPane fx:id="scrollPaneMap" pannable="true" BorderPane.alignment="CENTER">
-                    <content>
-                        <MapView fx:id="mapView" />
-                    </content>
-                </ScrollPane>
+                <ScrollPane fx:id="scrollPaneMap" pannable="true" BorderPane.alignment="CENTER" />
             </center>
             <right>
             </right>

@@ -1,10 +1,6 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.UIManager;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -13,9 +9,7 @@ import org.controlsfx.control.PopOver;
 
 public class EmptyNodeView extends Circle implements INodeViewShape {
 
-//    /**
-//     * Initializes the controller class.
-//     */
+    
     public EmptyNodeView() {
         setFill(Color.web("9e9e9e"));
         setRadius(5.0);

@@ -1,12 +1,8 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.UIManager;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
