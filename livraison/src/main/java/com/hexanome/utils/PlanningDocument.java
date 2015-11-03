@@ -83,8 +83,8 @@ public class PlanningDocument extends XMLParser {
                 deliveries.add(delivery);
             }
             // Get timeslot attributes 
-            int startTime = TypeWrapper.timestampToSeconds(timeSlotElement.getAttribute("heureDebut").getValue());
-            int endTime = TypeWrapper.timestampToSeconds(timeSlotElement.getAttribute("heureFin").getValue());
+            int startTime = TypeWrapper.timestampToSeconds(timeSlotElement.getAttributeValue("heureDebut"));
+            int endTime = TypeWrapper.timestampToSeconds(timeSlotElement.getAttributeValue("heureFin"));
             // Create new timeslot
             ts = new TimeSlot(startTime, endTime, deliveries);
             // Add new timeslot to the collection
@@ -133,7 +133,26 @@ public class PlanningDocument extends XMLParser {
             // TEST : check if each timeSlot contains at least one delivery
             for( Element ts : root.getChildren("Plage") ) {
                 
-// \todo add timeslot attributes checks !!!
+                // TEST : check if timeSlot attributes are not missing and correct
+                int startTime=-1; 
+                int endTime=-1; 
+                if(ts.getAttributeValue("heureDebut") != null) {
+                    startTime = TypeWrapper.timestampToSeconds(ts.getAttributeValue("heureDebut"));                    
+                } else {
+                    setErrorMsg("Missing <heureD> attribute in at least one timeSlot !");
+                    return false; // Interrupt check here
+                }
+                if(ts.getAttributeValue("heureFin") != null) {
+                    endTime = TypeWrapper.timestampToSeconds(ts.getAttributeValue("heureFin"));
+                } else {
+                    setErrorMsg("Missing <heureFin> attribute in at least one timeSlot !");
+                    return false; // Interrupt check here
+                }
+                // TEST : check if endTime > startTime
+                if(startTime >= endTime) {
+                    setErrorMsg("At least one timeSlot has an end time before its start time !");
+                    return false; // Interrupt check here
+                }
                 
                 List<Element> deliveries = root.getChildren("Livraison");
                 if(deliveries.size() < 1) {
@@ -141,18 +160,21 @@ public class PlanningDocument extends XMLParser {
                     return false; // Interrupt check here
                 }
                 ArrayList<Integer> ids = new ArrayList<>();
-                // TEST : if each delivery reference an existing node in the map
+                ArrayList<Integer> addresses = new ArrayList<>();
+           
                 for(Element delivery : deliveries) {
-                    
-// \todo check if two or more deliveries doesn't share the same adresse in a single timeslot !!!
-                    
+                    // TEST : if delivery has an address
                     if(delivery.getAttributeValue("adresse") == null) {
                         setErrorMsg("At least one delivery doesn't reference it's node id !");
                         return false; // Interrupt check here
                     } else {
                         try {
-                            int id = delivery.getAttribute("adresse").getIntValue();
+                            
+                            int address = delivery.getAttribute("adresse").getIntValue();
+                            addresses.add(new Integer(address));
+                            int id = delivery.getAttribute("id").getIntValue();
                             ids.add(new Integer(id));
+                            // TEST : if delivery reference an existing node in the map
                             if(map.getNodeById(id) == null) {
                                 setErrorMsg("At least one delivery has its node missing in the map !");
                                 return false; // Interrupt check here
@@ -166,6 +188,13 @@ public class PlanningDocument extends XMLParser {
                 for (Integer id : ids) {
                     if(Collections.frequency(ids, id) > 1) {
                         setErrorMsg("At least two deliveries share the same id !");
+                        return false; // Interrupt check here
+                    }
+                }
+                // TEST : check if two nodes share the same address in the timeslot
+                for (Integer id : ids) {
+                    if(Collections.frequency(ids, id) > 1) {
+                        setErrorMsg("At least two deliveries share the same <adresse> !");
                         return false; // Interrupt check here
                     }
                 }
