@@ -65,21 +65,20 @@ public class ModelManager {
      * exists in the model, it also returns false if the integrity of the
      * PlanningDocument is compromised, else it will return true.
      */
-    public boolean initModelPlanning(PlanningDocument planDoc) {
+    public String initModelPlanning(PlanningDocument planDoc) {
+        String s = null;
         if (map != null && planning == null) {
             // Planning creation
             if (planDoc.checkIntegrity(map)) { // TODO : always true  
                 planning = new Planning(map, planDoc.getWarehouse(map), planDoc.getTimeSlots(map));
             } else {
-                UIManager.getInstance().showError(planDoc.getErrorMsg());
-                return false;
+                s = planDoc.getErrorMsg();
             }
         } else {
-            UIManager.getInstance().showError("ModelManager: map wasn't initialized or a planning already exists !");
-            return false;
+            s = "ModelManager: map wasn't initialized or a planning already exists !";
         }
         // removeMeLater : démarrer directement un premier calcul de route ?
-        return true;
+        return s;
     }
 
     /**
