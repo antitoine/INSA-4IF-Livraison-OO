@@ -192,8 +192,8 @@ public class PlanningDocument extends XMLParser {
                     }
                 }
                 // TEST : check if two nodes share the same address in the timeslot
-                for (Integer id : ids) {
-                    if(Collections.frequency(ids, id) > 1) {
+                for (Integer address : addresses) {
+                    if(Collections.frequency(addresses, address) > 1) {
                         setErrorMsg("At least two deliveries share the same <adresse> !");
                         return false; // Interrupt check here
                     }
