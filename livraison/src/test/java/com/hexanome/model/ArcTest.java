@@ -76,7 +76,7 @@ public class ArcTest {
         Node node2 = map.createNode(2, new Point(10,20));
         Arc arc1 = map.createArc("route1",12,31,1,2);
               
-        TimeSlot result1 = arc1.getAssociatedTimeSlot();
+        TimeSlot result1 = arc1.getAssociatedTimeSlots();
         assertEquals(result1,null);
         
         //Node with delivery and TimeSlot
@@ -102,7 +102,7 @@ public class ArcTest {
         } catch (Exception ex) {
             Logger.getLogger(ArcTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        TimeSlot result2 = arc3.getAssociatedTimeSlot();
+        TimeSlot result2 = arc3.getAssociatedTimeSlots();
         assertEquals(timeSlot, result2);
 
          //Node with delivery and without TimeSlot
@@ -122,7 +122,7 @@ public class ArcTest {
         } catch (Exception ex) {
             Logger.getLogger(ArcTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        TimeSlot result3 = arc4.getAssociatedTimeSlot();
+        TimeSlot result3 = arc4.getAssociatedTimeSlots();
         assertEquals(result3, null);
     }
 
@@ -142,8 +142,8 @@ public class ArcTest {
         deliveries1.add(delivery1);
         TimeSlot expResult = new TimeSlot(8,9,deliveries1);
         
-        arc1.setAssociatedTimeSlot(expResult);
-        TimeSlot result = arc1.getAssociatedTimeSlot();
+        arc1.addAssociatedTimeSlot(expResult);
+        TimeSlot result = arc1.getAssociatedTimeSlots();
         assertEquals(expResult, result);
     }
 
