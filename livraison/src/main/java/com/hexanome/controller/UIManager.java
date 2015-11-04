@@ -120,7 +120,7 @@ public class UIManager {
                 mainWindow.disablePanning();
                 break;
             case HIDE_POPOVER:
-                mainWindow.ennablePanning();
+                mainWindow.enablePanning();
                 break;
             case DELEVERY_SELECTED:
                 mainWindow.getMapView().selectDelivery(((Delivery) (arg)));
@@ -177,8 +177,6 @@ public class UIManager {
         mainWindow.getMapView().clearMap();
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
         mainWindow.resetCursorAndInfoLabel();
-        ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
-        ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
     }
 
     public void beginLoadPlanning() {

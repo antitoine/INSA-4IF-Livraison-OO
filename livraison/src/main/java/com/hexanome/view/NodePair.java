@@ -1,16 +1,41 @@
-
 package com.hexanome.view;
 
-import java.awt.Point;
+import com.hexanome.model.Node;
+import java.util.Objects;
 
-public class PairPoint {
+public class NodePair {
 
-    Point point1;
-    Point point2;
-    
-    public PairPoint(Point pt1, Point pt2) {
-        point1 = pt1;
-        point2 = pt2;
+    Node node1;
+    Node node2;
+
+    public NodePair(Node node1, Node node2) {
+        this.node1 = node1;
+        this.node2 = node2;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.node1);
+        hash = 79 * hash + Objects.hashCode(this.node2);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final NodePair other = (NodePair) obj;
+
+        if ((this.node1 == other.node1 || this.node1 == other.node2)
+                && (this.node2 == other.node1 || this.node2 == other.node2)) {
+            return true;
+        }
+        return false;
     }
 
 }

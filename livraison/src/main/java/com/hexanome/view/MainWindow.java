@@ -178,7 +178,7 @@ public class MainWindow extends AnchorPane {
         scrollPaneMap.setPannable(false);
     }
 
-    public void ennablePanning() {
+    public void enablePanning() {
         scrollPaneMap.setPannable(true);
     }
 
