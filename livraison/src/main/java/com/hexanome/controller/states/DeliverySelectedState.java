@@ -39,11 +39,9 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void btnRemoveDelivery(Delivery delivery) {
-        // Retreive previous delivery
-        Delivery prevDelivery = ModelManager.getInstance().getPlanning().getPreviousDelivery(delivery);
         // \todo treat limit case if delivery is the first of the list
         // Create a new instance of RemoveDeliveryCommand
-        RemoveDeliveryCommand rmDeliveryCmd = new RemoveDeliveryCommand(delivery, prevDelivery);
+        RemoveDeliveryCommand rmDeliveryCmd = new RemoveDeliveryCommand(delivery);
         // ContextManager is asked to execute the command
         ContextManager.getInstance().executeCommand(rmDeliveryCmd);
         // Jump to EmptyNodeSelectedState

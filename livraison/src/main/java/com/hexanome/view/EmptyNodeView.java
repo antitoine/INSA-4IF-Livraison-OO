@@ -1,32 +1,20 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.UIManager;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 import org.controlsfx.control.PopOver;
 
-/**
- * FXML Controller class
- */
 public class EmptyNodeView extends Circle implements INodeViewShape {
 
-    /**
-     * Initializes the controller class.
-     */
+    
     public EmptyNodeView() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.EMPTYNODE));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(EmptyNodeView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setFill(Color.web("9e9e9e"));
+        setRadius(5.0);
+        setStroke(Color.BLACK);
+        setStrokeType(StrokeType.INSIDE);
     }
 
     @Override

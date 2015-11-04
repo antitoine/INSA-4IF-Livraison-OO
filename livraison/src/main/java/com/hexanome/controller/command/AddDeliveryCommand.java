@@ -14,19 +14,29 @@ import com.hexanome.model.TimeSlot;
 public class AddDeliveryCommand implements ICommand {
 
     private Node node;
-    private Delivery prevDelivery;
+    private Node nodePreviousDelivery;
     private TimeSlot timeSlot;
+    private Delivery delivery;
 
     /**
      * Construct a new AddDeliveryCommand to add a new delivery to the planning
      *
      * @param node Delivery to add
-     * @param prevDelivery Delivery preceding the delivery to add
+     * @param nodePreviousDelivery The node with the delivery preceding the 
+     * delivery to add
      */
-    public AddDeliveryCommand(Node node, Delivery prevDelivery) {
+    public AddDeliveryCommand(Node node, Node nodePreviousDelivery) {
         this.node = node;
-        this.prevDelivery = prevDelivery;
-        this.timeSlot = prevDelivery.getTimeSlot();
+        this.nodePreviousDelivery = nodePreviousDelivery;
+        
+        // Set the time slot
+        if (nodePreviousDelivery.getDelivery() == null) {
+            this.timeSlot = ModelManager.getInstance().getPlanning().getFirstTimeSlot();
+        } else {
+            this.timeSlot = nodePreviousDelivery.getDelivery().getTimeSlot();
+        }
+        
+        this.delivery = null;
     }
 
     /**
@@ -38,7 +48,9 @@ public class AddDeliveryCommand implements ICommand {
     @Override
     public ICommand execute() {
         if (ModelManager.getInstance().getPlanning() != null) {
-            ModelManager.getInstance().getPlanning().addDelivery(node, prevDelivery, timeSlot);
+            delivery = ModelManager.getInstance()
+                                   .getPlanning()
+                                   .addDelivery(node, nodePreviousDelivery, timeSlot);
         } else {
             // \todo treat error case
         }
@@ -54,7 +66,7 @@ public class AddDeliveryCommand implements ICommand {
      */
     @Override
     public ICommand reverse() {
-        if (ModelManager.getInstance().getPlanning() != null) {
+        if (ModelManager.getInstance().getPlanning() != null && delivery != null) {
             ModelManager.getInstance().getPlanning().removeDelivery(delivery);
         } else {
             // \todo treat error case

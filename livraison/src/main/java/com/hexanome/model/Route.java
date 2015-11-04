@@ -113,10 +113,10 @@ public class Route implements Publisher {
     /*
      * Adds a delivery to the route.
      * @param delivery the delivery to add.
-     * @param prevDelivery the delivery that will be executed before the one to add.
+     * @param prevDelivery The node with the delivery that will be executed before the one to add.
      * @param timeSlot the time slot to which the new delivery will belong.
      */
-    void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
+    void addDelivery(Delivery delivery, Node nodePreviousDelivery, TimeSlot timeSlot) {
         // Find the previous delivery in the list of paths
         int indexPreviousPath = -1;
         Path pathToReplace = null;
@@ -125,13 +125,13 @@ public class Route implements Publisher {
         for (int indexPath = 0, maxIndexPath = paths.size() - 1; !previousPathFound && indexPath <= maxIndexPath; ++indexPath) {
             Path p = paths.get(indexPath);
             
-            Delivery currentDelivery = p.getFirstNode().getDelivery();
+            Node currentNode = p.getFirstNode();
             
-            if (currentDelivery != null && currentDelivery.equals(prevDelivery)) {
+            if (currentNode != null && currentNode.equals(nodePreviousDelivery)) {
                 previousPathFound = true;
                 indexPreviousPath = indexPath;
                 pathToReplace = p;
-            }            
+            }
         }
         
         // Previous path with the previous delivery found
@@ -149,6 +149,8 @@ public class Route implements Publisher {
                         
             updateDeliveriesTime();
             updateArcTimeSlots();
+            
+            notifySubscribers();
         }
     }
     
@@ -190,6 +192,8 @@ public class Route implements Publisher {
         
         updateDeliveriesTime();
         updateArcTimeSlots();
+        
+        notifySubscribers();
     }
     
     /**
@@ -274,7 +278,26 @@ public class Route implements Publisher {
             
             updateDeliveriesTime();
             updateArcTimeSlots();
+            
+            notifySubscribers();
         }
+    }
+    
+    /**
+     * Find and return the node of the previous delivery done before the delivery
+     * passed by parameter.
+     * @param delivery The delivery to find.
+     * @return The node of the previous delivery in the current route.
+     */
+    Node getNodePreviousDelivery(Delivery delivery) {
+        for (Path p : paths) {
+            if (p.getLastNode().getDelivery() != null 
+             && p.getLastNode().getDelivery().equals(delivery))
+            {
+                return p.getFirstNode();
+            }
+        }
+        return null;
     }
 
     @Override
@@ -313,5 +336,7 @@ public class Route implements Publisher {
     public List<Path> getPaths() {
         return Collections.unmodifiableList(paths);
     }
+
+    
 
 }

@@ -1,14 +1,14 @@
 package com.hexanome.controller;
 
 import com.hexanome.controller.command.AddDeliveryCommand;
+import com.hexanome.controller.command.RemoveDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
 import com.hexanome.view.PopOverContentEmptyNode;
-import java.util.ArrayList;
-import java.util.List;
+import javafx.concurrent.Task;
 import javafx.stage.Stage; // \todo Doit disparaitre !
 
 /**
@@ -72,13 +72,27 @@ public class UIManager {
                 break;
             case ADD_DELIVERY:
                 Object[] objs = (Object[]) arg;
-                AddDeliveryCommand ac = new AddDeliveryCommand((Node) objs[0], 
-                        (Delivery) objs[1] );
-                ContextManager.getInstance().executeCommand(ac);
-                // Create an AddDeliveryCommand and give it to context manager
+                final AddDeliveryCommand ac = new AddDeliveryCommand((Node) objs[0],
+                        (Node) objs[1]);
+                new Thread(new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        ContextManager.getInstance().executeCommand(ac);
+                        return null;
+                    }
+                }).start();
+                mainWindow.getMapView().hidePopOver((Node) objs[0]);
                 break;
             case DELETE_DELIVERY:
-                // Create a RemoveDeliveryCommand and give it to context manager
+                Delivery d = (Delivery) arg;
+                final RemoveDeliveryCommand rdc = new RemoveDeliveryCommand(d);
+                new Thread(new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        ContextManager.getInstance().executeCommand(rdc);
+                        return null;
+                    }
+                }).start();
                 break;
             case SWAP_DELIVERIES:
                 // Create a SwapDeliveryCommand and give it to context manager
@@ -148,17 +162,18 @@ public class UIManager {
         mainWindow.getMapView().clearDeliveries();
     }
 
-    public void loadError() {
-        mainWindow.SetLoadingDone();
-        mainWindow.displayError("The file can't be loaded !");
-    }
-
     public void endLoadPlanning() {
         // Add view subscribers to the model
         ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTreeView());
         ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
         // Update mainwindow
         mainWindow.SetLoadingDone();
+    }
+
+    public void showError(String msg) {
+        mainWindow.SetLoadingDone();
+        // Ask main window to display error
+        mainWindow.displayError(msg);
     }
 
 }

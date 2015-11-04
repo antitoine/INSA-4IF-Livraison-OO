@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
@@ -16,8 +17,8 @@ import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 
 /**
- * 
- * @author 
+ *
+ * @author
  */
 public class Planning implements Publisher {
 
@@ -49,6 +50,7 @@ public class Planning implements Publisher {
 
     /**
      * Constructor.
+     *
      * @param map the map related to this planning.
      * @param warehouse the warehouse.
      * @param timeSlots all the timeslots where a delivery can be executed.
@@ -96,50 +98,61 @@ public class Planning implements Publisher {
     }
 
     /**
-     * Returns the delivery thanks to its id.
-     * @param id the id of the delivery.
-     * @return the delivery corresponding to this id.
+     * Adds a delivery to the planning, after another delivery.
+     *
+     * @param node The node where we want to add a delivery
+     * @param nodePreviousDelivery The node where is the delivery to do before
+     * the new one we want to add.
+     * @param timeSlot The time slot in which we want the new delivery to be.
+     * @return The delivery newly created.
      */
-    public Delivery getDeliveryById(int id) {
-        // \todo implement here
+    public Delivery addDelivery(Node node, Node nodePreviousDelivery, TimeSlot timeSlot) {
+        if (route != null) {
+            Delivery newDelivery = new Delivery(timeSlot.getDeliveries().size() + 1, node);
+            timeSlot.addDelivery(newDelivery);
+
+            route.addDelivery(newDelivery, nodePreviousDelivery, timeSlot);
+            notifySubscribers();
+            return newDelivery;
+        }
+
         return null;
     }
 
     /**
-     * Adds a delivery to the planning, after another delivery.
-     * @param node The node where we want to add a delivery
-     * @param previousDelivery the delivery that will be before the one we want to add.
-     * @param timeSlot the time slot in which we want the new delivery to be.
-     */
-    public void addDelivery(Node node, Delivery previousDelivery, TimeSlot timeSlot) {
-        if (route != null) {            
-            Delivery newDelivery = new Delivery(timeSlot.getDeliveries().size() + 1, node);            
-            timeSlot.addDelivery(newDelivery);
-            route.addDelivery(newDelivery, previousDelivery, timeSlot);
-            notifySubscribers();
-        }
-    }
-
-    /**
      * Removes a delivery from the planning.
+     *
      * @param delivery the delivery to remove.
      */
     public void removeDelivery(Delivery delivery) {
-        if(route != null)
-        {
+        if (route != null) {
             route.removeDelivery(delivery);
             notifySubscribers();
         }
     }
 
     /**
+     * Finds the delivery passed by parameter and returns the node which
+     * contains the delivery done before.
+     *
+     * @param delivery The delivery to find in the current planning.
+     * @return The node of the previous delivery.
+     */
+    public Node getNodePreviousDelivery(Delivery delivery) {
+        if (route != null) {
+            return route.getNodePreviousDelivery(delivery);
+        }
+        return null;
+    }
+
+    /**
      * Swaps two deliveries.
+     *
      * @param delivery1 the first delivery to swap.
-     * @param delivery2  the second delivery to swap.
+     * @param delivery2 the second delivery to swap.
      */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
-        if(route != null)
-        {
+        if (route != null) {
             route.swapDeliveries(delivery1, delivery2);
             notifySubscribers();
         }
@@ -147,6 +160,7 @@ public class Planning implements Publisher {
 
     /**
      * Returns all the time slots.
+     *
      * @return the list of all the time slots.
      */
     public List<TimeSlot> getTimeSlots() {
@@ -154,7 +168,17 @@ public class Planning implements Publisher {
     }
 
     /**
+     * Returns the first time slot, with the lowest start date.
+     *
+     * @return The first time slot, or null if it doesn't exist.
+     */
+    public TimeSlot getFirstTimeSlot() {
+        return (timeSlots.isEmpty()) ? null : timeSlots.get(0);
+    }
+
+    /**
      * Returns the map corresponding to this planning.
+     *
      * @return the map.
      */
     public Map getMap() {
@@ -163,6 +187,7 @@ public class Planning implements Publisher {
 
     /**
      * Returns the unique warehouse of this planning.
+     *
      * @return the warehouse.
      */
     public Node getWarehouse() {
@@ -171,6 +196,7 @@ public class Planning implements Publisher {
 
     /**
      * Returns the route created from this planning.
+     *
      * @return the route.
      */
     public Route getRoute() {
@@ -227,20 +253,12 @@ public class Planning implements Publisher {
         subscribers.clear();
     }
 
-    /**
-     * Returns the delivery that is before the one in parameter.
-     * @param delivery the delivery that is right after the one we are looking for.
-     * @return the delivery before the one in parameter.
-     */
-    public Delivery getPreviousDelivery(Delivery delivery) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Collection<Delivery> getDeliveries() {
+    public List<Delivery> getDeliveries() {
         ArrayList<Delivery> deliveries = new ArrayList();
-        for(TimeSlot ts : timeSlots){
+        for (TimeSlot ts : timeSlots) {
             deliveries.addAll(ts.getDeliveries());
         }
         return deliveries;
     }
+
 }

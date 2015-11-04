@@ -1,0 +1,23 @@
+\select@language {french}
+\contentsline {part}{I\hspace {1em}Introduction}{4}
+\contentsline {section}{\numberline {I.1}Pr\IeC {\'e}sentation du contenu du rapport}{5}
+\contentsline {part}{II\hspace {1em}Capture et analyse des besoins}{6}
+\contentsline {section}{\numberline {II.2}Planning pr\IeC {\'e}visionnel du projet \textit {(FR)}}{7}
+\contentsline {section}{\numberline {II.3}Domain model \textit {(EN)}}{7}
+\contentsline {section}{\numberline {II.4}Glossary \textit {(EN)}}{7}
+\contentsline {section}{\numberline {II.5}Use case diagram \textit {(EN)}}{8}
+\contentsline {part}{III\hspace {1em}Conception}{9}
+\contentsline {section}{\numberline {III.6}User-level events list and State-Transition Diagram \textit {(EN)}}{10}
+\contentsline {section}{\numberline {III.7}Packages and Classes Diagrams \textit {(EN)}}{12}
+\contentsline {subsection}{\numberline {III.7.1}Model related diagrams}{12}
+\contentsline {subsection}{\numberline {III.7.2}View related diagrams}{13}
+\contentsline {subsection}{\numberline {III.7.3}Controller related diagrams}{13}
+\contentsline {subsection}{\numberline {III.7.4}Other diagrams}{16}
+\contentsline {section}{\numberline {III.8}Choix architecturaux et patrons de conception utilis\IeC {\'e}s \textit {(FR)}}{16}
+\contentsline {section}{\numberline {III.9}Sequence Diagram describing Route computation process \textit {(EN)}}{17}
+\contentsline {part}{IV\hspace {1em}Impl\IeC {\'e}mentation et tests}{18}
+\contentsline {section}{\numberline {IV.10}Notes related to source code, its documentation and unit tests \textit {(EN)}}{19}
+\contentsline {section}{\numberline {IV.11}Packages and classes diagrams generated from source code \textit {(EN)}}{19}
+\contentsline {part}{V\hspace {1em}Bilan}{20}
+\contentsline {section}{\numberline {V.12}Planning effectif du projet \textit {(FR)}}{21}
+\contentsline {section}{\numberline {V.13}Bilan humain et technique \textit {(FR)}}{21}

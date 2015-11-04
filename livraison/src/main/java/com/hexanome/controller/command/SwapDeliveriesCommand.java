@@ -1,7 +1,7 @@
 package com.hexanome.controller.command;
 
 import com.hexanome.controller.ModelManager;
-import com.hexanome.controller.command.ICommand;
+import com.hexanome.model.Delivery;
 
 /**
  * This class represent the action of swaping two deliveries in the planning
@@ -9,18 +9,16 @@ import com.hexanome.controller.command.ICommand;
  * @see ICommand
  */
 public class SwapDeliveriesCommand implements ICommand {
-    private int firstDeliveryId;
-    private int secondDeliveryId;
+    private Delivery firstDelivery;
+    private Delivery secondDelivery;
     /**
      * Construct a new instance of SwapDeliveriesCommand
-     * @param firstDeliveryId
-     *      Id of the first delivery to swap
-     * @param secondDeliveryId 
-     *      Id of the second delivery to swap
+     * @param firstDelivery The first delivery to swap.
+     * @param secondDelivery The second delivery to swap
      */
-    public SwapDeliveriesCommand(int firstDeliveryId, int secondDeliveryId) {
-        this.firstDeliveryId = firstDeliveryId;
-        this.secondDeliveryId = secondDeliveryId;
+    public SwapDeliveriesCommand(Delivery firstDelivery, Delivery secondDelivery) {
+        this.firstDelivery = firstDelivery;
+        this.secondDelivery = secondDelivery;
     }
     
     /**
@@ -32,10 +30,7 @@ public class SwapDeliveriesCommand implements ICommand {
     public ICommand execute() {
         if(ModelManager.getInstance().getPlanning()!= null)
         {
-            ModelManager.getInstance().getPlanning().swapDeliveries(
-                    ModelManager.getInstance().getPlanning().getDeliveryById(firstDeliveryId),
-                    ModelManager.getInstance().getPlanning().getDeliveryById(secondDeliveryId)
-            );
+            ModelManager.getInstance().getPlanning().swapDeliveries(firstDelivery, secondDelivery);
         }
         else
         {
@@ -52,10 +47,7 @@ public class SwapDeliveriesCommand implements ICommand {
     public ICommand reverse() {
         if(ModelManager.getInstance().getPlanning()!= null)
         {
-            ModelManager.getInstance().getPlanning().swapDeliveries(
-                    ModelManager.getInstance().getPlanning().getDeliveryById(secondDeliveryId),
-                    ModelManager.getInstance().getPlanning().getDeliveryById(firstDeliveryId)
-            );
+            ModelManager.getInstance().getPlanning().swapDeliveries(secondDelivery, firstDelivery);
         }
         else
         {

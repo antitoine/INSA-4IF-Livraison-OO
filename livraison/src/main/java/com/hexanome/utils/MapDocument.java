@@ -3,6 +3,8 @@ package com.hexanome.utils;
 import com.hexanome.controller.UIManager;
 import com.hexanome.model.Map;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,16 +17,17 @@ import org.jdom2.Element;
  * XML description of a Map 
  * @author Estelle
  */
-public class MapDocument {
+public class MapDocument extends XMLParser {
 
-    private Document dom;
     /**
      * Creates a new instance of a MapDocument using the given DOM document
      * @param dom 
      */
     public MapDocument(Document dom) {
-        this.dom = dom;
+        super(dom);
     }
+    
+    
     /**
      * Fills the Map object using the content of file and the Map's 
      * factory methods 
@@ -32,7 +35,7 @@ public class MapDocument {
      */
     public void fillMap(Map map) {
         map.clear();
-        Element root = dom.getRootElement();
+        Element root = getDom().getRootElement();
 
         for (Element node : root.getChildren()) {
             try {
@@ -72,7 +75,129 @@ public class MapDocument {
      * @return
      */
     public boolean checkIntegrity() {
-        // \todo implement all XML checks here !
+        Element root = getDom().getRootElement();
+        // TEST : root contains enough children
+        if(root.getChildren().size() < 2)
+        {   
+            setErrorMsg("Root has not enough children to build a map !");
+            return false; // Interrupt check here
+        }
+        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Point> ps = new ArrayList<>();
+        ArrayList<Element> arcs = new ArrayList<>();
+        for (Element node : root.getChildren()) {
+            // TEST : each node has at least one outgoing arc
+            if(node.getChildren("LeTronconSortant").size() < 1) {   
+                setErrorMsg("At least one node is isolated in the map (no outgoing arc specified) !");
+                return false; // Interrupt check here
+            } else {
+                // Add arcs to list
+                arcs.addAll(node.getChildren("LeTronconSortant"));
+            }
+            // Initialize attributes
+            int id;
+            int x = -1;
+            int y = -1;
+            if(node.getAttributeValue("id") == null) {   
+                setErrorMsg("Missing attribute <id> in at least one node !");
+                return false; // Interrupt check here
+            } else {
+                try {
+                    id = node.getAttribute("id").getIntValue();
+                    ids.add(new Integer(id));
+                } catch (DataConversionException ex) {
+                    Logger.getLogger(MapDocument.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(node.getAttributeValue("x") == null) {   
+                setErrorMsg("Missing attribute <x> in at least one node !");
+                return false; // Interrupt check here
+            } else {
+                try {
+                    x = node.getAttribute("x").getIntValue();
+                } catch (DataConversionException ex) {
+                    Logger.getLogger(MapDocument.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(node.getAttributeValue("y") == null) {   
+                setErrorMsg("Missing attribute <y> in at least one node !");
+                return false; // Interrupt check here
+            } else {
+                try {
+                    y = node.getAttribute("y").getIntValue();
+                } catch (DataConversionException ex) {
+                    Logger.getLogger(MapDocument.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            ps.add(new Point(x,y));
+        }
+        // TEST : check if two nodes have the same id
+        for (Integer i : ids) {
+            if(Collections.frequency(ids, i) > 1) {
+                setErrorMsg("At least two nodes share the same id !");
+                return false; // Interrupt check here
+            }
+        }
+        // TEST : check if two or more nodes have the same coordinates
+        for (int i = 0; i < ps.size(); i++) {
+            for (int j = i+1; j < ps.size(); j++) {
+                if(ps.get(i).x == ps.get(j).x && ps.get(i).y == ps.get(j).y) {
+                    setErrorMsg("At least two nodes share the same coordinates !");
+                    return false; // Interrupt check here
+                }
+            }
+        }
+        // TEST : arcs destination node is valid
+        for (Element arc : arcs) {
+            if(arc.getAttributeValue("nomRue") == null) {   
+                setErrorMsg("Missing attribute <nomRue> in at least one arc !");
+                return false; // Interrupt check here
+            }
+            if(arc.getAttributeValue("vitesse") == null) {   
+                setErrorMsg("Missing attribute <vitesse> in at least one arc !");
+                return false; // Interrupt check here
+            } else {
+                float avgSpeed = Float.parseFloat(arc.getAttribute("vitesse").getValue().replaceAll(",","."));
+                // TEST : check if arc's avgSpeed is strictly above 0
+                if(avgSpeed <= 0f) {
+                    setErrorMsg("At least one arc has its average speed <= 0 !");
+                    return false; // Interrupt check here
+                }
+            }
+            if(arc.getAttributeValue("longueur") == null) {   
+                setErrorMsg("Missing attribute <longueur> in at least one arc !");
+                return false; // Interrupt check here
+            } else {
+                float length = Float.parseFloat(arc.getAttribute("longueur").getValue().replaceAll(",","."));
+                // TEST : check if arc's length is strictly above 0
+                if(length <= 0f) {
+                    setErrorMsg("At least one arc has its length <= 0 !");
+                    return false; // Interrupt check here
+                }   
+            }
+            if(arc.getAttributeValue("idNoeudDestination") == null) {   
+                setErrorMsg("Missing attribute <idNoeudDestination> in at least one arc !");
+                return false; // Interrupt check here
+            } else {
+                try {
+                    // TEST : check if arc's destination node is present in the map
+                    int id = arc.getAttribute("idNoeudDestination").getIntValue();
+                    boolean found = false;
+                    for (Integer i : ids) {
+                        if(i.intValue() == id) {
+                            found = true;
+                        }
+                    }
+                    if(!found) {
+                        setErrorMsg("At least one arc has its destination node missing in the map !");
+                        return false; // Interrupt check here
+                    }
+                } catch (DataConversionException ex) {
+                    Logger.getLogger(MapDocument.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        // Returns true if all tests passed !
         return true;
     }
 }

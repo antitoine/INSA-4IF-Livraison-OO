@@ -5,7 +5,6 @@
  */
 package com.hexanome.model;
 
-import com.hexanome.utils.Subscriber;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hexanome.view;
 
 /**
@@ -19,13 +14,13 @@ public abstract class NodeViewShapeFactory {
      */
     public static INodeViewShape createNodeViewShape(String nodeType) {
         switch (nodeType) {
-            case ConstView.EMPTYNODE:
+            case ConstView.EMPTY_NODE:
                 return new EmptyNodeView();
                 
-            case ConstView.DELIVERYNODE:
+            case ConstView.DELIVERY_NODE:
                 return new DeliveryNodeView();
                 
-            case ConstView.WAREHOUSENODE:
+            case ConstView.WAREHOUSE_NODE:
                 return new WarehouseNodeView();
                 
             default:

@@ -7,28 +7,21 @@ import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import com.hexanome.utils.TypeWrapper;
-import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.glyphfont.Glyph;
 
-/**
- * FXML Controller class
- */
-public class DeliveryTreeView extends VBox implements Initializable, Subscriber {
+
+public class DeliveryTreeView extends VBox implements Subscriber {
 
     TreeView<String> deliveryTree;
     TreeItem<String> rootItem;
@@ -39,25 +32,7 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
     HashMap<Delivery, TreeItem<String>> deliveryBranch;
 
     public DeliveryTreeView() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.TREEVIEW));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(EmptyNodeView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+        BorderPane.setAlignment(this, Pos.CENTER);
         deliveryBranch = new HashMap<>();
         timeSlotBranch = new HashMap<>();
 
@@ -78,6 +53,7 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
             public TreeCell<String> call(TreeView<String> p) {
                 return new DeliveryTreeCell();
             }
+
         });
 
         // Ask the map to show a popover over the selected delivery
@@ -92,10 +68,12 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
                         }
                     }
                 });
+
     }
 
     /**
      * Add a timeSlot in the TreeView
+     *
      * @param ts TimeSlot
      */
     public void AddTimeSlot(TimeSlot ts) {
@@ -105,6 +83,7 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
 
     /**
      * Delete a delivery in the TreeView
+     *
      * @param delivery
      */
     public void DeleteDelivery(Delivery delivery) {
@@ -120,12 +99,12 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
         deliveryBranch.clear();
         timeSlotBranch.clear();
     }
-    
+
     /**
-     * Return a delivery from an item 
-     * in the treeView
+     * Return a delivery from an item in the treeView
+     *
      * @param treeItem
-     * @return 
+     * @return
      */
     private Delivery getDeliveryFromTreeItem(TreeItem<String> treeItem) {
         Delivery result = null;
@@ -184,8 +163,8 @@ public class DeliveryTreeView extends VBox implements Initializable, Subscriber 
     }
 
     /**
-     * Select the appropriate delevery in the 
-     * TreeView
+     * Select the appropriate delevery in the TreeView
+     *
      * @param nodeView NodeView, delivery on the map
      */
     public void selectDelivery(NodeView nodeView) {

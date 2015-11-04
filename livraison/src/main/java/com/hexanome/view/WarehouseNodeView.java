@@ -1,32 +1,18 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.UIManager;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import org.controlsfx.control.PopOver;
+import org.controlsfx.glyphfont.Glyph;
 
-/**
- * FXML Controller class
- */
 public class WarehouseNodeView extends Label implements INodeViewShape {
 
     /**
      * Initializes the controller class.
      */
     public WarehouseNodeView() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.WAREHOUSENODE));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(WarehouseNodeView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setGraphic(new Glyph("FontAwesome", "HOME"));
     }
 
     @Override
