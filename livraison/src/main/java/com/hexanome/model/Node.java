@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class represents a node, which can be the beginning
@@ -28,6 +29,27 @@ public class Node {
      * The delivery attached to this node (if there is one).
      */
     private Delivery delivery;
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Node other = (Node) obj;
+        if (!Objects.equals(this.location, other.location)) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Constructor.

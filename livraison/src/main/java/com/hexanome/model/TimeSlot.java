@@ -103,7 +103,7 @@ public class TimeSlot {
         }
         
         TimeSlot timeSlot = (TimeSlot)obj;
-        if(this.startTime != timeSlot.startTime || this.endTime != timeSlot.endTime) {
+        if(this.startTime != timeSlot.startTime || this.endTime != timeSlot.endTime || this.deliveries.size() != timeSlot.deliveries.size()) {
             return false;
         }
         

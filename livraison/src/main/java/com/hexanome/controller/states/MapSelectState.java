@@ -89,11 +89,13 @@ public class MapSelectState extends DefaultState {
                                     // Full clear of the model
                                     ModelManager.getInstance().clearModel();
                                     // Jump to InitState
-                                    ContextManager.getInstance().setCurrentState(InitState.getInstance());
+                                    ContextManager.getInstance()
+                                            .setCurrentState(InitState.getInstance());
                                     // Update mainWindow
                                     UIManager.getInstance().showError(loadService.getValue());
                                 } else {
-                                    ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
+                                    ContextManager.getInstance()
+                                            .setCurrentState(MapLoadedState.getInstance());
                                     UIManager.getInstance().endLoadMap();
                                 }
                                 break;

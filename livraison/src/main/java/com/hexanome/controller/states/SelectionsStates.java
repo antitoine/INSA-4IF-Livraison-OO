@@ -75,7 +75,7 @@ public abstract class SelectionsStates extends DefaultState {
      * @see com.hexanome.controller.states.IState#leftClickPressedOnDelivery(com.hexanome.model.Delivery)
      */
     @Override
-    public void leftClickPressedOnDelivery(Delivery delivery) {
+    public void leftClickPressedOnDelivery() {
         // Jump to SwapDeliveryState
         ContextManager.getInstance().setCurrentState(SwapDeliveriesState.getInstance());
     }
