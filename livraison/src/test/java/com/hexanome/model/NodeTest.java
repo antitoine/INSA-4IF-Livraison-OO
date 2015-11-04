@@ -60,7 +60,7 @@ public class NodeTest {
         Node node3 = new Node(3, new Point(10,30));
         Arc arc = new Arc("hollywood",12,31,node1,node2);
         
-        node3.attachOutgoingArc(arc); //Function tested
+        node3.attachOutgoingArc(arc); 
         
         ArrayList<Arc> expResult = new ArrayList<>();
         expResult.add(arc);
