@@ -66,16 +66,15 @@ public class PlanningSelectState extends DefaultState {
          *
          * Otherwise, all the task listed here will be executed in the UI Thread
          */
-        final Service<Void> loadService = new Service<Void>() {
+        final Service<String> loadService = new Service<String>() {
             @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
+            protected Task<String> createTask() {
+                return new Task<String>() {
                     @Override
-                    protected Void call() throws Exception {
-                        ModelManager.getInstance()
+                    protected String call() throws Exception {
+                        return ModelManager.getInstance()
                                 .initModelPlanning(IOManager.getInstance()
                                         .getPlanningDocument(file));
-                        return null;
                     }
                 };
             }
@@ -83,26 +82,34 @@ public class PlanningSelectState extends DefaultState {
         loadService.stateProperty()
                 .addListener(new ChangeListener<Worker.State>() {
                     @Override
-                    public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldValue,
+                    public void changed(ObservableValue<? extends Worker.State> observableValue,
+                            Worker.State oldValue,
                             Worker.State newValue) {
                         switch (newValue) {
-                            case FAILED:
-                                // Clear current model's planning
-                                ModelManager.getInstance().clearPlanning();
-                                // Jump to MapLoadedState
-                                ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
-                                // Update mainWindow
-                                UIManager.getInstance().showError("File can(t be loaded");
-                                break;
-                            case CANCELLED:
-                                // File selection cancel is not managed here
-                                break;
                             case SUCCEEDED:
-                                // Jump to PlanningLoadedState
-                                ContextManager.getInstance().setCurrentState(PlanningLoadedState.getInstance());
-                                // update the view
-                                UIManager.getInstance().endLoadPlanning();
-                                break;
+                                if (loadService.getValue() != null) {
+                                    // Clear current model's planning
+                                    ModelManager.getInstance().clearPlanning();
+                                    // Jump to MapLoadedState
+                                    ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
+                                    // Update mainWindow
+                                    UIManager.getInstance().showError(loadService.getValue());
+                                    break;
+                                } else {
+                                    // Jump to PlanningLoadedState
+                                    ContextManager.getInstance()
+                                            .setCurrentState(PlanningLoadedState.getInstance());
+                                    // update the view
+                                    UIManager.getInstance().endLoadPlanning();
+
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ContextManager.getInstance().getCurrentState().btnGenerateRoute();
+                                        }
+                                    }).start();
+                                    break;
+                                }
                         }
                     }
                 });
@@ -114,5 +121,5 @@ public class PlanningSelectState extends DefaultState {
     public String toString() {
         return "PlanningSelectState"; //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
