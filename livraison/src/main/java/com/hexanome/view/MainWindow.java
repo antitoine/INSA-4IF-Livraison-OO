@@ -155,12 +155,20 @@ public class MainWindow extends AnchorPane {
         );
     }
 
-    public void SetLoadingState(final String text) {
+    /**
+     * 
+     * @param text 
+     */
+    public void setLoadingState(final String text) {
         labelInfos.setText(text);
         stage.getScene().setCursor(Cursor.WAIT);
     }
 
-    public void SetLoadingDone() {
+    /**
+     * Reset the cursor and the info label 
+     * at the end of a loading for example
+     */
+    public void resetCursorAndInfoLabel() {
         labelInfos.setText("");
         stage.getScene().setCursor(Cursor.DEFAULT);
 
