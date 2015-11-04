@@ -20,7 +20,9 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.glyphfont.Glyph;
 
-
+/**
+ * Planning reprensention at the left list of deliveries
+ */
 public class DeliveryTreeView extends VBox implements Subscriber {
 
     TreeView<String> deliveryTree;

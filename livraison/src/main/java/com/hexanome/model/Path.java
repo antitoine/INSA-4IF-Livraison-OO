@@ -64,6 +64,10 @@ public class Path {
         return false;
     }
     
+    /**
+     * Returns the total duration of the path, ie the sum of the arc's durations
+     * @return The duration of the path.
+     */
     public float getPathDuration() {
         return pathDuration;
     }
