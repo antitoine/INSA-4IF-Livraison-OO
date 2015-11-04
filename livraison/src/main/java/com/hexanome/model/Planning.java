@@ -77,9 +77,17 @@ public class Planning implements Publisher {
                 return planningComputeRouteWorker;
             }
         };
-        service.stateProperty()
-                .addListener(listenerComputeRoute);
+        service.stateProperty().addListener(listenerComputeRoute);
         service.start();
+    }
+    
+    /**
+     * Compute the route synchronously. Update the deliveries time.
+     * @throws java.lang.Exception Ifthe route can't be computed.
+     */
+    public void computeRoute() throws Exception {
+        planningComputeRouteWorker = new PlanningComputeRouteWorker(this);
+        planningComputeRouteWorker.call();
     }
 
     /**
