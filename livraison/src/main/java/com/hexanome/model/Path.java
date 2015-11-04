@@ -55,10 +55,19 @@ public class Path {
      */
     public boolean containsNode(Node node)
     {
-        // \todo implement here
+        for (Arc arc : arcs) {
+            if (arc.getSrc().equals(node) || arc.getDest().equals(node)) {
+                return true;
+            }
+        }
+        
         return false;
     }
     
+    /**
+     * Returns the total duration of the path, ie the sum of the arc's durations
+     * @return The duration of the path.
+     */
     public float getPathDuration() {
         return pathDuration;
     }

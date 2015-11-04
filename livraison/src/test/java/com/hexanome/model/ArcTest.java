@@ -35,10 +35,11 @@ public class ArcTest {
     @Test
     public void testGetDest() {
         System.out.println("getDest");
-
-        Node src = new Node(1, new Point(20,30));
-        Node dest = new Node(2, new Point(30,30));      
-        Arc arc = new Arc("hollywood", 12, 31, src, dest);
+        
+        Map map = new Map();
+        Node src = map.createNode(1, new Point(20,30));
+        Node dest = map.createNode(2, new Point(30,30));      
+        Arc arc = map.createArc("hollywood", 12, 31, 1, 2);
         Node expResult = dest;
         Node result = arc.getDest();
         assertEquals(expResult, result);
@@ -51,8 +52,8 @@ public class ArcTest {
     public void testGetSrc() {
         System.out.println("getSrc");
         Map map = new Map();
-        Node src = new Node(1, new Point(20,30));
-        Node dest = new Node(2, new Point(30,30));
+        Node src = map.createNode(1, new Point(20,30));
+        Node dest = map.createNode(2, new Point(30,30));
         Arc arc = map.createArc("hollywood", 12, 31, 1, 2);
         Node expResult = src;
         Node result = arc.getSrc();
@@ -66,6 +67,7 @@ public class ArcTest {
     public void testGetAssociatedTimeSlot() {
         System.out.println("getAssociatedTimeSlot");
         
+        Map map = new Map();
         //Node simple
         Node node1 = new Node(1, new Point(10,30));
         Node node2 = new Node(2, new Point(10,20));
@@ -84,6 +86,7 @@ public class ArcTest {
         deliveries1.add(delivery1);
         TimeSlot expResult1 = new TimeSlot(8,9,deliveries1);
         delivery1.attachTimeSlot(expResult1);
+        
         TimeSlot result2 = arc2.getAssociatedTimeSlot();
         assertEquals(expResult1, result2);
         
@@ -118,7 +121,7 @@ public class ArcTest {
         
         arc1.setAssociatedTimeSlot(expResult);
         TimeSlot result = arc1.getAssociatedTimeSlot();
-         assertEquals(expResult, result);
+        assertEquals(expResult, result);
     }
 
     /**

@@ -67,6 +67,8 @@ final class DeliveryTreeCell extends TreeCell<String> {
                     //System.out.println((db.getString()));
                     success = true;
                 }
+                
+                
                 /* let the source know whether the string was successfully 
                  * transferred and used */
                 //event.setDropCompleted(success);

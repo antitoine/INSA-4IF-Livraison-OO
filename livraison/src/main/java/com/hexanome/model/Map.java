@@ -77,16 +77,6 @@ public class Map implements Publisher {
 
     /**
      *
-     * @param location
-     * @return
-     */
-    public Node getNodeByLocation(Point location) {
-        // \todo implement here
-        return null;
-    }
-
-    /**
-     *
      * @param id
      * @return
      */
@@ -194,7 +184,11 @@ public class Map implements Publisher {
     }
 
     public void clear() {
-        // \todo implement here
+        arcs.clear();
+        globalMinDistances.clear();
+        globalPreviousNodes.clear();
+        nodes.clear();
+        notifySubscribers();
     }
 
     @Override
@@ -236,8 +230,7 @@ public class Map implements Publisher {
 
     @Override
     public void removeSubscriber(Subscriber s) {
-        // TODO
-        throw new UnsupportedOperationException("Not supported yet.");
+        subscribers.remove(s);
     }
 
     @Override
@@ -249,8 +242,7 @@ public class Map implements Publisher {
 
     @Override
     public void clearSubscribers() {
-        // TODO
-        throw new UnsupportedOperationException("Not supported yet.");
+        subscribers.clear();
     }
 
 }
