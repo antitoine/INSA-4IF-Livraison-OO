@@ -2,7 +2,9 @@ package com.hexanome.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class represents a road, that goes from a node to another one.
@@ -37,7 +39,7 @@ public class Arc {
     /**
      * The time slots associated with the arc when the arc is in a route.
      */
-    private List<TimeSlot> associatedTimeSlot;
+    private Set<TimeSlot> associatedTimeSlot;
 
     /**
      * Returns the node that ends the arc.
@@ -70,15 +72,15 @@ public class Arc {
         this.duration = length*avgSpeed; // Unit : s
         this.dest = dest;
         this.src = src;
-        this.associatedTimeSlot = new ArrayList<>();
+        this.associatedTimeSlot = new HashSet<>();
     }
     
     /**
      * Returns the time slots associated with the arc, if it exists.
      * @return The time slot if it exists, empty list otherwise.
      */
-    public List<TimeSlot> getAssociatedTimeSlots() {
-        return Collections.unmodifiableList(associatedTimeSlot);
+    public Set<TimeSlot> getAssociatedTimeSlots() {
+        return Collections.unmodifiableSet(associatedTimeSlot);
     }
     
     /**
