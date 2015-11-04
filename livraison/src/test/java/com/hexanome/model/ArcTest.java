@@ -35,10 +35,11 @@ public class ArcTest {
     @Test
     public void testGetDest() {
         System.out.println("getDest");
-
-        Node src = new Node(1, new Point(20,30));
-        Node dest = new Node(2, new Point(30,30));      
-        Arc arc = new Arc("hollywood", 12, 31, src, dest);
+        
+        Map map = new Map();
+        Node src = map.createNode(1, new Point(20,30));
+        Node dest = map.createNode(2, new Point(30,30));      
+        Arc arc = map.createArc("hollywood", 12, 31, 1, 2);
         Node expResult = dest;
         Node result = arc.getDest();
         assertEquals(expResult, result);
@@ -51,8 +52,8 @@ public class ArcTest {
     public void testGetSrc() {
         System.out.println("getSrc");
         Map map = new Map();
-        Node src = new Node(1, new Point(20,30));
-        Node dest = new Node(2, new Point(30,30));
+        Node src = map.createNode(1, new Point(20,30));
+        Node dest = map.createNode(2, new Point(30,30));
         Arc arc = map.createArc("hollywood", 12, 31, 1, 2);
         Node expResult = src;
         Node result = arc.getSrc();
