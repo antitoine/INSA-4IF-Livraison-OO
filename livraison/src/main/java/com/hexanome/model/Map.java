@@ -77,16 +77,6 @@ public class Map implements Publisher {
 
     /**
      *
-     * @param location
-     * @return
-     */
-    public Node getNodeByLocation(Point location) {
-        // \todo implement here
-        return null;
-    }
-
-    /**
-     *
      * @param id
      * @return
      */
