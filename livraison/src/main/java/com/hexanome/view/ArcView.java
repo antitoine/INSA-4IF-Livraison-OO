@@ -1,8 +1,10 @@
 package com.hexanome.view;
 
 import com.hexanome.model.Arc;
+import com.hexanome.model.TimeSlot;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -14,20 +16,47 @@ public class ArcView extends Pane {
 
     final double D = 10;
     ConstView.ArcViewType typeOfNonDeliveryNode;
-
+    LinkedList<Color> colors;
+    LinkedList<Arc> arcs;
     /**
      * Initializes the controller class.
      *
-     * @param arcs
+     * @param tsArcs
      * @param type
      */
-    public ArcView(ArrayList<Arc> arcs, ConstView.ArcViewType type) {
+    public ArcView(final LinkedList<Arc> tsArcs, ConstView.ArcViewType type) {
+        
         setMouseTransparent(true);
         this.typeOfNonDeliveryNode = type;
+        colors = new LinkedList<>();
+        
+        arcs = new LinkedList<>(tsArcs);
+        
+        boolean moreThanOneTimeSlot;
+        for (Arc arc : tsArcs) {
+            moreThanOneTimeSlot = false;
+            if (arc.getAssociatedTimeSlots().isEmpty()) {
+                if (type == ConstView.ArcViewType.STANDARD) {
+                    colors.add(Color.GRAY);
+                } else {
+                    colors.add(Color.BLACK);
+                }
+            } else {
+                for (TimeSlot ts : arc.getAssociatedTimeSlots()) {
+                    if (!moreThanOneTimeSlot) {
+                        moreThanOneTimeSlot = true;
+                    } else {
+                        arcs.add(arc);
+                    }
+                    colors.add(ColorsGenerator.getTimeSlotColor(ts));
+                }
+            }
+        }
+
         addArcs(arcs);
     }
 
-    public void addArcs(ArrayList<Arc> arcs) {
+    public void addArcs(LinkedList<Arc> arcs) {
 
         ArrayList<Node> arcElements = new ArrayList<>();
 
@@ -35,12 +64,13 @@ public class ArcView extends Pane {
 
         if ((arcNb % 2) == 1) {
             // draw line
-            Arc a = arcs.remove(0);
+            Arc arc = arcs.remove(0);
+            Color color = colors.remove(0);
 
-            Line line = drawLine(a.getSrc().getLocation(), a.getDest().getLocation());
-            Polygon arrow = drawArrow(a.getSrc().getLocation(), a.getDest().getLocation());
-            setArrowColor(a, arrow);
-            setLineColor(a, line);
+            Line line = drawLine(arc.getSrc().getLocation(), arc.getDest().getLocation());
+            Polygon arrow = drawArrow(arc.getSrc().getLocation(), arc.getDest().getLocation());
+            arrow.setFill(color);
+            line.setStroke(color);
             arcElements.add(line);
             arcElements.add(arrow);
             arcNb--;
@@ -49,36 +79,49 @@ public class ArcView extends Pane {
         for (int i = 1; i <= arcNb / 2; i++) {
             Arc a1 = arcs.remove(0);
             Arc a2 = arcs.remove(0);
+            Color color1 = colors.remove(0);
+            Color color2 = colors.remove(0);
 
-            double startX = a1.getSrc().getLocation().x;
-            double startY = a1.getSrc().getLocation().y;
+            double ptStartX = a1.getSrc().getLocation().x;
+            double ptStartY = a1.getSrc().getLocation().y;
 
-            double endX = a1.getDest().getLocation().x;
-            double endY = a1.getDest().getLocation().y;
+            double ptEndX = a1.getDest().getLocation().x;
+            double ptEndY = a1.getDest().getLocation().y;
 
-            double middleX = 0.5 * (endX + startX);
-            double middleY = 0.5 * (endY + startY);
-            
-            double alpha = Math.atan2(middleY - startY, middleX - startX);
-          //  double alpha = Math.atan2( distance(startX, startY, middleX, middleY) , D);
+            double vecMiddleX = 0.5 * (ptEndX - ptStartX);
+            double vecMiddleY = 0.5 * (ptEndY - ptStartY);
 
-            double ctrlX = i * D * Math.cos(Math.PI * 0.5 - alpha);
-            double ctrlY = i * D * Math.sin(Math.PI * 0.5 - alpha);
+            double ptMiddleX = ptStartX + vecMiddleX;
+            double ptMiddleY = ptStartY + vecMiddleY;
 
-            CubicCurve curve1 = new CubicCurve(startX, startY,
-                    middleX + ctrlX, middleY + ctrlY, middleX + ctrlX, middleY + ctrlY, endX, endY);
-            Polygon arrow1 = drawArrow(new Point((int) (middleX + ctrlX), (int) (middleY + ctrlY)),
+            double vecOrthoMiddleX = -vecMiddleY;
+            double vecOrthoMiddleY = vecMiddleX;
+
+            double normVecOrthoMiddle = Math.sqrt((vecOrthoMiddleX * vecOrthoMiddleX)
+                    + (vecOrthoMiddleY * vecOrthoMiddleY));
+
+            double ptCtrlX1 = ptMiddleX + (i * D * vecOrthoMiddleX) / (normVecOrthoMiddle);
+            double ptCtrlY1 = ptMiddleY + (i * D * vecOrthoMiddleY) / (normVecOrthoMiddle);
+
+            double ptCtrlX2 = ptMiddleX - (i * D * vecOrthoMiddleX) / (normVecOrthoMiddle);
+            double ptCtrlY2 = ptMiddleY - (i * D * vecOrthoMiddleY) / (normVecOrthoMiddle);
+
+            CubicCurve curve1 = new CubicCurve(ptStartX, ptStartY,
+                    ptCtrlX1, ptCtrlY1, ptCtrlX1, ptCtrlY1, ptEndX, ptEndY);
+            Polygon arrow1 = drawArrow(new Point((int) (ptCtrlX1), (int) (ptCtrlY1)),
                     a1.getDest().getLocation());
 
-            CubicCurve curve2 = new CubicCurve(startX, startY,
-                    middleX - ctrlX, middleY - ctrlY, middleX - ctrlX, middleY - ctrlY, endX, endY);
-            Polygon arrow2 = drawArrow(new Point((int) (middleX - ctrlX), (int) (middleY - ctrlY)),
+            CubicCurve curve2 = new CubicCurve(ptStartX, ptStartY,
+                    ptCtrlX2, ptCtrlY2, ptCtrlX2, ptCtrlY2, ptEndX, ptEndY);
+            Polygon arrow2 = drawArrow(new Point((int) (ptCtrlX2), (int) (ptCtrlY2)),
                     a2.getDest().getLocation());
-            
-            setCurveColor(a1, curve1);
-            setArrowColor(a1, arrow1);
-            setCurveColor(a2, curve2);
-            setArrowColor(a2, arrow2);
+
+            curve1.setFill(null);
+            curve2.setFill(null);
+            curve1.setStroke(color1);
+            curve2.setStroke(color2);
+            arrow1.setFill(color1);
+            arrow2.setFill(color2);
 
             arcElements.add(curve1);
             arcElements.add(arrow1);
@@ -103,7 +146,7 @@ public class ArcView extends Pane {
 
         line.setEndX(dest.x - deltaX2);
         line.setEndY(dest.y - deltaY2);
-        
+
         return line;
     }
 
@@ -127,41 +170,6 @@ public class ArcView extends Pane {
         arrow.setRotate(Math.toDegrees(angle));
 
         return arrow;
-    }
-
-    private void setArrowColor(Arc arc, Polygon polygon) {
-        if (arc.getAssociatedTimeSlots() != null) {
-            polygon.setFill(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlots()));
-        } else if(typeOfNonDeliveryNode == ConstView.ArcViewType.STANDARD){
-            polygon.setFill(Color.GRAY);
-        } else {
-            polygon.setFill(Color.BLACK);
-        }
-    }
-
-    private void setCurveColor(Arc arc, CubicCurve curve) {
-        curve.setFill(null);
-        curve.toBack();
-        if (arc.getAssociatedTimeSlots() != null) {
-            curve.setStroke(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlots()));
-        } else if(typeOfNonDeliveryNode == ConstView.ArcViewType.STANDARD){
-            curve.setStroke(Color.GRAY);
-        } else {
-            curve.setStroke(Color.BLACK);
-        }
-    }
-
-    private void setLineColor(Arc arc, Line line) {
-        line.setStrokeWidth(1.0);
-        line.toBack();
-
-        if (arc.getAssociatedTimeSlots() != null) {
-            line.setStroke(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlots()));
-        } else if(typeOfNonDeliveryNode == ConstView.ArcViewType.STANDARD){
-            line.setStroke(Color.GRAY);
-        } else {
-            line.setStroke(Color.BLACK);
-        }
     }
 
     private double distance(double xa, double ya, double xb, double yb) {
