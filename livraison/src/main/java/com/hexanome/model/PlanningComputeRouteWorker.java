@@ -100,6 +100,7 @@ public class PlanningComputeRouteWorker extends Task<Void> {
         for (int i = 0; i < graph.getNbEdges(); ++i) {
             System.out.print(solutions[i] + " ");
         }
+        System.out.print("\n");
 
         Route route = new Route(planning, paths);
 
