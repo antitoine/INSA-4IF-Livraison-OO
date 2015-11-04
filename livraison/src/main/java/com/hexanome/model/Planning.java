@@ -1,17 +1,11 @@
 package com.hexanome.model;
 
-import com.hexanome.controller.ContextManager;
-import com.hexanome.controller.ModelManager;
-import com.hexanome.controller.UIManager;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
@@ -68,7 +62,7 @@ public class Planning implements Publisher {
      * Abort the route computing if it is running.
      */
     public void abortComputeRoute() {
-        //planningComputeRouteWorker.interrupt();
+        planningComputeRouteWorker.cancel();
     }
 
     /**
@@ -83,9 +77,17 @@ public class Planning implements Publisher {
                 return planningComputeRouteWorker;
             }
         };
-        service.stateProperty()
-                .addListener(listenerComputeRoute);
+        service.stateProperty().addListener(listenerComputeRoute);
         service.start();
+    }
+    
+    /**
+     * Compute the route synchronously. Update the deliveries time.
+     * @throws java.lang.Exception Ifthe route can't be computed.
+     */
+    public void computeRoute() throws Exception {
+        planningComputeRouteWorker = new PlanningComputeRouteWorker(this);
+        planningComputeRouteWorker.call();
     }
 
     /**

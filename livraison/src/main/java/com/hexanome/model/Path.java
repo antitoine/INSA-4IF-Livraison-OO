@@ -64,6 +64,10 @@ public class Path {
         return false;
     }
     
+    /**
+     * Returns the total duration of the path, ie the sum of the arc's durations
+     * @return The duration of the path.
+     */
     public float getPathDuration() {
         return pathDuration;
     }
@@ -80,5 +84,23 @@ public class Path {
                 + "\"pathDuration\":%s, \"arcs\":\"%s\"\n"
                 + "}", strarcs, pathDuration);
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Path)) {
+            return false;
+        }
+        
+        Path path = (Path) obj;
+        if(this.pathDuration != path.pathDuration || this.arcs.size() != path.arcs.size()){
+            return false;
+        }
+        
+        for(int i = 0; i < this.arcs.size(); i++) {
+            if(!this.arcs.get(i).equals(path.arcs.get(i))) {
+                return false;
+            }
+        }
+        return true; //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -70,11 +70,16 @@ public class TimeSlot {
         return endTime;
     }
 
+    /**
+     * Checks if the time passed by parameter is betweend the start time and the
+     * end time of the current time slot.
+     * @param time The time to check.
+     * @return True if the time is contained in the current time slot, false
+     * otherwise.
+     */
     public boolean containsTime(float time) {
-        // \todo implement here
-        return false;
+        return (time >= startTime && time <= endTime);
     }
-    
 
     @Override
     public String toString() {
@@ -91,4 +96,23 @@ public class TimeSlot {
                 + "}", startTime, endTime, strdeliveries);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof TimeSlot)) {
+            return false;
+        }
+        
+        TimeSlot timeSlot = (TimeSlot)obj;
+        if(this.startTime != timeSlot.startTime || this.endTime != timeSlot.endTime || this.deliveries.size() != timeSlot.deliveries.size()) {
+            return false;
+        }
+        
+        for(int i = 0; i < this.deliveries.size(); i++) {
+            if(!this.deliveries.get(i).equals(timeSlot.deliveries.get(i))) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
 }

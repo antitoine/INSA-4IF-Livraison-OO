@@ -40,13 +40,13 @@ public interface IState {
      * Left click pressed on a delivery
      * @param delivery The delivery clicked
      */
-    public void leftClickPressedOnDelivery(Delivery delivery);
+    public void leftClickPressedOnDelivery();
 
     /**
      * Left click released on another delivery
      * @param delivery another delivery
      */
-    public void leftClickReleased(Delivery delivery);
+    public void leftClickReleased(Delivery sourceDelivery, Delivery targetDelivery);
 
     /**
      * Simple click on a delivery
@@ -75,7 +75,7 @@ public interface IState {
      * @param node The node to deliver
      * @param previousDelivery the delivery witch is before this one
      */
-    public void btnAddDelivery(Node node, Delivery previousDelivery);
+    public void btnAddDelivery(Node node, Node previousDeliveryNode);
 
     /**
      * Click on button to remove a delivery
