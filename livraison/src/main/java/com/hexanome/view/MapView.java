@@ -1,5 +1,6 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.UIManager;
 import com.hexanome.model.Arc;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Map;
@@ -10,9 +11,11 @@ import com.hexanome.model.Route;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map.Entry;
 import javafx.scene.layout.AnchorPane;
 
@@ -25,7 +28,7 @@ public class MapView extends AnchorPane implements Subscriber {
 
     HashMap<Node, NodeView> nodeList = new HashMap<>();
     HashSet<ArcView> arcslist = new HashSet<>();
-    HashMap<PairPoint, ArcView> arcsMap = new HashMap<>();
+    HashMap<NodePair, LinkedList<Arc>> arcsMap = new HashMap<>();
 
     /**
      * Initializes the controller class.
@@ -61,30 +64,67 @@ public class MapView extends AnchorPane implements Subscriber {
     /**
      * Add an arc in the view
      *
-     * @param arc arc as described in the model
+     * @param arcs arc as described in the model
      */
-    public void addRouteArc(Arc arc) {
-        MapView mv = this;
-        ArcView av = new ArcView(arc, ConstView.ArcViewType.ROUTE);
-        mv.getChildren().add(av);
-        arcslist.add(av);
-    }
+    public void addRouteArcs(ArrayList<Arc> arcs) {
+        clearArc();
 
-    public void addEmptyArcsAndNodes(Collection<Arc> arcs, Collection<Node> nodes) {
-        arcslist.clear();
         for (Arc arc : arcs) {
-            ArcView av = new ArcView(arc, ConstView.ArcViewType.STANDARD);
-            arcslist.add(av);
+            NodePair np = new NodePair(arc.getSrc(), arc.getDest());
+            if (arcsMap.get(np) != null) {
+                arcsMap.get(np).add(arc);
+            } else {
+                LinkedList<Arc> s = new LinkedList<>();
+                arcsMap.put(np, s);
+                s.add(arc);
+            }
         }
-        for (Node node : nodes) {
-            NodeView nv = new NodeView(ConstView.EMPTY_NODE, node);
-            nodeList.put(node, nv);
-            nv.relocate(node.getLocation().x - nv.getPrefWidth() / 2,
-                    node.getLocation().y - nv.getPrefHeight() / 2);
+
+        for (Entry<NodePair, LinkedList<Arc>> entrySet : arcsMap.entrySet()) {
+            ArcView av = new ArcView(entrySet.getValue(),
+                    ConstView.ArcViewType.ROUTE);
+            av.toBack();
+            arcslist.add(av);
         }
 
         getChildren().addAll(arcslist);
-        getChildren().addAll(nodeList.values());
+
+    }
+
+    public void addEmptyArcsAndNodes(Collection<Arc> arcs, Collection<Node> nodes) {
+        if (arcs != null) {
+            arcslist.clear();
+            for (Arc arc : arcs) {
+                NodePair np = new NodePair(arc.getSrc(), arc.getDest());
+                if (arcsMap.get(np) != null) {
+                    arcsMap.get(np).add(arc);
+                } else {
+                    LinkedList<Arc> s = new LinkedList<>();
+                    arcsMap.put(np, s);
+                    s.add(arc);
+                }
+            }
+
+            for (Entry<NodePair, LinkedList<Arc>> entrySet : arcsMap.entrySet()) {
+                ArcView av = new ArcView(entrySet.getValue(),
+                        ConstView.ArcViewType.STANDARD);
+                arcslist.add(av);
+            }
+            getChildren().addAll(arcslist);
+
+        }
+
+        if (nodes != null) {
+            for (Node node : nodes) {
+                NodeView nv = new NodeView(ConstView.EMPTY_NODE, node);
+                nodeList.put(node, nv);
+                nv.relocate(node.getLocation().x - nv.getPrefWidth() / 2,
+                        node.getLocation().y - nv.getPrefHeight() / 2);
+                nv.toFront();
+            }
+            getChildren().addAll(nodeList.values());
+        }
+
     }
 
     @Override
@@ -94,26 +134,34 @@ public class MapView extends AnchorPane implements Subscriber {
             addEmptyArcsAndNodes(map.getArcs(), map.getNodes().values());
         }
         if (p instanceof Planning) {
-            clearArc();
             Planning planning = (Planning) p;
-            clearDeliveries();
+
             ColorsGenerator.getInstance(planning.getTimeSlots());
+            UIManager.getInstance().getMainWindow().setLegend();
+
+        }
+        if (p instanceof Route) {
+            clearMap();
+            Route route = (Route) p;
+            Planning planning = (Planning) arg;
+            Map map = planning.getMap();
+            ArrayList<Arc> mapArc = new ArrayList<>(map.getArcs());
+
+            ArrayList<Arc> arcs = new ArrayList<>();
+            for (Path path : route.getPaths()) {
+                for (Arc a : path.getArcs()) {
+                    arcs.add(a);
+                }
+            }
+            mapArc.removeAll(arcs);
+            addRouteArcs(arcs);
+            addEmptyArcsAndNodes(mapArc, map.getNodes().values());
             for (TimeSlot ts : planning.getTimeSlots()) {
                 for (Delivery d : ts.getDeliveries()) {
                     (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE);
                 }
             }
             (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSE_NODE);
-        }
-        if (p instanceof Route) {
-            Route route = (Route) p;
-            clearArc();
-            System.out.println("" + route.getPaths().toString());
-            for (Path path : route.getPaths()) {
-                for (Arc a : path.getArcs()) {
-                    addRouteArc(a);
-                }
-            }
         }
     }
 
@@ -132,6 +180,7 @@ public class MapView extends AnchorPane implements Subscriber {
     public void clearArc() {
         getChildren().removeAll(arcslist);
         arcslist.clear();
+        arcsMap.clear();
     }
 
     /**

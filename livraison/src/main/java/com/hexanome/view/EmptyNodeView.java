@@ -25,7 +25,9 @@ public class EmptyNodeView extends Circle implements INodeViewShape {
         ContextManager.getInstance().getCurrentState().clickOnEmptyNode(node);
         if (ModelManager.getInstance().getPlanning() != null) {
             PopOverContentEmptyNode pop = (PopOverContentEmptyNode) context.getPopoverContent();
-            pop.setComboxBox(ModelManager.getInstance().getPlanning().getDeliveries());
+            pop.setComboxBox(ModelManager.getInstance().getPlanning().getWarehouse(),
+                             ModelManager.getInstance().getPlanning().getDeliveries(),
+                             ModelManager.getInstance().getPlanning().getTimeSlots());
         }
         context.showPopOver();
         UIManager.getInstance().getMainWindow().disablePanning();

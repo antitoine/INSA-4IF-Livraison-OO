@@ -7,6 +7,7 @@ import java.io.File;
 
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
+import com.hexanome.model.TimeSlot;
 
 /**
  * @author antitoine
@@ -117,7 +118,7 @@ public abstract class DefaultState implements IState {
      * @see com.hexanome.controller.states.IState#btnAddDelivery(com.hexanome.model.Node)
      */
     @Override
-    public void btnAddDelivery(Node node, Node previousDeliveryNode) {
+    public void btnAddDelivery(Node node, Node previousDeliveryNode, TimeSlot timeSlot) {
         System.out.println("btnAddDelivery In DefaultState");
         // Nothing to do here
     }

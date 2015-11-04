@@ -4,6 +4,8 @@ import com.hexanome.controller.command.AddDeliveryCommand;
 import com.hexanome.controller.command.RemoveDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
+import com.hexanome.model.TimeSlot;
+import com.hexanome.utils.TypeWrapper;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
@@ -60,9 +62,9 @@ public class UIManager {
     }
 
     /**
-     * Ask for confirmation 
+     * Asks for confirmation
      * @param message
-     * @return 
+     * @return
      */
     public boolean askConfirmation(String message) {
         boolean res;
@@ -97,8 +99,6 @@ public class UIManager {
         mainWindow.getMapView().clearMap();
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
         mainWindow.resetCursorAndInfoLabel();
-        ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
-        ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
     }
 
     public void beginLoadPlanning() {

@@ -84,7 +84,7 @@ public class Route implements Publisher {
             
             if (delivery != null) {
                 for (Arc arc : p.getArcs()) {
-                    arc.setAssociatedTimeSlot(delivery.getTimeSlot());
+                    arc.addAssociatedTimeSlot(delivery.getTimeSlot());
                 }
             }
         }
@@ -110,7 +110,7 @@ public class Route implements Publisher {
         return null;
     }
     
-    /*
+    /**
      * Adds a delivery to the route.
      * @param delivery the delivery to add.
      * @param prevDelivery The node with the delivery that will be executed before the one to add.
@@ -177,17 +177,17 @@ public class Route implements Publisher {
             i++;
         }
         
-        // creating the new path
+        /* creating the new path */
         Path newPath = null;
         Node prevNode = paths.get(deliveryIsDestPath).getFirstNode();
         Node nextNode = paths.get(deliveryIsSourcePath).getLastNode();
         newPath = planning.getMap().getFastestPath(prevNode, nextNode);
         
-        // removing the old paths
+        /* removing the old paths */
         paths.remove(deliveryIsDestPath);
         paths.remove(deliveryIsSourcePath);
         
-        // adding the new path
+        /* adding the new path */
         paths.add(deliveryIsDestPath, newPath);
         
         updateDeliveriesTime();
@@ -313,7 +313,7 @@ public class Route implements Publisher {
     @Override
     public void addSubscriber(Subscriber s) {
         subscribers.add(s);
-        s.update(this, null);
+        s.update(this, planning);
     }
 
     @Override
@@ -324,7 +324,7 @@ public class Route implements Publisher {
     @Override
     public void notifySubscribers() {
         for (Subscriber s : subscribers) {
-            s.update(this, null);
+            s.update(this, planning);
         }
     }
 

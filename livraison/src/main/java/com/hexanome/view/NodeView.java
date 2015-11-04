@@ -77,7 +77,7 @@ public class NodeView extends StackPane {
             @Override
             public void handle(Event event) {
                 ContextManager.getInstance().getCurrentState().clickSomewhereElse();
-                UIManager.getInstance().getMainWindow().ennablePanning();
+                UIManager.getInstance().getMainWindow().enablePanning();
             }
         });
     }

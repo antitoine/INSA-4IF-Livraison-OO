@@ -114,12 +114,14 @@ public class Map implements Publisher {
         
         while (dest != start) {
             arcs.add(src.getOutgoingArc(dest));
+            //System.out.println("\n\n----------------------- src = "+src.toString());
             
             dest = src;
             src = previousNodes.get(dest.getId());
+            //System.out.println("\n\n----------------------- dest = "+dest.toString());
         }
 
-        Collections.reverse(arcs); // reversing it so that the arcs are in the right order
+        Collections.reverse(arcs); /* reversing it so that the arcs are in the right order */
         Path path = new Path(arcs);
 
         return path;

@@ -147,7 +147,9 @@ public class DeliveryTreeView extends VBox implements Subscriber {
     public void update(Publisher p, Object arg) {
         clearTree();
         if (p instanceof Planning) {
+            int nbTimeSlots = 0;
             for (TimeSlot ts : ((Planning) (p)).getTimeSlots()) {
+                nbTimeSlots++;
                 String start = TypeWrapper.secondsToTimestamp(ts.getStartTime());
                 String end = TypeWrapper.secondsToTimestamp(ts.getEndTime());
 
@@ -156,7 +158,7 @@ public class DeliveryTreeView extends VBox implements Subscriber {
                         ConstView.TreeItemType.TIMESLOT, rootItem);
                 timeSlotBranch.put(ts, tsItem);
                 for (Delivery d : ts.getDeliveries()) {
-                    TreeItem<String> dItem = makeBranch("Delivery " + d.getId(),
+                    TreeItem<String> dItem = makeBranch("Delivery " + d.getId() +" - "+nbTimeSlots,
                             ConstView.TreeItemType.DELIVERY, tsItem);
                     deliveryBranch.put(d, dItem);
                 }

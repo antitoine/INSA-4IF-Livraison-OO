@@ -1,5 +1,11 @@
 package com.hexanome.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * This class represents a road, that goes from a node to another one.
  * @author paul
@@ -31,9 +37,9 @@ public class Arc {
     private Node src;
     
     /**
-     * The time slot associated with the arc when the arc is in a route.
+     * The time slots associated with the arc when the arc is in a route.
      */
-    private TimeSlot associatedTimeSlot;
+    private Set<TimeSlot> associatedTimeSlot;
 
     /**
      * Returns the node that ends the arc.
@@ -66,23 +72,34 @@ public class Arc {
         this.duration = length*avgSpeed; // Unit : s
         this.dest = dest;
         this.src = src;
-        this.associatedTimeSlot = null;
+        this.associatedTimeSlot = new HashSet<>();
     }
     
     /**
-     * Returns the time slot associated with the arc, if it exists.
-     * @return The time slot if it exists, null otherwise.
+     * Returns the time slots associated with the arc, if it exists.
+     * @return The time slot if it exists, empty list otherwise.
      */
-    public TimeSlot getAssociatedTimeSlot() {
-        return associatedTimeSlot;
+    public Set<TimeSlot> getAssociatedTimeSlots() {
+        return Collections.unmodifiableSet(associatedTimeSlot);
     }
     
     /**
      * Set a time slot to the current arc. 
      * @param timeSlot The time slot to attach.
      */
-    void setAssociatedTimeSlot(TimeSlot timeSlot) {
-        this.associatedTimeSlot = timeSlot;
+    void addAssociatedTimeSlot(TimeSlot timeSlot) {
+        if (associatedTimeSlot != null) {
+            associatedTimeSlot.add(timeSlot);
+        }
+    }
+    
+    /**
+     * Remove all the associated time slots of the current arc.
+     */
+    void clearAssociatedTimeSlot() {
+        if (associatedTimeSlot != null) {
+            associatedTimeSlot.clear();
+        }         
     }
     
     /**
