@@ -82,6 +82,7 @@ public class MapView extends AnchorPane implements Subscriber {
         for (Entry<NodePair, ArrayList<Arc>> entrySet : arcsMap.entrySet()) {
             ArcView av = new ArcView(entrySet.getValue(),
                     ConstView.ArcViewType.ROUTE);
+            av.toBack();
             arcslist.add(av);
         }
         
@@ -113,6 +114,7 @@ public class MapView extends AnchorPane implements Subscriber {
             nodeList.put(node, nv);
             nv.relocate(node.getLocation().x - nv.getPrefWidth() / 2,
                     node.getLocation().y - nv.getPrefHeight() / 2);
+            nv.toFront();
         }
 
         getChildren().addAll(arcslist);

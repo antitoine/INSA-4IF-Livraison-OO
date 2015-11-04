@@ -58,8 +58,9 @@ public class ArcView extends Pane {
 
             double middleX = 0.5 * (endX + startX);
             double middleY = 0.5 * (endY + startY);
-
-            double alpha = Math.atan(D / distance(startX, startY, middleX, middleY));
+            
+            double alpha = Math.atan2(middleY - startY, middleX - startX);
+          //  double alpha = Math.atan2( distance(startX, startY, middleX, middleY) , D);
 
             double ctrlX = i * D * Math.cos(Math.PI * 0.5 - alpha);
             double ctrlY = i * D * Math.sin(Math.PI * 0.5 - alpha);
@@ -73,7 +74,7 @@ public class ArcView extends Pane {
                     middleX - ctrlX, middleY - ctrlY, middleX - ctrlX, middleY - ctrlY, endX, endY);
             Polygon arrow2 = drawArrow(new Point((int) (middleX - ctrlX), (int) (middleY - ctrlY)),
                     a2.getDest().getLocation());
-
+            
             setCurveColor(a1, curve1);
             setArrowColor(a1, arrow1);
             setCurveColor(a2, curve2);
@@ -94,15 +95,15 @@ public class ArcView extends Pane {
 
         double angle = Math.atan2(dest.y - src.y, dest.x - src.x);
 
-        double deltaX2 = Math.cos(angle) * (ConstView.SIZE_NODE + 3);
-        double deltaY2 = Math.sin(angle) * (ConstView.SIZE_NODE + 3);
+        double deltaX2 = Math.cos(angle) * (ConstView.SIZE_NODE + 1);
+        double deltaY2 = Math.sin(angle) * (ConstView.SIZE_NODE + 1);
 
-        line.setStartX(src.x + deltaX2);
-        line.setStartY(src.y + deltaY2);
+        line.setStartX(src.x);
+        line.setStartY(src.y);
 
         line.setEndX(dest.x - deltaX2);
         line.setEndY(dest.y - deltaY2);
-
+        
         return line;
     }
 
@@ -140,6 +141,7 @@ public class ArcView extends Pane {
 
     private void setCurveColor(Arc arc, CubicCurve curve) {
         curve.setFill(null);
+        curve.toBack();
         if (arc.getAssociatedTimeSlot() != null) {
             curve.setStroke(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlot()));
         } else if(typeOfNonDeliveryNode == ConstView.ArcViewType.STANDARD){
@@ -151,6 +153,7 @@ public class ArcView extends Pane {
 
     private void setLineColor(Arc arc, Line line) {
         line.setStrokeWidth(1.0);
+        line.toBack();
 
         if (arc.getAssociatedTimeSlot() != null) {
             line.setStroke(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlot()));
