@@ -56,7 +56,7 @@ public class PathTest {
         System.out.println("getFirstNode");
         Node first = new Node(1, new Point(10,10));
         Node second = new Node(2, new Point(10,20));
-        Node third = new Node(2, new Point(10,30));
+        Node third = new Node(3, new Point(10,30));
         Arc arc1 = new Arc("hollywood",12,31,first,second);
         Arc arc2 = new Arc("doowylloh",12,31,second,third);      
         ArrayList<Arc> expResult = new ArrayList<>();
@@ -75,7 +75,7 @@ public class PathTest {
         System.out.println("getLastNode");
         Node first = new Node(1, new Point(10,10));
         Node second = new Node(2, new Point(10,20));
-        Node third = new Node(2, new Point(10,30));
+        Node third = new Node(3, new Point(10,30));
         Arc arc1 = new Arc("hollywood",12,31,first,second);
         Arc arc2 = new Arc("doowylloh",12,31,second,third);      
         ArrayList<Arc> expResult = new ArrayList<>();
