@@ -72,19 +72,6 @@ public class MapTest {
     }
 
     /**
-     * Test of getNodeByLocation method, of class Map.
-     */
-    @Test
-    public void testGetNodeByLocation() {
-        System.out.println("getNodeByLocation");
-        Point location = new Point(20,30);
-        Map map = new Map();     
-        Node expResult = map.createNode(1, new Point(20,30));
-        Node result = map.getNodeByLocation(location);
-        assertEquals(expResult, result);
-    }
-
-    /**
      * Test of getNodeById method, of class Map.
      */
     @Test
@@ -159,6 +146,14 @@ public class MapTest {
         arcs.add(arc3);
         Path expResult = new Path(arcs);
         Path result = map.getFastestPath(start, end);
-        assertEquals(expResult, result);
+        
+        ArrayList<Arc> expResultList = expResult.getArcs();
+        ArrayList<Arc> resultList = result.getArcs();
+        assertEquals(expResultList.size(), resultList.size()); //test number of arcs.
+        
+        for(int i=0;i<expResultList.size();i++)
+        {
+            assertEquals(expResultList.get(i), resultList.get(i));
+        }                
     }  
 }

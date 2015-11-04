@@ -8,7 +8,11 @@ import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
 import com.hexanome.view.PopOverContentEmptyNode;
+import java.util.Optional;
 import javafx.concurrent.Task;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage; // \todo Doit disparaitre !
 
 /**
@@ -136,6 +140,27 @@ public class UIManager {
     }
 
     /**
+     * Ask for confirmation 
+     * @param message
+     * @return 
+     */
+    public boolean askConfirmation(String message) {
+        boolean res;
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText(message);
+        alert.setContentText("Are you ok with this?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            res = true;
+        } else {
+            res = false;
+        }
+        return res;
+    }
+
+    /**
      * @return the mainWindow
      */
     public MainWindow getMainWindow() {
@@ -143,7 +168,7 @@ public class UIManager {
     }
 
     public void beginLoadMap() {
-        mainWindow.SetLoadingState("Loading Map...");
+        mainWindow.setLoadingState("Loading Map...");
         mainWindow.getMapView().clearMap();
         mainWindow.getDeliveryTreeView().clearTree();
     }
@@ -151,13 +176,13 @@ public class UIManager {
     public void endLoadMap() {
         mainWindow.getMapView().clearMap();
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
-        mainWindow.SetLoadingDone();
+        mainWindow.resetCursorAndInfoLabel();
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
     }
 
     public void beginLoadPlanning() {
-        mainWindow.SetLoadingState("Loading Planning...");
+        mainWindow.setLoadingState("Loading Planning...");
         mainWindow.getDeliveryTreeView().clearTree();
         mainWindow.getMapView().clearDeliveries();
     }
@@ -167,11 +192,11 @@ public class UIManager {
         ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTreeView());
         ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
         // Update mainwindow
-        mainWindow.SetLoadingDone();
+        mainWindow.resetCursorAndInfoLabel();
     }
 
     public void showError(String msg) {
-        mainWindow.SetLoadingDone();
+        mainWindow.resetCursorAndInfoLabel();
         // Ask main window to display error
         mainWindow.displayError(msg);
     }

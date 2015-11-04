@@ -60,13 +60,15 @@ public class PlanningLoadedState extends DefaultState {
     @Override
     public void btnLoadPlanning() {
         // WARNING : calls order matters
-        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         // Clear current model's planning
-        ModelManager.getInstance().clearPlanning();
-        // Jump to PlanningSelectState
-        ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
-        // Ask user for planning file to load
-        UIManager.getInstance().getMainWindow().askFile();
+        System.out.println("ici");
+        if (UIManager.getInstance().askConfirmation("Planning will be lost forever")) {
+            ModelManager.getInstance().clearPlanning();
+            // Jump to PlanningSelectState
+            ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
+            // Ask user for planning file to load
+            UIManager.getInstance().getMainWindow().askFile();
+        }
     }
 
     /* (non-Javadoc)
@@ -103,8 +105,7 @@ public class PlanningLoadedState extends DefaultState {
         ChangeListener<Worker.State> listenerComputeRoute
                 = new ChangeListener<Worker.State>() {
                     @Override
-                    public void changed(ObservableValue<? extends Worker.State> 
-                            observableValue, Worker.State oldValue,
+                    public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldValue,
                             Worker.State newValue) {
                         switch (newValue) {
                             case FAILED:
@@ -115,6 +116,7 @@ public class PlanningLoadedState extends DefaultState {
                                         getMainWindow().getMapView());
                                 ContextManager.getInstance()
                                 .setCurrentState(NothingSelectedState.getInstance());
+                                UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
                                 break;
                         }
                     }

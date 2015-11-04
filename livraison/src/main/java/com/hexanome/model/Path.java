@@ -55,7 +55,12 @@ public class Path {
      */
     public boolean containsNode(Node node)
     {
-        // \todo implement here
+        for (Arc arc : arcs) {
+            if (arc.getSrc().equals(node) || arc.getDest().equals(node)) {
+                return true;
+            }
+        }
+        
         return false;
     }
     
