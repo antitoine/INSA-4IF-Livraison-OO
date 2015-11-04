@@ -5,18 +5,11 @@
  */
 package com.hexanome.model;
 
-import com.hexanome.utils.MapDocument;
-import com.hexanome.utils.Subscriber;
 import java.awt.Point;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom2.Document;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -102,6 +95,7 @@ public class RouteTest {
         Delivery expResult = delivery3;
         
         assertEquals(expResult, result);
+        
         System.out.println("------------TestGetNextDeliveryOK");
     }
 
@@ -109,7 +103,7 @@ public class RouteTest {
      * Test of addDelivery method, of class Route.
      */
     @Test
-    public void testAddDelivery() {
+    public void testAddDelivery() { /* erreur sur ce test */
         System.out.println("getNextDelivery");
         
         Map map = new Map();
@@ -172,8 +166,8 @@ public class RouteTest {
         expResult.add(path1);
         expResult.add(path2);
         expResult.add(path3);
-        //expResult.add(le path entre node4 et deliveryToAdd)
-        expResult.add(path4);
+        expResult.add(map.getFastestPath(node4, node5));
+        expResult.add(map.getFastestPath(node5, node6));
         expResult.add(path5);
         
         assertEquals(expResult.size(), result.size());
@@ -189,7 +183,7 @@ public class RouteTest {
      * Test of removeDelivery method, of class Route.
      */
     @Test
-    public void testRemoveDelivery() {
+    public void testRemoveDelivery() { /* erreur sur ce test (outOfBounds ligne 247)*/
         System.out.println("removeDelivery");
         
         Map map = new Map();
@@ -247,17 +241,25 @@ public class RouteTest {
         
         List<Path> result = route.getPaths();
         List<Path> expResult = new ArrayList<Path>();
-        // pouet pouet pouet je sais pas comment faire !
-        // il faudrait créer des nouveaux paths et redéfinir le equals de Path
-        // pour faire la comparaison..
+        expResult.add(path1);
+        expResult.add(path2);
+        expResult.add(map.getFastestPath(node2, node6));
+        expResult.add(path5);
         
+        assertEquals(expResult.size(), result.size());
+        for(int i = 0; i<expResult.size(); i++)
+        {
+            assertEquals(expResult.get(i), result.get(i));
+        }
+        
+        System.out.println("------------TestRemoveDeliveryOK");
     }
 
     /**
      * Test of swapDeliveries method, of class Route.
      */
     @Test
-    public void testSwapDeliveries() {
+    public void testSwapDeliveries() { /* failure sur ce test */
         Map map = new Map();
         
         Node node1 = map.createNode(1, new Point(20, 30));
@@ -310,7 +312,23 @@ public class RouteTest {
         }
         Route route = plan.getFastestRoute();
         
-        route.swapDeliveries(delivery2, delivery4);
+        route.swapDeliveries(delivery2, delivery4); /* swap node2 and node6 */
+        
+        List<Path> result = route.getPaths();
+        List<Path> expResult = new ArrayList<Path>();
+        expResult.add(path1);
+        expResult.add(map.getFastestPath(node1, node6));
+        expResult.add(map.getFastestPath(node6, node4));
+        expResult.add(map.getFastestPath(node4, node2));
+        expResult.add(map.getFastestPath(node2, warehouse));
+        
+        assertEquals(expResult.size(), result.size());
+        for(int i = 0; i<expResult.size(); i++)
+        {
+            assertEquals(expResult.get(i), result.get(i));
+        }
+        
+        System.out.println("------------TestSwapDeliveriesOK");
     }
 
     /**
@@ -376,57 +394,7 @@ public class RouteTest {
         Node expResult = node1;
         
         assertEquals(expResult, result);
-        System.out.println("TestOK");
-    }
-
-    /**
-     * Test of addSubscriber method, of class Route.
-     */
-    @Test
-    public void testAddSubscriber() {
-        System.out.println("addSubscriber");
-        Subscriber s = null;
-        Route instance = null;
-        instance.addSubscriber(s);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of removeSubscriber method, of class Route.
-     */
-    @Test
-    public void testRemoveSubscriber() {
-        System.out.println("removeSubscriber");
-        Subscriber s = null;
-        Route instance = null;
-        instance.removeSubscriber(s);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of notifySubscribers method, of class Route.
-     */
-    @Test
-    public void testNotifySubscribers() {
-        System.out.println("notifySubscribers");
-        Route instance = null;
-        instance.notifySubscribers();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of clearSubscribers method, of class Route.
-     */
-    @Test
-    public void testClearSubscribers() {
-        System.out.println("clearSubscribers");
-        Route instance = null;
-        instance.clearSubscribers();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("------------TestGetNodePreviousDeliveryOK");
     }
 
     /**
@@ -501,6 +469,7 @@ public class RouteTest {
         {
             assertEquals(expResult.get(i), result.get(i));
         }
-        System.out.println("TestGetPathsOK");
+        
+        System.out.println("------------TestGetPathsOK");
     }
 }
