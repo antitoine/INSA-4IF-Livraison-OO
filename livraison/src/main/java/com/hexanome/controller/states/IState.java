@@ -75,7 +75,7 @@ public interface IState {
      * @param node The node to deliver
      * @param previousDelivery the delivery witch is before this one
      */
-    public void btnAddDelivery(Node node, Delivery previousDelivery);
+    public void btnAddDelivery(Node node, Node previousDeliveryNode);
 
     /**
      * Click on button to remove a delivery
