@@ -4,6 +4,7 @@ import com.hexanome.controller.command.AddDeliveryCommand;
 import com.hexanome.controller.command.RemoveDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
+import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.TypeWrapper;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
@@ -75,11 +76,22 @@ public class UIManager {
             case QUIT:
                 ContextManager.getInstance().exit(); // Special undoable
                 break;
+<<<<<<< HEAD
             case ADD_DELIVERY:
                 // \todo Remplacer en utilisant getCurrentState().btnAddDelivery(Node, Node) dans la vue
                 Object[] objs = (Object[]) arg;
                 final AddDeliveryCommand ac = new AddDeliveryCommand((Node) objs[0],
                         (Node) objs[1]);
+=======
+                
+            case ADD_DELIVERY: // \todo Remplacer en utilisant getCurrentState().btnAddDelivery(Node, Node) dans la vue
+                Object[] args = (Object[]) arg;
+                final AddDeliveryCommand ac = new AddDeliveryCommand(
+                        (Node) args[0],
+                        (Node) args[1],
+                        (TimeSlot) args[2]);
+
+>>>>>>> 200f7d4fda11b97e3235e046b87ecd4be86f666d
                 new Thread(new Task() {
                     @Override
                     protected Object call() throws Exception {
@@ -87,7 +99,7 @@ public class UIManager {
                         return null;
                     }
                 }).start();
-                mainWindow.getMapView().hidePopOver((Node) objs[0]);
+                mainWindow.getMapView().hidePopOver((Node) args[0]);
                 break;
             case DELETE_DELIVERY:
                 // \todo Remplacer en utilisant getCurrentState().btnRemoveDelivery(Delivery) dans la vue
@@ -119,7 +131,11 @@ public class UIManager {
                 NodeView nv = (NodeView) arg;
                 if (ModelManager.getInstance().getPlanning() != null) {
                     PopOverContentEmptyNode pop = (PopOverContentEmptyNode) nv.getPopoverContent();
-                    pop.setComboxBox(ModelManager.getInstance().getPlanning().getDeliveries());
+                    pop.setComboxBox(
+                        ModelManager.getInstance().getPlanning().getWarehouse(),
+                        ModelManager.getInstance().getPlanning().getDeliveries(),
+                        ModelManager.getInstance().getPlanning().getTimeSlots()
+                    );
                 }
                 nv.showPopOver();
                 mainWindow.disablePanning();

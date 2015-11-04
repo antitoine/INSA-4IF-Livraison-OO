@@ -130,8 +130,8 @@ public class ArcView extends Pane {
     }
 
     private void setArrowColor(Arc arc, Polygon polygon) {
-        if (arc.getAssociatedTimeSlot() != null) {
-            polygon.setFill(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlot()));
+        if (arc.getAssociatedTimeSlots() != null) {
+            polygon.setFill(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlots()));
         } else if(typeOfNonDeliveryNode == ConstView.ArcViewType.STANDARD){
             polygon.setFill(Color.GRAY);
         } else {
@@ -142,8 +142,8 @@ public class ArcView extends Pane {
     private void setCurveColor(Arc arc, CubicCurve curve) {
         curve.setFill(null);
         curve.toBack();
-        if (arc.getAssociatedTimeSlot() != null) {
-            curve.setStroke(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlot()));
+        if (arc.getAssociatedTimeSlots() != null) {
+            curve.setStroke(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlots()));
         } else if(typeOfNonDeliveryNode == ConstView.ArcViewType.STANDARD){
             curve.setStroke(Color.GRAY);
         } else {
@@ -155,8 +155,8 @@ public class ArcView extends Pane {
         line.setStrokeWidth(1.0);
         line.toBack();
 
-        if (arc.getAssociatedTimeSlot() != null) {
-            line.setStroke(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlot()));
+        if (arc.getAssociatedTimeSlots() != null) {
+            line.setStroke(ColorsGenerator.getTimeSlotColor(arc.getAssociatedTimeSlots()));
         } else if(typeOfNonDeliveryNode == ConstView.ArcViewType.STANDARD){
             line.setStroke(Color.GRAY);
         } else {

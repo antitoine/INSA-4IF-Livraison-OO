@@ -19,5 +19,4 @@ public class MainApp {
         // This is default JavaFX behaviour
        Controller.getInstance().initUI(args);
     }
-
 }

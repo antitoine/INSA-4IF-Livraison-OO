@@ -24,18 +24,12 @@ public class AddDeliveryCommand implements ICommand {
      * @param node Delivery to add
      * @param nodePreviousDelivery The node with the delivery preceding the 
      * delivery to add
+     * @param timeSlot The time slot of the new delivery to add
      */
-    public AddDeliveryCommand(Node node, Node nodePreviousDelivery) {
+    public AddDeliveryCommand(Node node, Node nodePreviousDelivery, TimeSlot timeSlot) {
         this.node = node;
         this.nodePreviousDelivery = nodePreviousDelivery;
-        
-        // Set the time slot
-        if (nodePreviousDelivery.getDelivery() == null) {
-            this.timeSlot = ModelManager.getInstance().getPlanning().getFirstTimeSlot();
-        } else {
-            this.timeSlot = nodePreviousDelivery.getDelivery().getTimeSlot();
-        }
-        
+        this.timeSlot = timeSlot;        
         this.delivery = null;
     }
 

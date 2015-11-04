@@ -7,6 +7,7 @@ import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.command.AddDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
+import com.hexanome.model.TimeSlot;
 
 /**
  * @author antitoine
@@ -74,9 +75,9 @@ public class EmptyNodeSelectedState extends SelectionsStates {
     }
 
     @Override
-    public void btnAddDelivery(Node node, Node previousDeliveryNode) {
+    public void btnAddDelivery(Node node, Node previousDeliveryNode, TimeSlot timeSlot) {
         // Builds a new add delivery command
-        AddDeliveryCommand adc = new AddDeliveryCommand(node, previousDeliveryNode);
+        AddDeliveryCommand adc = new AddDeliveryCommand(node, previousDeliveryNode, timeSlot);
         // Execute command
         ContextManager.getInstance().executeCommand(adc);
         // Jump to DeliverySelectedState

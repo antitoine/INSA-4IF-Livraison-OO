@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
+import com.hexanome.model.TimeSlot;
 
 /**
  * @author antoine
@@ -73,9 +74,10 @@ public interface IState {
     /**
      * Click on button to add a new delivery
      * @param node The node to deliver
-     * @param previousDelivery the delivery witch is before this one
+     * @param previousDeliveryNode The nodewith the previous delivery
+     * @param timeSlot The time slot of the new delivery
      */
-    public void btnAddDelivery(Node node, Node previousDeliveryNode);
+    public void btnAddDelivery(Node node, Node previousDeliveryNode, TimeSlot timeSlot);
 
     /**
      * Click on button to remove a delivery

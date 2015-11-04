@@ -84,7 +84,7 @@ public class Route implements Publisher {
             
             if (delivery != null) {
                 for (Arc arc : p.getArcs()) {
-                    arc.setAssociatedTimeSlot(delivery.getTimeSlot());
+                    arc.addAssociatedTimeSlot(delivery.getTimeSlot());
                 }
             }
         }
