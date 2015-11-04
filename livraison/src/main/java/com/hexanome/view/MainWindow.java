@@ -53,9 +53,6 @@ public class MainWindow extends AnchorPane {
     private MenuItem mntmRedo;
 
     @FXML
-    private Button btnComputeRoute;
-
-    @FXML
     private Button btnRoadMap;
 
     @FXML
@@ -132,16 +129,6 @@ public class MainWindow extends AnchorPane {
     }
 
     @FXML
-    private void computeRoute() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ContextManager.getInstance().getCurrentState().btnGenerateRoute();
-            }
-        }).start();
-    }
-
-    @FXML
     private void generateRoadMap() {
         // ContextManager.getInstance().getCurrentState().
     }
@@ -168,12 +155,20 @@ public class MainWindow extends AnchorPane {
         );
     }
 
-    public void SetLoadingState(final String text) {
+    /**
+     * 
+     * @param text 
+     */
+    public void setLoadingState(final String text) {
         labelInfos.setText(text);
         stage.getScene().setCursor(Cursor.WAIT);
     }
 
-    public void SetLoadingDone() {
+    /**
+     * Reset the cursor and the info label 
+     * at the end of a loading for example
+     */
+    public void resetCursorAndInfoLabel() {
         labelInfos.setText("");
         stage.getScene().setCursor(Cursor.DEFAULT);
 
@@ -237,9 +232,6 @@ public class MainWindow extends AnchorPane {
                 mntmRedo.setDisable(true);
                 btnRedo.setDisable(true);
                 break;
-            case COMPUTE_ROUTE:
-                btnComputeRoute.setDisable(true);
-                break;
             case ROAD_MAP:
                 btnRoadMap.setDisable(true);
                 break;
@@ -264,9 +256,6 @@ public class MainWindow extends AnchorPane {
             case REDO:
                 mntmRedo.setDisable(false);
                 btnRedo.setDisable(false);
-                break;
-            case COMPUTE_ROUTE:
-                btnComputeRoute.setDisable(false);
                 break;
             case ROAD_MAP:
                 btnRoadMap.setDisable(false);
