@@ -155,11 +155,20 @@ public class MapTest {
         Arc arc3 = map.createArc("route3", 5, 31, 2, 3);
         
         ArrayList<Arc> arcs = new ArrayList<>();
+        arcs.add(arc1);
         arcs.add(arc2);
         arcs.add(arc3);
         Path expResult = new Path(arcs);
-        Path result = map.getFastestPath(start, end);        
         
-        assertEquals(expResult, result);
+        Path result = map.getFastestPath(start, end);
+        
+        ArrayList<Arc> expResultList = expResult.getArcs();
+        ArrayList<Arc> resultList = result.getArcs();
+        assertEquals(expResultList.size(), resultList.size()); //test number of arcs.
+        
+        for(int i=0;i<expResultList.size();i++)
+        {
+            assertEquals(expResultList.get(i), resultList.get(i));
+        }                
     }  
 }
