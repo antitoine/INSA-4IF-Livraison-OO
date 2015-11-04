@@ -76,7 +76,7 @@ public class ContextManager {
     /**
      * Undo the last command added to done commands stack
      */
-    void undo() {
+    public void undo() {
         // \todo (security) check if undo possible
         undone.push(done.pop().reverse());
         // Enable redo button
@@ -90,7 +90,7 @@ public class ContextManager {
     /**
      * Redo the last command added to undone commands stack
      */
-    void redo() {
+    public void redo() {
         // \todo (security) check if redo possible
         done.push(undone.pop().execute());
         // Enable undo button
@@ -120,7 +120,7 @@ public class ContextManager {
     /**
      * Closes the application
      */
-    void exit() {
+    public void exit() {
         // \todo Check if Route should be saved
         // EXIT application
         System.exit(0);

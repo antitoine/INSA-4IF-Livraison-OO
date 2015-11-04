@@ -1,5 +1,6 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
@@ -54,10 +55,8 @@ public class PopOverContentEmptyNode extends PopOverContent {
 
     private void addDelivery() {
         String s = prevDeliveryComboBox.getSelectionModel().getSelectedItem();
-        Object[] obj = new Object[2];
-        obj[0] = node;
-        obj[1] = deliveryNames.get(s).getNode();
-        UIManager.getInstance().NotifyUI(ConstView.Action.ADD_DELIVERY, obj);
+        ContextManager.getInstance().getCurrentState().btnAddDelivery(node, deliveryNames.get(s).getNode());
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver(node);
     }
 
     /**

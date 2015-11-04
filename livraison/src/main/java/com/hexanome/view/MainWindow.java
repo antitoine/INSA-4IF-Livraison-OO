@@ -98,7 +98,7 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void quitApplication(ActionEvent event) {
-        UIManager.getInstance().NotifyUI(ConstView.Action.QUIT);
+        ContextManager.getInstance().exit(); // Special undoable
     }
 
     public MapView getMapView() {
@@ -135,12 +135,12 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private void undo() {
-        UIManager.getInstance().NotifyUI(ConstView.Action.UNDO);
+        ContextManager.getInstance().undo();
     }
 
     @FXML
     private void redo() {
-        UIManager.getInstance().NotifyUI(ConstView.Action.REDO);
+        ContextManager.getInstance().redo();
     }
 
     private static void configureFileChooser(final FileChooser fileChooser, String title) {

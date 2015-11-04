@@ -12,16 +12,16 @@ public abstract class NodeViewShapeFactory {
      * @param nodeType The type of the node to create, defined in ConstView.
      * @return The node view shape newly created, or null if the type is undefined.
      */
-    public static INodeViewShape createNodeViewShape(String nodeType) {
+    public static INodeViewShape createNodeViewShape(String nodeType, com.hexanome.model.Node node) {
         switch (nodeType) {
             case ConstView.EMPTY_NODE:
-                return new EmptyNodeView();
+                return new EmptyNodeView(node);
                 
             case ConstView.DELIVERY_NODE:
-                return new DeliveryNodeView();
+                return new DeliveryNodeView(node);
                 
             case ConstView.WAREHOUSE_NODE:
-                return new WarehouseNodeView();
+                return new WarehouseNodeView(node);
                 
             default:
                 return null;

@@ -65,8 +65,8 @@ public class DeliveryTreeView extends VBox implements Subscriber {
                     public void changed(ObservableValue<? extends TreeItem<String>> observable,
                             TreeItem<String> oldValue, TreeItem<String> newValue) {
                         if (newValue.isLeaf()) {
-                            UIManager.getInstance().NotifyUI(ConstView.Action.DELEVERY_SELECTED,
-                                    getDeliveryFromTreeItem(newValue));
+                            UIManager.getInstance().getMainWindow()
+                                    .getMapView().selectDelivery(getDeliveryFromTreeItem(newValue));
                         }
                     }
                 });

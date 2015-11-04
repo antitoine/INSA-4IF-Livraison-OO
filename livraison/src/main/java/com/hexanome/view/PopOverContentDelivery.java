@@ -1,5 +1,6 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.model.Node;
 import javafx.event.ActionEvent;
@@ -50,8 +51,7 @@ public class PopOverContentDelivery extends PopOverContent {
     }
 
     private void delete() {
-        UIManager.getInstance().NotifyUI(ConstView.Action.DELETE_DELIVERY,
-                node.getDelivery());
+        ContextManager.getInstance().getCurrentState().btnRemoveDelivery(node.getDelivery());
     }
 
 }
