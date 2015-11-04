@@ -1,0 +1,25 @@
+PRESENTATION DEVOO -------------------------------------------------------------------------------
+
++ Demonstration commerciale dans les 15 premieres minutes
+    - preparer un scénario !
+    - l'idée c'est de faire un truc à l'Américaine.
+    - /!\ ça ne doit pas planter => dérouler la présentation à l'avance !
+
++ Prise en main par les profs ensuite.
+
++ Questions posées par les profs.
+
+NOTES COMPLEMENTAIRES ----------------------------------------------------------------------------
+
+    - A l'heure prévue, le programme doit tourner sur une machine (perso ou depart' peu importe).
+    - Première partie de note : soutenance.
+    - Seconde partie de la note : livrables.
+    - Classes de test pour le modèle et parseur seulement.
+    - Captures d'écran dans le compte rendu (un seul fichier PDF).
+    - Nom de tous les membres sur la page du compte rendu.
+    - Sommaire listant les livrables (notation livrable par livrable).
+    - Décomposer le diagramme de séquence en sous-diagrammes.
+    - Détailler les sous-diagrammes ensuite.
+    - Ajouter des screenshots dans le compte-rendu.
+    - Ne pas oublier les plannings (prévisionnel et réalisé).
+    - Bilan technique important. RETEX concernant le TP, ne pas hésiter. 

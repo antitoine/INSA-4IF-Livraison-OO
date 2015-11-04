@@ -135,6 +135,11 @@ public class UIManager {
         NotifyUI(action, null);
     }
 
+    public boolean askConfirmation(String message) {
+        showError(message);
+        return false;
+    }
+    
     /**
      * @return the mainWindow
      */
