@@ -116,7 +116,7 @@ public class Route implements Publisher {
      * @param prevDelivery the delivery that will be executed before the one to add.
      * @param timeSlot the time slot to which the new delivery will belong.
      */
-    public void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
+    void addDelivery(Delivery delivery, Delivery prevDelivery, TimeSlot timeSlot) {
         // Find the previous delivery in the list of paths
         int indexPreviousPath = -1;
         Path pathToReplace = null;
@@ -156,7 +156,7 @@ public class Route implements Publisher {
      * Removes a delivery from the route.
      * @param delivery the delivery to remove.
      */
-    public void removeDelivery(Delivery delivery) {
+    void removeDelivery(Delivery delivery) {
         // retrieving the index of the paths where delivery is the source node or the end node 
         int deliveryIsSourcePath = -1;
         int deliveryIsDestPath = -1;
@@ -197,7 +197,7 @@ public class Route implements Publisher {
      * @param delivery1 the first delivery to swap.
      * @param delivery2 the second delivery to swap.
      */
-    public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
+    void swapDeliveries(Delivery delivery1, Delivery delivery2) {
         // Find the first path with delivery 1 or delivery 2 as source
         int indexPreviousPath = -1, indexNextPath = -1;
         Delivery previousDelivery = null, nextDelivery = null;
