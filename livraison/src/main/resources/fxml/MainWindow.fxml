@@ -27,13 +27,37 @@
             <left>
                 <BorderPane fx:id="deliveriesPane">
                     <bottom>
-                        <Button fx:id="btnRoadMap" disable="true" mnemonicParsing="false" prefHeight="40.0"
-                          prefWidth="300.0" text="%roadmap" BorderPane.alignment="CENTER">
-                            <graphic>
-                                <Glyph fontFamily="FontAwesome" icon="PRINT" />
-                            </graphic>
-                        </Button>
+                        <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <GridPane fx:id="legendGridPane">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Legend" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    </children>
+                                </GridPane>
+                                <Button fx:id="btnRoadMap" disable="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" text="%roadmap">
+                                    <graphic>
+                                        <Glyph fontFamily="FontAwesome" icon="PRINT" />
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </VBox>
                     </bottom>
+                    <top>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Planning" BorderPane.alignment="CENTER">
+                            <BorderPane.margin>
+                                <Insets bottom="10.0" top="10.0" />
+                            </BorderPane.margin>
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Text>
+                    </top>
                 </BorderPane>          
             </left>
             <center>
@@ -48,45 +72,35 @@
                             <menus>
                                 <Menu mnemonicParsing="false" text="%file">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#loadMap" 
-                                                  text="%load_map">
+                                        <MenuItem mnemonicParsing="false" onAction="#loadMap" text="%load_map">
                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="O" control="DOWN"
-                                                                    meta="UP" shift="UP" shortcut="UP" />
+                                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                             </accelerator>
                                         </MenuItem>
-                                        <MenuItem fx:id="mntmLoadPlanning" disable="true" mnemonicParsing="false"
-                                                  onAction="#loadPlanning" text="%load_planning">
+                                        <MenuItem fx:id="mntmLoadPlanning" disable="true" mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP"
-                                                                    shift="DOWN" shortcut="UP" />
+                                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                                             </accelerator>
                                         </MenuItem>
                                         <MenuItem disable="true" mnemonicParsing="false" text="%clear_map" />
                                         <MenuItem disable="true" mnemonicParsing="false" text="%delete_planning" />
-                                        <MenuItem fx:id="quitMenuItem" mnemonicParsing="false"
-                                                  onAction="#quitApplication" text="%exit">
+                                        <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="%exit">
                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="Q" control="DOWN"
-                                                                    meta="UP" shift="UP" shortcut="UP" />
+                                                <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                             </accelerator>
                                         </MenuItem>
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="%actions">
                                     <items>
-                                        <MenuItem fx:id="mntmUndo" disable="true" mnemonicParsing="false"
-                                                  onAction="#undo" text="%undo">
+                                        <MenuItem fx:id="mntmUndo" disable="true" mnemonicParsing="false" onAction="#undo" text="%undo">
                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="Z" control="DOWN"
-                                                                    meta="UP" shift="UP" shortcut="UP" />
+                                                <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                             </accelerator>
                                         </MenuItem>
-                                        <MenuItem fx:id="mntmRedo" disable="true" mnemonicParsing="false"
-                                                  onAction="#redo" text="%redo">
+                                        <MenuItem fx:id="mntmRedo" disable="true" mnemonicParsing="false" onAction="#redo" text="%redo">
                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="Y" control="DOWN" 
-                                                                    meta="UP" shift="UP" shortcut="UP" />
+                                                <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                             </accelerator>
                                         </MenuItem>
                                     </items>
@@ -100,8 +114,7 @@
                                         <Glyph fontFamily="FontAwesome" icon="FOLDER_OPEN" />
                                     </graphic>
                                 </Button>
-                                <Button fx:id="btnLoadPlanning" disable="true" mnemonicParsing="false"
-                                        onAction="#loadPlanning" text="%load_planning">
+                                <Button fx:id="btnLoadPlanning" disable="true" mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="FILE" />
                                     </graphic>

@@ -1,5 +1,6 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.UIManager;
 import com.hexanome.model.Arc;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Map;
@@ -138,6 +139,7 @@ public class MapView extends AnchorPane implements Subscriber {
                 }
             }
             (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSE_NODE);
+            UIManager.getInstance().getMainWindow().setLegend();
         }
         if (p instanceof Route) {
             Route route = (Route) p;
