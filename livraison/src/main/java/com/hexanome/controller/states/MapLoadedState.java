@@ -42,6 +42,7 @@ public class MapLoadedState extends DefaultState {
     public void btnLoadMap() {
         // WARNING : calls order matters
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
+        UIManager.getInstance().askConfirmation("Coucou !");
         // Full clear of the model
         ModelManager.getInstance().clearModel();
         // Jump to MapSelectState

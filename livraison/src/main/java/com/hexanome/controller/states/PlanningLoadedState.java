@@ -115,6 +115,7 @@ public class PlanningLoadedState extends DefaultState {
                                         getMainWindow().getMapView());
                                 ContextManager.getInstance()
                                 .setCurrentState(NothingSelectedState.getInstance());
+                                UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
                                 break;
                         }
                     }
