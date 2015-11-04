@@ -324,7 +324,7 @@ public class Route implements Publisher {
     @Override
     public void notifySubscribers() {
         for (Subscriber s : subscribers) {
-            s.update(this, null);
+            s.update(this, planning.getMap());
         }
     }
 

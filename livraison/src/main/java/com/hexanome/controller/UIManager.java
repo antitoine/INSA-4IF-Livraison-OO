@@ -5,6 +5,7 @@ import com.hexanome.controller.command.RemoveDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
+import com.hexanome.utils.TypeWrapper;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.NodeView;
@@ -92,16 +93,23 @@ public class UIManager {
                 }).start();
                 mainWindow.getMapView().hidePopOver((Node) args[0]);
                 break;
-            case DELETE_DELIVERY: // \todo Remplacer en utilisant getCurrentState().btnRemoveDelivery(Delivery) dans la vue
+            case DELETE_DELIVERY:
+                // \todo Remplacer en utilisant getCurrentState().btnRemoveDelivery(Delivery) dans la vue
                 Delivery d = (Delivery) arg;
-                final RemoveDeliveryCommand rdc = new RemoveDeliveryCommand(d);
-                new Thread(new Task() {
-                    @Override
-                    protected Object call() throws Exception {
-                        ContextManager.getInstance().executeCommand(rdc);
-                        return null;
-                    }
-                }).start();
+                String start = TypeWrapper.secondsToTimestamp(d.getTimeSlot().getStartTime());
+                String end = TypeWrapper.secondsToTimestamp(d.getTimeSlot().getEndTime());
+
+                if (askConfirmation("This delivery " + d.getId()
+                        + " (" + start + " - " + end + ") will be deleted !")) {
+                    final RemoveDeliveryCommand rdc = new RemoveDeliveryCommand(d);
+                    new Thread(new Task() {
+                        @Override
+                        protected Object call() throws Exception {
+                            ContextManager.getInstance().executeCommand(rdc);
+                            return null;
+                        }
+                    }).start();
+                }
                 break;
             case SWAP_DELIVERIES:
                 // Create a SwapDeliveryCommand and give it to context manager
@@ -149,9 +157,10 @@ public class UIManager {
     }
 
     /**
-     * Ask for confirmation 
+     * Ask for confirmation
+     *
      * @param message
-     * @return 
+     * @return
      */
     public boolean askConfirmation(String message) {
         boolean res;

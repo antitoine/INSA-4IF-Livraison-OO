@@ -1,20 +1,7 @@
 package com.hexanome.livraison;
 
 import com.hexanome.controller.Controller;
-import com.hexanome.model.Arc;
-import com.hexanome.model.Delivery;
-import com.hexanome.model.Map;
 import com.hexanome.model.ModelTest;
-import com.hexanome.model.Node;
-import com.hexanome.model.Path;
-import com.hexanome.model.Planning;
-import com.hexanome.model.Route;
-import com.hexanome.model.TimeSlot;
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MainApp {
 
@@ -32,6 +19,4 @@ public class MainApp {
         // This is default JavaFX behaviour
        Controller.getInstance().initUI(args);
     }
-    
-
 }
