@@ -77,7 +77,6 @@ public class ModelManager {
         } else {
             s = "ModelManager: map wasn't initialized or a planning already exists !";
         }
-        // removeMeLater : démarrer directement un premier calcul de route ?
         return s;
     }
 

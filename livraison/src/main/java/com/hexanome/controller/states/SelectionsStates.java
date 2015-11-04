@@ -1,5 +1,5 @@
 /**
- * Meta-state for all interactions on map nodes 
+ * Meta-state for all interactions on map nodes
  */
 package com.hexanome.controller.states;
 
@@ -9,8 +9,7 @@ import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 
 /**
- * @author antitoine
- * \todo TODO
+ * @author antitoine \todo TODO
  */
 public abstract class SelectionsStates extends DefaultState {
 
@@ -20,13 +19,14 @@ public abstract class SelectionsStates extends DefaultState {
     @Override
     public void btnLoadMap() {
         // WARNING : calls order matters
-        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
-        // Full clear of the model
-        ModelManager.getInstance().clearModel();
-        // Jump to MapSelectState
-        ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
-        // Ask user for a file to load
-        UIManager.getInstance().getMainWindow().askFile();
+        if (UIManager.getInstance().askConfirmation("Planning and Map will be lost forever")) {
+            // Full clear of the model
+            ModelManager.getInstance().clearModel();
+            // Jump to MapSelectState
+            ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
+            // Ask user for a file to load
+            UIManager.getInstance().getMainWindow().askFile();
+        }
     }
 
     /* (non-Javadoc)
@@ -35,13 +35,14 @@ public abstract class SelectionsStates extends DefaultState {
     @Override
     public void btnLoadPlanning() {
         // WARNING : calls order matters
-        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         // Clear current model's planning
-        ModelManager.getInstance().clearPlanning();
-        // Jump to PlanningSelectState
-        ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
-        // Ask user for planning file to load
-        UIManager.getInstance().getMainWindow().askFile();
+        if (UIManager.getInstance().askConfirmation("Planning will be lost forever")) {
+            ModelManager.getInstance().clearPlanning();
+            // Jump to PlanningSelectState
+            ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
+            // Ask user for planning file to load
+            UIManager.getInstance().getMainWindow().askFile();
+        }
     }
 
     /* (non-Javadoc)
@@ -51,7 +52,7 @@ public abstract class SelectionsStates extends DefaultState {
     public void btnCloseMap() {
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         // Get model manager instance
-        ModelManager modelManager = ModelManager.getInstance(); 
+        ModelManager modelManager = ModelManager.getInstance();
         // Full clear model
         modelManager.clearModel();
         // Jump to InitState
