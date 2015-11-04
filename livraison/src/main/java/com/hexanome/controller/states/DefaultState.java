@@ -117,7 +117,7 @@ public abstract class DefaultState implements IState {
      * @see com.hexanome.controller.states.IState#btnAddDelivery(com.hexanome.model.Node)
      */
     @Override
-    public void btnAddDelivery(Node node, Delivery previousDelivery) {
+    public void btnAddDelivery(Node node, Node previousDeliveryNode) {
         System.out.println("btnAddDelivery In DefaultState");
         // Nothing to do here
     }
