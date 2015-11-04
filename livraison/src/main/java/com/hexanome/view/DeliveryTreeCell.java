@@ -64,7 +64,7 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
                 if (db.hasString()) {
-                    System.out.println((db.getString()));
+                    //System.out.println((db.getString()));
                     success = true;
                 }
                 /* let the source know whether the string was successfully 
@@ -95,6 +95,13 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 /* show to the user that it is an actual gesture target */
                 if (event.getDragboard().hasString()) {
                     System.out.println("ON drag entered");
+                    
+                    Dragboard sourceCell = event.getDragboard();
+                    DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
+                    if(! targetCell.getString().equals(sourceCell.getString())) {
+                        targetCell.setStyle("-fx-background: blue;");
+                    }
+                    
                 }
                 event.consume();
             }
@@ -105,7 +112,13 @@ final class DeliveryTreeCell extends TreeCell<String> {
             public void handle(DragEvent event) {
                 /* mouse moved away, remove the graphical cues */
                 System.out.println("ON drag exited");
-
+                
+                Dragboard sourceCell = event.getDragboard();
+                DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
+                if(! targetCell.getString().equals(sourceCell.getString())) {
+                    targetCell.setStyle("-fx-background: white;");
+                }
+                
                 event.consume();
             }
         });
