@@ -68,7 +68,8 @@ public class ArcTest {
     @Test
     public void testGetAssociatedTimeSlot() {
         System.out.println("getAssociatedTimeSlot");
-        
+        fail();
+        /*
         Map map = new Map();
         
         //Node simple
@@ -124,6 +125,7 @@ public class ArcTest {
         }
         TimeSlot result3 = arc4.getAssociatedTimeSlots();
         assertEquals(result3, null);
+        */
     }
 
     /**
@@ -132,7 +134,8 @@ public class ArcTest {
     @Test
     public void testSetAssociatedTimeSlot() {
         System.out.println("setAssociatedTimeSlot");
-        
+        fail();
+        /*
         Node node1 = new Node(1, new Point(10,30));
         Node node2 = new Node(2, new Point(10,20));
         Arc arc1 = new Arc("hollywood",12,31,node1,node2);
@@ -145,6 +148,7 @@ public class ArcTest {
         arc1.addAssociatedTimeSlot(expResult);
         TimeSlot result = arc1.getAssociatedTimeSlots();
         assertEquals(expResult, result);
+        */
     }
 
     /**

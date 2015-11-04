@@ -2,9 +2,12 @@ package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
+import com.hexanome.model.TimeSlot;
+import com.hexanome.utils.TypeWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +22,10 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -57,6 +64,9 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private BorderPane deliveriesPane;
+    
+    @FXML
+    private GridPane legendGridPane;
 
     final FileChooser fileChooser;
     private Stage stage;
@@ -88,6 +98,7 @@ public class MainWindow extends AnchorPane {
         deliveriesPane.setCenter(deliveryTreeView);
         mapView = new MapView();
         scrollPaneMap.setContent(mapView);
+        legendGridPane.setVisible(false);
 
     }
 
@@ -265,6 +276,22 @@ public class MainWindow extends AnchorPane {
                 btnLoadPlanning.setDisable(false);
                 break;
         }
+    }
+    
+    void setLegend(){
+        legendGridPane.setVisible(true);
+        int i = 1;
+        for (Map.Entry<TimeSlot, Color> entrySet : ColorsGenerator
+                .getTimeSlotColors().entrySet()) {
+            TimeSlot ts = entrySet.getKey();
+            Rectangle rect = new Rectangle(10, 10, entrySet.getValue());
+            String start = TypeWrapper.secondsToTimestamp(ts.getStartTime());
+            String end = TypeWrapper.secondsToTimestamp(ts.getEndTime());
+            Text txt = new Text(start + " - "+end);
+            legendGridPane.add(txt, 0, i);  
+            legendGridPane.add(rect, 1, i);  
+            i++;
+        };
     }
 
 }

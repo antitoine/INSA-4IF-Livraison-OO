@@ -9,6 +9,10 @@ import javafx.scene.paint.Color;
 public class ColorsGenerator {
 
     private final ArrayList<Color> colors;
+
+    public static HashMap<TimeSlot, Color> getTimeSlotColors() {
+        return timeSlotColors;
+    }
     private static HashMap<TimeSlot, Color> timeSlotColors;
     private static ColorsGenerator colorgenerator;
 

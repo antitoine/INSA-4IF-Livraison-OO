@@ -76,14 +76,14 @@ public class UIManager {
             case QUIT:
                 ContextManager.getInstance().exit(); // Special undoable
                 break;
-                
-            case ADD_DELIVERY: // \todo Remplacer en utilisant getCurrentState().btnAddDelivery(Node, Node) dans la vue
+       
+            case ADD_DELIVERY: 
+                // \todo Remplacer en utilisant getCurrentState().btnAddDelivery(Node, Node) dans la vue
                 Object[] args = (Object[]) arg;
                 final AddDeliveryCommand ac = new AddDeliveryCommand(
                         (Node) args[0],
                         (Node) args[1],
                         (TimeSlot) args[2]);
-
                 new Thread(new Task() {
                     @Override
                     protected Object call() throws Exception {

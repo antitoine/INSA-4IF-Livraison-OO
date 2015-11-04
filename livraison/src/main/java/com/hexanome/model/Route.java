@@ -313,7 +313,7 @@ public class Route implements Publisher {
     @Override
     public void addSubscriber(Subscriber s) {
         subscribers.add(s);
-        s.update(this, null);
+        s.update(this, planning);
     }
 
     @Override
@@ -324,7 +324,7 @@ public class Route implements Publisher {
     @Override
     public void notifySubscribers() {
         for (Subscriber s : subscribers) {
-            s.update(this, planning.getMap());
+            s.update(this, planning);
         }
     }
 
