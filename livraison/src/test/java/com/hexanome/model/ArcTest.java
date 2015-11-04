@@ -118,7 +118,7 @@ public class ArcTest {
         
         arc1.setAssociatedTimeSlot(expResult);
         TimeSlot result = arc1.getAssociatedTimeSlot();
-         assertEquals(expResult, result);
+        assertEquals(expResult, result);
     }
 
     /**

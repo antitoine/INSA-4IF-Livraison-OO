@@ -158,7 +158,8 @@ public class MapTest {
         arcs.add(arc2);
         arcs.add(arc3);
         Path expResult = new Path(arcs);
-        Path result = map.getFastestPath(start, end);
+        Path result = map.getFastestPath(start, end);        
+        
         assertEquals(expResult, result);
     }  
 }
