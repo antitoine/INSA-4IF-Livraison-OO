@@ -91,4 +91,23 @@ public class TimeSlot {
                 + "}", startTime, endTime, strdeliveries);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof TimeSlot)) {
+            return false;
+        }
+        
+        TimeSlot timeSlot = (TimeSlot)obj;
+        if(this.startTime != timeSlot.startTime || this.endTime != timeSlot.endTime) {
+            return false;
+        }
+        
+        for(int i = 0; i < this.deliveries.size(); i++) {
+            if(!this.deliveries.get(i).equals(timeSlot.deliveries.get(i))) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
 }
