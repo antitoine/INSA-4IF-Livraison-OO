@@ -155,7 +155,6 @@ public class MapTest {
         Arc arc3 = map.createArc("route3", 5, 31, 2, 3);
         
         ArrayList<Arc> arcs = new ArrayList<>();
-        arcs.add(arc1);
         arcs.add(arc2);
         arcs.add(arc3);
         Path expResult = new Path(arcs);
