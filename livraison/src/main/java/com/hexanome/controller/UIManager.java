@@ -74,7 +74,7 @@ public class UIManager {
             case QUIT:
                 ContextManager.getInstance().exit(); // Special undoable
                 break;
-            case ADD_DELIVERY:
+            case ADD_DELIVERY: // \todo Remplacer en utilisant getCurrentState().btnAddDelivery(Node, Node) dans la vue
                 Object[] objs = (Object[]) arg;
                 final AddDeliveryCommand ac = new AddDeliveryCommand((Node) objs[0],
                         (Node) objs[1]);
@@ -87,7 +87,7 @@ public class UIManager {
                 }).start();
                 mainWindow.getMapView().hidePopOver((Node) objs[0]);
                 break;
-            case DELETE_DELIVERY:
+            case DELETE_DELIVERY: // \todo Remplacer en utilisant getCurrentState().btnRemoveDelivery(Delivery) dans la vue
                 Delivery d = (Delivery) arg;
                 final RemoveDeliveryCommand rdc = new RemoveDeliveryCommand(d);
                 new Thread(new Task() {
@@ -101,12 +101,12 @@ public class UIManager {
             case SWAP_DELIVERIES:
                 // Create a SwapDeliveryCommand and give it to context manager
                 break;
-            case CLICK_ON_DELIVERY_NODE:
+            case CLICK_ON_DELIVERY_NODE: // \todo Appeler getCurrentState().clickOnDelivery() dans la vue
                 ((NodeView) (arg)).showPopOver();
                 mainWindow.getDeliveryTreeView().selectDelivery((NodeView) (arg));
                 mainWindow.disablePanning();
                 break;
-            case CLICK_ON_EMPTY_NODE:
+            case CLICK_ON_EMPTY_NODE: // \todo Appeler getCurrentState().clickOnEmptyNode() dans la vue
                 NodeView nv = (NodeView) arg;
                 if (ModelManager.getInstance().getPlanning() != null) {
                     PopOverContentEmptyNode pop = (PopOverContentEmptyNode) nv.getPopoverContent();
@@ -115,14 +115,14 @@ public class UIManager {
                 nv.showPopOver();
                 mainWindow.disablePanning();
                 break;
-            case CLICK_ON_WAREHOUSE:
+            case CLICK_ON_WAREHOUSE: // \todo Appeler getCurrentState().clickOnWarehouse() dans la vue
                 ((NodeView) (arg)).showPopOver();
                 mainWindow.disablePanning();
                 break;
             case HIDE_POPOVER:
                 mainWindow.ennablePanning();
                 break;
-            case DELEVERY_SELECTED:
+            case DELEVERY_SELECTED: // removeMeLater : quand on est dans la tree view
                 mainWindow.getMapView().selectDelivery(((Delivery) (arg)));
                 break;
             default:

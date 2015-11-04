@@ -11,7 +11,7 @@
 \usepackage{url}
 \usepackage{pdfpages}
 \usepackage{todonotes}
-\usepackage[a4paper, body={17cm,26cm}]{geometry}
+\usepackage[a4paper, body={16cm,23cm}]{geometry}
 \usepackage{float}
 \usepackage{framed}
 \usepackage[toc,page]{appendix} 
@@ -26,19 +26,19 @@
 %%% Custom headers/footers (fancyhdr package)
 \usepackage{fancyhdr}
 \pagestyle{fancyplain}
-\fancyhead{}											% No page header
-\fancyfoot[L]{}											% Empty 
-\fancyfoot[C]{}											% Empty
-\fancyfoot[R]{\thepage}									% Pagenumbering
-\renewcommand{\headrulewidth}{0pt}			% Remove header underlines
-\renewcommand{\footrulewidth}{0pt}				% Remove footer underlines
+\fancyhead{}								% No page header
+\fancyfoot[L]{}							% Empty 
+\fancyfoot[C]{}							% Empty
+\fancyfoot[R]{\thepage}					% Pagenumbering
+\renewcommand{\headrulewidth}{0pt}		% Remove header underlines
+\renewcommand{\footrulewidth}{0pt}		% Remove footer underlines
 \setlength{\headheight}{13.6pt}
 
 
 %%% Equation and float numbering
 \numberwithin{equation}{section}		% Equationnumbering: section.eq#
-\numberwithin{figure}{section}			% Figurenumbering: section.fig#
-\numberwithin{table}{section}				% Tablenumbering: section.tab#
+\numberwithin{figure}{section}		% Figurenumbering: section.fig#
+\numberwithin{table}{section}		% Tablenumbering: section.tab#
 
 
 %%% Define new commands
@@ -65,13 +65,8 @@
 \lstset{breaklines=true,columns=fullflexible}
 \colorlet{shadecolor}{black!10}
 
-
-
 \delimitershortfall-1sp
 \newcommand\abs[1]{\left|#1\right|}
-
-
-
 
 %%% Begin document
 \begin{document}
@@ -87,13 +82,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{Introduction}
+\label{part:introduction}
 
 \section{Présentation du contenu du rapport}
+\label{sec:presentation-du-contenu-du-rapport}
+
 Ce document constitue la synthèse de l'ensemble des livrables devant être remis à la fin du projet Développement Orienté Objet effectué en 4IF. Il a été convenu avec les professeurs encadrant le projet que le code pouvait être réalisé en langue anglaise mais que ceci impliquait également le rendu de certains livrables en Anglais. Les livrables devant être rendu en Anglais ont été identifiés avec les professeurs lors de la première séance de TP. Il sera donc indiqué dans le titre de chaque partie si le contenu de la partie est rédigé en Anglais \it{(EN)} ou en Français \it{(FR)}.  
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Capture et analyse des besoins
+
 \part{Capture et analyse des besoins}
+\label{part:capture-et-analyse-des-besoins}
 
 \section{Planning prévisionnel du projet \it{(FR)}}
+\label{sec:planning-previsionnel-du-projet}
 
 \begin{figure}[H]
 \centering
@@ -104,6 +106,7 @@ Ce document constitue la synthèse de l'ensemble des livrables devant être remi
 \Todo{Ajouter tableau déroulement et affectation des tâches}
 
 \section{Domain model \it{(EN)}}
+\label{sec:domain-model}
 
 \Todo{We should add a comment here}
 
@@ -114,6 +117,7 @@ Ce document constitue la synthèse de l'ensemble des livrables devant être remi
 \end{figure}
 
 \section{Glossary \it{(EN)}}
+\label{sec:glossary}
 
 Syntax used :
 \begin{itemize}
@@ -138,6 +142,7 @@ Glossary :
 \end{itemize}
 
 \section{Use case diagram \it{(EN)}}
+\label{sec:use-case-diagram}
 
 \Todo{We should add a comment here}
 
@@ -147,9 +152,51 @@ Glossary :
 \caption{Use case diagram}
 \end{figure}
 
+\section{Structured textual description of use cases \it{(EN)}}
+\label{sec:structured-textual-description-of-use-cases}
+
+\subsection{Textual description of \bfit{Load map}}
+\label{subsec:textual-description-of-load-map}
+
+\textbf{Short description :} The user selects an XML file describing a city map. The map is loaded and displayed on the screen.
+
+\textbf{Organized description :}
+
+\begin{itemize}
+  \item[•] \textbf{Precondition :} none.
+  \item[•] \textbf{Main scenario :}
+  \begin{enumerate}
+    \item The user indicates that he wants to load a map
+    \item The system opens a dialog box allowing the user to select a file.
+    \item The user selects the XML file describing the map that he wants to load in the program.
+    \item The system interprets the XML file, loads the city map and display the map on the screen.
+    \item The user can’t cancel his former modifications anymore.
+  \end{enumerate}
+  \item[•] \textbf{Alternative scenarios :}
+  \begin{itemize}
+    \item[3a.] The users indicates that he wants to stop the selection of a city map.
+    \begin{itemize}
+      \item[•] Le system stops the selection and ends the scenario.
+    \end{itemize}
+    \item[4a.] The XML file selected is incorrect (cf. XML Errors Lists~\ref{subsec:xml-errors-lists}) and doesn’t define a city map.
+    \begin{itemize}
+      \item[•] The system indicates that the file is incorrect and can’t be loaded, and end the scenario.
+    \end{itemize}
+    \item[4b.] The opening and the reading of the XML file is denied (cf. IO Errors Lists~\ref{subsec:io-errors-list}).
+    \begin{itemize}
+      \item[•] The system displays that the loading has failed and indicates the cause (insufficient privileges…) and ends the scenario.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\Todo{Ajouter les autres scénarios à partir du drive}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conception
 \part{Conception}
+\label{part:conception}
 
 \section{User-level events list and State-Transition Diagram \it{(EN)}}
+\label{sec:user-level-events-list-and-state-transition-diagram}
 
 \begin{figure}[H]
 \advance\leftskip-1cm
@@ -161,8 +208,10 @@ Glossary :
 \Todo{We should add a comment here}
 
 \section{Packages and Classes Diagrams \it{(EN)}}
+\label{sec:packages-and-classes-diagrams}
 
 \subsection{Model related diagrams}
+\label{subsec:model-related-diagrams}
 
 \Todo{We should add a comment here}
 
@@ -174,6 +223,7 @@ Glossary :
 \end{figure}
 
 \subsection{View related diagrams}
+\label{subsec:view-related-diagrams}
 
 \Todo{We should add a comment here}
 
@@ -184,6 +234,7 @@ Glossary :
 \end{figure}
 
 \subsection{Controller related diagrams}
+\label{subsec:controller-related-diagrams}
 
 \Todo{We should add a comment here}
 
@@ -206,6 +257,7 @@ Glossary :
 \end{figure}
 
 \subsection{Other diagrams}
+\label{subsec:other-diagrams}
 
 \Todo{We should add a comment here}
 
@@ -216,6 +268,7 @@ Glossary :
 \end{figure}
 
 \section{Choix architecturaux et patrons de conception utilisés \it{(FR)}}
+\label{sec:choix-architecturaux-et-patrons-de-conception-utilises}
 
 \bfit{Les classes cités dans ce document pouvant présenter des ambiguïtés sont référencés dans le glossaire.} \\
 
@@ -246,28 +299,105 @@ On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme de
 \Todo{Ajouter des explications concernant les patrons de conception utilisés.}
 
 \section{Sequence Diagram describing Route computation process \it{(EN)}}
+\label{sec:sequence-diagram-describing-route-computation-process}
 
 \Todo{Add sequence diagram here}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Implémentation et tests
+
 \part{Implémentation et tests}
+\label{part:implementation-et-tests}
 
 \section{Notes related to source code, its documentation and unit tests \it{(EN)}}
+\label{sec:notes-related-to-source-code}
 
 \Todo{Add notes here if needed or remove this section}
 
 \section{Packages and classes diagrams generated from source code \it{(EN)}}
+\label{sec:packages-and-classes-diagrams-generated-from-source-code}
 
 \Todo{Retro-generated diagrams}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Bilan
+
 \part{Bilan}
+\label{part:bilan}
 
 \section{Planning effectif du projet \it{(FR)}}
+\label{sec:planning(effectif-du-projet}
 
 \Todo{Ajouter le planning effectif (Gantt réel)}
 
 \section{Bilan humain et technique \it{(FR)}}
+\label{sec:bilan-humain-et-technique}
 
 \Todo{Rédiger le bilan ici}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Annexes
+
+\part{Annexes}
+\label{part:annexes}
+
+\section{Errors lists \it{(EN)}}
+\label{sec:errors-lists}
+
+\Todo{Expliquer ce que sont ces listes d'erreurs}
+
+\subsection{IO Errors List}
+\label{subsec:io-errors-list}
+
+\textbf{Input errors :}
+\begin{itemize}
+  \item[•] \textbf{Cant Read File Error :} the folder is not readable, user’s privileges doesn’t match required privileges.
+  \item[•] \textbf{Missing File Error :} the file is missing in file system. 
+\end{itemize}
+
+\textbf{Output errors :}
+\begin{itemize}
+  \item[•] Cant Write File Error : the folder is not readable, user’s privileges doesn’t match required privileges.  
+\end{itemize}
+
+\subsection{XML errors list}
+\label{subsec:xml-errors-lists}
+
+\textbf{Shared errors:}
+\begin{itemize}
+  \item[•] \textbf{Syntax errors :}
+  \begin{itemize}
+    \item[•] \textbf{Unexpected End Of File Error :} XML file is not well formatted, tags are not closed properly.
+  \end{itemize}
+\end{itemize}
+
+\textbf{File specific errors :}
+\begin{itemize}
+  \item[•] \textbf{Semantic errors :}
+  \begin{itemize}
+    \item[•] \textbf{Map file :}
+    \begin{itemize}
+      \item[•] \textbf{Empty Map Error :} root tag has no child.
+      \item[•] \textbf{Missing Node Attribute :} missing id, x or y attribute.
+      \item[•] \textbf{Empty Node Error :} tag Node has no outgoing arc.
+      \item[•] \textbf{Duplicate Node ID Error :} two or more nodes have the same ID.
+      \item[•] \textbf{Duplicate Node Error :} two or more nodes have the same coordinates.
+      \item[•] \textbf{Duplicate Arc Error :} two or more outgoing arcs of a single node have the same destination node. 
+      \item[•] \textbf{Missing Destination Node Error :} the node referenced by an arc as its destination doesn’t exist. 
+      \item[•] \textbf{Invalid Average Speed Value Error :} an arc specified average speed is missing, negative or zero. 
+      \item[•] \textbf{Invalid Length Value Error :} an arc specified length is missing, negative or zero.
+    \end{itemize}
+
+    \item[•] \textbf{Planning file :}
+    \begin{itemize}
+      \item[•] \textbf{Missing Warehouse Error :} warehouse tag is missing or the id of the specified warehouse doesn’t match any of the node in the Map.
+      \item[•] \textbf{Duplicate Warehouse Error :} more than one warehouse tag is present in the input file.
+      \item[•] \textbf{Missing TimeSlot Error :} the file doesn’t specify a timeslot.
+      \item[•] \textbf{Duplicate TimeSlot Error :} two or more timeslots have the same start time and end time.
+      \item[•] \textbf{Null TimeSlot Error :} a timeslot has the same start and end time.
+      \item[•] \textbf{Intersecting TimeSlot Error :} two or more timeslots are intersecting.
+      \item[•] \textbf{Missing Delivery Node Error :} the address specified by a delivery doesn’t match any node in the Map.
+      \item[•] \textbf{Duplicate Delivery Error :} two or more deliveries share the same destination. 
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
 
 %%% End document
 \end{document}

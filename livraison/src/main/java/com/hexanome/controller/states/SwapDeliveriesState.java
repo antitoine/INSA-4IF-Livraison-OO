@@ -34,7 +34,7 @@ public class SwapDeliveriesState extends DefaultState {
      * @see com.hexanome.controller.states.IState#leftClickReleased(com.hexanome.model.Delivery)
      */
     @Override
-    public void leftClickReleased(Delivery delivery) {
+    public void leftClickReleased(Delivery sourceDelivery, Delivery targetDelivery) {
         // \todo TODO
     }
 

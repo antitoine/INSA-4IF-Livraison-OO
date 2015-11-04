@@ -63,7 +63,7 @@ public abstract class DefaultState implements IState {
      * @see com.hexanome.controller.states.IState#leftClickPressedOnDelivery(com.hexanome.model.Delivery)
      */
     @Override
-    public void leftClickPressedOnDelivery(Delivery delivery) {
+    public void leftClickPressedOnDelivery() {
         System.out.println("leftClickPressedOnDelivery In DefaultState");
         // Nothing to do here
     }
@@ -72,7 +72,7 @@ public abstract class DefaultState implements IState {
      * @see com.hexanome.controller.states.IState#leftClickReleased(com.hexanome.model.Delivery)
      */
     @Override
-    public void leftClickReleased(Delivery delivery) {
+    public void leftClickReleased(Delivery sourceDelivery, Delivery targetDelivery) {
         System.out.println("leftClickReleased In DefaultState");
         // Nothing to do here
     }
@@ -117,7 +117,7 @@ public abstract class DefaultState implements IState {
      * @see com.hexanome.controller.states.IState#btnAddDelivery(com.hexanome.model.Node)
      */
     @Override
-    public void btnAddDelivery(Node node, Delivery previousDelivery) {
+    public void btnAddDelivery(Node node, Node previousDeliveryNode) {
         System.out.println("btnAddDelivery In DefaultState");
         // Nothing to do here
     }
