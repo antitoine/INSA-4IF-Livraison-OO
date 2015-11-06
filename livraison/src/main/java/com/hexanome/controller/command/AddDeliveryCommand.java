@@ -42,6 +42,7 @@ public class AddDeliveryCommand implements ICommand {
     @Override
     public ICommand execute() {
         if (ModelManager.getInstance().getPlanning() != null) {
+
             delivery = ModelManager.getInstance()
                                    .getPlanning()
                                    .addDelivery(node, nodePreviousDelivery, timeSlot);

@@ -8,6 +8,8 @@ import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.TypeWrapper;
 import java.util.Collection;
 import java.util.HashMap;
+
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -46,9 +48,7 @@ public class PopOverContentEmptyNode extends PopOverContent {
         
         prevDeliveryMap = new HashMap<>();
         timeSlotsMap = new HashMap<>();
-        
-        
-        
+
         initPopOverLayout();       
     }
     
@@ -59,17 +59,17 @@ public class PopOverContentEmptyNode extends PopOverContent {
     }
 
     private void onBtnAddDelivery() {
-        //
        String selectedPreviousDelivery = prevDeliveryComboBox.getSelectionModel()
                                                               .getSelectedItem();
-       // 
-       String selectedTimeSlot = timeSlotsComboBox.getSelectionModel().getSelectedItem();
-       // 
-       ContextManager.getInstance().getCurrentState().btnAddDelivery(node, 
+
+        String selectedTimeSlot = timeSlotsComboBox.getSelectionModel().getSelectedItem();
+
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver(node);
+
+        ContextManager.getInstance().getCurrentState().btnAddDelivery(node,
                prevDeliveryMap.get(selectedPreviousDelivery), 
                timeSlotsMap.get(selectedTimeSlot));
-       //
-       UIManager.getInstance().getMainWindow().getMapView().hidePopOver(node);
+
     }
 
     /**
@@ -200,10 +200,8 @@ public class PopOverContentEmptyNode extends PopOverContent {
         GridPane.setHalignment(btnValidateAddDelivery, HPos.CENTER);
         
         setCenter(panelForm);
-        
+
         BorderPane.setMargin(panelForm, new Insets(12, 12, 12, 12));
-        //
-        //BorderPane.setMargin(btnValidateAddDelivery, new Insets(12, 12, 12, 12));
     }
 
 }
