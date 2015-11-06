@@ -6,10 +6,6 @@ import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.TypeWrapper;
-import java.util.Collection;
-import java.util.HashMap;
-
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -25,6 +21,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import org.controlsfx.glyphfont.Glyph;
 
+import java.util.Collection;
+import java.util.HashMap;
+
+/**
+ * PopOver content of an Empty Node
+ * Permits to add a delivery at the selected node
+ */
 public class PopOverContentEmptyNode extends PopOverContent {
 
     Button btnValidateAddDelivery;

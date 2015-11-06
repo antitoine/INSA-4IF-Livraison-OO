@@ -17,6 +17,7 @@ public final class ConstView {
     public static final String POPOVERDELIVERY = "POPOVERDELIVERY";
 
     public static final String MAINWINDOW = "/fxml/MainWindow.fxml";
+    public static final String ROAD_MAP = "/fxml/RoadMap.fxml";
 
     public static final double SIZE_NODE = 7.0;
    

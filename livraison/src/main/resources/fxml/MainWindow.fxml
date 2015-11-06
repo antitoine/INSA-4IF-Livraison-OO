@@ -29,7 +29,8 @@
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     </columnConstraints>
                                 </GridPane>
-                                <Button fx:id="btnRoadMap" disable="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" text="%roadmap">
+                                <Button fx:id="btnRoadMap" disable="true" mnemonicParsing="false"
+                                        onAction="#generateRoadMap" prefHeight="40.0" prefWidth="300.0" text="%roadmap">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="PRINT" />
                                     </graphic>

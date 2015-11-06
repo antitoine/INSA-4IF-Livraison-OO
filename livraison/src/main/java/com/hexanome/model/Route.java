@@ -2,6 +2,7 @@ package com.hexanome.model;
 
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -35,7 +36,7 @@ public class Route implements Publisher {
      * deliveries times.
      *
      * @param planning
-     * @param paths The paths representing the route.
+     * @param paths    The paths representing the route.
      */
     public Route(Planning planning, LinkedList<Path> paths) {
         this.planning = planning;
@@ -116,10 +117,10 @@ public class Route implements Publisher {
     /**
      * Adds a delivery to the route.
      *
-     * @param delivery the delivery to add.
-     * @param prevDelivery The node with the delivery that will be executed
-     * before the one to add.
-     * @param timeSlot the time slot to which the new delivery will belong.
+     * @param delivery     the delivery to add.
+     * @param nodePreviousDelivery The node with the delivery that will be executed
+     *                     before the one to add.
+     * @param timeSlot     the time slot to which the new delivery will belong.
      */
     void addDelivery(Delivery delivery, Node nodePreviousDelivery, TimeSlot timeSlot) {
         // Find the previous delivery in the list of paths
@@ -214,8 +215,8 @@ public class Route implements Publisher {
         Path previousPath = null, nextPath = null;
 
         for (int indexPath = 0, maxIndexPath = paths.size() - 1;
-                (previousPath == null || nextPath == null)
-                && indexPath <= maxIndexPath; ++indexPath) {
+             (previousPath == null || nextPath == null)
+                     && indexPath <= maxIndexPath; ++indexPath) {
             Path p = paths.get(indexPath);
 
             // Find the path which begins with delivery1 or delivery2 

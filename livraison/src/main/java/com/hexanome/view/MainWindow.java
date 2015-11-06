@@ -1,27 +1,15 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.UIManager;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.TypeWrapper;
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -30,6 +18,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainWindow extends AnchorPane {
 
@@ -145,6 +141,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void generateRoadMap() {
         // ContextManager.getInstance().getCurrentState().
+        UIManager.getInstance().generateRoadMap();
     }
 
     @FXML
@@ -312,5 +309,7 @@ public class MainWindow extends AnchorPane {
     void clearLegend() {
         legendGridPane.getChildren().clear();
     }
+
+
 
 }

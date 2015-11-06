@@ -1,21 +1,15 @@
 package com.hexanome.controller;
 
-import com.hexanome.controller.command.AddDeliveryCommand;
-import com.hexanome.controller.command.RemoveDeliveryCommand;
-import com.hexanome.model.Delivery;
-import com.hexanome.model.Node;
-import com.hexanome.model.TimeSlot;
-import com.hexanome.utils.TypeWrapper;
-import com.hexanome.view.ConstView;
+import com.hexanome.model.Arc;
+import com.hexanome.model.Path;
 import com.hexanome.view.MainWindow;
-import com.hexanome.view.NodeView;
-import com.hexanome.view.PopOverContentEmptyNode;
-import java.util.Optional;
-import javafx.concurrent.Task;
+import com.hexanome.view.RoadMapView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage; // \todo Doit disparaitre !
+import javafx.stage.Stage;
+
+import java.util.Optional;
 
 /**
  * This controller manage all the view and is notify when something happens on
@@ -121,4 +115,22 @@ public class UIManager {
         mainWindow.displayError(msg);
     }
 
+    /**
+     * Generate the road Map file
+     * (TODO : display it in a dialog)
+     */
+    public void generateRoadMap() {
+        String roadMap = " --- ROAD MAP ---\n";
+        for(Path path : ModelManager.getInstance().getPlanning().getRoute().getPaths()){
+            roadMap += "From : "+path.getFirstNode().getLocation() + "\n";
+            for(Arc arc : path.getArcs()){
+                roadMap += "take the road : "+arc.getDuration()+"\n";
+            }
+            roadMap += "Then, go to "+path.getLastNode().getLocation()+"\n";
+        }
+        System.out.println(roadMap);
+
+        new RoadMapView(roadMap);
+
+    }
 }
