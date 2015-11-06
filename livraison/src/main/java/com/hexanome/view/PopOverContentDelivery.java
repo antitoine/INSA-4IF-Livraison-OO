@@ -3,6 +3,7 @@ package com.hexanome.view;
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.model.Node;
+import com.hexanome.utils.TypeWrapper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -46,7 +47,8 @@ public class PopOverContentDelivery extends PopOverContent {
 
         if (node.getDelivery() != null && node.getDelivery().getDeliveryTime() != 0) {
             adressText.setText(adressText.getText() + "\n"
-                    + "Delivery Time : " + node.getDelivery().getDeliveryTime());
+                    + "Delivery Time : " 
+                    + TypeWrapper.secondsToTimestamp((int) node.getDelivery().getDeliveryTime()));
         }
     }
 

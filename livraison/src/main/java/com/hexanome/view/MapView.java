@@ -135,7 +135,6 @@ public class MapView extends AnchorPane implements Subscriber {
         }
         if (p instanceof Planning) {
             Planning planning = (Planning) p;
-
             ColorsGenerator.getInstance(planning.getTimeSlots());
             UIManager.getInstance().getMainWindow().setLegend();
 
