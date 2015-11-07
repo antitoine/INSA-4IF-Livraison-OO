@@ -79,6 +79,8 @@ public class Route implements Publisher {
      * Update the associated time slots of the arcs contained in the path.
      */
     private void updateArcTimeSlots() {
+        planning.getMap().resetArcs();
+        
         for (Path p : paths) {
             Delivery delivery = p.getLastNode().getDelivery();
             
