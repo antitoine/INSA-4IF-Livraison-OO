@@ -20,7 +20,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnLoadMap() {
-        System.out.println("btnLoadMap In DefaultState");
+        System.err.println("btnLoadMap In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -29,7 +29,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnLoadPlanning() {
-        System.out.println("btnLoadPlanning In DefaultState");
+        System.err.println("btnLoadPlanning In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -38,7 +38,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnGenerateRoute() {
-        System.out.println("btnGenerateRoute In DefaultState");
+        System.err.println("btnGenerateRoute In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -47,7 +47,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnCancel() {
-        System.out.println("btnCancel In DefaultState");
+        System.err.println("btnCancel In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -56,7 +56,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnValidateFile(File file) {
-        System.out.println("btnValidateFile In DefaultState");
+        System.err.println("btnValidateFile In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -65,7 +65,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void leftClickPressedOnDelivery() {
-        System.out.println("leftClickPressedOnDelivery In DefaultState");
+        System.err.println("leftClickPressedOnDelivery In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -74,7 +74,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void leftClickReleased(Delivery sourceDelivery, Delivery targetDelivery) {
-        System.out.println("leftClickReleased In DefaultState");
+        System.err.println("leftClickReleased In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -83,7 +83,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void clickOnDelivery(Delivery delivery) {
-        System.out.println("clickOnDelivery In DefaultState");
+        System.err.println("clickOnDelivery In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -92,7 +92,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void clickSomewhereElse() {
-        System.out.println("clickSomewhereElse In DefaultState");
+        System.err.println("clickSomewhereElse In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -101,7 +101,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void closePopOver() {
-        System.out.println("closePopOver In DefaultState");
+        System.err.println("closePopOver In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -110,7 +110,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void clickOnEmptyNode(Node node) {
-        System.out.println("clickOnEmptyNode In DefaultState");
+        System.err.println("clickOnEmptyNode In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -119,7 +119,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnAddDelivery(Node node, Node previousDeliveryNode, TimeSlot timeSlot) {
-        System.out.println("btnAddDelivery In DefaultState");
+        System.err.println("btnAddDelivery In DefaultState"); //DEBUG
         // Nothing to do here
     }
 
@@ -128,7 +128,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnRemoveDelivery(Delivery delivery) {
-        System.out.println("btnRemoveDelivery In DefaultState");
+        System.err.println("btnRemoveDelivery In DefaultState");  //DEBUG
         // Nothing to do here
     }
 
@@ -137,7 +137,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void clickOnWarehouse(Node warehouse) {
-        System.out.println("clickOnWarehouse In DefaultState");
+        System.err.println("clickOnWarehouse In DefaultState");  //DEBUG
         // Nothing to do here
     }
 
@@ -146,7 +146,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnCloseMap() {
-        System.out.println("btnCloseMap In DefaultState");
+        System.err.println("btnCloseMap In DefaultState");  //DEBUG
         // Nothing to do here
     }
 
@@ -155,13 +155,13 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnClearPlanning() {
-        System.out.println("btnClearPlanning In DefaultState");
+        System.err.println("btnClearPlanning In DefaultState");  //DEBUG
         // Nothing to do here
     }
 
     @Override
     public String toString() {
-        return "DefaultState";
+        return "DefaultState"; 
     }
 
 }

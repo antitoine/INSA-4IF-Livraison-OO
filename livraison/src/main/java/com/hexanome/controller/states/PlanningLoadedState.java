@@ -44,10 +44,8 @@ public class PlanningLoadedState extends DefaultState {
     public void btnLoadMap() {
         // WARNING : calls order matters
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
-        // Get ModelManager instance
-        ModelManager modelManager = ModelManager.getInstance();
         // Full clear model
-        modelManager.clearModel();
+        ModelManager.getInstance().clearModel();
         // Jump to MapSelectState
         ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
         // Ask user for the map to load
@@ -77,10 +75,8 @@ public class PlanningLoadedState extends DefaultState {
     @Override
     public void btnCloseMap() {
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
-        // Get model manager instance
-        ModelManager modelManager = ModelManager.getInstance();
         // Full clear model
-        modelManager.clearModel();
+        ModelManager.getInstance().clearModel();
         // Jump to InitState
         ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
@@ -109,13 +105,20 @@ public class PlanningLoadedState extends DefaultState {
                             Worker.State newValue) {
                         switch (newValue) {
                             case FAILED:
+                                System.err.println("btnGenerateRoute : task failed"); // DEBUG
+                                break;
                             case CANCELLED:
+                                System.err.println("btnGenerateRoute : task cancelled"); // DEBUG
+                                break;
                             case SUCCEEDED:
+                                // Add MapView as a subscriber of route
                                 ModelManager.getInstance().getPlanning().getRoute().
                                 addSubscriber(UIManager.getInstance().
                                         getMainWindow().getMapView());
+                                // Change current state to nothing selected state
                                 ContextManager.getInstance()
                                 .setCurrentState(NothingSelectedState.getInstance());
+                                // Enable ROAD_MAP button
                                 UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
                                 break;
                         }

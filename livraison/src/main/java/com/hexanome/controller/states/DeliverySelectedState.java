@@ -39,14 +39,16 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void btnRemoveDelivery(Delivery delivery) {
-        // \todo treat limit case if delivery is the first of the list
         // Create a new instance of RemoveDeliveryCommand
         RemoveDeliveryCommand rmDeliveryCmd = new RemoveDeliveryCommand(delivery);
         // ContextManager is asked to execute the command
         ContextManager.getInstance().executeCommand(rmDeliveryCmd);
-        // \todo TODO Close the open pop over
+        // Close the open pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver(delivery.getNode());
         // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
+        // \todo Open new popover
+        //UIManager.getInstance().getMainWindow().getMapView().showPopOver(delivery.getNode());
     }
 
     /* (non-Javadoc)
@@ -54,8 +56,10 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnEmptyNode(Node node) {
-        // \todo TODO Close the open pop over
+        // Close the open pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver(node);
         // \todo TODO Open the new pop over
+        //UIManager.getInstance().getMainWindow().getMapView().showPopOver(node);
         // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
