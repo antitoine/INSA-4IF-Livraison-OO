@@ -158,7 +158,9 @@ public class MainWindow extends AnchorPane {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error - " + msg);
         alert.setContentText(msg);
-        alert.show();
+        alert.setResizable(true);
+        alert.getDialogPane().setPrefSize(480, 320);
+        alert.showAndWait();
     }
 
     /**
@@ -215,10 +217,8 @@ public class MainWindow extends AnchorPane {
      * Displays the legend in the main Window if not already displayed The
      * planning must be initialized before calling this method
      */
-    void setLegend() {
-        if (legendDisplayed) {
-            return;
-        }
+    public void setLegend() {
+        legendGridPane.getChildren().clear();
         legendGridPane.setVisible(true);
         int i = 1;
         Text txtNotInTime = new Text("Out of time slot");
@@ -237,9 +237,13 @@ public class MainWindow extends AnchorPane {
             GridPane.setMargin(rect, new Insets(0, 12, 0, 0));
             GridPane.setMargin(txt, new Insets(0, 0, 0, 12));
             i++;
-        };
-        legendDisplayed = true;
+        }
     }
+
+    public void clearLegend() {
+        legendGridPane.getChildren().clear();
+    }
+
 
     @FXML
     private void quitApplication(ActionEvent event) {

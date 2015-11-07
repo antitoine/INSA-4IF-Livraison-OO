@@ -5,7 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 /**
- * This class represent the popover content specific to the
+ * This class represents the popover content specific to the
  * warehouse node
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul

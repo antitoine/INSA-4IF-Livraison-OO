@@ -1,6 +1,5 @@
 package com.hexanome.view;
 
-import com.hexanome.controller.UIManager;
 import com.hexanome.model.*;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
@@ -40,13 +39,6 @@ public class MapView extends AnchorPane implements Subscriber {
             addEmptyNodes(map.getNodes().values());
         }
 
-        // called when a new planning is loaded
-        if (p instanceof Planning) {
-            Planning planning = (Planning) p;
-            ColorsGenerator.getInstance(planning.getTimeSlots());
-            UIManager.getInstance().getMainWindow().setLegend();
-        }
-
         // called when a new Route is computed
         if (p instanceof Route) {
             clearMap();
@@ -69,8 +61,6 @@ public class MapView extends AnchorPane implements Subscriber {
 
     /**
      * Hide the PopOver which corresponds the node passed as paramater
-     *
-     * @param node node which should dismiss its popover
      */
     public void hidePopOver() {
         if(latestNodeForOpenPopOver != null) {

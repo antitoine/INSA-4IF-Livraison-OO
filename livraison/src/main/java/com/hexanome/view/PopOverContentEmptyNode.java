@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
- * This class represent the popover content specific to an 
+ * This class represents the popover content specific to an 
  * empty node
  * Permits to add a delivery at the selected node
  * 

@@ -363,4 +363,32 @@ public class Route implements Publisher {
         return Collections.unmodifiableList(paths);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Route)) {
+            return false;
+        }
+        
+        Route route = (Route) obj;
+        
+        if(this.subscribers.size() != route.subscribers.size() || this.paths.size() != route.paths.size() || !(this.planning.equals(route.planning))) {
+            return false;
+        }
+        
+        for(int i = 0; i<this.paths.size(); i++){
+            if(!(this.paths.get(i).equals(route.paths.get(i)))){
+                return false;
+            }
+        }
+        
+        for(int j = 0; j<this.subscribers.size(); j++) {
+            if(!(this.subscribers.get(j).equals(route.subscribers.get(j)))) {
+                return false;
+            }
+        }
+        return true;  
+    }
+    
+    
+
 }

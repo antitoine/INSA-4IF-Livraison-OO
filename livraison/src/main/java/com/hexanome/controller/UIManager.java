@@ -1,6 +1,7 @@
 package com.hexanome.controller;
 
 import com.hexanome.utils.RouteDocument;
+import com.hexanome.view.ColorsGenerator;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.RoadMapView;
 import javafx.scene.control.Alert;
@@ -49,7 +50,7 @@ public class UIManager {
     /**
      * Create the main Window and return it
      *
-     * @param stage
+     * @param stage the main stage
      * @return the mainWindow which should be integrated into the scene
      */
     MainWindow createMainWindow(Stage stage) {
@@ -60,8 +61,8 @@ public class UIManager {
     /**
      * Asks for confirmation
      *
-     * @param message
-     * @return
+     * @param message message for the dialog
+     * @return true if the user select ok, false otherwise
      */
     public boolean askConfirmation(String message) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -89,6 +90,7 @@ public class UIManager {
         ModelManager.getInstance().getMap().clearSubscribers();
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
         mainWindow.resetCursorAndInfoLabel();
+        mainWindow.clearLegend();
     }
 
     public void beginLoadPlanning() {
@@ -100,7 +102,10 @@ public class UIManager {
         // Add view subscribers to the model
         ModelManager.getInstance().getPlanning().clearSubscribers();
         ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTreeView());
-        ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
+        ColorsGenerator.getInstance()
+                .createColors(ModelManager.getInstance().getPlanning().getTimeSlots());
+        mainWindow.clearLegend();
+        mainWindow.setLegend();
         // Update mainwindow
         mainWindow.resetCursorAndInfoLabel();
     }

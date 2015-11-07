@@ -2,19 +2,21 @@ package com.hexanome.model;
 
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This class represents a planning, a collection of deliveries 
  * contained in timeslots.
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
+ *
  */
 public class Planning implements Publisher {
 
@@ -90,15 +92,6 @@ public class Planning implements Publisher {
     public void computeRoute() throws Exception {
         planningComputeRouteWorker = new PlanningComputeRouteWorker(this);
         planningComputeRouteWorker.call();
-    }
-
-    /**
-     * Returns the route, or null if any route was calculated before.
-     *
-     * @return The fastest route.
-     */
-    public Route getFastestRoute() {
-        return route;
     }
 
     /**
@@ -259,7 +252,7 @@ public class Planning implements Publisher {
     }
 
     public List<Delivery> getDeliveries() {
-        ArrayList<Delivery> deliveries = new ArrayList();
+        ArrayList<Delivery> deliveries = new ArrayList<>();
         for (TimeSlot ts : timeSlots) {
             deliveries.addAll(ts.getDeliveries());
         }
