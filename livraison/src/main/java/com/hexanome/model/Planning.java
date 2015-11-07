@@ -113,7 +113,7 @@ public class Planning implements Publisher {
             Delivery newDelivery = new Delivery(timeSlot.getDeliveries().size() + 1, node);
             timeSlot.addDelivery(newDelivery);
 
-            route.addDelivery(newDelivery, nodePreviousDelivery, timeSlot);
+            route.addDelivery(newDelivery, nodePreviousDelivery);
             notifySubscribers();
             return newDelivery;
         }

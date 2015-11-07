@@ -110,6 +110,11 @@ public class Map implements Publisher {
         HashMap<Integer, Node> previousNodes = globalPreviousNodes.get(start.getId());
 
         Node src = previousNodes.get(target.getId());
+        
+        if (src == null) {
+            return null;
+        }
+        
         Node dest = target;
         
         while (dest != start) {

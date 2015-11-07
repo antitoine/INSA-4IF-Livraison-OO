@@ -84,6 +84,10 @@ public class PlanningComputeRouteWorker extends Task<Void> {
         } catch (InterruptedException ex) {
             return null;
         }
+        
+        if (solutions == null || solutions[0] == null) {
+            throw new ArithmeticException("Any route can't be found with the current map and planning");
+        }
 
         System.out.print("Solution de longueur " + tsp.getSolutionCost() + " trouvee en " + (System.currentTimeMillis() - tempsDebut) + "ms : ");
 
