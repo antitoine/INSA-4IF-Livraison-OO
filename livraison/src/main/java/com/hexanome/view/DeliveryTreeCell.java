@@ -7,6 +7,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeCell;
 import javafx.scene.input.*;
+import javafx.scene.paint.Color;
 
 /**
  * This class is the graphic component used to display an element 
@@ -19,6 +20,7 @@ final class DeliveryTreeCell extends TreeCell<String> {
 
     private TextField textField;
     private ContextMenu addMenu = new ContextMenu();
+    private DeliveryTreeCell targetCellSwap = null;
 
     public DeliveryTreeCell() {
 
@@ -40,38 +42,14 @@ final class DeliveryTreeCell extends TreeCell<String> {
             }
         });
 
-        setOnDragDone(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                /* the drag and drop gesture ended */
-                /* if the data was successfully moved, clear it */
-                System.out.println("Drag done " + event.getDragboard().getString() + " <->" + event.getSource().toString());
-                DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
-                if (targetCell.getString().startsWith("D")) {
-                    Delivery delivery1 = DeliveryTreeView.getDeliveryIdFromName(event.getDragboard().getString());
-                    Delivery delivery2 = DeliveryTreeView.getDeliveryIdFromName(targetCell.getString());
-                    UIManager.getInstance().swapDelivery(delivery1, delivery2);
-                }
-                event.consume();
-            }
-        });
+
 
         // DRAG TARGET    
         setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                /* data dropped */
-                /* if there is a string data on dragboard, read it and use it */
-                Dragboard db = event.getDragboard();
-                boolean success = false;
-                if (db.hasString()) {
-                    //System.out.println((db.getString()));
-                    success = true;
-                }
-
-                /* let the source know whether the string was successfully 
-                 * transferred and used */
-                //event.setDropCompleted(success);
-
+                /* on drag Over */
+                event.acceptTransferModes(TransferMode.ANY);
                 event.consume();
             }
         });
@@ -80,15 +58,19 @@ final class DeliveryTreeCell extends TreeCell<String> {
             @Override
             public void handle(DragEvent event) {
                 /* data is dragged over the target */
-                /* accept it only if it is not dragged from the same node 
-                 * and if it has a string data */
-                System.out.println(event.getSource().toString() + " <-> " + event.getDragboard().toString());
+                event.acceptTransferModes(TransferMode.ANY);
 
-                if (event.getDragboard().hasString()) {
-                    /* allow for both copying and moving, whatever user chooses */
-
-                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                Dragboard sourceCell = event.getDragboard();
+                if (targetCellSwap != null) {
+                    Delivery delivery1 = DeliveryTreeView
+                            .getDeliveryIdFromName(event.getDragboard().getString());
+                    Delivery delivery2 = DeliveryTreeView
+                            .getDeliveryIdFromName(targetCellSwap.getString());
+                    System.out.println("Drag done " + sourceCell.getString() + " <->" +
+                            targetCellSwap.getString());
+                    UIManager.getInstance().swapDelivery(delivery1, delivery2);
                 }
+
                 event.consume();
             }
         });
@@ -102,7 +84,9 @@ final class DeliveryTreeCell extends TreeCell<String> {
                     DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
                     if(! targetCell.getString().equals(sourceCell.getString())) {
                         if (targetCell.getString().startsWith("D")) {
+                            targetCell.setTextFill(Color.RED);
                             targetCell.setUnderline(true);
+                            targetCellSwap = targetCell;
                         }
                     }
                 }
@@ -117,10 +101,10 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 Dragboard sourceCell = event.getDragboard();
                 DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
                 if(! targetCell.getString().equals(sourceCell.getString())) {
-                    // targetCell.setStyle("-fx-background: none;");
                     targetCell.setUnderline(false);
+                    targetCell.setTextFill(Color.BLACK);
+                    //targetCellSwap =null;
                 }
-                
                 event.consume();
             }
         });
