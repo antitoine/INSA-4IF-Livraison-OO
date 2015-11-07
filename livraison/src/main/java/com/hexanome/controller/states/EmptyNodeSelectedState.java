@@ -65,7 +65,7 @@ public class EmptyNodeSelectedState extends SelectionsStates {
     @Override
     public void clickOnWarehouse(Node warehouse) {
         // Hide current pop over
-        
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
         // Jump to WarehouseSelectedState
         ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
     }
