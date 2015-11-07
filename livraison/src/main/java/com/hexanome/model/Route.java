@@ -86,6 +86,10 @@ public class Route implements Publisher {
 
         for (Path p : paths) {
             Delivery delivery = p.getLastNode().getDelivery();
+            
+            if (delivery == null) {
+                delivery = p.getFirstNode().getDelivery();
+            }
 
             if (delivery != null) {
                 for (Arc arc : p.getArcs()) {
