@@ -5,6 +5,9 @@
  */
 package com.hexanome.utils;
 
+import com.hexanome.controller.ModelManager;
+import com.hexanome.model.Arc;
+import com.hexanome.model.Path;
 import com.hexanome.model.Route;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,7 +34,7 @@ public class RouteDocument extends File {
      * @param route 
      */
     public void writeRoute(Route route) {
-        // \todo implement here, file output for a route write all in content
+        content = generateRouteDocumentContent(route);
     }
     /**
      * Save the document writting it to the File System.
@@ -52,6 +55,29 @@ public class RouteDocument extends File {
             writer.close();
         }
         return false;
+    }
+    /**
+     * Getter of content property
+     * @return 
+     */
+    public String getContent() {
+        return content;
+    }
+    /**
+     * Format content of RouteDocument
+     * @param route
+     * @return 
+     */
+    public static String generateRouteDocumentContent(Route route) {   
+        String docContent = " --- ROAD MAP ---\n";
+        for(Path path : route.getPaths()){
+            docContent += "From : "+path.getFirstNode().getLocation() + "\n";
+            for(Arc arc : path.getArcs()){
+                docContent += "take the road : "+arc.getStreetName()+"\n";
+            }
+            docContent += "Then, go to "+path.getLastNode().getLocation()+"\n";
+        }
+        return docContent;
     }
     
 }

@@ -2,6 +2,7 @@ package com.hexanome.controller;
 
 import com.hexanome.model.Arc;
 import com.hexanome.model.Path;
+import com.hexanome.utils.RouteDocument;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.RoadMapView;
 import javafx.scene.control.Alert;
@@ -120,17 +121,10 @@ public class UIManager {
      * (TODO : display it in a dialog)
      */
     public void generateRoadMap() {
-        String roadMap = " --- ROAD MAP ---\n";
-        for(Path path : ModelManager.getInstance().getPlanning().getRoute().getPaths()){
-            roadMap += "From : "+path.getFirstNode().getLocation() + "\n";
-            for(Arc arc : path.getArcs()){
-                roadMap += "take the road : "+arc.getDuration()+"\n";
-            }
-            roadMap += "Then, go to "+path.getLastNode().getLocation()+"\n";
-        }
-        System.out.println(roadMap);
-
-        new RoadMapView(roadMap);
+        String filename = "todo_passer_le_nom_du_fichier_en_argument";
+        RouteDocument rdoc = ModelManager.getInstance().generateRoadMap(filename);
+        System.out.println(rdoc.getContent());
+        new RoadMapView(rdoc.getContent());
 
     }
 }
