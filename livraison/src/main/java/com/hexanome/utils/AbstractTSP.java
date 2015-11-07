@@ -29,12 +29,12 @@ public abstract class AbstractTSP implements ITSP  {
         startTime = System.currentTimeMillis();
         this.limitTime = timeLimit;
         this.graph = graph;
-        bestSolutions = new Integer[graph.getNbEdges()];
-        Collection<Integer> nonVus = new ArrayList<>(graph.getNbEdges()- 1);
-        for (int i = 1; i < graph.getNbEdges(); i++) {
+        bestSolutions = new Integer[graph.getNbArcs()];
+        Collection<Integer> nonVus = new ArrayList<>(graph.getNbArcs()- 1);
+        for (int i = 1; i < graph.getNbArcs(); i++) {
             nonVus.add(i);
         }
-        Collection<Integer> vus = new ArrayList<>(graph.getNbEdges());
+        Collection<Integer> vus = new ArrayList<>(graph.getNbArcs());
         vus.add(0); // le premier sommet visite est 0
         costBestSolution = Float.MAX_VALUE;
         branchAndBound(0, nonVus, vus, 0);
