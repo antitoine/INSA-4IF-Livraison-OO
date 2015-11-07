@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class ColorsGenerator {
 
-    private static HashMap<TimeSlot, Color> timeSlotColors;
+    private static HashMap<Integer, Color> timeSlotColors;
     private static ColorsGenerator colorgenerator;
     private final ArrayList<Color> colors;
 
@@ -57,7 +57,7 @@ public class ColorsGenerator {
      * @return the timeSlot's color
      */
     public static Color getTimeSlotColor(TimeSlot ts) {
-        return timeSlotColors.get(ts);
+        return timeSlotColors.get(ts.getStartTime());
     }
 
 
@@ -71,7 +71,7 @@ public class ColorsGenerator {
 
         int i = 0;
         for (TimeSlot ts : timeSlots) {
-            timeSlotColors.put(ts, colors.get((i % colors.size())));
+            timeSlotColors.put(ts.getStartTime(), colors.get((i % colors.size())));
             i++;
         }
     }
