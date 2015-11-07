@@ -45,7 +45,6 @@ public class DeliverySelectedState extends SelectionsStates {
         // ContextManager is asked to execute the command
         ContextManager.getInstance().executeCommand(rmDeliveryCmd);
         // \todo TODO Close the open pop over
-        UIManager.getInstance().getMainWindow().
         // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
