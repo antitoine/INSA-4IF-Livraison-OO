@@ -68,7 +68,7 @@ public class MapView extends AnchorPane implements Subscriber {
      *
      * @param node node which should dismiss its popover
      */
-    void hidePopOver(Node node) {
+    public void hidePopOver(Node node) {
         nodeList.get(node).hidePopOver();
     }
 

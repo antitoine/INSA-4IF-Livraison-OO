@@ -111,9 +111,9 @@ public class PlanningLoadedState extends DefaultState {
                             case FAILED:
                             case CANCELLED:
                             case SUCCEEDED:
-                                ModelManager.getInstance().getPlanning().getRoute().
-                                addSubscriber(UIManager.getInstance().
-                                        getMainWindow().getMapView());
+                                ModelManager.getInstance().getPlanning()
+                                        .getRoute().addSubscriber(UIManager.getInstance()
+                                        .getMainWindow().getMapView());
                                 ContextManager.getInstance()
                                 .setCurrentState(NothingSelectedState.getInstance());
                                 UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
