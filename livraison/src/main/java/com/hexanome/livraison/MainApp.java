@@ -14,7 +14,6 @@ public class MainApp {
         // Init managers by instanciating singletons
        Controller.getInstance().initManagers();
         // launch the UI Manager to display the windows
-        // This is default JavaFX behaviour
        Controller.getInstance().initUI(args);
     }
 }

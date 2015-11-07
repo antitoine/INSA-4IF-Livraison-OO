@@ -54,6 +54,7 @@ public class Controller {
      */
     public void initUI(String[] args) {
         // Launch can only be done once
+        // This is JAVAFX default behaviour
         Application.launch(AppMediator.class, args);
     }
 

@@ -26,6 +26,21 @@ public class ColorsGenerator {
     private ColorsGenerator() {
         colors = new ArrayList<>();
         timeSlotColors = new HashMap<>();
+
+        colors.add(Color.BLUE);
+        colors.add(Color.BROWN);
+        colors.add(Color.ORANGE);
+        colors.add(Color.PINK);
+        colors.add(Color.LIGHTGOLDENRODYELLOW);
+        colors.add(Color.web("#89CFF0"));
+        colors.add(Color.YELLOW);
+        colors.add(Color.ORANGE);
+        colors.add(Color.GREEN);
+        colors.add(Color.VIOLET);
+        colors.add(Color.AQUAMARINE);
+        colors.add(Color.CHOCOLATE);
+        colors.add(Color.CHARTREUSE);
+
     }
 
     public static ColorsGenerator getInstance() {
@@ -52,22 +67,7 @@ public class ColorsGenerator {
      * @param timeSlots Collection of timeSlots
      */
     public void createColors(Collection<TimeSlot> timeSlots) {
-        colors.clear();
         timeSlotColors.clear();
-
-        colors.add(Color.BLUE);
-        colors.add(Color.BROWN);
-        colors.add(Color.ORANGE);
-        colors.add(Color.PINK);
-        colors.add(Color.LIGHTGOLDENRODYELLOW);
-        colors.add(Color.web("#89CFF0"));
-        colors.add(Color.YELLOW);
-        colors.add(Color.ORANGE);
-        colors.add(Color.GREEN);
-        colors.add(Color.VIOLET);
-        colors.add(Color.AQUAMARINE);
-        colors.add(Color.CHOCOLATE);
-        colors.add(Color.CHARTREUSE);
 
         int i = 0;
         for (TimeSlot ts : timeSlots) {
