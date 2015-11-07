@@ -112,7 +112,7 @@ public class ArcView extends Pane {
             double normVecOrthoMiddle = Math.sqrt((vecOrthoMiddleX * vecOrthoMiddleX)
                     + (vecOrthoMiddleY * vecOrthoMiddleY));
 
-            double coef = i * D * (numberOfArcs * 0.3);
+            double coef = i * D * (numberOfArcs * 0.8);
             double ptCtrlX1 = ptMiddleX + (coef * vecOrthoMiddleX) / (normVecOrthoMiddle);
             double ptCtrlY1 = ptMiddleY + (coef * vecOrthoMiddleY) / (normVecOrthoMiddle);
 

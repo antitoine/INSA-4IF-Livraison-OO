@@ -41,7 +41,7 @@ public class MapView extends AnchorPane implements Subscriber {
         // called when a new planning is loaded
         if (p instanceof Planning) {
             Planning planning = (Planning) p;
-            ColorsGenerator.getInstance(planning.getTimeSlots());
+            ColorsGenerator.getInstance().createColors(planning.getTimeSlots());
             UIManager.getInstance().getMainWindow().setLegend();
         }
 
@@ -67,8 +67,6 @@ public class MapView extends AnchorPane implements Subscriber {
 
     /**
      * Hide the PopOver which corresponds the node passed as paramater
-     *
-     * @param node node which should dismiss its popover
      */
     public void hidePopOver() {
         if(latestNodeForOpenPopOver != null) {
