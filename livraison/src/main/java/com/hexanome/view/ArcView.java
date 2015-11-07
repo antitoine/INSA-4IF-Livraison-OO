@@ -15,7 +15,8 @@ import java.util.LinkedList;
 
 public class ArcView extends Pane {
 
-    final double D = 4;
+    final double ARC_DISTANCE = 4;
+    final double COEF_ARC_DISTANCE = 0.8;
     LinkedList<Color> colors;
     LinkedList<Arc> arcs;
 
@@ -112,7 +113,7 @@ public class ArcView extends Pane {
             double normVecOrthoMiddle = Math.sqrt((vecOrthoMiddleX * vecOrthoMiddleX)
                     + (vecOrthoMiddleY * vecOrthoMiddleY));
 
-            double coef = i * D * (numberOfArcs * 0.8);
+            double coef = i * ARC_DISTANCE * (numberOfArcs * COEF_ARC_DISTANCE);
             double ptCtrlX1 = ptMiddleX + (coef * vecOrthoMiddleX) / (normVecOrthoMiddle);
             double ptCtrlY1 = ptMiddleY + (coef * vecOrthoMiddleY) / (normVecOrthoMiddle);
 

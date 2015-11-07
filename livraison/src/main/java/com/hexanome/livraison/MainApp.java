@@ -12,7 +12,7 @@ public class MainApp {
      */
     public static void main(String[] args) {
         // TEST
-       ModelTest mt = new ModelTest();
+        new ModelTest();
         // Init managers by instanciating singletons
        Controller.getInstance().initManagers();
         // launch the UI Manager to display the windows

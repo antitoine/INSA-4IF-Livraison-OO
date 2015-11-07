@@ -16,8 +16,7 @@ public class ColorsGenerator {
     /**
      * Allow to generate colors for timeSlots
      *
-     * @param timeSlots list of timeSlot in order to generate the corresponding colors
-     */
+     * */
     private ColorsGenerator() {
         colors = new ArrayList<>();
         timeSlotColors = new HashMap<>();
@@ -34,12 +33,18 @@ public class ColorsGenerator {
      * Return the timeSlot color
      *
      * @param ts timeSlot
-     * @return the timeSlot color
+     * @return the timeSlot's color
      */
     public static Color getTimeSlotColor(TimeSlot ts) {
         return timeSlotColors.get(ts);
     }
 
+
+    /**
+     * Allow to generate colors for timeSlots
+     *
+     * @param timeSlots Collection of timeSlots
+     */
     public void createColors(Collection<TimeSlot> timeSlots) {
         colors.clear();
         timeSlotColors.clear();

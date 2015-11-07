@@ -1,6 +1,5 @@
 package com.hexanome.view;
 
-import com.hexanome.controller.UIManager;
 import com.hexanome.model.*;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
@@ -36,13 +35,6 @@ public class MapView extends AnchorPane implements Subscriber {
             getChildren().addAll(arcslist);
 
             addEmptyNodes(map.getNodes().values());
-        }
-
-        // called when a new planning is loaded
-        if (p instanceof Planning) {
-            Planning planning = (Planning) p;
-            ColorsGenerator.getInstance().createColors(planning.getTimeSlots());
-            UIManager.getInstance().getMainWindow().setLegend();
         }
 
         // called when a new Route is computed
