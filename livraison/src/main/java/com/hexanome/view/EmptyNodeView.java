@@ -29,7 +29,6 @@ public class EmptyNodeView extends Circle implements INodeViewShape {
                              ModelManager.getInstance().getPlanning().getDeliveries(),
                              ModelManager.getInstance().getPlanning().getTimeSlots());
         }
-        context.showPopOver();
         UIManager.getInstance().getMainWindow().disablePanning();
     }
 

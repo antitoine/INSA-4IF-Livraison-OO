@@ -21,9 +21,11 @@ public class DeliveryNodeView extends Circle implements INodeViewShape {
 
     @Override
     public void onMouseClickedNotify(NodeView context) {
-        ContextManager.getInstance().getCurrentState().clickOnDelivery(node.getDelivery());
-        context.showPopOver();
+        // 
         UIManager.getInstance().getMainWindow().getDeliveryTreeView().selectDelivery(context);
+        //
+        ContextManager.getInstance().getCurrentState().clickOnDelivery(node.getDelivery());
+        //
         UIManager.getInstance().getMainWindow().disablePanning();
     }
     

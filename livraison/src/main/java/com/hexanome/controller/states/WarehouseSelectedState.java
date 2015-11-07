@@ -4,6 +4,7 @@
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 
@@ -38,6 +39,10 @@ public class WarehouseSelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnDelivery(Delivery delivery) {
+        // Hide current pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
+        // Show new popover
+        UIManager.getInstance().getMainWindow().getMapView().showPopOver(delivery.getNode());
         // Jump to DeliverySelectedState
         ContextManager.getInstance().setCurrentState(DeliverySelectedState.getInstance());
     }
@@ -47,6 +52,10 @@ public class WarehouseSelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnEmptyNode(Node node) {
+        // Hide current pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
+        // Show new popover
+        UIManager.getInstance().getMainWindow().getMapView().showPopOver(node);
         // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
@@ -56,6 +65,8 @@ public class WarehouseSelectedState extends SelectionsStates {
      */
     @Override
     public void clickSomewhereElse() {
+        // Hide current pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
         // Jump to NothingSelectedState
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
     }

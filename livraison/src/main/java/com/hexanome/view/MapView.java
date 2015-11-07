@@ -22,6 +22,8 @@ public class MapView extends AnchorPane implements Subscriber {
     LinkedList<ArcView> arcslist = new LinkedList<>();
     HashMap<NodePair, LinkedList<Arc>> arcsMap = new HashMap<>();
 
+    Node latestNodeForOpenPopOver = null;
+    
     @Override
     public void update(Publisher p, Object arg) {
 
@@ -60,7 +62,7 @@ public class MapView extends AnchorPane implements Subscriber {
      * @param delivery delivery to be selected
      */
     void selectDelivery(Delivery delivery) {
-        nodeList.get(delivery.getNode()).showPopOver();
+        showPopOver(delivery.getNode());
     }
 
     /**
@@ -68,8 +70,12 @@ public class MapView extends AnchorPane implements Subscriber {
      *
      * @param node node which should dismiss its popover
      */
-    public void hidePopOver(Node node) {
-        nodeList.get(node).hidePopOver();
+    public void hidePopOver() {
+        if(latestNodeForOpenPopOver != null) {
+            nodeList.get(latestNodeForOpenPopOver).hidePopOver();
+            // Reset memory to avoid double closure
+            latestNodeForOpenPopOver = null;
+        }
     }
 
     /**
@@ -78,6 +84,11 @@ public class MapView extends AnchorPane implements Subscriber {
      * @param node node which should display a popover
      */
     public void showPopOver(Node node) {
+        // Hide latest open popover (security to guarantee at most one popover is opened)
+        hidePopOver();
+        // Memorize latest open pop over
+        latestNodeForOpenPopOver = node;
+        // Show this pop over
         nodeList.get(node).showPopOver();
     }
 

@@ -53,8 +53,6 @@ public class PopOverContentDelivery extends PopOverContent {
     }
 
     private void delete() {
-        UIManager.getInstance().getMainWindow().getMapView().hidePopOver(node);
-
         ContextManager.getInstance().getCurrentState()
                 .btnRemoveDelivery(node.getDelivery());
     }
