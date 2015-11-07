@@ -1,9 +1,13 @@
 package com.hexanome.controller;
 
+import com.hexanome.model.Arc;
 import com.hexanome.model.Map;
+import com.hexanome.model.Path;
 import com.hexanome.model.Planning;
+import com.hexanome.utils.DocumentFactory;
 import com.hexanome.utils.MapDocument;
 import com.hexanome.utils.PlanningDocument;
+import com.hexanome.utils.RouteDocument;
 
 /**
  * This class manages the model of the application, it is responsible of
@@ -110,5 +114,14 @@ public class ModelManager {
      */
     public Planning getPlanning() {
         return planning;
+    }
+
+    RouteDocument generateRoadMap(String filename) {
+        RouteDocument rdoc = null;
+        if(planning != null) {
+            rdoc = DocumentFactory.createRouteDocument(filename);
+            rdoc.writeRoute(planning.getRoute());
+        }
+        return rdoc;
     }
 }
