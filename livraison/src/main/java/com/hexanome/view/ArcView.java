@@ -25,12 +25,8 @@ public class ArcView extends Pane {
      * @param tsArcs list of arcs for the arcView
      * @param type tell the arcView if the nodes are standard or route view
      */
-    public ArcView(final LinkedList<Arc> tsArcs, ConstView.ArcViewType type) {
-
-        System.out.println(tsArcs.size());
+    public ArcView(final LinkedList<Arc> tsArcs) {
         setMouseTransparent(true);
-
-        this.typeOfNonDeliveryNode = type;
 
         colors = new LinkedList<>();
         arcs = new LinkedList<>(tsArcs);
@@ -39,11 +35,7 @@ public class ArcView extends Pane {
         for (Arc arc : tsArcs) {
             moreThanOneTimeSlot = false;
             if (arc.getAssociatedTimeSlots().isEmpty()) {
-                if(type == ConstView.ArcViewType.STANDARD){
                     colors.add(Color.GRAY);
-                } else {
-                    colors.add(Color.DARKGRAY);
-                }
             } else {
                 for (TimeSlot ts : arc.getAssociatedTimeSlots()) {
                     if (!moreThanOneTimeSlot) {
@@ -55,9 +47,7 @@ public class ArcView extends Pane {
                 }
             }
         }
-
         addArcs(arcs);
-
     }
 
     public void addArcs(LinkedList<Arc> arcs) {

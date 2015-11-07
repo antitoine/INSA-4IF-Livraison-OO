@@ -6,15 +6,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Locale;
@@ -72,21 +69,4 @@ public class RoadMapView extends GridPane {
 
     }
 
-    private void SaveFile(String content, File file){
-        try {
-            FileWriter fileWriter = null;
-            fileWriter = new FileWriter(file);
-            fileWriter.write(content);
-            fileWriter.close();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Success !");
-            alert.setContentText("Your Road map is saved ! ");
-            alert.show();
-        } catch (IOException ex) {
-            Logger.getLogger(RoadMapView.class.getName()).log(Level.SEVERE, null, ex);
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("There was a problem when saving your file ! ");
-            alert.show();
-        }
-    }
 }

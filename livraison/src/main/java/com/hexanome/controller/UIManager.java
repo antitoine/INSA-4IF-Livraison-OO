@@ -15,20 +15,19 @@ import java.util.Optional;
 /**
  * This controller manage all the view and is notify when something happens on
  * the view
- *
+ * <p>
  * It implements the sigleton design pattern and only one instance should exist
  * when the application is running
- *
+ * <p>
  * Should always be use as following UIManager.getInstance(). ...
  */
 public class UIManager {
 
+    private static UIManager uimanager = null;
     /**
      * Main Window of the application see MainWindow class for more information
      */
     private MainWindow mainWindow;
-
-    private static UIManager uimanager = null;
 
     private UIManager() {
     }
@@ -58,23 +57,18 @@ public class UIManager {
 
     /**
      * Asks for confirmation
+     *
      * @param message
      * @return
      */
     public boolean askConfirmation(String message) {
-        boolean res;
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText(message);
         alert.setContentText("Are you ok with this?");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            res = true;
-        } else {
-            res = false;
-        }
-        return res;
+        return (result.get() == ButtonType.OK);
     }
 
     /**
@@ -86,12 +80,10 @@ public class UIManager {
 
     public void beginLoadMap() {
         mainWindow.setLoadingState("Loading Map...");
-       // mainWindow.getMapView().clearMap();
         mainWindow.getDeliveryTreeView().clearTree();
     }
 
     public void endLoadMap() {
-      //  mainWindow.getMapView().clearMap();
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
         mainWindow.resetCursorAndInfoLabel();
     }
@@ -99,7 +91,6 @@ public class UIManager {
     public void beginLoadPlanning() {
         mainWindow.setLoadingState("Loading Planning...");
         mainWindow.getDeliveryTreeView().clearTree();
-      //  mainWindow.getMapView().clearDeliveries();
     }
 
     public void endLoadPlanning() {
@@ -136,11 +127,19 @@ public class UIManager {
         //Show save file dialog
         File file = fileChooser.showSaveDialog(stage);
 
-        if(file != null){
-            if(!IOManager.getInstance().saveRouteDocument(file)){
-                // \todo treat error case save failed
+        if (file != null) {
+            if (!IOManager.getInstance().saveRouteDocument(file)) {
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("There was a problem when saving your file ! ");
+                alert.show();
             }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Success !");
+            alert.setContentText("Your Road map is saved ! ");
+            alert.show();
             stage.close();
+
         }
     }
 }
