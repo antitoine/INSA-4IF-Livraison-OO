@@ -84,8 +84,6 @@ public class MapView extends AnchorPane implements Subscriber {
      * @param node node which should display a popover
      */
     public void showPopOver(Node node) {
-        // Hide latest open popover (security to guarantee at most one popover is opened)
-        hidePopOver();
         // Memorize latest open pop over
         latestNodeForOpenPopOver = node;
         // Show this pop over
