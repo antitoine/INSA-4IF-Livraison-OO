@@ -18,6 +18,7 @@ public class EmptyNodeView extends Circle implements INodeViewShape {
         setStroke(Color.BLACK);
         setStrokeType(StrokeType.INSIDE);
         this.node = node;
+
     }
 
     @Override
@@ -29,7 +30,6 @@ public class EmptyNodeView extends Circle implements INodeViewShape {
                              ModelManager.getInstance().getPlanning().getDeliveries(),
                              ModelManager.getInstance().getPlanning().getTimeSlots());
         }
-        context.showPopOver();
         UIManager.getInstance().getMainWindow().disablePanning();
     }
 

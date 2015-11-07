@@ -16,11 +16,38 @@ public class ColorsGenerator {
     /**
      * Allow to generate colors for timeSlots
      *
-     * @param timeSlots
-     */
-    private ColorsGenerator(Collection<TimeSlot> timeSlots) {
+     * */
+    private ColorsGenerator() {
         colors = new ArrayList<>();
         timeSlotColors = new HashMap<>();
+    }
+
+    public static ColorsGenerator getInstance() {
+        if (colorgenerator == null) {
+            colorgenerator = new ColorsGenerator();
+        }
+        return colorgenerator;
+    }
+
+    /**
+     * Return the timeSlot color
+     *
+     * @param ts timeSlot
+     * @return the timeSlot's color
+     */
+    public static Color getTimeSlotColor(TimeSlot ts) {
+        return timeSlotColors.get(ts);
+    }
+
+
+    /**
+     * Allow to generate colors for timeSlots
+     *
+     * @param timeSlots Collection of timeSlots
+     */
+    public void createColors(Collection<TimeSlot> timeSlots) {
+        colors.clear();
+        timeSlotColors.clear();
 
         colors.add(Color.BLUE);
         colors.add(Color.BROWN);
@@ -41,27 +68,6 @@ public class ColorsGenerator {
             timeSlotColors.put(ts, colors.get((i % colors.size())));
             i++;
         }
-    }
-
-    public static HashMap<TimeSlot, Color> getTimeSlotColors() {
-        return timeSlotColors;
-    }
-
-    public static ColorsGenerator getInstance(Collection<TimeSlot> timeSlots) {
-        if (colorgenerator == null) {
-            colorgenerator = new ColorsGenerator(timeSlots);
-        }
-        return colorgenerator;
-    }
-
-    /**
-     * Return the timeSlot color
-     *
-     * @param ts
-     * @return the timeSlot color
-     */
-    public static Color getTimeSlotColor(TimeSlot ts) {
-        return timeSlotColors.get(ts);
     }
 
 }

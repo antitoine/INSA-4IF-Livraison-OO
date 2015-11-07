@@ -1,6 +1,5 @@
 package com.hexanome.view;
 
-import com.hexanome.controller.UIManager;
 import com.hexanome.model.*;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
@@ -22,6 +21,8 @@ public class MapView extends AnchorPane implements Subscriber {
     LinkedList<ArcView> arcslist = new LinkedList<>();
     HashMap<NodePair, LinkedList<Arc>> arcsMap = new HashMap<>();
 
+    Node latestNodeForOpenPopOver = null;
+    
     @Override
     public void update(Publisher p, Object arg) {
 
@@ -34,13 +35,6 @@ public class MapView extends AnchorPane implements Subscriber {
             getChildren().addAll(arcslist);
 
             addEmptyNodes(map.getNodes().values());
-        }
-
-        // called when a new planning is loaded
-        if (p instanceof Planning) {
-            Planning planning = (Planning) p;
-            ColorsGenerator.getInstance(planning.getTimeSlots());
-            UIManager.getInstance().getMainWindow().setLegend();
         }
 
         // called when a new Route is computed
@@ -60,16 +54,18 @@ public class MapView extends AnchorPane implements Subscriber {
      * @param delivery delivery to be selected
      */
     void selectDelivery(Delivery delivery) {
-        nodeList.get(delivery.getNode()).showPopOver();
+        showPopOver(delivery.getNode());
     }
 
     /**
      * Hide the PopOver which corresponds the node passed as paramater
-     *
-     * @param node node which should dismiss its popover
      */
-    public void hidePopOver(Node node) {
-        nodeList.get(node).hidePopOver();
+    public void hidePopOver() {
+        if(latestNodeForOpenPopOver != null) {
+            nodeList.get(latestNodeForOpenPopOver).hidePopOver();
+            // Reset memory to avoid double closure
+            latestNodeForOpenPopOver = null;
+        }
     }
 
     /**
@@ -78,6 +74,9 @@ public class MapView extends AnchorPane implements Subscriber {
      * @param node node which should display a popover
      */
     public void showPopOver(Node node) {
+        // Memorize latest open pop over
+        latestNodeForOpenPopOver = node;
+        // Show this pop over
         nodeList.get(node).showPopOver();
     }
 

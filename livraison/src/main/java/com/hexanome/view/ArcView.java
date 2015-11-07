@@ -15,15 +15,15 @@ import java.util.LinkedList;
 
 public class ArcView extends Pane {
 
-    final double D = 4;
-    ConstView.ArcViewType typeOfNonDeliveryNode;
+    final double ARC_DISTANCE = 4;
+    final double COEF_ARC_DISTANCE = 0.8;
     LinkedList<Color> colors;
     LinkedList<Arc> arcs;
 
     /**
      * Initializes the controller class.
+     *
      * @param tsArcs list of arcs for the arcView
-     * @param type tell the arcView if the nodes are standard or route view
      */
     public ArcView(final LinkedList<Arc> tsArcs) {
         setMouseTransparent(true);
@@ -35,7 +35,7 @@ public class ArcView extends Pane {
         for (Arc arc : tsArcs) {
             moreThanOneTimeSlot = false;
             if (arc.getAssociatedTimeSlots().isEmpty()) {
-                    colors.add(Color.GRAY);
+                colors.add(Color.GRAY);
             } else {
                 for (TimeSlot ts : arc.getAssociatedTimeSlots()) {
                     if (!moreThanOneTimeSlot) {
@@ -54,19 +54,19 @@ public class ArcView extends Pane {
 
         ArrayList<Node> arcElements = new ArrayList<>();
         boolean isATwoWayTrip = false;
-        if(colors.size() <= 2){
+        if (colors.size() <= 2) {
             isATwoWayTrip = true;
             Color tempColor = colors.get(0);
-            for(Color c : colors){
-                if(!c.equals(tempColor)){
-                    isATwoWayTrip  = false;
+            for (Color c : colors) {
+                if (!c.equals(tempColor)) {
+                    isATwoWayTrip = false;
                     break;
                 }
             }
         }
 
         int numberOfArcs;
-        if(isATwoWayTrip){
+        if (isATwoWayTrip) {
             numberOfArcs = 0;
         } else {
             numberOfArcs = arcs.size();
@@ -113,7 +113,7 @@ public class ArcView extends Pane {
             double normVecOrthoMiddle = Math.sqrt((vecOrthoMiddleX * vecOrthoMiddleX)
                     + (vecOrthoMiddleY * vecOrthoMiddleY));
 
-            double coef = i * D * numberOfArcs;
+            double coef = i * ARC_DISTANCE * (numberOfArcs * COEF_ARC_DISTANCE);
             double ptCtrlX1 = ptMiddleX + (coef * vecOrthoMiddleX) / (normVecOrthoMiddle);
             double ptCtrlY1 = ptMiddleY + (coef * vecOrthoMiddleY) / (normVecOrthoMiddle);
 
@@ -146,7 +146,6 @@ public class ArcView extends Pane {
         getChildren().addAll(arcElements);
 
     }
-
 
 
     private Polygon drawArrow(Point src, Point dest) {

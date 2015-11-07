@@ -43,13 +43,14 @@ public class PlanningLoadedState extends DefaultState {
     @Override
     public void btnLoadMap() {
         // WARNING : calls order matters
-        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
-        // Full clear model
-        ModelManager.getInstance().clearModel();
-        // Jump to MapSelectState
-        ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
-        // Ask user for the map to load
-        UIManager.getInstance().getMainWindow().askFile();
+        if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
+            // Full clear model
+            ModelManager.getInstance().clearModel();
+            // Jump to MapSelectState
+            ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
+            // Ask user for the map to load
+            UIManager.getInstance().getMainWindow().askFile();
+        }
     }
 
     /* (non-Javadoc)
@@ -60,7 +61,7 @@ public class PlanningLoadedState extends DefaultState {
         // WARNING : calls order matters
         // Clear current model's planning
         System.out.println("ici");
-        if (UIManager.getInstance().askConfirmation("Planning will be lost forever")) {
+        if (UIManager.getInstance().askConfirmation("Current planning will be lost.")) {
             ModelManager.getInstance().clearPlanning();
             // Jump to PlanningSelectState
             ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
@@ -74,11 +75,12 @@ public class PlanningLoadedState extends DefaultState {
      */
     @Override
     public void btnCloseMap() {
-        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
-        // Full clear model
-        ModelManager.getInstance().clearModel();
-        // Jump to InitState
-        ContextManager.getInstance().setCurrentState(InitState.getInstance());
+        if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
+            // Full clear model
+            ModelManager.getInstance().clearModel();
+            // Jump to InitState
+            ContextManager.getInstance().setCurrentState(InitState.getInstance());
+        }
     }
 
     /* (non-Javadoc)
@@ -86,11 +88,12 @@ public class PlanningLoadedState extends DefaultState {
      */
     @Override
     public void btnClearPlanning() {
-        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
-        // Clear model's current planning
-        ModelManager.getInstance().clearPlanning();
-        // Jump to MapLoadedState
-        ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
+        if (UIManager.getInstance().askConfirmation("Current planning will be lost.")) {
+            // Clear model's current planning
+            ModelManager.getInstance().clearPlanning();
+            // Jump to MapLoadedState
+            ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
+        }
     }
 
     /* (non-Javadoc)
@@ -112,9 +115,7 @@ public class PlanningLoadedState extends DefaultState {
                                 break;
                             case SUCCEEDED:
                                 // Add MapView as a subscriber of route
-                                ModelManager.getInstance().getPlanning().getRoute().
-                                addSubscriber(UIManager.getInstance().
-                                        getMainWindow().getMapView());
+                                UIManager.getInstance().endRouteComputation();
                                 // Change current state to nothing selected state
                                 ContextManager.getInstance()
                                 .setCurrentState(NothingSelectedState.getInstance());

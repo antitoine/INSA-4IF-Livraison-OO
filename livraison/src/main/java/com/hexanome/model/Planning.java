@@ -2,17 +2,17 @@ package com.hexanome.model;
 
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  *
- * @author
  */
 public class Planning implements Publisher {
 
@@ -248,7 +248,7 @@ public class Planning implements Publisher {
     }
 
     public List<Delivery> getDeliveries() {
-        ArrayList<Delivery> deliveries = new ArrayList();
+        ArrayList<Delivery> deliveries = new ArrayList<>();
         for (TimeSlot ts : timeSlots) {
             deliveries.addAll(ts.getDeliveries());
         }

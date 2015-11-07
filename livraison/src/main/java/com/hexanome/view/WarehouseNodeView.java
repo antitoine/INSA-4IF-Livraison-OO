@@ -20,7 +20,6 @@ public class WarehouseNodeView extends Label implements INodeViewShape {
     @Override
     public void onMouseClickedNotify(NodeView context) {
         ContextManager.getInstance().getCurrentState().clickOnWarehouse(node);
-        context.showPopOver();
         UIManager.getInstance().getMainWindow().disablePanning();
     }
 
