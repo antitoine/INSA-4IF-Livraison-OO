@@ -2,9 +2,6 @@ package com.hexanome.view;
 
 import com.hexanome.model.Arc;
 import com.hexanome.model.TimeSlot;
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -12,34 +9,40 @@ import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class ArcView extends Pane {
 
-    final double D = 10;
+    final double D = 4;
     ConstView.ArcViewType typeOfNonDeliveryNode;
     LinkedList<Color> colors;
     LinkedList<Arc> arcs;
+
     /**
      * Initializes the controller class.
-     *
-     * @param tsArcs
-     * @param type
+     * @param tsArcs list of arcs for the arcView
+     * @param type tell the arcView if the nodes are standard or route view
      */
     public ArcView(final LinkedList<Arc> tsArcs, ConstView.ArcViewType type) {
-        
+
+        System.out.println(tsArcs.size());
         setMouseTransparent(true);
+
         this.typeOfNonDeliveryNode = type;
+
         colors = new LinkedList<>();
-        
         arcs = new LinkedList<>(tsArcs);
-        
+
         boolean moreThanOneTimeSlot;
         for (Arc arc : tsArcs) {
             moreThanOneTimeSlot = false;
             if (arc.getAssociatedTimeSlots().isEmpty()) {
-                if (type == ConstView.ArcViewType.STANDARD) {
+                if(type == ConstView.ArcViewType.STANDARD){
                     colors.add(Color.GRAY);
                 } else {
-                    colors.add(Color.BLACK);
+                    colors.add(Color.DARKGRAY);
                 }
             } else {
                 for (TimeSlot ts : arc.getAssociatedTimeSlots()) {
@@ -54,13 +57,33 @@ public class ArcView extends Pane {
         }
 
         addArcs(arcs);
+
     }
 
     public void addArcs(LinkedList<Arc> arcs) {
 
         ArrayList<Node> arcElements = new ArrayList<>();
+        boolean isATwoWayTrip = false;
+        if(colors.size() <= 2){
+            isATwoWayTrip = true;
+            Color tempColor = colors.get(0);
+            for(Color c : colors){
+                if(!c.equals(tempColor)){
+                    isATwoWayTrip  = false;
+                    break;
+                }
+            }
+        }
+
+        int numberOfArcs;
+        if(isATwoWayTrip){
+            numberOfArcs = 0;
+        } else {
+            numberOfArcs = arcs.size();
+        }
 
         int arcNb = arcs.size();
+
 
         if ((arcNb % 2) == 1) {
             // draw line
@@ -100,11 +123,12 @@ public class ArcView extends Pane {
             double normVecOrthoMiddle = Math.sqrt((vecOrthoMiddleX * vecOrthoMiddleX)
                     + (vecOrthoMiddleY * vecOrthoMiddleY));
 
-            double ptCtrlX1 = ptMiddleX + (i * D * vecOrthoMiddleX) / (normVecOrthoMiddle);
-            double ptCtrlY1 = ptMiddleY + (i * D * vecOrthoMiddleY) / (normVecOrthoMiddle);
+            double coef = i * D * numberOfArcs;
+            double ptCtrlX1 = ptMiddleX + (coef * vecOrthoMiddleX) / (normVecOrthoMiddle);
+            double ptCtrlY1 = ptMiddleY + (coef * vecOrthoMiddleY) / (normVecOrthoMiddle);
 
-            double ptCtrlX2 = ptMiddleX - (i * D * vecOrthoMiddleX) / (normVecOrthoMiddle);
-            double ptCtrlY2 = ptMiddleY - (i * D * vecOrthoMiddleY) / (normVecOrthoMiddle);
+            double ptCtrlX2 = ptMiddleX - (coef * vecOrthoMiddleX) / (normVecOrthoMiddle);
+            double ptCtrlY2 = ptMiddleY - (coef * vecOrthoMiddleY) / (normVecOrthoMiddle);
 
             CubicCurve curve1 = new CubicCurve(ptStartX, ptStartY,
                     ptCtrlX1, ptCtrlY1, ptCtrlX1, ptCtrlY1, ptEndX, ptEndY);
@@ -133,6 +157,29 @@ public class ArcView extends Pane {
 
     }
 
+
+
+    private Polygon drawArrow(Point src, Point dest) {
+        double angle = Math.atan2(dest.y - src.y, dest.x - src.x);
+        double deltaX = Math.cos(angle) * ConstView.SIZE_NODE;
+        double deltaY = Math.sin(angle) * ConstView.SIZE_NODE;
+
+        double endX = dest.x - deltaX;
+        double endY = dest.y - deltaY;
+
+        Polygon arrow = new Polygon();
+        arrow.getPoints().addAll((endX - 1), (endY + 2),
+                (endX + 2), (endY),
+                (endX - 1), (endY - 2));
+
+        arrow.setScaleX(1.3);
+        arrow.setScaleY(1.3);
+        arrow.setRotate(Math.toDegrees(angle));
+
+        return arrow;
+    }
+
+
     private Line drawLine(Point src, Point dest) {
         Line line = new Line();
 
@@ -150,32 +197,5 @@ public class ArcView extends Pane {
         return line;
     }
 
-    private Polygon drawArrow(Point src, Point dest) {
-        double angle = Math.atan2(dest.y - src.y, dest.x - src.x);
-        double deltaX = Math.cos(angle) * ConstView.SIZE_NODE;
-        double deltaY = Math.sin(angle) * ConstView.SIZE_NODE;
-
-        double endX = dest.x - deltaX;
-        double endY = dest.y - deltaY;
-
-        Polygon arrow = new Polygon();
-        arrow.getPoints().addAll(new Double[]{
-            (endX - 1), (endY + 2),
-            (endX + 2), (endY),
-            (endX - 1), (endY - 2)
-        });
-
-        arrow.setScaleX(1.3);
-        arrow.setScaleY(1.3);
-        arrow.setRotate(Math.toDegrees(angle));
-
-        return arrow;
-    }
-
-    private double distance(double xa, double ya, double xb, double yb) {
-        double a = (xa - xb) * (xa - xb);
-        double b = (ya - yb) * (ya - yb);
-        return Math.sqrt(a + b);
-    }
 
 }

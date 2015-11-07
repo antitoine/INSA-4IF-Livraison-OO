@@ -86,12 +86,12 @@ public class UIManager {
 
     public void beginLoadMap() {
         mainWindow.setLoadingState("Loading Map...");
-        mainWindow.getMapView().clearMap();
+       // mainWindow.getMapView().clearMap();
         mainWindow.getDeliveryTreeView().clearTree();
     }
 
     public void endLoadMap() {
-        mainWindow.getMapView().clearMap();
+      //  mainWindow.getMapView().clearMap();
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
         mainWindow.resetCursorAndInfoLabel();
     }
@@ -99,7 +99,7 @@ public class UIManager {
     public void beginLoadPlanning() {
         mainWindow.setLoadingState("Loading Planning...");
         mainWindow.getDeliveryTreeView().clearTree();
-        mainWindow.getMapView().clearDeliveries();
+      //  mainWindow.getMapView().clearDeliveries();
     }
 
     public void endLoadPlanning() {
