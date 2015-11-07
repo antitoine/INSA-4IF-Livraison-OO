@@ -36,7 +36,7 @@ public class Route implements Publisher {
      * deliveries times.
      *
      * @param planning
-     * @param paths    The paths representing the route.
+     * @param paths The paths representing the route.
      */
     public Route(Planning planning, LinkedList<Path> paths) {
         this.planning = planning;
@@ -65,7 +65,7 @@ public class Route implements Publisher {
                 if (previousPath != null) {
                     Delivery previousDelivery = previousPath.getFirstNode().getDelivery();
                     if (previousDelivery != null) {
-                        deliveryTime += previousDelivery.getDeliveryTime() ;
+                        deliveryTime += previousDelivery.getDeliveryTime();
                     }
                 }
 
@@ -83,7 +83,7 @@ public class Route implements Publisher {
      */
     private void updateArcTimeSlots() {
         planning.getMap().resetArcs();
-        
+
         for (Path p : paths) {
             Delivery delivery = p.getLastNode().getDelivery();
 
@@ -119,9 +119,9 @@ public class Route implements Publisher {
     /**
      * Adds a delivery to the route.
      *
-     * @param delivery     the delivery to add.
-     * @param nodePreviousDelivery The node with the delivery that will be executed
-     *                     before the one to add.
+     * @param delivery the delivery to add.
+     * @param nodePreviousDelivery The node with the delivery that will be
+     * executed before the one to add.
      */
     void addDelivery(Delivery delivery, Node nodePreviousDelivery) {
         // Find the previous delivery in the list of paths
@@ -129,9 +129,9 @@ public class Route implements Publisher {
         Path pathToReplace = null;
 
         boolean previousPathFound = false;
-        for (int indexPath = 0, maxIndexPath = paths.size() - 1; 
-             !previousPathFound && indexPath <= maxIndexPath; 
-             ++indexPath) {
+        for (int indexPath = 0, maxIndexPath = paths.size() - 1;
+                !previousPathFound && indexPath <= maxIndexPath;
+                ++indexPath) {
             Path p = paths.get(indexPath);
 
             Node currentNode = p.getFirstNode();
@@ -158,11 +158,17 @@ public class Route implements Publisher {
             paths.add(indexPreviousPath, nextPath);
             paths.add(indexPreviousPath, previousPath);
 
-            updateDeliveriesTime();
-            updateArcTimeSlots();
-
-            notifySubscribers();
+        } else {
+            Path previousPath = planning.getMap().getFastestPath(nodePreviousDelivery, delivery.getNode());
+            Path nextPath = planning.getMap().getFastestPath(delivery.getNode(), nodePreviousDelivery);
+            paths.add(previousPath);
+            paths.add(nextPath);
         }
+
+        updateDeliveriesTime();
+        updateArcTimeSlots();
+
+        notifySubscribers();
     }
 
     /**
@@ -175,9 +181,9 @@ public class Route implements Publisher {
         int indexPathtoRemove = -1;
         boolean pathToRemoveFound = false;
         Path pathToRemove = null;
-        for (int indexPath = 0, maxIndex = paths.size() - 1; 
-             indexPath <= maxIndex && !pathToRemoveFound;
-             ++indexPath) {
+        for (int indexPath = 0, maxIndex = paths.size() - 1;
+                indexPath <= maxIndex && !pathToRemoveFound;
+                ++indexPath) {
             Path path = paths.get(indexPath);
             Node currentNode = path.getLastNode();
             if (currentNode != null && currentNode.equals(deliveryToRemove.getNode())) {
@@ -186,23 +192,33 @@ public class Route implements Publisher {
                 pathToRemove = path;
             }
         }
-        
+
         // Remove the path if it was previously found
         if (pathToRemove != null) {
             Node firstNode = pathToRemove.getFirstNode();
             Node lastNode = paths.get(indexPathtoRemove + 1).getLastNode();
-            Path newPath = planning.getMap().getFastestPath(firstNode, lastNode);
-            
+
+            boolean addNewPath = (paths.size() > 2);
+
             // Remove the old paths in the list and the new one
             paths.remove(indexPathtoRemove + 1);
             paths.remove(indexPathtoRemove);
-            paths.add(indexPathtoRemove, newPath);
-            
+
+            // If the delivery to remove is in the last path, it's useless to
+            // add a new path.
+            if (addNewPath) {
+                Path newPath = planning.getMap().getFastestPath(firstNode, lastNode);
+                paths.add(indexPathtoRemove, newPath);
+            }
+
+            TimeSlot ts = deliveryToRemove.getTimeSlot();
+            ts.removeDelivery(deliveryToRemove);
+
             updateDeliveriesTime();
             updateArcTimeSlots();
 
             notifySubscribers();
-        }        
+        }
     }
 
     /**
@@ -218,8 +234,8 @@ public class Route implements Publisher {
         Path previousPath = null, nextPath = null;
 
         for (int indexPath = 0, maxIndexPath = paths.size() - 1;
-             (previousPath == null || nextPath == null)
-                     && indexPath <= maxIndexPath; ++indexPath) {
+                (previousPath == null || nextPath == null)
+                && indexPath <= maxIndexPath; ++indexPath) {
             Path p = paths.get(indexPath);
 
             if (previousPath == null) {
@@ -242,8 +258,8 @@ public class Route implements Publisher {
             if (previousDelivery != null && nextPath == null) {
                 Delivery srcDelivery = p.getFirstNode().getDelivery();
                 if (srcDelivery != null && srcDelivery.equals(previousDelivery)) {
-                        nextPath = p;
-                        indexNextPath = indexPath;
+                    nextPath = p;
+                    indexNextPath = indexPath;
                 }
             }
         }
@@ -272,13 +288,13 @@ public class Route implements Publisher {
 
             paths.remove(indexPreviousPath);
             paths.add(indexPreviousPath, pathToNewFirstDelivery);
-            
+
             paths.remove(indexPreviousPath + 1);
             paths.add(indexPreviousPath + 1, newFirstDeliveryToNextDelivery);
-            
+
             paths.remove(indexNextPath - 1);
             paths.add(indexNextPath - 1, previousNewFirstDeliveryToNewLastDelivery);
-            
+
             paths.remove(indexNextPath);
             paths.add(indexNextPath, newLastDeliveryToNewFirstDeliveryNext);
 

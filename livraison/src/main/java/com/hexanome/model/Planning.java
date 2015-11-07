@@ -128,9 +128,7 @@ public class Planning implements Publisher {
      */
     public void removeDelivery(Delivery delivery) {
         if (route != null) {
-            route.removeDelivery(delivery);
-            TimeSlot ts = delivery.getTimeSlot();
-            ts.removeDelivery(delivery);            
+            route.removeDelivery(delivery);          
             notifySubscribers();
         }
     }
