@@ -64,7 +64,7 @@ public class MapView extends AnchorPane implements Subscriber {
     }
 
     /**
-     * Add the PopOver which corresponds the node passed as paramater
+     * Hide the PopOver which corresponds the node passed as paramater
      *
      * @param node node which should dismiss its popover
      */
@@ -72,6 +72,14 @@ public class MapView extends AnchorPane implements Subscriber {
         nodeList.get(node).hidePopOver();
     }
 
+    /**
+     * Show the popover above the node passed as parameter
+     *
+     * @param node node which should display a popover
+     */
+    public void showPopOver(Node node) {
+        nodeList.get(node).showPopOver();
+    }
 
 
     private void updateRouteOnMap(Planning planning, Map map){
