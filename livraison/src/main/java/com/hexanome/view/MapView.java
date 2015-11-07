@@ -22,7 +22,6 @@ public class MapView extends AnchorPane implements Subscriber {
     LinkedList<ArcView> arcslist = new LinkedList<>();
     HashMap<NodePair, LinkedList<Arc>> arcsMap = new HashMap<>();
 
-
     @Override
     public void update(Publisher p, Object arg) {
 
