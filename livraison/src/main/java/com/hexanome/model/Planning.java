@@ -129,13 +129,16 @@ public class Planning implements Publisher {
     public void removeDelivery(Delivery delivery) {
         if (route != null) {
             route.removeDelivery(delivery);
+            TimeSlot ts = delivery.getTimeSlot();
+            ts.removeDelivery(delivery);            
             notifySubscribers();
         }
     }
 
     /**
      * Finds the delivery passed by parameter and returns the node which
-     * contains the delivery done before.
+     * contains the delivery done before. A route must be computed when you
+     * call this method. Otherwise, it will return null.
      *
      * @param delivery The delivery to find in the current planning.
      * @return The node of the previous delivery.

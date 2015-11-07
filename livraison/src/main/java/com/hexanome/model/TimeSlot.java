@@ -37,6 +37,16 @@ public class TimeSlot {
         deliveries.add(delivery);
         delivery.attachTimeSlot(this);
     }
+    
+    /**
+     * Remove the delivery passed by parameter in the list of deliveries.
+     * Unattach the time slot to the delivery.
+     * @param delivery The delivery to remove.
+     */
+    void removeDelivery(Delivery delivery) {
+        deliveries.remove(delivery);
+        delivery.attachTimeSlot(null);
+    }
 
     /**
      * Constructor.
