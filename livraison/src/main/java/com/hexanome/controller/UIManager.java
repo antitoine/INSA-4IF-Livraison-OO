@@ -84,6 +84,7 @@ public class UIManager {
     }
 
     public void endLoadMap() {
+        ModelManager.getInstance().getMap().clearSubscribers();
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
         mainWindow.resetCursorAndInfoLabel();
     }
@@ -95,10 +96,16 @@ public class UIManager {
 
     public void endLoadPlanning() {
         // Add view subscribers to the model
+        ModelManager.getInstance().getPlanning().clearSubscribers();
         ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTreeView());
         ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
         // Update mainwindow
         mainWindow.resetCursorAndInfoLabel();
+    }
+
+    public void endRouteComputation() {
+        ModelManager.getInstance().getPlanning().getRoute().removeSubscriber(mainWindow.getMapView());
+        ModelManager.getInstance().getPlanning().getRoute().addSubscriber(mainWindow.getMapView());
     }
 
     public void showError(String msg) {
@@ -142,4 +149,6 @@ public class UIManager {
 
         }
     }
+
+
 }

@@ -115,9 +115,7 @@ public class PlanningLoadedState extends DefaultState {
                                 break;
                             case SUCCEEDED:
                                 // Add MapView as a subscriber of route
-                                ModelManager.getInstance().getPlanning().getRoute().
-                                addSubscriber(UIManager.getInstance().
-                                        getMainWindow().getMapView());
+                                UIManager.getInstance().endRouteComputation();
                                 // Change current state to nothing selected state
                                 ContextManager.getInstance()
                                 .setCurrentState(NothingSelectedState.getInstance());

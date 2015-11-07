@@ -16,14 +16,12 @@ import java.util.LinkedList;
 public class ArcView extends Pane {
 
     final double D = 4;
-    ConstView.ArcViewType typeOfNonDeliveryNode;
     LinkedList<Color> colors;
     LinkedList<Arc> arcs;
 
     /**
      * Initializes the controller class.
      * @param tsArcs list of arcs for the arcView
-     * @param type tell the arcView if the nodes are standard or route view
      */
     public ArcView(final LinkedList<Arc> tsArcs) {
         setMouseTransparent(true);
@@ -58,10 +56,15 @@ public class ArcView extends Pane {
             isATwoWayTrip = true;
             Color tempColor = colors.get(0);
             for(Color c : colors){
-                if(!c.equals(tempColor)){
-                    isATwoWayTrip  = false;
-                    break;
+                try {
+                    if (!c.equals(tempColor)) {
+                        isATwoWayTrip = false;
+                        break;
+                    }
+                } catch (NullPointerException e) {
+                    System.out.println("null pointer here");
                 }
+
             }
         }
 
@@ -113,7 +116,7 @@ public class ArcView extends Pane {
             double normVecOrthoMiddle = Math.sqrt((vecOrthoMiddleX * vecOrthoMiddleX)
                     + (vecOrthoMiddleY * vecOrthoMiddleY));
 
-            double coef = i * D * numberOfArcs;
+            double coef = i * D * (numberOfArcs * 0.3);
             double ptCtrlX1 = ptMiddleX + (coef * vecOrthoMiddleX) / (normVecOrthoMiddle);
             double ptCtrlY1 = ptMiddleY + (coef * vecOrthoMiddleY) / (normVecOrthoMiddle);
 
