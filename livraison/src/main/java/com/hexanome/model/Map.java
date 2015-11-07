@@ -185,12 +185,24 @@ public class Map implements Publisher {
         }
     }
 
+    /**
+     * Clear the map and all its data.
+     */
     public void clear() {
         arcs.clear();
         globalMinDistances.clear();
         globalPreviousNodes.clear();
         nodes.clear();
         notifySubscribers();
+    }
+    
+    /**
+     * Reset the arcs in their original state.
+     */
+    void resetArcs() {
+        for (Arc arc : arcs) {
+            arc.clearAssociatedTimeSlot();
+        }
     }
 
     @Override
@@ -246,5 +258,7 @@ public class Map implements Publisher {
     public void clearSubscribers() {
         subscribers.clear();
     }
+
+    
 
 }

@@ -64,7 +64,7 @@ public class DeliveryTreeView extends VBox implements Subscriber {
                     @Override
                     public void changed(ObservableValue<? extends TreeItem<String>> observable,
                             TreeItem<String> oldValue, TreeItem<String> newValue) {
-                        if (newValue.isLeaf()) {
+                        if (newValue != null && newValue.isLeaf()) {
                             UIManager.getInstance().getMainWindow()
                                     .getMapView().selectDelivery(getDeliveryFromTreeItem(newValue));
                         }

@@ -82,6 +82,8 @@ public class Route implements Publisher {
      * Update the associated time slots of the arcs contained in the path.
      */
     private void updateArcTimeSlots() {
+        planning.getMap().resetArcs();
+        
         for (Path p : paths) {
             Delivery delivery = p.getLastNode().getDelivery();
 
@@ -128,8 +130,9 @@ public class Route implements Publisher {
         Path pathToReplace = null;
 
         boolean previousPathFound = false;
-        for (int indexPath = 0, maxIndexPath = paths.size() - 1; !previousPathFound
-                && indexPath <= maxIndexPath; ++indexPath) {
+        for (int indexPath = 0, maxIndexPath = paths.size() - 1; 
+             !previousPathFound && indexPath <= maxIndexPath; 
+             ++indexPath) {
             Path p = paths.get(indexPath);
 
             Node currentNode = p.getFirstNode();
@@ -166,40 +169,41 @@ public class Route implements Publisher {
     /**
      * Removes a delivery from the route.
      *
-     * @param delivery the delivery to remove.
+     * @param deliveryToRemove the delivery to remove.
      */
-    void removeDelivery(Delivery delivery) {
-        // retrieving the index of the paths where delivery is the source node or the end node 
-        int deliveryIsSourcePath = -1;
-        int deliveryIsDestPath = -1;
-        int i = 0;
-        while (i < paths.size() || (deliveryIsSourcePath != -1 && deliveryIsDestPath != -1)) {
-            Path path = paths.get(i);
-            if (path.getLastNode() == delivery.getNode()) {
-                deliveryIsDestPath = i;
-            } else if (path.getFirstNode() == delivery.getNode()) {
-                deliveryIsSourcePath = i;
+    void removeDelivery(Delivery deliveryToRemove) {
+        // Search the path to remove, according to the delivery to remove
+        int indexPathtoRemove = -1;
+        boolean pathToRemoveFound = false;
+        Path pathToRemove = null;
+        for (int indexPath = 0, maxIndex = paths.size() - 1; 
+             indexPath <= maxIndex && !pathToRemoveFound;
+             ++indexPath) {
+            Path path = paths.get(indexPath);
+            Node currentNode = path.getLastNode();
+            if (currentNode != null && currentNode.equals(deliveryToRemove.getNode())) {
+                pathToRemoveFound = true;
+                indexPathtoRemove = indexPath;
+                pathToRemove = path;
             }
-            i++;
         }
+        
+        // Remove the path if it was previously found
+        if (pathToRemove != null) {
+            Node firstNode = pathToRemove.getFirstNode();
+            Node lastNode = paths.get(indexPathtoRemove + 1).getLastNode();
+            Path newPath = planning.getMap().getFastestPath(firstNode, lastNode);
+            
+            // Remove the old paths in the list and the new one
+            paths.remove(indexPathtoRemove + 1);
+            paths.remove(indexPathtoRemove);
+            paths.add(indexPathtoRemove, newPath);
+            
+            updateDeliveriesTime();
+            updateArcTimeSlots();
 
-        /* creating the new path */
-        Path newPath = null;
-        Node prevNode = paths.get(deliveryIsDestPath).getFirstNode();
-        Node nextNode = paths.get(deliveryIsSourcePath).getLastNode();
-        newPath = planning.getMap().getFastestPath(prevNode, nextNode);
-
-        /* removing the old paths */
-        paths.remove(deliveryIsDestPath);
-        paths.remove(deliveryIsSourcePath);
-
-        /* adding the new path */
-        paths.add(deliveryIsDestPath, newPath);
-
-        updateDeliveriesTime();
-        updateArcTimeSlots();
-
-        notifySubscribers();
+            notifySubscribers();
+        }        
     }
 
     /**
