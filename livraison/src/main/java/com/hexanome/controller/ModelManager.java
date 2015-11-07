@@ -116,13 +116,4 @@ public class ModelManager {
     public Planning getPlanning() {
         return planning;
     }
-
-    RouteDocument generateRoadMap(File file) {
-        RouteDocument rdoc = null;
-        if(planning != null) {
-            rdoc = DocumentFactory.createRouteDocument(file);
-            rdoc.writeRoute(planning.getRoute());
-        }
-        return rdoc;
-    }
 }

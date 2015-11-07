@@ -137,7 +137,9 @@ public class UIManager {
         File file = fileChooser.showSaveDialog(stage);
 
         if(file != null){
-            ModelManager.getInstance().generateRoadMap(file);
+            if(!IOManager.getInstance().saveRouteDocument(file)){
+                // \todo treat error case save failed
+            }
             stage.close();
         }
     }

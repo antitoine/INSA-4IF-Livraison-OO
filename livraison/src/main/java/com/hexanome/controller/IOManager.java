@@ -1,5 +1,6 @@
 package com.hexanome.controller;
 
+import com.hexanome.model.Planning;
 import com.hexanome.model.Route;
 import com.hexanome.utils.DocumentFactory;
 import com.hexanome.utils.MapDocument;
@@ -55,9 +56,9 @@ public class IOManager {
      *      Route to write in the file
      * @return true if the file was successfully written, else it returns false
      */
-    boolean saveRouteDocument(File file, Route route) {
+    boolean saveRouteDocument(File file) {
         RouteDocument rdoc = DocumentFactory.createRouteDocument(file);
-        rdoc.writeRoute(route);
+        rdoc.writeRoute(ModelManager.getInstance().getPlanning().getRoute());
         return rdoc.save();
     }
 }
