@@ -1,6 +1,7 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.TypeWrapper;
@@ -14,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -22,54 +24,40 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainWindow extends AnchorPane {
 
-    private MapView mapView;
-
-    private DeliveryTreeView deliveryTreeView;
-
-    @FXML
-    private Label labelInfos;
-
+    final FileChooser fileChooser;
     @FXML
     ScrollPane scrollPaneMap;
-
+    boolean legendDisplayed = false;
+    double zoomLevel = 1.0;
+    private MapView mapView;
+    private DeliveryTreeView deliveryTreeView;
+    @FXML
+    private Label labelInfos;
     @FXML
     private MenuItem mntmLoadPlanning;
-
     @FXML
     private Button btnLoadPlanning;
-
     @FXML
     private Button btnRedo;
-
     @FXML
     private Button btnUndo;
-
     @FXML
     private MenuItem mntmUndo;
-
     @FXML
     private MenuItem mntmRedo;
-
     @FXML
     private Button btnRoadMap;
-
     @FXML
     private BorderPane deliveriesPane;
-
     @FXML
     private GridPane legendGridPane;
-
-    boolean legendDisplayed = false;
-    final FileChooser fileChooser;
     private Stage stage;
-    double zoomLevel = 1.0;
 
     /**
      * Main window
@@ -101,13 +89,21 @@ public class MainWindow extends AnchorPane {
 
     }
 
+    private static void configureFileChooser(final FileChooser fileChooser, String title) {
+        fileChooser.setTitle(title);
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+        );
 
-
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("xml", "*.xml"),
+                new FileChooser.ExtensionFilter("All files", "*.*")
+        );
+    }
 
     public DeliveryTreeView getDeliveryTreeView() {
         return deliveryTreeView;
     }
-
 
     public MapView getMapView() {
         return mapView;
@@ -220,10 +216,14 @@ public class MainWindow extends AnchorPane {
         }
         legendGridPane.setVisible(true);
         int i = 1;
-        for (Map.Entry<TimeSlot, Color> entrySet : ColorsGenerator
-                .getTimeSlotColors().entrySet()) {
-            TimeSlot ts = entrySet.getKey();
-            Rectangle rect = new Rectangle(40, 5, entrySet.getValue());
+        Text txtNotInTime = new Text("Delivery outside time slot");
+        Circle circle = new Circle(5.0, Color.RED);
+        GridPane.setMargin(circle, new Insets(0, 12, 0, 0));
+        GridPane.setMargin(txtNotInTime, new Insets(0, 0, 0, 12));
+        legendGridPane.add(txtNotInTime, 0, 0);
+        legendGridPane.add(circle, 1, 0);
+        for (TimeSlot ts : ModelManager.getInstance().getPlanning().getTimeSlots()) {
+            Rectangle rect = new Rectangle(40, 5, ColorsGenerator.getTimeSlotColor(ts));
             String start = TypeWrapper.secondsToTimestamp(ts.getStartTime());
             String end = TypeWrapper.secondsToTimestamp(ts.getEndTime());
             Text txt = new Text(start + " - " + end);
@@ -235,20 +235,6 @@ public class MainWindow extends AnchorPane {
         };
         legendDisplayed = true;
     }
-
-
-    private static void configureFileChooser(final FileChooser fileChooser, String title) {
-        fileChooser.setTitle(title);
-        fileChooser.setInitialDirectory(
-                new File(System.getProperty("user.home"))
-        );
-
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("xml", "*.xml"),
-                new FileChooser.ExtensionFilter("All files", "*.*")
-        );
-    }
-
 
     @FXML
     private void quitApplication(ActionEvent event) {
