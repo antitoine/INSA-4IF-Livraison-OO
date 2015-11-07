@@ -34,14 +34,7 @@ public class RouteDocument extends File {
      * @param route 
      */
     public void writeRoute(Route route) {
-        content = " --- ROAD MAP ---\n";
-        for(Path path : ModelManager.getInstance().getPlanning().getRoute().getPaths()){
-            content += "From : "+path.getFirstNode().getLocation() + "\n";
-            for(Arc arc : path.getArcs()){
-                content += "take the road : "+arc.getStreetName()+"\n";
-            }
-            content += "Then, go to "+path.getLastNode().getLocation()+"\n";
-        }
+        content = generateRouteDocumentContent(route);
     }
     /**
      * Save the document writting it to the File System.
@@ -63,9 +56,28 @@ public class RouteDocument extends File {
         }
         return false;
     }
-    
+    /**
+     * Getter of content property
+     * @return 
+     */
     public String getContent() {
         return content;
+    }
+    /**
+     * Format content of RouteDocument
+     * @param route
+     * @return 
+     */
+    public static String generateRouteDocumentContent(Route route) {   
+        String docContent = " --- ROAD MAP ---\n";
+        for(Path path : route.getPaths()){
+            docContent += "From : "+path.getFirstNode().getLocation() + "\n";
+            for(Arc arc : path.getArcs()){
+                docContent += "take the road : "+arc.getStreetName()+"\n";
+            }
+            docContent += "Then, go to "+path.getLastNode().getLocation()+"\n";
+        }
+        return docContent;
     }
     
 }

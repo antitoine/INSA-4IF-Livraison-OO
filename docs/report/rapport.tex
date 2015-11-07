@@ -155,7 +155,7 @@ Glossary :
 \section{Structured textual description of use cases \it{(EN)}}
 \label{sec:structured-textual-description-of-use-cases}
 
-\subsection{Textual description of \bfit{Load map}}
+\subsection{Textual description of \it{Load map}}
 \label{subsec:textual-description-of-load-map}
 
 \textbf{Short description :} The user selects an XML file describing a city map. The map is loaded and displayed on the screen.
@@ -189,7 +189,7 @@ Glossary :
   \end{itemize}
 \end{itemize}
 
-\subsection{Textual description of \bfit{Load delivery request}}
+\subsection{Textual description of \it{Load delivery request}}
 \label{subsec:textual-description-of-load-delivery-request}
 
 \textbf{Short description :} The user selects an XML file describing delivery requests. The system displays the position of each delivery request on the city map.
@@ -222,7 +222,7 @@ Glossary :
   \end{itemize}
 \end{itemize}
 
-\subsection{Textual description of \bfit{Compute a route}}
+\subsection{Textual description of \it{Compute a route}}
 \label{subsec:textual-description-of-compute-a-route}
 
 \textbf{Short description :} The users asks the system to compute a route. The route computed by the system is displayed on the screen, as the list of deliveries.
@@ -245,7 +245,7 @@ Glossary :
   \end{itemize}
 \end{itemize}
 
-\subsection{Textual description of \bfit{Add a delivery}}
+\subsection{Textual description of \it{Add a delivery}}
 \label{subsec:textual-description-of-add-a-delivery}
 
 \textbf{Short description :} The user adds a delivery to the route, at a node that isn’t already a delivery point.
@@ -282,7 +282,7 @@ Glossary :
   \end{itemize}
 \end{itemize}
 
-\subsection{Textual description of \bfit{Delete a delivery}}
+\subsection{Textual description of \it{Delete a delivery}}
 \label{subsec:textual-description-of-delete-a-delivery}
 
 \textbf{Short description :} The user deletes an existing delivery of the route.
@@ -307,10 +307,8 @@ Glossary :
   \end{itemize}
 \end{itemize}
 
-\subsection{Textual description of \bfit{Swap two deliveries}}
+\subsection{Textual description of \it{Swap two deliveries}}
 \label{subsec:textual-description-of-swap-two-deliveries}
-
-\Todo{Vérifier ce scénario par rapport au drive}
 
 \textbf{Short description :} The user swaps two deliveries.
 
@@ -320,7 +318,7 @@ Glossary :
   \item[•] \textbf{Precondition :} a route has to be computed.
   \item[•] \textbf{Main scenario :}
   \begin{enumerate}
-    \item The user moves graphically the delivery on another delivery.If the delivery time of the selected delivery is lower (respectively higher) than the delivery time of the second one, then the second delivery has to be executed before (respectively after) the first one.
+    \item The user moves graphically the delivery on another delivery. If the delivery time of the selected delivery is lower (respectively higher) than the delivery time of the second one, then the second delivery has to be executed before (respectively after) the first one.
     \item The system updates the path of the route and displays it.
   \end{enumerate}
   \item[•] \textbf{Alternative scenarios :}
@@ -336,7 +334,48 @@ Glossary :
   \end{itemize}
 \end{itemize}
 
-\Todo{Ajouter les autres scénarios à partir du drive}
+\subsection{Textual description of \it{Generate an itinerary}}
+\label{subsec:textual-description-of-generate-an-itinerary}
+
+\textbf{Short description :} The user asks the system to generate an itinerary.
+
+\textbf{Organized description :}
+
+\begin{itemize}
+  \item[•] \textbf{Precondition :} a route has to be computed.
+  \item[•] \textbf{Main scenario :}
+  \begin{enumerate}
+    \item The user indicates that he wants to generate an itinerary.
+    \item The system asks the user to name the file and to select the location where it will be saved.
+    \item The user names the file and selects a location.
+    \item The system generates an itinerary in txt format, with the list of the deliveries, and displays a message on the screen when it’s done.
+  \end{enumerate}
+  \item[•] \textbf{Alternative scenarios :}
+  \begin{itemize}
+    \item[3.] The user indicates that he wants to interrupt the generation.
+    \begin{itemize}
+      \item[•] The system stops the generation and ends the scenario.
+    \end{itemize}
+    \item[4.]  The record is denied.
+    \begin{itemize}
+      \item[•] The system displays that the generation failed and indicates the cause (insufficient privileges…) and ends the scenario.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\subsection{Alternative scenarios that can occur at any moment}
+\label{subsec:alternative-scenarios-that-can-occur-at-any-moment}
+
+\begin{itemize}
+  \item[a.] The user chooses to cancel his last modification.
+  \begin{itemize}
+    \item[•] The system cancels the last modification if it exists and restores the previous route.
+  \end{itemize}
+  \item[b.] The users chooses to redo a cancelled modification.
+  \begin{itemize}
+    \item[•] The system redoes the last cancelled modification if it exists, and restores the corresponding route.
+  \end{itemize}
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conception
 \part{Conception}
