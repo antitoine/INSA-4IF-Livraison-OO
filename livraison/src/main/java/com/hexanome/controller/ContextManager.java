@@ -77,8 +77,12 @@ public class ContextManager {
      * Undo the last command added to done commands stack
      */
     public void undo() {
-        // \todo (security) check if undo possible
-        undone.push(done.pop().reverse());
+        // Take command from stack
+        ICommand cmd = done.pop();
+        // Reverse command
+        cmd.reverse();
+        // Push command on the undone stack
+        undone.push(cmd);
         // Enable redo button
         UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.REDO);
         if (done.empty()) {
@@ -91,8 +95,12 @@ public class ContextManager {
      * Redo the last command added to undone commands stack
      */
     public void redo() {
-        // \todo (security) check if redo possible
-        done.push(undone.pop().execute());
+        // Take command from top of undone stack
+        ICommand cmd = undone.pop();
+        // Execute command
+        cmd.execute();
+        // Push command on top of done stack
+        done.push(cmd);
         // Enable undo button
         UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.UNDO);
         if (undone.empty()) {
