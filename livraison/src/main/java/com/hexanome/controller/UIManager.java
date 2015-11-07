@@ -1,15 +1,15 @@
 package com.hexanome.controller;
 
-import com.hexanome.model.Arc;
-import com.hexanome.model.Path;
 import com.hexanome.utils.RouteDocument;
 import com.hexanome.view.MainWindow;
 import com.hexanome.view.RoadMapView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.Optional;
 
 /**
@@ -121,10 +121,24 @@ public class UIManager {
      * (TODO : display it in a dialog)
      */
     public void generateRoadMap() {
-        String filename = "todo_passer_le_nom_du_fichier_en_argument";
-        RouteDocument rdoc = ModelManager.getInstance().generateRoadMap(filename);
-        System.out.println(rdoc.getContent());
-        new RoadMapView(rdoc.getContent());
+        new RoadMapView(RouteDocument.generateFormatedRouteDocumentContent(
+                ModelManager.getInstance().getPlanning().getRoute()));
+    }
 
+    public void saveRoadMapDocument(Stage stage) {
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilter =
+                new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(stage);
+
+        if(file != null){
+            ModelManager.getInstance().generateRoadMap(file.getAbsolutePath());
+            stage.close();
+        }
     }
 }
