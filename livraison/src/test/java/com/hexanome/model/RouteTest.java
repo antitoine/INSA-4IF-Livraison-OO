@@ -89,7 +89,7 @@ public class RouteTest {
         } catch (Exception ex) {
             Logger.getLogger(RouteTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Route route = plan.getFastestRoute();
+        Route route = plan.getRoute();
         
         Delivery result = route.getNextDelivery(delivery2);
         Delivery expResult = delivery3;
@@ -103,8 +103,8 @@ public class RouteTest {
      * Test of addDelivery method, of class Route.
      */
     @Test
-    public void testAddDelivery() { /* erreur sur ce test */
-        System.out.println("getNextDelivery");
+    public void testAddDelivery() {
+        System.out.println("addDelivery");
         
         Map map = new Map();
         
@@ -155,7 +155,7 @@ public class RouteTest {
             return;
         }
         
-        Route route = plan.getFastestRoute();
+        Route route = plan.getRoute();
                 
         Delivery deliveryToAdd = new Delivery(5, node5);
         // deliveryToAdd should be added between node2 and node6
@@ -182,7 +182,7 @@ public class RouteTest {
      * Test of removeDelivery method, of class Route.
      */
     @Test
-    public void testRemoveDelivery() { /* erreur sur ce test (outOfBounds ligne 247)*/
+    public void testRemoveDelivery() {
         System.out.println("removeDelivery");
         
         Map map = new Map();
@@ -235,7 +235,7 @@ public class RouteTest {
         } catch (Exception ex) {
             Logger.getLogger(RouteTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Route route = plan.getFastestRoute();
+        Route route = plan.getRoute();
         route.removeDelivery(delivery3);
         
         List<Path> result = route.getPaths();
@@ -258,7 +258,9 @@ public class RouteTest {
      * Test of swapDeliveries method, of class Route.
      */
     @Test
-    public void testSwapDeliveries() { /* failure sur ce test */
+    public void testSwapDeliveries() {
+        System.out.println("testSwapDeliveries");
+        
         Map map = new Map();
         
         Node node1 = map.createNode(1, new Point(20, 30));
@@ -302,7 +304,7 @@ public class RouteTest {
         } catch (Exception ex) {
             Logger.getLogger(RouteTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Route route = plan.getFastestRoute();
+        Route route = plan.getRoute();
         
         route.swapDeliveries(delivery2, delivery6); /* swap node2 and node6 */
         
@@ -380,7 +382,7 @@ public class RouteTest {
         } catch (Exception ex) {
             Logger.getLogger(RouteTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Route route = plan.getFastestRoute();
+        Route route = plan.getRoute();
         
         Node result = route.getNodePreviousDelivery(delivery2);
         Node expResult = node1;
@@ -453,7 +455,7 @@ public class RouteTest {
         } catch (Exception ex) {
             Logger.getLogger(RouteTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Route route = plan.getFastestRoute();
+        Route route = plan.getRoute();
         List<Path> result = route.getPaths();
         
         assertEquals(expResult.size(), result.size());

@@ -91,15 +91,6 @@ public class Planning implements Publisher {
     }
 
     /**
-     * Returns the route, or null if any route was calculated before.
-     *
-     * @return The fastest route.
-     */
-    public Route getFastestRoute() {
-        return route;
-    }
-
-    /**
      * Adds a delivery to the planning, after another delivery.
      *
      * @param node The node where we want to add a delivery
