@@ -1,5 +1,6 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -53,7 +54,7 @@ public class NodeView extends StackPane {
     final void setType(String nodeType) {
         getChildren().clear();
 
-        nodeShape = NodeViewShapeFactory.createNodeViewShape(nodeType);
+        nodeShape = NodeViewShapeFactory.createNodeViewShape(nodeType, node);
         getChildren().add(nodeShape.asSceneNode());
         configurePopOver();
         setAlignment(nodeShape.asSceneNode(), Pos.CENTER);
@@ -75,7 +76,8 @@ public class NodeView extends StackPane {
         popover.setOnAutoHide(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
-                UIManager.getInstance().NotifyUI(ConstView.Action.HIDE_POPOVER);
+                ContextManager.getInstance().getCurrentState().clickSomewhereElse();
+                UIManager.getInstance().getMainWindow().enablePanning();
             }
         });
     }

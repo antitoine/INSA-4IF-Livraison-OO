@@ -134,23 +134,14 @@ public class MapView extends AnchorPane implements Subscriber {
             addEmptyArcsAndNodes(map.getArcs(), map.getNodes().values());
         }
         if (p instanceof Planning) {
-            clearArc();
             Planning planning = (Planning) p;
-            clearDeliveries();
             ColorsGenerator.getInstance(planning.getTimeSlots());
             UIManager.getInstance().getMainWindow().setLegend();
 
-            for (TimeSlot ts : planning.getTimeSlots()) {
-                for (Delivery d : ts.getDeliveries()) {
-                    (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE);
-                }
-            }
-            (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSE_NODE);
         }
         if (p instanceof Route) {
+            clearMap();
             Route route = (Route) p;
-            clearArc();
-
             Planning planning = (Planning) arg;
             Map map = planning.getMap();
             ArrayList<Arc> mapArc = new ArrayList<>(map.getArcs());
@@ -164,6 +155,11 @@ public class MapView extends AnchorPane implements Subscriber {
             mapArc.removeAll(arcs);
             addRouteArcs(arcs);
             addEmptyArcsAndNodes(mapArc, map.getNodes().values());
+            for (TimeSlot ts : planning.getTimeSlots()) {
+                for (Delivery d : ts.getDeliveries()) {
+                    (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE);
+                }
+            }
             (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSE_NODE);
         }
     }

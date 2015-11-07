@@ -1,5 +1,7 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -8,18 +10,27 @@ import javafx.scene.shape.StrokeType;
 import org.controlsfx.control.PopOver;
 
 public class EmptyNodeView extends Circle implements INodeViewShape {
-
+    com.hexanome.model.Node node;
     
-    public EmptyNodeView() {
+    public EmptyNodeView(com.hexanome.model.Node node) {
         setFill(Color.web("9e9e9e"));
         setRadius(5.0);
         setStroke(Color.BLACK);
         setStrokeType(StrokeType.INSIDE);
+        this.node = node;
     }
 
     @Override
     public void onMouseClickedNotify(NodeView context) {
-        UIManager.getInstance().NotifyUI(ConstView.Action.CLICK_ON_EMPTY_NODE, context);
+        ContextManager.getInstance().getCurrentState().clickOnEmptyNode(node);
+        if (ModelManager.getInstance().getPlanning() != null) {
+            PopOverContentEmptyNode pop = (PopOverContentEmptyNode) context.getPopoverContent();
+            pop.setComboxBox(ModelManager.getInstance().getPlanning().getWarehouse(),
+                             ModelManager.getInstance().getPlanning().getDeliveries(),
+                             ModelManager.getInstance().getPlanning().getTimeSlots());
+        }
+        context.showPopOver();
+        UIManager.getInstance().getMainWindow().disablePanning();
     }
 
     @Override

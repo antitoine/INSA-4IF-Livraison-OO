@@ -1,5 +1,6 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -7,17 +8,20 @@ import org.controlsfx.control.PopOver;
 import org.controlsfx.glyphfont.Glyph;
 
 public class WarehouseNodeView extends Label implements INodeViewShape {
-
+    com.hexanome.model.Node node;
     /**
      * Initializes the controller class.
      */
-    public WarehouseNodeView() {
+    public WarehouseNodeView(com.hexanome.model.Node node) {
         setGraphic(new Glyph("FontAwesome", "HOME"));
+        this.node = node;
     }
 
     @Override
     public void onMouseClickedNotify(NodeView context) {
-        UIManager.getInstance().NotifyUI(ConstView.Action.CLICK_ON_WAREHOUSE, context);
+        ContextManager.getInstance().getCurrentState().clickOnWarehouse(node);
+        context.showPopOver();
+        UIManager.getInstance().getMainWindow().disablePanning();
     }
 
     @Override

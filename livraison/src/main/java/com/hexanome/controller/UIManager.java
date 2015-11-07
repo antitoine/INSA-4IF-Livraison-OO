@@ -1,21 +1,15 @@
 package com.hexanome.controller;
 
-import com.hexanome.controller.command.AddDeliveryCommand;
-import com.hexanome.controller.command.RemoveDeliveryCommand;
-import com.hexanome.model.Delivery;
-import com.hexanome.model.Node;
-import com.hexanome.model.TimeSlot;
-import com.hexanome.utils.TypeWrapper;
-import com.hexanome.view.ConstView;
+import com.hexanome.model.Arc;
+import com.hexanome.model.Path;
 import com.hexanome.view.MainWindow;
-import com.hexanome.view.NodeView;
-import com.hexanome.view.PopOverContentEmptyNode;
-import java.util.Optional;
-import javafx.concurrent.Task;
+import com.hexanome.view.RoadMapView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage; // \todo Doit disparaitre !
+import javafx.stage.Stage;
+
+import java.util.Optional;
 
 /**
  * This controller manage all the view and is notify when something happens on
@@ -62,103 +56,7 @@ public class UIManager {
     }
 
     /**
-     * Method that allow to notify the UIController
-     *
-     * @param action Action to be executed
-     * @param arg Optional argument
-     *
-     * Expected @param arg for the following action Load_MAP : File file (valid
-     * xml file) Load_PLANNING : File file (valid xml file)
-     */
-    public void NotifyUI(ConstView.Action action, Object arg) {
-        // \todo implémenter toutes les méthodes dans les states pour plus avoir ce switch !!!
-        switch (action) {
-            case QUIT:
-                ContextManager.getInstance().exit(); // Special undoable
-                break;
-       
-            case ADD_DELIVERY: 
-                // \todo Remplacer en utilisant getCurrentState().btnAddDelivery(Node, Node) dans la vue
-                Object[] args = (Object[]) arg;
-                final AddDeliveryCommand ac = new AddDeliveryCommand(
-                        (Node) args[0],
-                        (Node) args[1],
-                        (TimeSlot) args[2]);
-                new Thread(new Task() {
-                    @Override
-                    protected Object call() throws Exception {
-                        ContextManager.getInstance().executeCommand(ac);
-                        return null;
-                    }
-                }).start();
-                mainWindow.getMapView().hidePopOver((Node) args[0]);
-                break;
-            case DELETE_DELIVERY:
-                // \todo Remplacer en utilisant getCurrentState().btnRemoveDelivery(Delivery) dans la vue
-                Delivery d = (Delivery) arg;
-                String start = TypeWrapper.secondsToTimestamp(d.getTimeSlot().getStartTime());
-                String end = TypeWrapper.secondsToTimestamp(d.getTimeSlot().getEndTime());
-
-                if (askConfirmation("This delivery " + d.getId()
-                        + " (" + start + " - " + end + ") will be deleted !")) {
-                    final RemoveDeliveryCommand rdc = new RemoveDeliveryCommand(d);
-                    new Thread(new Task() {
-                        @Override
-                        protected Object call() throws Exception {
-                            ContextManager.getInstance().executeCommand(rdc);
-                            return null;
-                        }
-                    }).start();
-                }
-                break;
-            case SWAP_DELIVERIES:
-                // Create a SwapDeliveryCommand and give it to context manager
-                break;
-            case CLICK_ON_DELIVERY_NODE: // \todo Appeler getCurrentState().clickOnDelivery() dans la vue
-                ((NodeView) (arg)).showPopOver();
-                mainWindow.getDeliveryTreeView().selectDelivery((NodeView) (arg));
-                mainWindow.disablePanning();
-                break;
-            case CLICK_ON_EMPTY_NODE: // \todo Appeler getCurrentState().clickOnEmptyNode() dans la vue
-                NodeView nv = (NodeView) arg;
-                if (ModelManager.getInstance().getPlanning() != null) {
-                    PopOverContentEmptyNode pop = (PopOverContentEmptyNode) nv.getPopoverContent();
-                    pop.setComboxBox(
-                        ModelManager.getInstance().getPlanning().getWarehouse(),
-                        ModelManager.getInstance().getPlanning().getDeliveries(),
-                        ModelManager.getInstance().getPlanning().getTimeSlots()
-                    );
-                }
-                nv.showPopOver();
-                mainWindow.disablePanning();
-                break;
-            case CLICK_ON_WAREHOUSE: // \todo Appeler getCurrentState().clickOnWarehouse() dans la vue
-                ((NodeView) (arg)).showPopOver();
-                mainWindow.disablePanning();
-                break;
-            case HIDE_POPOVER:
-                mainWindow.enablePanning();
-                break;
-            case DELEVERY_SELECTED: // removeMeLater : quand on est dans la tree view
-                mainWindow.getMapView().selectDelivery(((Delivery) (arg)));
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Method that allow to notify the UIController
-     *
-     * @param action action to be executed
-     */
-    public void NotifyUI(ConstView.Action action) {
-        NotifyUI(action, null);
-    }
-
-    /**
-     * Ask for confirmation
-     *
+     * Asks for confirmation
      * @param message
      * @return
      */
@@ -217,4 +115,22 @@ public class UIManager {
         mainWindow.displayError(msg);
     }
 
+    /**
+     * Generate the road Map file
+     * (TODO : display it in a dialog)
+     */
+    public void generateRoadMap() {
+        String roadMap = " --- ROAD MAP ---\n";
+        for(Path path : ModelManager.getInstance().getPlanning().getRoute().getPaths()){
+            roadMap += "From : "+path.getFirstNode().getLocation() + "\n";
+            for(Arc arc : path.getArcs()){
+                roadMap += "take the road : "+arc.getDuration()+"\n";
+            }
+            roadMap += "Then, go to "+path.getLastNode().getLocation()+"\n";
+        }
+        System.out.println(roadMap);
+
+        new RoadMapView(roadMap);
+
+    }
 }

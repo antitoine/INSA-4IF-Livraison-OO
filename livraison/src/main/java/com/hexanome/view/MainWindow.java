@@ -4,22 +4,12 @@ import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.TypeWrapper;
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -28,6 +18,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainWindow extends AnchorPane {
 
@@ -64,10 +62,11 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private BorderPane deliveriesPane;
-    
+
     @FXML
     private GridPane legendGridPane;
 
+    boolean legendDisplayed = false;
     final FileChooser fileChooser;
     private Stage stage;
     double zoomLevel = 1.0;
@@ -109,7 +108,7 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void quitApplication(ActionEvent event) {
-        UIManager.getInstance().NotifyUI(ConstView.Action.QUIT);
+        ContextManager.getInstance().exit(); // Special undoable
     }
 
     public MapView getMapView() {
@@ -142,16 +141,17 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void generateRoadMap() {
         // ContextManager.getInstance().getCurrentState().
+        UIManager.getInstance().generateRoadMap();
     }
 
     @FXML
     private void undo() {
-        UIManager.getInstance().NotifyUI(ConstView.Action.UNDO);
+        ContextManager.getInstance().undo();
     }
 
     @FXML
     private void redo() {
-        UIManager.getInstance().NotifyUI(ConstView.Action.REDO);
+        ContextManager.getInstance().redo();
     }
 
     private static void configureFileChooser(final FileChooser fileChooser, String title) {
@@ -167,8 +167,8 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * 
-     * @param text 
+     *
+     * @param text
      */
     public void setLoadingState(final String text) {
         labelInfos.setText(text);
@@ -176,8 +176,7 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Reset the cursor and the info label 
-     * at the end of a loading for example
+     * Reset the cursor and the info label at the end of a loading for example
      */
     public void resetCursorAndInfoLabel() {
         labelInfos.setText("");
@@ -277,21 +276,40 @@ public class MainWindow extends AnchorPane {
                 break;
         }
     }
-    
-    void setLegend(){
+
+    /**
+     * Displays the legend in the main Window if not already displayed The
+     * planning must be initialized before calling this method
+     */
+    void setLegend() {
+        if (legendDisplayed) {
+            return;
+        }
         legendGridPane.setVisible(true);
         int i = 1;
         for (Map.Entry<TimeSlot, Color> entrySet : ColorsGenerator
                 .getTimeSlotColors().entrySet()) {
             TimeSlot ts = entrySet.getKey();
-            Rectangle rect = new Rectangle(10, 10, entrySet.getValue());
+            Rectangle rect = new Rectangle(40, 5, entrySet.getValue());
             String start = TypeWrapper.secondsToTimestamp(ts.getStartTime());
             String end = TypeWrapper.secondsToTimestamp(ts.getEndTime());
-            Text txt = new Text(start + " - "+end);
-            legendGridPane.add(txt, 0, i);  
-            legendGridPane.add(rect, 1, i);  
+            Text txt = new Text(start + " - " + end);
+            legendGridPane.add(txt, 0, i);
+            legendGridPane.add(rect, 1, i);
+            GridPane.setMargin(rect, new Insets(0, 12, 0, 0));
+            GridPane.setMargin(txt, new Insets(0, 0, 0, 12));
             i++;
         };
+        legendDisplayed = true;
     }
+
+    /**
+     * Clear the legend
+     */
+    void clearLegend() {
+        legendGridPane.getChildren().clear();
+    }
+
+
 
 }
