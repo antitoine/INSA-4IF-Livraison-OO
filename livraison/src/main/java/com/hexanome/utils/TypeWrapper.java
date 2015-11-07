@@ -34,8 +34,8 @@ public class TypeWrapper {
      */
     public static String secondsToTimestamp(int seconds) {
         int hour = (int) (seconds / 3600);
-        int min = (int) ((seconds - hour * 3600) / 3600);
-        int sec = (int) ((seconds - min * 60 - hour * 3600) / 3600);
+        int min = (int) ((seconds - hour * 3600) / 60);
+        int sec = (int) ((seconds - min * 60 - hour * 3600) / 60);
         return String.format("%d:%d:%d", hour, min, sec);
     }
 

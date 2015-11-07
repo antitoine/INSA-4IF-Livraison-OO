@@ -69,7 +69,7 @@ public class Arc {
         this.streetName = streetName;
         this.length = length;
         this.avgSpeed = avgSpeed;
-        this.duration = length*avgSpeed; // Unit : s
+        this.duration = length / avgSpeed; // Unit : s
         this.dest = dest;
         this.src = src;
         this.associatedTimeSlot = new HashSet<>();
