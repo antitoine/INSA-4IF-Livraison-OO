@@ -22,6 +22,8 @@ public abstract class SelectionsStates extends DefaultState {
         if (UIManager.getInstance().askConfirmation("Planning and Map will be lost forever")) {
             // Full clear of the model
             ModelManager.getInstance().clearModel();
+            // Clear commands history
+            ContextManager.getInstance().clearCommandsHistory();
             // Jump to MapSelectState
             ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
             // Ask user for a file to load
@@ -37,7 +39,10 @@ public abstract class SelectionsStates extends DefaultState {
         // WARNING : calls order matters
         // Clear current model's planning
         if (UIManager.getInstance().askConfirmation("Planning will be lost forever")) {
+            // Clear planning in model
             ModelManager.getInstance().clearPlanning();
+            // Clear commands history
+            ContextManager.getInstance().clearCommandsHistory();
             // Jump to PlanningSelectState
             ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
             // Ask user for planning file to load
@@ -51,10 +56,10 @@ public abstract class SelectionsStates extends DefaultState {
     @Override
     public void btnCloseMap() {
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
-        // Get model manager instance
-        ModelManager modelManager = ModelManager.getInstance();
         // Full clear model
-        modelManager.clearModel();
+        ModelManager.getInstance().clearModel();
+        // Clear commands history
+        ContextManager.getInstance().clearCommandsHistory();
         // Jump to InitState
         ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
@@ -67,6 +72,8 @@ public abstract class SelectionsStates extends DefaultState {
         // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
         // Clear model's current planning
         ModelManager.getInstance().clearPlanning();
+        // Clear commands history
+        ContextManager.getInstance().clearCommandsHistory();
         // Jump to MapLoadedState
         ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
     }
