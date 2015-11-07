@@ -21,6 +21,7 @@ public class ArcView extends Pane {
 
     /**
      * Initializes the controller class.
+     *
      * @param tsArcs list of arcs for the arcView
      */
     public ArcView(final LinkedList<Arc> tsArcs) {
@@ -33,7 +34,7 @@ public class ArcView extends Pane {
         for (Arc arc : tsArcs) {
             moreThanOneTimeSlot = false;
             if (arc.getAssociatedTimeSlots().isEmpty()) {
-                    colors.add(Color.GRAY);
+                colors.add(Color.GRAY);
             } else {
                 for (TimeSlot ts : arc.getAssociatedTimeSlots()) {
                     if (!moreThanOneTimeSlot) {
@@ -52,24 +53,19 @@ public class ArcView extends Pane {
 
         ArrayList<Node> arcElements = new ArrayList<>();
         boolean isATwoWayTrip = false;
-        if(colors.size() <= 2){
+        if (colors.size() <= 2) {
             isATwoWayTrip = true;
             Color tempColor = colors.get(0);
-            for(Color c : colors){
-                try {
-                    if (!c.equals(tempColor)) {
-                        isATwoWayTrip = false;
-                        break;
-                    }
-                } catch (NullPointerException e) {
-                    System.out.println("null pointer here");
+            for (Color c : colors) {
+                if (!c.equals(tempColor)) {
+                    isATwoWayTrip = false;
+                    break;
                 }
-
             }
         }
 
         int numberOfArcs;
-        if(isATwoWayTrip){
+        if (isATwoWayTrip) {
             numberOfArcs = 0;
         } else {
             numberOfArcs = arcs.size();
@@ -149,7 +145,6 @@ public class ArcView extends Pane {
         getChildren().addAll(arcElements);
 
     }
-
 
 
     private Polygon drawArrow(Point src, Point dest) {
