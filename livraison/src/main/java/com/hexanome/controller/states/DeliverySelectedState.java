@@ -4,7 +4,7 @@
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
-import com.hexanome.controller.ModelManager;
+import com.hexanome.controller.UIManager;
 import com.hexanome.controller.command.RemoveDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
@@ -44,6 +44,8 @@ public class DeliverySelectedState extends SelectionsStates {
         RemoveDeliveryCommand rmDeliveryCmd = new RemoveDeliveryCommand(delivery);
         // ContextManager is asked to execute the command
         ContextManager.getInstance().executeCommand(rmDeliveryCmd);
+        // \todo TODO Close the open pop over
+        UIManager.getInstance().getMainWindow().
         // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
@@ -53,6 +55,8 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnEmptyNode(Node node) {
+        // \todo TODO Close the open pop over
+        // \todo TODO Open the new pop over
         // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
@@ -62,6 +66,7 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickSomewhereElse() {
+        // \todo TODO Close the open pop over
         // Jump to NothingSelectedState
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
     }
@@ -71,6 +76,8 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnWarehouse(Node warehouse) {
+        // \todo TODO Close the open pop over
+        // \todo TODO Open the new pop over
         // Jump to WarehouseSelectedState
         ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
     }
