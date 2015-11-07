@@ -20,6 +20,13 @@ import javafx.stage.Stage;
  */
 public class AppMediator extends Application{
 
+    /**
+     * Method used to start JavaFX mainwindow
+     * 
+     * @param stage
+     *      Stage to use to start the app
+     * @throws Exception 
+     */
     @Override
     public void start(Stage stage) throws Exception {
         MainWindow mainWindow = UIManager.getInstance().createMainWindow(stage);

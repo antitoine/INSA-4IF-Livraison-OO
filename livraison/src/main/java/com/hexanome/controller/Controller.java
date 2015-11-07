@@ -10,10 +10,16 @@ import javafx.application.Application;
 public class Controller {
     private static Controller controller = null;
     
+    /**
+     * Builds a new instance of the Controller
+     */
      private Controller() {
         // Nothing to do here for now
     }
      
+    /**
+     * @return the single existing instance of the controller
+     */
     public static Controller getInstance() {
         if(controller == null)
         {   
@@ -22,6 +28,10 @@ public class Controller {
         return controller;
     }
     
+    /**
+     * Initialize internal sub-components of the controller 
+     * package called managers
+     */
     public void initManagers() {
         // <!>
         // WARNING : Calls' order matters ! 
@@ -35,7 +45,13 @@ public class Controller {
         // Force ContextManager first instanciation
         ContextManager.getInstance();
     }   
-    
+    /**
+     * Initialize User Interface Event loop. 
+     * This instruction is blocking.
+     * 
+     * @param args 
+     *      Arguments to give to the graphic app
+     */
     public void initUI(String[] args) {
         // Launch can only be done once
         Application.launch(AppMediator.class, args);

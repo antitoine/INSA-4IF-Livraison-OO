@@ -28,7 +28,7 @@ public class ContextManager {
     private Stack<ICommand> undone;
 
     /**
-     *
+     * Builds a new ContextManager instance 
      */
     private ContextManager() {
         this.setCurrentState(InitState.getInstance());

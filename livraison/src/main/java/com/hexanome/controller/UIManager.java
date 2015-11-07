@@ -81,23 +81,32 @@ public class UIManager {
         return mainWindow;
     }
 
+    /**
+     * Modifies mainwindow according to the action of loading a map
+     */
     public void beginLoadMap() {
         mainWindow.setLoadingState("Loading Map...");
         mainWindow.getDeliveryTreeView().clearTree();
     }
-
+    /**
+     * Modifies mainwindow according to the action of stoping map loading process
+     */
     public void endLoadMap() {
         ModelManager.getInstance().getMap().clearSubscribers();
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
         mainWindow.resetCursorAndInfoLabel();
         mainWindow.clearLegend();
     }
-
+    /**
+     * Modifies mainwindow according to the action of loading a planning
+     */
     public void beginLoadPlanning() {
         mainWindow.setLoadingState("Loading Planning...");
         mainWindow.getDeliveryTreeView().clearTree();
     }
-
+    /**
+     * Modifies mainwindow according to the action of stoping planning loading process
+     */
     public void endLoadPlanning() {
         // Add view subscribers to the model
         ModelManager.getInstance().getPlanning().clearSubscribers();
@@ -109,12 +118,16 @@ public class UIManager {
         // Update mainwindow
         mainWindow.resetCursorAndInfoLabel();
     }
-
+    /**
+     * Change subscribers of the route
+     */
     public void endRouteComputation() {
         ModelManager.getInstance().getPlanning().getRoute().removeSubscriber(mainWindow.getMapView());
         ModelManager.getInstance().getPlanning().getRoute().addSubscriber(mainWindow.getMapView());
     }
-
+    /**
+     * Modifies mainwindow to display an error message
+     */
     public void showError(String msg) {
         mainWindow.resetCursorAndInfoLabel();
         // Ask main window to display error
@@ -129,7 +142,10 @@ public class UIManager {
         new RoadMapView(RouteDocument.generateFormatedRouteDocumentContent(
                 ModelManager.getInstance().getPlanning().getRoute()));
     }
-
+    /**
+     * Saves the roadmap to a file
+     * @param stage 
+     */
     public void saveRoadMapDocument(Stage stage) {
         FileChooser fileChooser = new FileChooser();
 

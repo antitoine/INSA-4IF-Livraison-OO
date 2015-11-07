@@ -16,6 +16,9 @@ import java.io.File;
 public class IOManager {
     private static IOManager iomanager = null;
   
+    /**
+     * Builds a new instance of an IOmanager
+     */
     private IOManager() {
         // Nothing to do here for now
     }
@@ -35,7 +38,7 @@ public class IOManager {
      *  Returns a MapDocument built using the given file 
      * @param file
      *      file to used to build MapDocument object
-     * @return 
+     * @return the MapDocument created
      */
     public MapDocument getMapDocument(File file) {
         return DocumentFactory.createMapDocument(file);
@@ -44,17 +47,15 @@ public class IOManager {
      * Returns a PlanningDocument built using the given file
      * @param file
      *      file used to build PlanningDocument object
-     * @return 
+     * @return the PlanningDocument created
      */
     public PlanningDocument getPlanningDocument(File file) {
         return DocumentFactory.createPlanningDocument(file);
     }
     /**
-     * Save the given route into a file named using filename.
-     * @param filename
-     *      Name of the file to write
-     * @param route
-     *      Route to write in the file
+     * Save the current route of the model into a file.
+     * @param file
+     *      file to write
      * @return true if the file was successfully written, else it returns false
      */
     boolean saveRouteDocument(File file) {

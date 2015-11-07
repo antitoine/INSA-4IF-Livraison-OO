@@ -22,6 +22,9 @@ public class ModelManager {
     private Map map = null;
     private Planning planning = null;
 
+    /**
+     * Builds a new ModelManager instance
+     */
     private ModelManager() {
         // Nothing to do here for now
     }
