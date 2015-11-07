@@ -15,6 +15,8 @@ import java.util.Map.Entry;
 /**
  * Reprensents a view of the map with nodes and arc
  * This is a one-to-one representation of the Map model
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class MapView extends AnchorPane implements Subscriber {
 

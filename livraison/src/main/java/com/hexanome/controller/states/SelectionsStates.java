@@ -9,7 +9,10 @@ import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 
 /**
- * @author antitoine \todo TODO
+ * This abstract class provides common code for logic states when 
+ * a map and a planning are loaded
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public abstract class SelectionsStates extends DefaultState {
 

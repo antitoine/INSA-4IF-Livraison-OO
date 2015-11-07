@@ -11,8 +11,10 @@ import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 
 /**
- *
- * @author
+ * This class represents a planning, a collection of deliveries 
+ * contained in timeslots.
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Planning implements Publisher {
 

@@ -2,7 +2,8 @@ package com.hexanome.view;
 
 /**
  * Simple factory of node view shape objects, regarding the INodeViewShape interface.
- * @author Pierre Jarsaillon
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public abstract class NodeViewShapeFactory {
     

@@ -12,7 +12,9 @@ import javafx.scene.layout.StackPane;
 import org.controlsfx.control.PopOver;
 
 /**
- * NodeView
+ * This class is the generic graphic component equivalent of the model node
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class NodeView extends StackPane {
 

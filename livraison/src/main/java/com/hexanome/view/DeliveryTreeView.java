@@ -22,6 +22,8 @@ import org.controlsfx.glyphfont.Glyph;
 
 /**
  * Planning reprensention at the left list of deliveries
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class DeliveryTreeView extends VBox implements Subscriber {
 

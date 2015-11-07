@@ -11,6 +11,8 @@ package com.hexanome.utils;
  * A Publisher object can have one or more subsriber, which is an object that implements interface subsriber.
  * After an object that implement Publisher changes, it has to call to the update method of the subscribers.
  * The order in which notifications will be delivered is unspecified.
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface Publisher {
     public void addSubscriber(Subscriber s);

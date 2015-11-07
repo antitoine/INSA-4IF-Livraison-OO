@@ -15,6 +15,8 @@ import javafx.stage.Stage;
  * the current instance of a javaFX application
  * 
  * The start method should be called by launch(AppMediator.class, args)
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul 
  */
 public class AppMediator extends Application{
 

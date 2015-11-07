@@ -10,8 +10,10 @@ import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 
 /**
- * @author antitoine
- * \todo TODO
+ * This state represents the logic state when a delivery is selected 
+ * on the map
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class DeliverySelectedState extends SelectionsStates {
 

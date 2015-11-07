@@ -9,6 +9,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 import org.controlsfx.control.PopOver;
 
+/**
+ * This class is the graphic component equivalent of the model node
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
+ */
 public class EmptyNodeView extends Circle implements INodeViewShape {
     com.hexanome.model.Node node;
     

@@ -23,7 +23,8 @@ import java.util.logging.Logger;
 
 /**
  *  This class provides a convenient interface to write a Route output file 
- * @author paul
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class RouteDocument {
     private File file;

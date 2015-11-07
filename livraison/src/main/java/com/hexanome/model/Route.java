@@ -12,7 +12,7 @@ import java.util.List;
  * This class represents a route, with the entire path to follow to execute
  * every delivery.
  *
- * @author pierre
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Route implements Publisher {
 

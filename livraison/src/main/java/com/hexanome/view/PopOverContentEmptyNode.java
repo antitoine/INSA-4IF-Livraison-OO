@@ -25,8 +25,11 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
- * PopOver content of an Empty Node
+ * This class represent the popover content specific to an 
+ * empty node
  * Permits to add a delivery at the selected node
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PopOverContentEmptyNode extends PopOverContent {
 

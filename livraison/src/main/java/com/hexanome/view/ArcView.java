@@ -13,6 +13,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * This class is the graphic component equivalent to the arc defined
+ * in the model
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
+ */
 public class ArcView extends Pane {
 
     final double D = 4;

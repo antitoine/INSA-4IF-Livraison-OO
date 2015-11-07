@@ -8,8 +8,9 @@ import java.util.Objects;
 
 /**
  * This class represents a node, which can be the beginning
- * point of one or many outgoings streets.
- * @author paul
+ * point of at least one outgoing street.
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Node {
 

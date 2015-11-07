@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * This class represents the path to follow to execute all the deliveries.
- * @author paul
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Path {
     /**

@@ -10,8 +10,10 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 
 /**
- *
- * @author paul
+ * This class represents a map, a graph, composed of arcs (streets) 
+ * and nodes (crossroads)
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Map implements Publisher {
 

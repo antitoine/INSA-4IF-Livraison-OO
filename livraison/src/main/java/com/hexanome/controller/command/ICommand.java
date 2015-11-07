@@ -1,8 +1,9 @@
 package com.hexanome.controller.command;
 
 /**
- * @author antoine
- *  This is the interface of a command which can be executed by the ContextManager
+ * This is the interface of a command which can be executed by the ContextManager
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface ICommand {
     /**

@@ -8,7 +8,8 @@ import java.util.Set;
 
 /**
  * This class represents a road, that goes from a node to another one.
- * @author paul
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Arc {
     /**

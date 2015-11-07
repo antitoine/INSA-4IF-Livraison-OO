@@ -5,7 +5,8 @@ import com.hexanome.model.Delivery;
 
 /**
  * This class represent the action of swaping two deliveries in the planning
- * @author paul
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  * @see ICommand
  */
 public class SwapDeliveriesCommand implements ICommand {

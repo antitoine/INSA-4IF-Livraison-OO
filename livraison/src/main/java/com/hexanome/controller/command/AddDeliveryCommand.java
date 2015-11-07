@@ -8,7 +8,7 @@ import com.hexanome.model.TimeSlot;
 /**
  * This class represent the action of adding a delivery to the planning
  *
- * @author paul
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  * @see ICommand
  */
 public class AddDeliveryCommand implements ICommand {

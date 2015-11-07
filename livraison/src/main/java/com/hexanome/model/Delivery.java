@@ -2,7 +2,8 @@ package com.hexanome.model;
 
 /**
  * This class represents a delivery point.
- * @author paul
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 
 public class Delivery {

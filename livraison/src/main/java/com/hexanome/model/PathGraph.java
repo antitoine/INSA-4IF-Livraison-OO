@@ -4,8 +4,9 @@ import com.hexanome.utils.IGraph;
 import java.util.HashMap;
 
 /**
- *
- * @author paul
+ * This class represents \todo Define here
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PathGraph implements IGraph {
     

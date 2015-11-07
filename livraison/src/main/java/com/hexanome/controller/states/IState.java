@@ -7,8 +7,10 @@ import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 
 /**
- * @author antoine
- * \todo TODO
+ * This interface defines all the methods that should be implemented
+ * by logical states
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface IState {
 

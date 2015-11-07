@@ -6,8 +6,10 @@ package com.hexanome.controller.states;
 import com.hexanome.model.Delivery;
 
 /**
- * @author antitoine
- * \todo TODO
+ * This class represents the state when to deliveries are being 
+ * swaped
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class SwapDeliveriesState extends DefaultState {
 

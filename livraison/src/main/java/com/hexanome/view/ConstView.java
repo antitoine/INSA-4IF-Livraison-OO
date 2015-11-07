@@ -1,8 +1,9 @@
 package com.hexanome.view;
 
 /**
- * Contains all the different path for the fxml files, and also the different
- * action that are handled by the UIManager
+ * Contains all the different path for the fxml files
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public final class ConstView {
 

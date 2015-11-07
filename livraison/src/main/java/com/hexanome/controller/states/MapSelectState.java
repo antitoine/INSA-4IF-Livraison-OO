@@ -17,7 +17,10 @@ import javafx.concurrent.Task;
 import javafx.concurrent.Worker.State;
 
 /**
- * @author antitoine \todo TODO
+ * This class represents the logic state when the user is selecting 
+ * a map to load
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class MapSelectState extends DefaultState {
 

@@ -7,7 +7,7 @@ import java.util.TimeZone;
 /**
  * This class provides type conversion static methods
  *
- * @author paul
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class TypeWrapper {
 

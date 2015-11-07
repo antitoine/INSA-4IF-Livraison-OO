@@ -10,7 +10,8 @@ import java.io.File;
 
 /**
  * This class manages Input/Output interactions with the File System
- * @author paul
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class IOManager {
     private static IOManager iomanager = null;

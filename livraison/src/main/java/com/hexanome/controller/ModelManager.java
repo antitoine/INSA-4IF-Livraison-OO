@@ -14,7 +14,7 @@ import java.io.File;
  * This class manages the model of the application, it is responsible of
  * instanciating objects of the model and guarantee model's consistency
  *
- * @author paul
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class ModelManager {
 

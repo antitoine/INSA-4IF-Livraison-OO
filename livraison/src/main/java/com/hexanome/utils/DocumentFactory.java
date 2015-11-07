@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * This class is a factory used to build objects providing convenient interfaces
  * to interact with input/output files used by the application
  *
- * @author paul
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class DocumentFactory {
     /**

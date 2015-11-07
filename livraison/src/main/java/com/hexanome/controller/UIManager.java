@@ -20,6 +20,8 @@ import java.util.Optional;
  * when the application is running
  * <p>
  * Should always be use as following UIManager.getInstance(). ...
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class UIManager {
 

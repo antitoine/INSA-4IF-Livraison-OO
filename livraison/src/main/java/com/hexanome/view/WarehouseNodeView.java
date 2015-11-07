@@ -7,6 +7,11 @@ import javafx.scene.control.Label;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.glyphfont.Glyph;
 
+/**
+ * This class represents the warehouse version of the nodeView
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
+ */
 public class WarehouseNodeView extends Label implements INodeViewShape {
     com.hexanome.model.Node node;
     /**

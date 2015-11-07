@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 /**
  * This class represents a time slot, with a start time and an end time.
- * @author paul
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class TimeSlot {
 

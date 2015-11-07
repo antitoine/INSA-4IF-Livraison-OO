@@ -3,6 +3,11 @@ package com.hexanome.view;
 import com.hexanome.model.Node;
 import java.util.Objects;
 
+/**
+ * This class represents a pair of nodes
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
+ */
 public class NodePair {
 
     Node node1;

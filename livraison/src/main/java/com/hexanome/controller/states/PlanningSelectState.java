@@ -17,7 +17,10 @@ import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 
 /**
- * @author antitoine \todo TODO
+ * This class represents the logic state when user is selecting a
+ * planning to load
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PlanningSelectState extends DefaultState {
 

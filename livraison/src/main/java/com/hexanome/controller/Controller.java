@@ -2,7 +2,10 @@ package com.hexanome.controller;
 
 import javafx.application.Application;
 /**
- * MainController
+ * This class is the main controller, its role is to initialize 
+ * properly the application and its graphics components.
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Controller {
     private static Controller controller = null;

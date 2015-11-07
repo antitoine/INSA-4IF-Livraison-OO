@@ -21,7 +21,8 @@ import org.jdom2.Element;
 /**
  * This class provides a convenient interface to extract information from the 
  * XML description of a Planning 
- * @author paul
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PlanningDocument extends XMLParser {
     /**

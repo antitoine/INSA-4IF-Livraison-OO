@@ -10,8 +10,10 @@ import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 
 /**
- * @author antitoine
- * \todo TODO
+ * This class represents the default logic state extended by all
+ * other states
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public abstract class DefaultState implements IState {
 

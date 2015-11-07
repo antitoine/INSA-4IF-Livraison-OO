@@ -4,8 +4,9 @@ import com.hexanome.utils.AbstractTSP;
 import java.util.Collection;
 
 /**
- *
- * @author pierre
+ *  This class represents \todo javadoc here
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class RouteTSP extends AbstractTSP {
 

@@ -12,8 +12,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 
 /**
- * @author antitoine
- *
+ * This class represents the logic state when a planning has been 
+ * loaded
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PlanningLoadedState extends DefaultState {
 

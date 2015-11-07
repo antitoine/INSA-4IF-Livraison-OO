@@ -11,7 +11,8 @@ import java.util.Iterator;
 
 /**
  * Abstract class implementing the ITSP interface. 
- * @author Pierre Jarsaillon
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public abstract class AbstractTSP implements ITSP  {
 

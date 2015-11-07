@@ -18,7 +18,11 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ * This class represents the view used to preview the roadmap
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
+ */
 public class RoadMapView extends GridPane {
 
     @FXML

@@ -16,9 +16,9 @@ import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 
 /**
- * This class manages both commands and state machines of the application
+ * This class manages both commands and the main state machine of the application
  *
- * @author paul
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class ContextManager {
 

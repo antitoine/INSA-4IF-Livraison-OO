@@ -7,7 +7,8 @@ package com.hexanome.utils;
 
 /**
  * Inteface representing a graph which can be used by generic algorithms.
- * @author Pierre Jarsaillon
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface IGraph {
 

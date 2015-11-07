@@ -4,8 +4,10 @@
 package com.hexanome.controller.states;
 
 /**
- * @author antitoine
- * \todo TODO
+ * This class represent the logic state in which the application
+ * is computing the best route to reach all delivery points
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class ComputingRouteState extends DefaultState {
 

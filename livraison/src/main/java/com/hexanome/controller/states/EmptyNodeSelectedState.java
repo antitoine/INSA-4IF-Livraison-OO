@@ -11,8 +11,10 @@ import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 
 /**
- * @author antitoine
- * \todo TODO
+ * This class represents the logic state when an emptyNode is 
+ * selected on the map
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class EmptyNodeSelectedState extends SelectionsStates {
 

@@ -9,8 +9,9 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import org.jdom2.Document;
 
 /**
- * This class provides a generic XML parser
- * @author paul
+ * This class provides a generic XML parser.
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class XMLParser {
    

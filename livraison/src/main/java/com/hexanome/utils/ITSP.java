@@ -7,7 +7,8 @@ package com.hexanome.utils;
 
 /**
  * Interface with the methods to use to resolve the Travelling Salesman Problem.
- * @author Pierre Jarsaillon
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface ITSP {
 

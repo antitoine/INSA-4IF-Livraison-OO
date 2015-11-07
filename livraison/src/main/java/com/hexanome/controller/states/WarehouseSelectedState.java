@@ -9,8 +9,10 @@ import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 
 /**
- * @author antitoine
- * \todo TODO
+ * This class represents the logic state when warehouse is selected 
+ * on the map
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class WarehouseSelectedState extends SelectionsStates {
 

@@ -9,8 +9,9 @@ import javafx.scene.Node;
 import org.controlsfx.control.PopOver;
 
 /**
- *
- * @author pierre
+ *  This interface defines methods to be implemented in nodeView classes
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface INodeViewShape {
     

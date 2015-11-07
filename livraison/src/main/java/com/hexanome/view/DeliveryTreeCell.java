@@ -11,6 +11,13 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 
+/**
+ * This class is the graphic component used to display an element 
+ * in a tree
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
+ * @see DeliveryTreeView
+ */
 final class DeliveryTreeCell extends TreeCell<String> {
 
     private TextField textField;

@@ -15,7 +15,8 @@ import org.jdom2.Element;
 /**
  * This class provides a convenient interface to extract information from the 
  * XML description of a Map 
- * @author Estelle
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class MapDocument extends XMLParser {
 

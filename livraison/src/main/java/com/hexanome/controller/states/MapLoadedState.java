@@ -10,7 +10,9 @@ import com.hexanome.view.ConstView;
 import javafx.application.Platform;
 
 /**
- * @author antitoine \todo TODO
+ * This class represents the logic state when a map has been loaded
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class MapLoadedState extends DefaultState {
 

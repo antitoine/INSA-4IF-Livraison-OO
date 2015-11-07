@@ -14,7 +14,10 @@ import javafx.scene.text.Text;
 import org.controlsfx.glyphfont.Glyph;
 
 /**
- *
+ * This class represents the popover content specific to a 
+ * delivery node
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PopOverContentDelivery extends PopOverContent {
 

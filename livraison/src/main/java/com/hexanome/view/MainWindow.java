@@ -28,6 +28,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class represents the main window of the application
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
+ */
 public class MainWindow extends AnchorPane {
 
     final FileChooser fileChooser;

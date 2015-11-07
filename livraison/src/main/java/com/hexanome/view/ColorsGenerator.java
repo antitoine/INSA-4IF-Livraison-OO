@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+/**
+ * This class generates colors to draw arcs associating them to 
+ * their timeslot
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
+ */
 public class ColorsGenerator {
 
     private static HashMap<TimeSlot, Color> timeSlotColors;

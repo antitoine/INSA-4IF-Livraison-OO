@@ -4,9 +4,11 @@ import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.view.ConstView;
 
-/**
- * @author antitoine
- *
+/** 
+ * This class represents the logic state at the very beginning 
+ * of the application
+ * 
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class InitState extends DefaultState {
 

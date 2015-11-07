@@ -8,7 +8,7 @@ import javafx.concurrent.Task;
 /**
  * Worker Thread used to compute a route of a planning. Can be interrupted.
  *
- * @author Pierre Jarsaillon
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PlanningComputeRouteWorker extends Task<Void> {
 

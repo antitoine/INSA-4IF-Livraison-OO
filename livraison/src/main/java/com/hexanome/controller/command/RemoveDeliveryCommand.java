@@ -8,7 +8,7 @@ import com.hexanome.model.TimeSlot;
 /**
  * This class represent the action of removing a delivery from the planning
  *
- * @author paul
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  * @see ICommand
  */
 
