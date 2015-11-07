@@ -1,5 +1,6 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.UIManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -7,14 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
-import javafx.stage.FileChooser;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -23,7 +25,7 @@ import java.util.logging.Logger;
 public class RoadMapView extends GridPane {
 
     @FXML
-    TextArea roadMapDescription;
+    TextFlow roadMapDescription;
 
     @FXML
     Button saveButton;
@@ -33,7 +35,7 @@ public class RoadMapView extends GridPane {
 
     Stage stage;
 
-    public RoadMapView(final String roadMap) {
+    public RoadMapView(final LinkedList<Text> texts) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.ROAD_MAP));
         fxmlLoader.setResources(ResourceBundle.getBundle("bundles.LangueBundle", new Locale("en")));
 
@@ -47,9 +49,8 @@ public class RoadMapView extends GridPane {
             stage.setScene(new Scene(this, 800, 600));
             stage.show();
 
-            roadMapDescription.setEditable(false);
             roadMapDescription.setPrefHeight(480);
-            roadMapDescription.setText(roadMap);
+            roadMapDescription.getChildren().addAll(texts);
 
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,20 +66,7 @@ public class RoadMapView extends GridPane {
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FileChooser fileChooser = new FileChooser();
-
-                //Set extension filter
-                FileChooser.ExtensionFilter extFilter =
-                        new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-                fileChooser.getExtensionFilters().add(extFilter);
-
-                //Show save file dialog
-                File file = fileChooser.showSaveDialog(stage);
-
-                if(file != null){
-                    SaveFile(roadMap, file);
-                    stage.close();
-                }
+                UIManager.getInstance().saveRoadMapDocument(stage);
             }
         });
 

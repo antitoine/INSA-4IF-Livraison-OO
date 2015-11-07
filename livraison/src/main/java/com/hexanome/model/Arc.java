@@ -122,5 +122,9 @@ public class Arc {
                 + "\"srcNodeId\":%s\n"
                 + "}", streetName, length, avgSpeed, duration, dest.getId(), src.getId());
     }
+
+    public String getStreetName() {
+        return streetName;
+    }
     
 }
