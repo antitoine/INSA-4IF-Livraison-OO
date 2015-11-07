@@ -7,8 +7,6 @@ import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import com.hexanome.utils.TypeWrapper;
-import java.util.HashMap;
-import java.util.Map;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -19,6 +17,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.glyphfont.Glyph;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Planning reprensention at the left list of deliveries
@@ -75,25 +76,6 @@ public class DeliveryTreeView extends VBox implements Subscriber {
 
     }
 
-    /**
-     * Add a timeSlot in the TreeView
-     *
-     * @param ts TimeSlot
-     */
-    public void AddTimeSlot(TimeSlot ts) {
-        String info = ts.getStartTime() + " - " + ts.getEndTime();
-        timeSlotBranch.put(ts, makeBranch(info, ConstView.TreeItemType.TIMESLOT, rootItem));
-    }
-
-    /**
-     * Delete a delivery in the TreeView
-     *
-     * @param delivery
-     */
-    public void DeleteDelivery(Delivery delivery) {
-        rootItem.getChildren().remove(deliveryBranch.get(delivery));
-        deliveryBranch.remove(delivery);
-    }
 
     /**
      * Remove all the items in the TreeView
@@ -140,25 +122,30 @@ public class DeliveryTreeView extends VBox implements Subscriber {
                 item = new TreeItem<>(title, new Glyph("FontAwesome", "CLOCK_ALT"));
                 break;
         }
-        item.setExpanded(true);
         parent.getChildren().add(item);
+        item.setExpanded(true);
+
         return item;
     }
 
     @Override
     public void update(Publisher p, Object arg) {
-        clearTree();
+
         if (p instanceof Planning) {
+            clearTree();
             int nbTimeSlots = 0;
             for (TimeSlot ts : ((Planning) (p)).getTimeSlots()) {
                 nbTimeSlots++;
+
                 String start = TypeWrapper.secondsToTimestamp(ts.getStartTime());
                 String end = TypeWrapper.secondsToTimestamp(ts.getEndTime());
 
                 TreeItem<String> tsItem = null;
                 tsItem = makeBranch(start + " - " + end,
                         ConstView.TreeItemType.TIMESLOT, rootItem);
+
                 timeSlotBranch.put(ts, tsItem);
+
                 for (Delivery d : ts.getDeliveries()) {
                     TreeItem<String> dItem = makeBranch("Delivery " + d.getId() +" - "+nbTimeSlots,
                             ConstView.TreeItemType.DELIVERY, tsItem);
