@@ -55,8 +55,8 @@ public class IOManager {
      *      Route to write in the file
      * @return true if the file was successfully written, else it returns false
      */
-    boolean saveRouteDocument(String filename, Route route) {
-        RouteDocument rdoc = DocumentFactory.createRouteDocument(filename);
+    boolean saveRouteDocument(File file, Route route) {
+        RouteDocument rdoc = DocumentFactory.createRouteDocument(file);
         rdoc.writeRoute(route);
         return rdoc.save();
     }

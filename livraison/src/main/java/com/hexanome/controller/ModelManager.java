@@ -8,6 +8,7 @@ import com.hexanome.utils.DocumentFactory;
 import com.hexanome.utils.MapDocument;
 import com.hexanome.utils.PlanningDocument;
 import com.hexanome.utils.RouteDocument;
+import java.io.File;
 
 /**
  * This class manages the model of the application, it is responsible of
@@ -116,10 +117,10 @@ public class ModelManager {
         return planning;
     }
 
-    RouteDocument generateRoadMap(String filename) {
+    RouteDocument generateRoadMap(File file) {
         RouteDocument rdoc = null;
         if(planning != null) {
-            rdoc = DocumentFactory.createRouteDocument(filename);
+            rdoc = DocumentFactory.createRouteDocument(file);
             rdoc.writeRoute(planning.getRoute());
         }
         return rdoc;

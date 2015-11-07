@@ -72,7 +72,7 @@ public class DocumentFactory {
      * @param filename Filename used to create the document
      * @return
      */
-    public static RouteDocument createRouteDocument(String filename) {
-        return new RouteDocument(filename);
+    public static RouteDocument createRouteDocument(File file) {
+        return new RouteDocument(file);
     }
 }

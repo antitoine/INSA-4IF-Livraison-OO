@@ -137,7 +137,7 @@ public class UIManager {
         File file = fileChooser.showSaveDialog(stage);
 
         if(file != null){
-            ModelManager.getInstance().generateRoadMap(file.getAbsolutePath());
+            ModelManager.getInstance().generateRoadMap(file);
             stage.close();
         }
     }

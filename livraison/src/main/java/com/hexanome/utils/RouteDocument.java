@@ -25,14 +25,15 @@ import java.util.logging.Logger;
  *  This class provides a convenient interface to write a Route output file 
  * @author paul
  */
-public class RouteDocument extends File {
+public class RouteDocument {
+    private File file;
     private String content;
     /**
      * Creates a new instance of a RouteDocument using pathname
      * @param pathname 
      */
-    public RouteDocument(String pathname) {
-        super(pathname);
+    public RouteDocument(File file) {
+        this.file = file;
     }
     /**
      * Writes the route to the document content
@@ -47,11 +48,12 @@ public class RouteDocument extends File {
      */
     public boolean save() {
         PrintWriter writer = null;
+        boolean saved = false;
         try {
-            writer = new PrintWriter(this, "UTF-8");
+            writer = new PrintWriter(file, "UTF-8");
             writer.println(content);
             writer.close();
-            return true;
+            saved = true;
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
             Logger.getLogger(RouteDocument.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -59,7 +61,7 @@ public class RouteDocument extends File {
                 writer.close();
             }
         }
-        return false;
+        return saved;
     }
     /**
      * Getter of content property
