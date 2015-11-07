@@ -1,27 +1,17 @@
 package com.hexanome.view;
 
 import com.hexanome.model.TimeSlot;
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import javafx.scene.paint.Color;
 
 public class ColorsGenerator {
 
-    private final ArrayList<Color> colors;
-
-    public static HashMap<TimeSlot, Color> getTimeSlotColors() {
-        return timeSlotColors;
-    }
     private static HashMap<TimeSlot, Color> timeSlotColors;
     private static ColorsGenerator colorgenerator;
-
-    public static ColorsGenerator getInstance(Collection<TimeSlot> timeSlots) {
-        if (colorgenerator == null) {
-            colorgenerator = new ColorsGenerator(timeSlots);
-        }
-        return colorgenerator;
-    }
+    private final ArrayList<Color> colors;
 
     /**
      * Allow to generate colors for timeSlots
@@ -32,17 +22,16 @@ public class ColorsGenerator {
         colors = new ArrayList<>();
         timeSlotColors = new HashMap<>();
 
-        colors.add(Color.RED);
         colors.add(Color.BLUE);
+        colors.add(Color.BROWN);
         colors.add(Color.ORANGE);
+        colors.add(Color.PINK);
+        colors.add(Color.LIGHTGOLDENRODYELLOW);
         colors.add(Color.web("#89CFF0"));
         colors.add(Color.YELLOW);
         colors.add(Color.ORANGE);
-        colors.add(Color.BROWN);
         colors.add(Color.GREEN);
         colors.add(Color.VIOLET);
-        colors.add(Color.PINK);
-        colors.add(Color.LIGHTGOLDENRODYELLOW);
         colors.add(Color.AQUAMARINE);
         colors.add(Color.CHOCOLATE);
         colors.add(Color.CHARTREUSE);
@@ -52,6 +41,17 @@ public class ColorsGenerator {
             timeSlotColors.put(ts, colors.get((i % colors.size())));
             i++;
         }
+    }
+
+    public static HashMap<TimeSlot, Color> getTimeSlotColors() {
+        return timeSlotColors;
+    }
+
+    public static ColorsGenerator getInstance(Collection<TimeSlot> timeSlots) {
+        if (colorgenerator == null) {
+            colorgenerator = new ColorsGenerator(timeSlots);
+        }
+        return colorgenerator;
     }
 
     /**

@@ -10,9 +10,14 @@ import org.controlsfx.control.PopOver;
 
 public class DeliveryNodeView extends Circle implements INodeViewShape {
     com.hexanome.model.Node node;
-    
-    public DeliveryNodeView(com.hexanome.model.Node node) {     
-        setFill(ColorsGenerator.getTimeSlotColor(node.getDelivery().getTimeSlot()));
+
+    public DeliveryNodeView(com.hexanome.model.Node node) {
+        if (node.getDelivery().getTimeSlot() == null) {
+            setFill(Color.RED);
+        } else {
+            setFill(ColorsGenerator
+                    .getTimeSlotColor(node.getDelivery().getTimeSlot()));
+        }
         setRadius(5.0);
         setStroke(Color.BLACK);
         setStrokeType(StrokeType.INSIDE);
