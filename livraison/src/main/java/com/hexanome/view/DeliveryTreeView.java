@@ -28,18 +28,18 @@ import java.util.Map;
  */
 public class DeliveryTreeView extends VBox implements Subscriber {
 
+    static HashMap<String, Delivery> deliveresByName;
     TreeView<String> deliveryTree;
     TreeItem<String> rootItem;
-
     HashMap<TimeSlot, TreeItem<String>> timeSlotBranch;
     HashMap<TimeSlot, Integer> timeSlotRow;
-
     HashMap<Delivery, TreeItem<String>> deliveryBranch;
 
     public DeliveryTreeView() {
         BorderPane.setAlignment(this, Pos.CENTER);
         deliveryBranch = new HashMap<>();
         timeSlotBranch = new HashMap<>();
+        deliveresByName = new HashMap<>();
 
         deliveryTree = new TreeView<>();
 
@@ -76,6 +76,9 @@ public class DeliveryTreeView extends VBox implements Subscriber {
 
     }
 
+    public static Delivery getDeliveryIdFromName(String string) {
+        return deliveresByName.get(string);
+    }
 
     /**
      * Remove all the items in the TreeView
@@ -84,6 +87,7 @@ public class DeliveryTreeView extends VBox implements Subscriber {
         rootItem.getChildren().clear();
         deliveryBranch.clear();
         timeSlotBranch.clear();
+        deliveresByName.clear();
     }
 
     /**
@@ -112,10 +116,11 @@ public class DeliveryTreeView extends VBox implements Subscriber {
      * @return
      */
     private TreeItem<String> makeBranch(String title, ConstView.TreeItemType treeItemType,
-            TreeItem<String> parent) {
+                                        TreeItem<String> parent, Delivery d) {
         TreeItem<String> item = null;
         switch (treeItemType) {
             case DELIVERY:
+                deliveresByName.put(title, d);
                 item = new TreeItem<>(title, new Glyph("FontAwesome", "TRUCK"));
                 break;
             case TIMESLOT:
@@ -142,13 +147,13 @@ public class DeliveryTreeView extends VBox implements Subscriber {
 
                 TreeItem<String> tsItem = null;
                 tsItem = makeBranch(start + " - " + end,
-                        ConstView.TreeItemType.TIMESLOT, rootItem);
+                        ConstView.TreeItemType.TIMESLOT, rootItem, null);
 
                 timeSlotBranch.put(ts, tsItem);
 
                 for (Delivery d : ts.getDeliveries()) {
                     TreeItem<String> dItem = makeBranch("Delivery " + d.getId() +" - "+nbTimeSlots,
-                            ConstView.TreeItemType.DELIVERY, tsItem);
+                            ConstView.TreeItemType.DELIVERY, tsItem, d);
                     deliveryBranch.put(d, dItem);
                 }
             }

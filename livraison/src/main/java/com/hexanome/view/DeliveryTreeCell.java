@@ -1,5 +1,7 @@
 package com.hexanome.view;
 
+import com.hexanome.controller.UIManager;
+import com.hexanome.model.Delivery;
 import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextField;
@@ -43,6 +45,12 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 /* the drag and drop gesture ended */
                 /* if the data was successfully moved, clear it */
                 System.out.println("Drag done " + event.getDragboard().getString() + " <->" + event.getSource().toString());
+                DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
+                if (targetCell.getString().startsWith("D")) {
+                    Delivery delivery1 = DeliveryTreeView.getDeliveryIdFromName(event.getDragboard().getString());
+                    Delivery delivery2 = DeliveryTreeView.getDeliveryIdFromName(targetCell.getString());
+                    UIManager.getInstance().swapDelivery(delivery1, delivery2);
+                }
                 event.consume();
             }
         });

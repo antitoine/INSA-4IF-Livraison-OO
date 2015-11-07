@@ -1,5 +1,6 @@
 package com.hexanome.controller;
 
+import com.hexanome.model.Delivery;
 import com.hexanome.utils.RouteDocument;
 import com.hexanome.view.ColorsGenerator;
 import com.hexanome.view.MainWindow;
@@ -174,4 +175,8 @@ public class UIManager {
     }
 
 
+    public void swapDelivery(Delivery delivery1, Delivery delivery2) {
+        System.out.println(delivery1);
+        System.out.println(delivery2);
+    }
 }
