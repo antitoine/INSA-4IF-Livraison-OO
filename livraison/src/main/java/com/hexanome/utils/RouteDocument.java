@@ -5,14 +5,19 @@
  */
 package com.hexanome.utils;
 
-import com.hexanome.controller.ModelManager;
 import com.hexanome.model.Arc;
+import com.hexanome.model.Node;
 import com.hexanome.model.Path;
 import com.hexanome.model.Route;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,12 +52,12 @@ public class RouteDocument extends File {
             writer.println(content);
             writer.close();
             return true;
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(RouteDocument.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
+        } catch (FileNotFoundException | UnsupportedEncodingException ex) {
             Logger.getLogger(RouteDocument.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            writer.close();
+            if (writer != null) {
+                writer.close();
+            }
         }
         return false;
     }
@@ -69,7 +74,7 @@ public class RouteDocument extends File {
      * @return 
      */
     public static String generateRouteDocumentContent(Route route) {   
-        String docContent = " --- ROAD MAP ---\n";
+        String docContent = " --- ROAD MAP ---\n\n";
         for(Path path : route.getPaths()){
             docContent += "From : "+path.getFirstNode().getLocation() + "\n";
             for(Arc arc : path.getArcs()){
@@ -78,6 +83,33 @@ public class RouteDocument extends File {
             docContent += "Then, go to "+path.getLastNode().getLocation()+"\n";
         }
         return docContent;
+    }
+
+    /**
+     * Format content of RouteDocument
+     * @param route
+     * @return
+     */
+    public static LinkedList<Text> generateFormatedRouteDocumentContent(Route route) {
+        LinkedList<Text> texts = new LinkedList<>();
+        Text title = new Text("Road Map \n\n");
+        title.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+        texts.add(title);
+        for(Path path : route.getPaths()){
+            texts.add(new Text("From intersection "));
+            texts.add(new Text(nodeToString(path.getFirstNode())+ "\n"));
+            for(Arc arc : path.getArcs()){
+                texts.add(new Text("take the road : "));
+                texts.add(new Text(arc.getStreetName()+"\n"));
+            }
+            texts.add(new Text("Then, go to intersection "));
+            texts.add(new Text(nodeToString(path.getLastNode())+"\n\n"));
+        }
+        return texts;
+    }
+
+    private static String nodeToString(Node node){
+        return node.getId() + " ("+node.getLocation().x+ ", "+node.getLocation().y+")";
     }
     
 }
