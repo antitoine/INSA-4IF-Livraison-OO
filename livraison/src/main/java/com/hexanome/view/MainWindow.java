@@ -101,32 +101,16 @@ public class MainWindow extends AnchorPane {
 
     }
 
-    /**
-     * Notify the UI Manager that the user wants to quit the application
-     *
-     * @param event
-     */
-    @FXML
-    private void quitApplication(ActionEvent event) {
-        ContextManager.getInstance().exit(); // Special undoable
-    }
 
-    public MapView getMapView() {
-        return mapView;
-    }
+
 
     public DeliveryTreeView getDeliveryTreeView() {
         return deliveryTreeView;
     }
 
-    @FXML
-    private void loadMap() {
-        ContextManager.getInstance().getCurrentState().btnLoadMap();
-    }
 
-    @FXML
-    private void loadPlanning() {
-        ContextManager.getInstance().getCurrentState().btnLoadPlanning();
+    public MapView getMapView() {
+        return mapView;
     }
 
     public void askFile() {
@@ -138,37 +122,9 @@ public class MainWindow extends AnchorPane {
         }
     }
 
-    @FXML
-    private void generateRoadMap() {
-        // ContextManager.getInstance().getCurrentState().
-        UIManager.getInstance().generateRoadMap();
-    }
-
-    @FXML
-    private void undo() {
-        ContextManager.getInstance().undo();
-    }
-
-    @FXML
-    private void redo() {
-        ContextManager.getInstance().redo();
-    }
-
-    private static void configureFileChooser(final FileChooser fileChooser, String title) {
-        fileChooser.setTitle(title);
-        fileChooser.setInitialDirectory(
-                new File(System.getProperty("user.home"))
-        );
-
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("xml", "*.xml"),
-                new FileChooser.ExtensionFilter("All files", "*.*")
-        );
-    }
-
     /**
      *
-     * @param text
+     * @param text set info text to display at the bottom
      */
     public void setLoadingState(final String text) {
         labelInfos.setText(text);
@@ -192,45 +148,22 @@ public class MainWindow extends AnchorPane {
         scrollPaneMap.setPannable(true);
     }
 
-    @FXML
-    public void zoomIn() {
-        zoomLevel += 0.5;
-        mapView.setScaleX(zoomLevel);
-        mapView.setScaleY(zoomLevel);
-        //TODO update scrollbar
-    }
-
-    @FXML
-    public void zoomOut() {
-        zoomLevel -= 0.25;
-        mapView.setScaleX(zoomLevel);
-        mapView.setScaleY(zoomLevel);
-
-        scrollPaneMap.setFitToWidth(true);
-        scrollPaneMap.setFitToHeight(true);
-        //TODO update scrollbar
-    }
-
     /**
      * Display an error
      *
-     * @param msg error msg
+     * @param msg error msg to display
      */
     public void displayError(String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error - " + msg);
         alert.setContentText(msg);
-        /**
-         * Java 8 : alert.showAndWait(); Java 7 : --> showAndWait() should work
-         * too
-         */
         alert.show();
     }
 
     /**
      * Disable the button
      *
-     * @param btn
+     * @param btn btn to disable
      */
     public void disableButton(ConstView.Button btn) {
         switch (btn) {
@@ -255,7 +188,7 @@ public class MainWindow extends AnchorPane {
     /**
      * Enable the button
      *
-     * @param btn
+     * @param btn btn to enable
      */
     public void enableButton(ConstView.Button btn) {
         switch (btn) {
@@ -303,11 +236,68 @@ public class MainWindow extends AnchorPane {
         legendDisplayed = true;
     }
 
-    /**
-     * Clear the legend
-     */
-    void clearLegend() {
-        legendGridPane.getChildren().clear();
+
+    private static void configureFileChooser(final FileChooser fileChooser, String title) {
+        fileChooser.setTitle(title);
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+        );
+
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("xml", "*.xml"),
+                new FileChooser.ExtensionFilter("All files", "*.*")
+        );
+    }
+
+
+    @FXML
+    private void quitApplication(ActionEvent event) {
+        ContextManager.getInstance().exit(); // Special undoable
+    }
+
+    @FXML
+    private void loadMap() {
+        ContextManager.getInstance().getCurrentState().btnLoadMap();
+    }
+
+    @FXML
+    private void loadPlanning() {
+        ContextManager.getInstance().getCurrentState().btnLoadPlanning();
+    }
+
+    @FXML
+    private void generateRoadMap() {
+        // ContextManager.getInstance().getCurrentState().
+        UIManager.getInstance().generateRoadMap();
+    }
+
+    @FXML
+    private void undo() {
+        ContextManager.getInstance().undo();
+    }
+
+    @FXML
+    private void redo() {
+        ContextManager.getInstance().redo();
+    }
+
+    @FXML
+    private void zoomIn() {
+        zoomLevel += 0.5;
+        mapView.setScaleX(zoomLevel);
+        mapView.setScaleY(zoomLevel);
+        //TODO update scrollbar
+    }
+
+    @FXML
+    private void zoomOut() {
+        zoomLevel -= 0.25;
+        mapView.setScaleX(zoomLevel);
+        mapView.setScaleY(zoomLevel);
+
+        scrollPaneMap.setFitToWidth(true);
+        scrollPaneMap.setFitToHeight(true);
+        //TODO update scrollbar
     }
 
 

@@ -22,50 +22,6 @@ public class MapView extends AnchorPane implements Subscriber {
     LinkedList<ArcView> arcslist = new LinkedList<>();
     HashMap<NodePair, LinkedList<Arc>> arcsMap = new HashMap<>();
 
-    private void addArcs(Collection <Arc> arcs, ConstView.ArcViewType type){
-        if(arcs == null){
-            return;
-        }
-
-        for (Arc arc : arcs) {
-            NodePair np = new NodePair(arc.getSrc(), arc.getDest());
-            if (arcsMap.get(np) != null) {
-                arcsMap.get(np).add(arc);
-            } else {
-                LinkedList<Arc> s = new LinkedList<>();
-                arcsMap.put(np, s);
-                s.add(arc);
-            }
-        }
-
-        for (Entry<NodePair, LinkedList<Arc>> entrySet : arcsMap.entrySet()) {
-            ArcView av = null;
-            switch (type){
-                case ROUTE:
-                    av = new ArcView(entrySet.getValue(),
-                            ConstView.ArcViewType.ROUTE);
-                    break;
-                case STANDARD:
-                    av = new ArcView(entrySet.getValue(),
-                            ConstView.ArcViewType.STANDARD);
-                    break;
-            }
-            arcslist.add(av);
-        }
-    }
-
-    private void addEmptyNodes(Collection<Node> nodes) {
-        if (nodes != null) {
-            for (Node node : nodes) {
-                NodeView nv = new NodeView(ConstView.EMPTY_NODE, node);
-                nodeList.put(node, nv);
-                nv.relocate(node.getLocation().x - nv.getPrefWidth() / 2,
-                        node.getLocation().y - nv.getPrefHeight() / 2);
-                nv.toFront();
-            }
-            getChildren().addAll(nodeList.values());
-        }
-    }
 
     @Override
     public void update(Publisher p, Object arg) {
@@ -75,7 +31,7 @@ public class MapView extends AnchorPane implements Subscriber {
             clearMap();
             Map map = (Map) p;
 
-            addArcs(map.getArcs(), ConstView.ArcViewType.STANDARD);
+            addArcs(map.getArcs());
             getChildren().addAll(arcslist);
 
             addEmptyNodes(map.getNodes().values());
@@ -99,33 +55,6 @@ public class MapView extends AnchorPane implements Subscriber {
     }
 
 
-    private void updateRouteOnMap(Planning planning, Map map){
-        ArrayList<Arc> mapArc = new ArrayList<>(map.getArcs());
-
-        addArcs(mapArc, ConstView.ArcViewType.ROUTE);
-        getChildren().addAll(arcslist);
-
-        addEmptyNodes(map.getNodes().values());
-
-        for (TimeSlot ts : planning.getTimeSlots()) {
-            for (Delivery d : ts.getDeliveries()) {
-                (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE);
-            }
-        }
-
-        (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSE_NODE);
-    }
-
-    /**
-     * Remove all nodeview and arview from the mapView
-     */
-    private void clearMap() {
-        nodeList.clear();
-        arcslist.clear();
-        arcsMap.clear();
-        getChildren().clear();
-    }
-
     /**
      * Select the delivery passed as parameter
      *
@@ -143,5 +72,71 @@ public class MapView extends AnchorPane implements Subscriber {
     void hidePopOver(Node node) {
         nodeList.get(node).hidePopOver();
     }
+
+
+
+    private void updateRouteOnMap(Planning planning, Map map){
+        ArrayList<Arc> mapArc = new ArrayList<>(map.getArcs());
+
+        addArcs(mapArc);
+        getChildren().addAll(arcslist);
+
+        addEmptyNodes(map.getNodes().values());
+
+        for (TimeSlot ts : planning.getTimeSlots()) {
+            for (Delivery d : ts.getDeliveries()) {
+                (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE);
+            }
+        }
+
+        (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSE_NODE);
+    }
+
+    private void addArcs(Collection <Arc> arcs){
+        if(arcs == null){
+            return;
+        }
+
+        for (Arc arc : arcs) {
+            NodePair np = new NodePair(arc.getSrc(), arc.getDest());
+            if (arcsMap.get(np) != null) {
+                arcsMap.get(np).add(arc);
+            } else {
+                LinkedList<Arc> s = new LinkedList<>();
+                arcsMap.put(np, s);
+                s.add(arc);
+            }
+        }
+
+        for (Entry<NodePair, LinkedList<Arc>> entrySet : arcsMap.entrySet()) {
+            ArcView av  = new ArcView(entrySet.getValue());
+            arcslist.add(av);
+        }
+    }
+
+    private void addEmptyNodes(Collection<Node> nodes) {
+        if (nodes != null) {
+            for (Node node : nodes) {
+                NodeView nv = new NodeView(ConstView.EMPTY_NODE, node);
+                nodeList.put(node, nv);
+                nv.relocate(node.getLocation().x - nv.getPrefWidth() / 2,
+                        node.getLocation().y - nv.getPrefHeight() / 2);
+                nv.toFront();
+            }
+            getChildren().addAll(nodeList.values());
+        }
+    }
+
+
+    /**
+     * Remove everything from the mapView
+     */
+    private void clearMap() {
+        nodeList.clear();
+        arcslist.clear();
+        arcsMap.clear();
+        getChildren().clear();
+    }
+
 
 }
