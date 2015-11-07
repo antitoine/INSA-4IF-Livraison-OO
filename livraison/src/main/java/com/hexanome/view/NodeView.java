@@ -39,7 +39,6 @@ public class NodeView extends StackPane {
                 nodeShape.onMouseClickedNotify(self);
             }
         });
-
     }
 
     public PopOverContent getPopoverContent() {
