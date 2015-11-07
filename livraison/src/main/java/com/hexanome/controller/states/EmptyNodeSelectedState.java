@@ -4,6 +4,7 @@
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.UIManager;
 import com.hexanome.controller.command.AddDeliveryCommand;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
@@ -39,6 +40,10 @@ public class EmptyNodeSelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnDelivery(Delivery delivery) {
+        // Hide old pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
+        // Show new popover
+        UIManager.getInstance().getMainWindow().getMapView().showPopOver(delivery.getNode());
         // Jump to DeliverySelectedState
         ContextManager.getInstance().setCurrentState(DeliverySelectedState.getInstance());
     }
@@ -48,6 +53,8 @@ public class EmptyNodeSelectedState extends SelectionsStates {
      */
     @Override
     public void clickSomewhereElse() {
+        // Hide currently open pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
         // Jump to NothingSelectedState
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
     }
@@ -57,6 +64,8 @@ public class EmptyNodeSelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnWarehouse(Node warehouse) {
+        // Hide current pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
         // Jump to WarehouseSelectedState
         ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
     }
@@ -76,12 +85,16 @@ public class EmptyNodeSelectedState extends SelectionsStates {
 
     @Override
     public void btnAddDelivery(Node node, Node previousDeliveryNode, TimeSlot timeSlot) {
+        // Close current pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
         // Builds a new add delivery command
         AddDeliveryCommand adc = new AddDeliveryCommand(node, previousDeliveryNode, timeSlot);
         // Execute command
         ContextManager.getInstance().executeCommand(adc);
         // Jump to DeliverySelectedState
         ContextManager.getInstance().setCurrentState(DeliverySelectedState.getInstance());
+        // Show new pop over
+        UIManager.getInstance().getMainWindow().getMapView().showPopOver(node);
     }
 
 }

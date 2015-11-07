@@ -39,16 +39,16 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void btnRemoveDelivery(Delivery delivery) {
+        // Close the open pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();        
         // Create a new instance of RemoveDeliveryCommand
         RemoveDeliveryCommand rmDeliveryCmd = new RemoveDeliveryCommand(delivery);
         // ContextManager is asked to execute the command
         ContextManager.getInstance().executeCommand(rmDeliveryCmd);
-        // Close the open pop over
-        UIManager.getInstance().getMainWindow().getMapView().hidePopOver(delivery.getNode());
         // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
-        // \todo Open new popover
-        //UIManager.getInstance().getMainWindow().getMapView().showPopOver(delivery.getNode());
+        // Open new popover
+        UIManager.getInstance().getMainWindow().getMapView().showPopOver(delivery.getNode());
     }
 
     /* (non-Javadoc)
@@ -57,9 +57,9 @@ public class DeliverySelectedState extends SelectionsStates {
     @Override
     public void clickOnEmptyNode(Node node) {
         // Close the open pop over
-        UIManager.getInstance().getMainWindow().getMapView().hidePopOver(node);
-        // \todo TODO Open the new pop over
-        //UIManager.getInstance().getMainWindow().getMapView().showPopOver(node);
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
+        // Open the new popover
+        UIManager.getInstance().getMainWindow().getMapView().showPopOver(node);
         // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
@@ -69,7 +69,8 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickSomewhereElse() {
-        // \todo TODO Close the open pop over
+        // Hide currently open pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
         // Jump to NothingSelectedState
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
     }
@@ -79,8 +80,10 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void clickOnWarehouse(Node warehouse) {
-        // \todo TODO Close the open pop over
-        // \todo TODO Open the new pop over
+        // Hide current pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
+        // Show new pop over
+        UIManager.getInstance().getMainWindow().getMapView().showPopOver(warehouse);
         // Jump to WarehouseSelectedState
         ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
     }

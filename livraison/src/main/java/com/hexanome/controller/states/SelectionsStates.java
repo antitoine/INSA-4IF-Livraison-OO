@@ -19,7 +19,7 @@ public abstract class SelectionsStates extends DefaultState {
     @Override
     public void btnLoadMap() {
         // WARNING : calls order matters
-        if (UIManager.getInstance().askConfirmation("Planning and Map will be lost forever")) {
+        if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
             // Full clear of the model
             ModelManager.getInstance().clearModel();
             // Clear commands history
@@ -38,7 +38,7 @@ public abstract class SelectionsStates extends DefaultState {
     public void btnLoadPlanning() {
         // WARNING : calls order matters
         // Clear current model's planning
-        if (UIManager.getInstance().askConfirmation("Planning will be lost forever")) {
+        if (UIManager.getInstance().askConfirmation("Current planning will be lost.")) {
             // Clear planning in model
             ModelManager.getInstance().clearPlanning();
             // Clear commands history
@@ -55,13 +55,14 @@ public abstract class SelectionsStates extends DefaultState {
      */
     @Override
     public void btnCloseMap() {
-        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
-        // Full clear model
-        ModelManager.getInstance().clearModel();
-        // Clear commands history
-        ContextManager.getInstance().clearCommandsHistory();
-        // Jump to InitState
-        ContextManager.getInstance().setCurrentState(InitState.getInstance());
+        if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
+            // Full clear model
+            ModelManager.getInstance().clearModel();
+            // Clear commands history
+            ContextManager.getInstance().clearCommandsHistory();
+            // Jump to InitState
+            ContextManager.getInstance().setCurrentState(InitState.getInstance());
+        }
     }
 
     /* (non-Javadoc)
@@ -69,13 +70,14 @@ public abstract class SelectionsStates extends DefaultState {
      */
     @Override
     public void btnClearPlanning() {
-        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
-        // Clear model's current planning
-        ModelManager.getInstance().clearPlanning();
-        // Clear commands history
-        ContextManager.getInstance().clearCommandsHistory();
-        // Jump to MapLoadedState
-        ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
+        if (UIManager.getInstance().askConfirmation("Current planning will be lost.")) {
+            // Clear model's current planning
+            ModelManager.getInstance().clearPlanning();
+            // Clear commands history
+            ContextManager.getInstance().clearCommandsHistory();
+            // Jump to MapLoadedState
+            ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
+        }
     }
 
     /* (non-Javadoc)

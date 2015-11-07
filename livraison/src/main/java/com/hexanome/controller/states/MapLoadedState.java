@@ -40,7 +40,7 @@ public class MapLoadedState extends DefaultState {
     @Override
     public void btnLoadMap() {
         // WARNING : calls order matters
-        if (UIManager.getInstance().askConfirmation("Planning and Map will be lost forever")) {
+        if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
             // Full clear of the model
             ModelManager.getInstance().clearModel();
             // Jump to MapSelectState
@@ -67,11 +67,12 @@ public class MapLoadedState extends DefaultState {
      */
     @Override
     public void btnCloseMap() {
-        // \todo Afficher par la vue un message comme quoi tout est perdu avant de changer d'état
-        // Full clear of the model
-        ModelManager.getInstance().clearModel();
-        // Jump to InitState
-        ContextManager.getInstance().setCurrentState(InitState.getInstance());
+        if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
+            // Full clear of the model
+            ModelManager.getInstance().clearModel();
+            // Jump to InitState
+            ContextManager.getInstance().setCurrentState(InitState.getInstance());
+        }
     }
 
     @Override

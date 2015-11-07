@@ -67,8 +67,6 @@ public class PopOverContentEmptyNode extends PopOverContent {
 
         String selectedTimeSlot = timeSlotsComboBox.getSelectionModel().getSelectedItem();
 
-        UIManager.getInstance().getMainWindow().getMapView().hidePopOver(node);
-
         ContextManager.getInstance().getCurrentState().btnAddDelivery(node,
                prevDeliveryMap.get(selectedPreviousDelivery), 
                timeSlotsMap.get(selectedTimeSlot));
