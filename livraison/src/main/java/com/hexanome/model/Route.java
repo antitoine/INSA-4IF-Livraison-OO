@@ -65,7 +65,7 @@ public class Route implements Publisher {
                 if (previousPath != null) {
                     Delivery previousDelivery = previousPath.getFirstNode().getDelivery();
                     if (previousDelivery != null) {
-                        deliveryTime += previousDelivery.getDeliveryTime();
+                        deliveryTime += previousDelivery.getDeliveryTime() ;
                     }
                 }
 
