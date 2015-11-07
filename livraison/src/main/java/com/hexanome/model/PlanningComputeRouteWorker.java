@@ -88,7 +88,7 @@ public class PlanningComputeRouteWorker extends Task<Void> {
         System.out.print("Solution de longueur " + tsp.getSolutionCost() + " trouvee en " + (System.currentTimeMillis() - tempsDebut) + "ms : ");
 
         // Recreate the path to create the Route
-        int nbEdges = graph.getNbEdges();
+        int nbEdges = graph.getNbArcs();
         LinkedList<Path> paths = new LinkedList<>();
 
         for (int i = 0, j = 1; j < nbEdges; ++i, ++j) {
@@ -97,7 +97,7 @@ public class PlanningComputeRouteWorker extends Task<Void> {
 
         paths.add(graph.indexAsPath(solutions[nbEdges - 1], solutions[0]));
 
-        for (int i = 0; i < graph.getNbEdges(); ++i) {
+        for (int i = 0; i < graph.getNbArcs(); ++i) {
             System.out.print(solutions[i] + " ");
         }
         System.out.print("\n");

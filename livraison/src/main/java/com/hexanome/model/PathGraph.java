@@ -36,7 +36,7 @@ public class PathGraph implements IGraph {
     }    
 
     @Override
-    public int getNbEdges() {
+    public int getNbArcs() {
         return graph.keySet().size();
     }
 

@@ -12,13 +12,13 @@ package com.hexanome.utils;
 public interface IGraph {
 
     /**
-     * @return The number of edges of the implemented graph.
+     * @return The number of arcs of the implemented graph.
      */
-    public int getNbEdges();
+    public int getNbArcs();
 
     /**
-     * @param i The number of the initial vertex.
-     * @param j The number of the terminal vertex.
+     * @param i The number of the initial vertex. (starts to 0)
+     * @param j The number of the terminal vertex. (starts to 0)
      * @return The cost associated with the directed arc (i, j), if it exists. 
      * Otherwise, returns -1.
      */
@@ -26,8 +26,8 @@ public interface IGraph {
 
     /**
      * Check if an arc exists.
-     * @param i The number of the initial vertex.
-     * @param j The number of the terminal vertex.
+     * @param i The number of the initial vertex. (starts to 0)
+     * @param j The number of the terminal vertex. (starts to 0)
      * @return True if the directed arc (i, j) exists, false otherwise.
      */
     public boolean isArc(int i, int j);
