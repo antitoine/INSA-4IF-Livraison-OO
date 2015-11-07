@@ -216,7 +216,7 @@ public class MainWindow extends AnchorPane {
         }
         legendGridPane.setVisible(true);
         int i = 1;
-        Text txtNotInTime = new Text("Delivery outside time slot");
+        Text txtNotInTime = new Text("Out of time slot");
         Circle circle = new Circle(5.0, Color.RED);
         GridPane.setMargin(circle, new Insets(0, 12, 0, 0));
         GridPane.setMargin(txtNotInTime, new Insets(0, 0, 0, 12));

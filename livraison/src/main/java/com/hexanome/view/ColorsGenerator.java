@@ -24,14 +24,14 @@ public class ColorsGenerator {
 
         colors.add(Color.BLUE);
         colors.add(Color.BROWN);
-        colors.add(Color.PINK);
         colors.add(Color.ORANGE);
+        colors.add(Color.PINK);
+        colors.add(Color.LIGHTGOLDENRODYELLOW);
         colors.add(Color.web("#89CFF0"));
         colors.add(Color.YELLOW);
         colors.add(Color.ORANGE);
         colors.add(Color.GREEN);
         colors.add(Color.VIOLET);
-        colors.add(Color.LIGHTGOLDENRODYELLOW);
         colors.add(Color.AQUAMARINE);
         colors.add(Color.CHOCOLATE);
         colors.add(Color.CHARTREUSE);
