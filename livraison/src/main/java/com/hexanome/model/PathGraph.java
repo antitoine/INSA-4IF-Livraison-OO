@@ -77,10 +77,14 @@ public class PathGraph implements IGraph {
     }
     
     /**
-     * Add a Path to the current graph.
+     * Add a Path to the current graph. Ignore if path is null.
      * @param path The Path to add.
      */
     public void addPath(Path path) {
+        if (path == null) {
+            return;
+        }
+        
         Node firstNode = path.getFirstNode();
         
         if (!nodes.containsValue(firstNode.getId())) {

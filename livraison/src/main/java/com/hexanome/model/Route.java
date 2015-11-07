@@ -122,9 +122,8 @@ public class Route implements Publisher {
      * @param delivery     the delivery to add.
      * @param nodePreviousDelivery The node with the delivery that will be executed
      *                     before the one to add.
-     * @param timeSlot     the time slot to which the new delivery will belong.
      */
-    void addDelivery(Delivery delivery, Node nodePreviousDelivery, TimeSlot timeSlot) {
+    void addDelivery(Delivery delivery, Node nodePreviousDelivery) {
         // Find the previous delivery in the list of paths
         int indexPreviousPath = -1;
         Path pathToReplace = null;
@@ -223,35 +222,28 @@ public class Route implements Publisher {
                      && indexPath <= maxIndexPath; ++indexPath) {
             Path p = paths.get(indexPath);
 
-            // Find the path which begins with delivery1 or delivery2 
             if (previousPath == null) {
-                Delivery srcDelivery = p.getFirstNode().getDelivery();
-                if (srcDelivery != null) {
-                    if (srcDelivery.equals(delivery1)) {
+                Delivery destDelivery = p.getLastNode().getDelivery();
+                if (destDelivery != null) {
+                    if (destDelivery.equals(delivery1)) {
                         previousPath = p;
-                        previousDelivery = delivery1;
-                        indexPreviousPath = indexPath;
-                    } else if (srcDelivery.equals(delivery2)) {
-                        previousPath = p;
+                        nextDelivery = delivery1;
                         previousDelivery = delivery2;
+                        indexPreviousPath = indexPath;
+                    } else if (destDelivery.equals(delivery2)) {
+                        previousPath = p;
+                        nextDelivery = delivery2;
+                        previousDelivery = delivery1;
                         indexPreviousPath = indexPath;
                     }
                 }
             }
 
-            // Find the path which ends with delivery1 or delivery2
-            if (nextPath == null) {
-                Delivery destDelivery = p.getLastNode().getDelivery();
-                if (destDelivery != null) {
-                    if (destDelivery.equals(delivery1)) {
+            if (previousDelivery != null && nextPath == null) {
+                Delivery srcDelivery = p.getFirstNode().getDelivery();
+                if (srcDelivery != null && srcDelivery.equals(previousDelivery)) {
                         nextPath = p;
-                        nextDelivery = delivery1;
                         indexNextPath = indexPath;
-                    } else if (destDelivery.equals(delivery2)) {
-                        nextPath = p;
-                        nextDelivery = delivery2;
-                        indexNextPath = indexPath;
-                    }
                 }
             }
         }
@@ -259,33 +251,36 @@ public class Route implements Publisher {
         if (previousPath != null && nextPath != null) {
 
             Path pathToNewFirstDelivery = planning.getMap().getFastestPath(
-                    paths.get(indexPreviousPath - 1).getFirstNode(),
-                    nextPath.getLastNode()
+                    previousPath.getFirstNode(),
+                    nextPath.getFirstNode()
             );
 
             Path newFirstDeliveryToNextDelivery = planning.getMap().getFastestPath(
-                    nextPath.getLastNode(),
-                    previousPath.getLastNode()
+                    nextPath.getFirstNode(),
+                    paths.get(indexPreviousPath + 1).getLastNode()
             );
 
             Path previousNewFirstDeliveryToNewLastDelivery = planning.getMap().getFastestPath(
-                    nextPath.getFirstNode(),
-                    previousPath.getFirstNode()
+                    paths.get(indexNextPath - 1).getFirstNode(),
+                    previousPath.getLastNode()
             );
 
             Path newLastDeliveryToNewFirstDeliveryNext = planning.getMap().getFastestPath(
-                    previousPath.getFirstNode(),
-                    paths.get(indexNextPath + 1).getLastNode()
+                    previousPath.getLastNode(),
+                    nextPath.getLastNode()
             );
 
-            paths.remove(indexPreviousPath - 1);
-            paths.add(indexPreviousPath - 1, pathToNewFirstDelivery);
             paths.remove(indexPreviousPath);
-            paths.add(indexPreviousPath, newFirstDeliveryToNextDelivery);
+            paths.add(indexPreviousPath, pathToNewFirstDelivery);
+            
+            paths.remove(indexPreviousPath + 1);
+            paths.add(indexPreviousPath + 1, newFirstDeliveryToNextDelivery);
+            
+            paths.remove(indexNextPath - 1);
+            paths.add(indexNextPath - 1, previousNewFirstDeliveryToNewLastDelivery);
+            
             paths.remove(indexNextPath);
-            paths.add(indexNextPath, previousNewFirstDeliveryToNewLastDelivery);
-            paths.remove(indexNextPath + 1);
-            paths.add(indexNextPath + 1, newLastDeliveryToNewFirstDeliveryNext);
+            paths.add(indexNextPath, newLastDeliveryToNewFirstDeliveryNext);
 
             updateDeliveriesTime();
             updateArcTimeSlots();

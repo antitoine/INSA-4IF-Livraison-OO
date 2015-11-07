@@ -98,7 +98,7 @@ public class RouteTest {
         
         System.out.println("------------TestGetNextDeliveryOK");
     }
-
+    
     /**
      * Test of addDelivery method, of class Route.
      */
@@ -125,28 +125,25 @@ public class RouteTest {
         Arc street4to5 = map.createArc("4to5", 10, 1, 4, 5);
         Arc street4to6 = map.createArc("4to6", 10, 5, 4, 6);
         Arc street5to6 = map.createArc("5to6", 10, 2, 5, 6);
-        Arc street6toWH = map.createArc("6toWH", 10, 5, 6, 7);
-        
+        Arc street6toWH = map.createArc("6toWH", 10, 5, 6, 7);        
         
         Delivery delivery1 = new Delivery(1, node1);
         Delivery delivery2 = new Delivery(2, node2);
-        Delivery delivery3 = new Delivery(3, node4);
-        Delivery delivery4 = new Delivery(4, node6);
+        Delivery delivery6 = new Delivery(3, node6);
         
         ArrayList<Delivery> deliveries = new ArrayList<>();
         deliveries.add(delivery1);
         deliveries.add(delivery2);
-        deliveries.add(delivery3);
-        deliveries.add(delivery4);
+        deliveries.add(delivery6);
         
-        ArrayList<TimeSlot> timeSlotList = new ArrayList<TimeSlot>();
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
         TimeSlot time = new TimeSlot(8, 11, deliveries);
         timeSlotList.add(time);
         
         Path path1 = map.getFastestPath(warehouse, node1);
         Path path2 = map.getFastestPath(node1, node2);
-        Path path3 = map.getFastestPath(node2, node4);
-        Path path4 = map.getFastestPath(node4, node6);
+        Path path3 = map.getFastestPath(node2, node5);
+        Path path4 = map.getFastestPath(node5, node6);
         Path path5 = map.getFastestPath(node6, warehouse);
         
         Planning plan = new Planning(map, warehouse, timeSlotList);
@@ -154,24 +151,26 @@ public class RouteTest {
         try {
             plan.computeRoute();
         } catch (Exception ex) {
-            Logger.getLogger(RouteTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Route.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
-        Route route = plan.getFastestRoute();
         
+        Route route = plan.getFastestRoute();
+                
         Delivery deliveryToAdd = new Delivery(5, node5);
-        route.addDelivery(deliveryToAdd, node4, time); /* deliveryToAdd should be added between node4 and node6 */
+        // deliveryToAdd should be added between node2 and node6
+        plan.addDelivery(deliveryToAdd.getNode(), node2, time); 
         
         List<Path> result = route.getPaths();
-        List<Path> expResult = new ArrayList<Path>();
+        List<Path> expResult = new ArrayList<>();
         expResult.add(path1);
         expResult.add(path2);
         expResult.add(path3);
-        expResult.add(map.getFastestPath(node4, node5));
-        expResult.add(map.getFastestPath(node5, node6));
+        expResult.add(path4);
         expResult.add(path5);
         
         assertEquals(expResult.size(), result.size());
-        for(int i = 0; i<expResult.size(); i++)
+        for(int i = 0; i < expResult.size(); i++)
         {
             assertEquals(expResult.get(i), result.get(i));
         }
@@ -279,29 +278,22 @@ public class RouteTest {
         Arc street4to5 = map.createArc("4to5", 10, 1, 4, 5);
         Arc street4to6 = map.createArc("4to6", 10, 5, 4, 6);
         Arc street5to6 = map.createArc("5to6", 10, 2, 5, 6);
-        Arc street6toWH = map.createArc("6toWH", 10, 5, 6, 7);
-        
+        Arc street6toWH = map.createArc("6toWH", 10, 5, 6, 7);        
         
         Delivery delivery1 = new Delivery(1, node1);
         Delivery delivery2 = new Delivery(2, node2);
-        Delivery delivery3 = new Delivery(3, node4);
-        Delivery delivery4 = new Delivery(4, node6);
+        Delivery delivery4 = new Delivery(3, node4);
+        Delivery delivery6 = new Delivery(4, node6);
         
         ArrayList<Delivery> deliveries = new ArrayList<>();
         deliveries.add(delivery1);
         deliveries.add(delivery2);
-        deliveries.add(delivery3);
         deliveries.add(delivery4);
+        deliveries.add(delivery6);
         
-        ArrayList<TimeSlot> timeSlotList = new ArrayList<TimeSlot>();
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
         TimeSlot time = new TimeSlot(8, 11, deliveries);
         timeSlotList.add(time);
-        
-        Path path1 = map.getFastestPath(warehouse, node1);
-        Path path2 = map.getFastestPath(node1, node2);
-        Path path3 = map.getFastestPath(node2, node4);
-        Path path4 = map.getFastestPath(node4, node6);
-        Path path5 = map.getFastestPath(node6, warehouse);
         
         Planning plan = new Planning(map, warehouse, timeSlotList);
         
@@ -312,11 +304,11 @@ public class RouteTest {
         }
         Route route = plan.getFastestRoute();
         
-        route.swapDeliveries(delivery2, delivery4); /* swap node2 and node6 */
+        route.swapDeliveries(delivery2, delivery6); /* swap node2 and node6 */
         
         List<Path> result = route.getPaths();
-        List<Path> expResult = new ArrayList<Path>();
-        expResult.add(path1);
+        List<Path> expResult = new ArrayList<>();
+        expResult.add(map.getFastestPath(warehouse, node1));
         expResult.add(map.getFastestPath(node1, node6));
         expResult.add(map.getFastestPath(node6, node4));
         expResult.add(map.getFastestPath(node4, node2));
