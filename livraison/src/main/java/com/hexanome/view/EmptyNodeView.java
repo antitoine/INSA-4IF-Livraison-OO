@@ -18,6 +18,7 @@ public class EmptyNodeView extends Circle implements INodeViewShape {
         setStroke(Color.BLACK);
         setStrokeType(StrokeType.INSIDE);
         this.node = node;
+
     }
 
     @Override

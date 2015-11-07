@@ -4,6 +4,7 @@ import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.UIManager;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
@@ -12,7 +13,6 @@ import org.controlsfx.control.PopOver;
 
 /**
  * NodeView
- *
  */
 public class NodeView extends StackPane {
 
@@ -69,7 +69,6 @@ public class NodeView extends StackPane {
         popover = nodeShape.createPopOver(node);
 
         popover.setAutoHide(true);
-        popover.setArrowLocation(PopOver.ArrowLocation.BOTTOM_LEFT);
         popover.setDetachable(false);
 
         popover.setOnAutoHide(new EventHandler<Event>() {
@@ -94,6 +93,16 @@ public class NodeView extends StackPane {
      * Show a popover above a nodeview
      */
     public void showPopOver() {
+        Bounds bounds = this.localToScene(this.getBoundsInLocal());
+        if (bounds.getMaxX() < 600 && bounds.getMaxY() < 300) {
+            popover.setArrowLocation(PopOver.ArrowLocation.TOP_LEFT);
+        } else if (bounds.getMaxY() < 300) {
+            popover.setArrowLocation(PopOver.ArrowLocation.TOP_RIGHT);
+        } else if (bounds.getMaxX() < 600) {
+            popover.setArrowLocation(PopOver.ArrowLocation.BOTTOM_LEFT);
+        } else {
+            popover.setArrowLocation(PopOver.ArrowLocation.BOTTOM_RIGHT);
+        }
         popover.show(this);
     }
 
