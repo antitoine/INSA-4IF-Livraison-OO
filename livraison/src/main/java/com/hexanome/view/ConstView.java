@@ -19,32 +19,34 @@ public final class ConstView {
 
     public static final String MAINWINDOW = "/fxml/MainWindow.fxml";
     public static final String ROAD_MAP = "/fxml/RoadMap.fxml";
+    public static final String DIALOG = "/fxml/Dialog.fxml";
 
-    public static final double SIZE_NODE = 7.0;
+
+    public static final double SIZE_NODE = 6.0;
    
-    /**
-     * Enumeration of the buttons existing in the user interface
-     */
-    public static enum Button {
-        REDO, UNDO, LOAD_PLANNING, COMPUTE_ROUTE, ROAD_MAP
-    }
-    /**
-     * Enumeration of the tree item types
-     */
-    public static enum TreeItemType {
-        TIMESLOT, DELIVERY
-    }
-    /**
-     * Enumeration of arcview types 
-     */
-    public static enum ArcViewType{
-        STANDARD, ROUTE
-    }
-
     /**
      * Must not be called !
      */
     private ConstView() {
         throw new AssertionError();
+    }
+    /**
+     * Enumeration of the buttons existing in the user interface
+     */
+    public enum Button {
+        REDO, UNDO, LOAD_PLANNING, COMPUTE_ROUTE, ROAD_MAP
+    }
+    /**
+     * Enumeration of the tree item types
+     */
+    public enum TreeItemType {
+        TIMESLOT, DELIVERY
+    }
+
+    /**
+     * Enumeration of arcview types
+     */
+    public enum ArcViewType {
+        STANDARD, ROUTE
     }
 }

@@ -1,0 +1,37 @@
+Test sur le chargement du plan :
+
+plan-arc_bad_longueur.xml 	-> Ok
+plan-arc_bad_vitesse.xml 	-> Ok
+plan-arc_missing_longueur.xml 	-> Ok
+plan-arc_missing_nomRue.xml 	-> Ok
+plan-arc_missing_vitesse.xml 	-> Ok
+plan-empty_map.xml		-> Ok
+plan-id_duplicate.xml 		-> Ok
+plan-malformed_xml.xml		-> Ok
+plan-missing_dest_node.xml 	-> Ok
+plan-missing_id.xml 		-> Ok
+plan-missing_id_noeud_dest.xml 	-> Ok
+plan-missing_x.xml 		-> Ok
+plan-missing_y.xml 		-> Ok
+plan-no_outgoing_arc.xml 	-> Ok
+plan-not_enough_child.xml 	-> Ok
+plan-not-xml-json.xml		-> Ok
+plan-not-xml-binary.xml		-> Ok
+plan-same_coordinates.xml 	-> Ok
+
+
+Test sur le chargement du planning :
+
+livraison10x10-end_time_before_start_time.xml			-> 
+livraison10x10-malformed_xml.xml				-> 
+livraison10x10-missing_adresse_in_delivery.xml			-> 
+livraison10x10-missing_delivery_node_id_in_map.xml		-> 
+livraison10x10-missing_end_time.xml				-> 
+livraison10x10-missing_start_time.xml				-> 
+livraison10x10-missing_warehouse_address.xml			->
+livraison10x10-missing_warehouse_node_in_map.xml		-> 
+livraison10x10-more_than_one_warehouse.xml			-> 
+livraison10x10-no_delivery_in_timeslot.xml			-> 
+livraison10x10-no_timeslot_specified.xml			-> 
+livraison10x10-same_adresse_for_different_deliveries.xml	-> 
+livraison10x10-same_id_for_different_deliveries.xml		-> 

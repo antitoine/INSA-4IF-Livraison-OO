@@ -9,7 +9,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +31,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -105,6 +105,13 @@ public class MainWindow extends AnchorPane {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                quitApplication();
+            }
+        });
+
         deliveryTreeView = new DeliveryTreeView();
         deliveriesPane.setCenter(deliveryTreeView);
         mapView = new MapView();
@@ -173,7 +180,7 @@ public class MainWindow extends AnchorPane {
         alert.setTitle("Error - " + msg);
         alert.setContentText(msg);
         alert.setResizable(true);
-        alert.getDialogPane().setPrefSize(480, 320);
+        alert.getDialogPane().setPrefSize(400, 200);
         alert.showAndWait();
     }
 
@@ -260,7 +267,7 @@ public class MainWindow extends AnchorPane {
 
 
     @FXML
-    private void quitApplication(ActionEvent event) {
+    private void quitApplication() {
         ContextManager.getInstance().exit(); // Special undoable
     }
 

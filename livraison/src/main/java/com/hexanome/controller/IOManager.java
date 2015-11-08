@@ -1,7 +1,5 @@
 package com.hexanome.controller;
 
-import com.hexanome.model.Planning;
-import com.hexanome.model.Route;
 import com.hexanome.utils.DocumentFactory;
 import com.hexanome.utils.MapDocument;
 import com.hexanome.utils.PlanningDocument;

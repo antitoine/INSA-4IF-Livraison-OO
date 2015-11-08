@@ -47,11 +47,6 @@ public class DeliverySelectedState extends SelectionsStates {
         RemoveDeliveryCommand rmDeliveryCmd = new RemoveDeliveryCommand(delivery);
         // ContextManager is asked to execute the command
         ContextManager.getInstance().executeCommand(rmDeliveryCmd);
-        // Jump to EmptyNodeSelectedState
-        ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
-        // Open new popover
-        UIManager.getInstance().getMainWindow().repositionToLatestPosition();
-        UIManager.getInstance().getMainWindow().getMapView().showPopOver(delivery.getNode());
     }
 
     /* (non-Javadoc)

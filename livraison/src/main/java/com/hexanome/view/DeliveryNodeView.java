@@ -17,7 +17,8 @@ public class DeliveryNodeView extends Circle implements INodeViewShape {
     com.hexanome.model.Node node;
 
     public DeliveryNodeView(com.hexanome.model.Node node) {
-        if (node.getDelivery().getTimeSlot() == null) {
+        if (node.getDelivery().getTimeSlot() == null ||
+                node.getDelivery().getDeliveryTime() > node.getDelivery().getTimeSlot().getEndTime()) {
             setFill(Color.RED);
         } else {
             setFill(ColorsGenerator

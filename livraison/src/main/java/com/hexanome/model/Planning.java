@@ -2,14 +2,11 @@ package com.hexanome.model;
 
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
-import javafx.beans.value.ChangeListener;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javafx.event.EventHandler;
 
 /**
  * This class represents a planning, a collection of deliveries 
@@ -114,7 +111,7 @@ public class Planning implements Publisher {
      */
     void setRoute(Route route) {
         this.route = route;
-        notifySubscribers();
+        //notifySubscribers();
     }
     
     /**
@@ -145,17 +142,11 @@ public class Planning implements Publisher {
      * Start the route computing. The observers will be notified when the route
      * is set. Update the deliveries time as well.
      */
-    public void computeRoute(ChangeListener<Worker.State> listenerComputeRoute) {
-        planningComputeRouteWorker = new PlanningComputeRouteWorker(this);
-        Service<Void> service = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return planningComputeRouteWorker;
-            }
-        };
-        service.stateProperty().addListener(listenerComputeRoute);
-        service.start();
+    public void computeRoute(EventHandler handler) {
+        planningComputeRouteWorker = new PlanningComputeRouteWorker(this, handler);
+        new Thread(planningComputeRouteWorker).start();
     }
+    
     /**
      * Compute the route synchronously. Update the deliveries time.
      * @throws java.lang.Exception Ifthe route can't be computed.
@@ -192,7 +183,7 @@ public class Planning implements Publisher {
      */
     public void removeDelivery(Delivery delivery) {
         if (route != null) {
-            route.removeDelivery(delivery);          
+            route.removeDelivery(delivery);   
             notifySubscribers();
         }
     }

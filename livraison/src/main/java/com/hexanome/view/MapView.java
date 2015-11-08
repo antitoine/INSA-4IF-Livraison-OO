@@ -20,7 +20,6 @@ import java.util.Map.Entry;
 public class MapView extends AnchorPane implements Subscriber {
 
     HashMap<Node, NodeView> nodeList = new HashMap<>();
-    LinkedList<ArcView> arcslist = new LinkedList<>();
     HashMap<NodePair, LinkedList<Arc>> arcsMap = new HashMap<>();
 
     Node latestNodeForOpenPopOver = null;
@@ -93,12 +92,12 @@ public class MapView extends AnchorPane implements Subscriber {
             }
         }
 
-        (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSE_NODE);
-
+        NodeView warehouseNodeView = nodeList.get(planning.getWarehouse());
+        warehouseNodeView.setType(ConstView.WAREHOUSE_NODE);        
     }
 
     private void addArcs(Collection <Arc> arcs){
-        if(arcs == null){
+        if (arcs == null){
             return;
         }
 
@@ -108,14 +107,13 @@ public class MapView extends AnchorPane implements Subscriber {
                 arcsMap.get(np).add(arc);
             } else {
                 LinkedList<Arc> s = new LinkedList<>();
-                arcsMap.put(np, s);
                 s.add(arc);
+                arcsMap.put(np, s);                
             }
         }
 
         for (Entry<NodePair, LinkedList<Arc>> entrySet : arcsMap.entrySet()) {
-            ArcView av = new ArcView(entrySet.getValue(), this);
-            arcslist.add(av);
+            ArcView arcView = new ArcView(entrySet.getValue(), this);
         }
     }
 
@@ -138,7 +136,6 @@ public class MapView extends AnchorPane implements Subscriber {
      */
     private void clearMap() {
         nodeList.clear();
-        arcslist.clear();
         arcsMap.clear();
         getChildren().clear();
     }
