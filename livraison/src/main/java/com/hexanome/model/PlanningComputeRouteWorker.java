@@ -4,6 +4,7 @@ import com.hexanome.utils.ITSP;
 import java.util.LinkedList;
 import java.util.List;
 import javafx.concurrent.Task;
+import javafx.event.EventHandler;
 
 /**
  * Worker Thread used to compute a route of a planning. Can be interrupted.
@@ -19,6 +20,18 @@ public class PlanningComputeRouteWorker extends Task<Void> {
 
     /**
      * Constructor of the worker thread.
+     *
+     * @param planning The planning to use to compute the route.
+     * @param handler The handler to notify when the task ends.
+     */
+    public PlanningComputeRouteWorker(Planning planning, EventHandler handler) {
+        this.planning = planning;
+        setOnSucceeded(handler);
+    }
+    
+    /**
+     * Constructor of the worker thread, without handler to notify when the task
+     * is done.
      *
      * @param planning The planning to use to compute the route.
      */
@@ -113,11 +126,11 @@ public class PlanningComputeRouteWorker extends Task<Void> {
         planning.setRoute(route);
         return null;
     }
-
+/*
     @Override
     protected void succeeded() {
         super.succeeded();
         System.out.println("Done!");
-    }
+    }*/
 
 }
