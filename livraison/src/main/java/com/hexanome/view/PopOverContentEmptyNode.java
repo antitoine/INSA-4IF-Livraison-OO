@@ -1,6 +1,7 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
@@ -114,12 +115,13 @@ public class PopOverContentEmptyNode extends PopOverContent {
     }
 
     private void initComboBoxDeliveries() {
+        
         prevDeliveryComboBox = new ComboBox<>();
         prevDeliveryComboBox.prefWidth(150);
         prevDeliveryComboBox.getSelectionModel()
                             .selectedItemProperty()
                             .addListener(new ChangeListener<String>() {
-
+              
             /**
              * Update the time slot combobox when a preivous delivery is selected
              */
@@ -141,6 +143,7 @@ public class PopOverContentEmptyNode extends PopOverContent {
                 } 
             }
         });
+        
     }
 
     private void initComboBoxTimeSlots() {
@@ -161,7 +164,12 @@ public class PopOverContentEmptyNode extends PopOverContent {
     private void initPopOverLayout() {
         initTopLayout();
         initCenterLayout();
-
+        // Set popover content
+        if (ModelManager.getInstance().getPlanning() != null) {
+            setComboxBox(ModelManager.getInstance().getPlanning().getWarehouse(),
+                             ModelManager.getInstance().getPlanning().getDeliveries(),
+                             ModelManager.getInstance().getPlanning().getTimeSlots());
+        } 
     }
 
     private void initTopLayout() {
