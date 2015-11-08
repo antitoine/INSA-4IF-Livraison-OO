@@ -195,7 +195,7 @@ public class Planning implements Publisher {
      * @param delivery2 the second delivery to swap.
      */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
-        if (route != null) {
+        if (route != null) {            
             route.swapDeliveries(delivery1, delivery2);
             notifySubscribers();
         }

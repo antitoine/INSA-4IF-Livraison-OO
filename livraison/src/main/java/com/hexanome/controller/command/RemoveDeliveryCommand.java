@@ -19,8 +19,6 @@ import javafx.concurrent.Worker;
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  * @see ICommand
  */
-
-
 public class RemoveDeliveryCommand implements ICommand {
 
     private Delivery delivery;
@@ -52,43 +50,20 @@ public class RemoveDeliveryCommand implements ICommand {
                     .getPlanning().getNodePreviousDelivery(delivery);
             UIManager.getInstance().beginComputingRoute();
 
-            final Service<Void> removeService = new Service<Void>() {
-                @Override
-                protected Task<Void> createTask() {
-                    return new Task<Void>() {
-                        @Override
-                        protected Void call() throws Exception {
-                            ModelManager.getInstance().getPlanning().removeDelivery(delivery);
-                            return null;
-                        }
-                    };
-                }
-            };
-            removeService.stateProperty()
-                    .addListener(new ChangeListener<Worker.State>() {
-                        @Override
-                        public void changed(ObservableValue<? extends Worker.State> observableValue,
-                                            Worker.State oldValue,
-                                            Worker.State newValue) {
-                            switch (newValue) {
-                                case SUCCEEDED:
-                                    ModelManager.getInstance()
-                                            .getPlanning().notifySubscribers();
-                                    ModelManager.getInstance().getPlanning()
-                                            .getRoute().notifySubscribers();
-                                    // Jump to EmptyNodeSelectedState
-                                    ContextManager.getInstance()
-                                            .setCurrentState(EmptyNodeSelectedState.getInstance());
-                                    // Open new popover
-                                    UIManager.getInstance().getMainWindow()
-                                            .repositionToLatestPosition();
-                                    UIManager.getInstance().getMainWindow().getMapView()
-                                            .showPopOver(delivery.getNode());
-                                    break;
-                            }
-                        }
-                    });
-            removeService.start();
+            ModelManager.getInstance().getPlanning().removeDelivery(delivery);
+
+            ModelManager.getInstance()
+                    .getPlanning().notifySubscribers();
+            ModelManager.getInstance().getPlanning()
+                    .getRoute().notifySubscribers();
+            // Jump to EmptyNodeSelectedState
+            ContextManager.getInstance()
+                    .setCurrentState(EmptyNodeSelectedState.getInstance());
+            // Open new popover
+            UIManager.getInstance().getMainWindow()
+                    .repositionToLatestPosition();
+            UIManager.getInstance().getMainWindow().getMapView()
+                    .showPopOver(delivery.getNode());
         } else {
             // \todo treat error case
         }
