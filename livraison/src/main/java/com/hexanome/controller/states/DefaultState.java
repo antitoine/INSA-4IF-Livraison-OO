@@ -160,7 +160,11 @@ public abstract class DefaultState implements IState {
         System.err.println("btnClearPlanning In DefaultState");  //DEBUG
         // Nothing to do here
     }
-
+    
+    /**
+     * Returns the string describing the state, used for debug only
+     * @return a string describing the state
+     */
     @Override
     public String toString() {
         return "DefaultState"; 

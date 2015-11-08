@@ -26,15 +26,22 @@ public class EmptyNodeView extends Circle implements INodeViewShape {
 
     }
 
+    /**
+     * Handler for mouse click events
+     * @param context 
+     */
     @Override
     public void onMouseClickedNotify(NodeView context) {
-        ContextManager.getInstance().getCurrentState().clickOnEmptyNode(node);
+        // Set popover content
         if (ModelManager.getInstance().getPlanning() != null) {
             PopOverContentEmptyNode pop = (PopOverContentEmptyNode) context.getPopoverContent();
             pop.setComboxBox(ModelManager.getInstance().getPlanning().getWarehouse(),
                              ModelManager.getInstance().getPlanning().getDeliveries(),
                              ModelManager.getInstance().getPlanning().getTimeSlots());
         }
+        // Call current state related action
+        ContextManager.getInstance().getCurrentState().clickOnEmptyNode(node);
+        // Disable panning
         UIManager.getInstance().getMainWindow().disablePanning();
     }
 
@@ -43,6 +50,11 @@ public class EmptyNodeView extends Circle implements INodeViewShape {
         return this;
     }
 
+    /**
+     * Creates popover content for an EmptyNode
+     * @param node
+     * @return 
+     */
     @Override
     public PopOver createPopOver(com.hexanome.model.Node node) {
         return new PopOver(new PopOverContentEmptyNode(node));

@@ -29,6 +29,10 @@ public class DeliveryNodeView extends Circle implements INodeViewShape {
         this.node = node;
     }
 
+    /**
+     * Handler for mouse click events
+     * @param context 
+     */
     @Override
     public void onMouseClickedNotify(NodeView context) {
         // 

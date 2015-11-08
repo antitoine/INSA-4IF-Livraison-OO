@@ -76,7 +76,12 @@ public class DeliveryTreeView extends VBox implements Subscriber {
 
     }
 
-    public static Delivery getDeliveryIdFromName(String string) {
+    /**
+     * Returns a delivery using its name
+     * @param string
+     * @return 
+     */
+    public static Delivery getDeliveryFromName(String string) {
         return deliveresByName.get(string);
     }
 

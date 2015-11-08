@@ -32,10 +32,7 @@ public class MapView extends AnchorPane implements Subscriber {
         if (p instanceof Map) {
             clearMap();
             Map map = (Map) p;
-
             addArcs(map.getArcs());
-            getChildren().addAll(arcslist);
-
             addEmptyNodes(map.getNodes().values());
         }
 
@@ -87,7 +84,6 @@ public class MapView extends AnchorPane implements Subscriber {
         ArrayList<Arc> mapArc = new ArrayList<>(map.getArcs());
 
         addArcs(mapArc);
-        getChildren().addAll(arcslist);
 
         addEmptyNodes(map.getNodes().values());
 
@@ -98,6 +94,7 @@ public class MapView extends AnchorPane implements Subscriber {
         }
 
         (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSE_NODE);
+
     }
 
     private void addArcs(Collection <Arc> arcs){
@@ -117,7 +114,7 @@ public class MapView extends AnchorPane implements Subscriber {
         }
 
         for (Entry<NodePair, LinkedList<Arc>> entrySet : arcsMap.entrySet()) {
-            ArcView av  = new ArcView(entrySet.getValue());
+            ArcView av = new ArcView(entrySet.getValue(), this);
             arcslist.add(av);
         }
     }

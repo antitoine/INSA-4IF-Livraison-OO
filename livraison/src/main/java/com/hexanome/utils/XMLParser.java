@@ -15,16 +15,16 @@ import org.jdom2.Document;
  */
 public class XMLParser {
    
-    private Document dom;
-    private String error;
     /**
-     * Builds a new instance of XMLParser
-     * @param dom 
+     * DOM Document representing the XML data to parse
      */
-    protected XMLParser(Document dom) {
-        this.dom = dom;
-        this.error = "No error";
-    }
+    private Document dom;
+    /**
+     * String containing the latest error message if an error occured while 
+     * parsing XML data
+     */
+    private String error;
+    
     /**
      * Set the error message of the parser
      * @param msg 
@@ -33,14 +33,27 @@ public class XMLParser {
         error = String.format("Semantic error : %s", msg);
     }
     /**
-     * 
+     * Returns the latest error message or null if no error message was set
      * @return 
      */
     public String getErrorMsg() {
         return error;
     }
-    
+    /**
+     * Returns the DOM Document
+     * @return 
+     */
     protected Document getDom() {
         return dom;
+    }
+    
+    /**
+     * Builds a new instance of XMLParser
+     * @param dom 
+     *      DOM Document to parse
+     */
+    protected XMLParser(Document dom) {
+        this.dom = dom;
+        this.error = null;
     }
 }

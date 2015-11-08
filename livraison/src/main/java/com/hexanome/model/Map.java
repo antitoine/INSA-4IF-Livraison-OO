@@ -25,7 +25,32 @@ public class Map implements Publisher {
     private HashMap<Integer, HashMap<Integer, Node>> globalPreviousNodes; // int = id of the current node, Node = the previous node
 
     /**
-     *
+     * Returns the node of the map which id is given or null if 
+     * the id doesn't exists
+     * @param id
+     *      Id of the node to return
+     * @return
+     */
+    public Node getNodeById(int id) {
+        return nodes.get(id);
+    }
+    /**
+     * Returns a collection of all arcs present in the map
+     * @return
+     */
+    public ArrayList<Arc> getArcs() {
+        return arcs;
+    }
+    /**
+     * Returns a collection of all nodes present in the map
+     * @return
+     */
+    public HashMap<Integer, Node> getNodes() {
+        return nodes;
+    }
+    
+    /**
+     * Builds a new instance of Map
      * @param nodes
      * @param arcs
      */
@@ -78,30 +103,11 @@ public class Map implements Publisher {
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * Returns the fastest path (collection of arcs) computed between two nodes
+     * @param start
+     * @param target
+     * @return 
      */
-    public Node getNodeById(int id) {
-        return nodes.get(id);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public ArrayList<Arc> getArcs() {
-        return arcs;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public HashMap<Integer, Node> getNodes() {
-        return nodes;
-    }
-
     public Path getFastestPath(Node start, Node target) {
         ArrayList<Arc> arcs = new ArrayList<>();
         
@@ -133,7 +139,10 @@ public class Map implements Publisher {
 
         return path;
     }
-
+    /**
+    * Computes the 
+    * @param firstNode 
+    */
     private void computePathsFromSource(final Node firstNode) {
         
         HashMap<Integer, Node> previousNodes = new HashMap<>();
@@ -211,7 +220,6 @@ public class Map implements Publisher {
             arc.clearAssociatedTimeSlot();
         }
     }
-
     /**
      * Reset the nodes in their original state, without any delivery.
      */
@@ -220,7 +228,47 @@ public class Map implements Publisher {
             node.attachDelivery(null);
         }
     }
-
+    
+    /**
+     * Add one subscriber
+     * @param s 
+     *      Subscriber to add
+     */
+    @Override
+    public void addSubscriber(Subscriber s) {
+        subscribers.add(s);
+        s.update(this, null);
+    }
+    /**
+     * Remove one subscriber
+     * @param s 
+     *      Subscriber to remove
+     */
+    @Override
+    public void removeSubscriber(Subscriber s) {
+        subscribers.remove(s);
+    }
+    /**
+     * Notify all subscribers
+     */
+    @Override
+    public void notifySubscribers() {
+        for (Subscriber s : subscribers) {
+            s.update(this, null);
+        }
+    }
+    /**
+     * Remove all subscribers
+     */
+    @Override
+    public void clearSubscribers() {
+        subscribers.clear();
+    }
+    
+    /**
+     * Returns the string describing the objet, used for debug only
+     * @return a string describing the object
+     */
     @Override
     public String toString() {
 
@@ -251,30 +299,5 @@ public class Map implements Publisher {
                 + "]\n"
                 + "}", strnodes, strarcs);
     }
-
-    @Override
-    public void addSubscriber(Subscriber s) {
-        subscribers.add(s);
-        s.update(this, null);
-    }
-
-    @Override
-    public void removeSubscriber(Subscriber s) {
-        subscribers.remove(s);
-    }
-
-    @Override
-    public void notifySubscribers() {
-        for (Subscriber s : subscribers) {
-            s.update(this, null);
-        }
-    }
-
-    @Override
-    public void clearSubscribers() {
-        subscribers.clear();
-    }
-
-    
 
 }

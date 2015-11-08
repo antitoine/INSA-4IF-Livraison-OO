@@ -63,10 +63,6 @@ public class NodeView extends StackPane {
         currentNodeType = nodeType;
     }
 
-    String getCurrentNodeType() {
-        return currentNodeType;
-    }
-
     private void configurePopOver() {
         popover = nodeShape.createPopOver(node);
 

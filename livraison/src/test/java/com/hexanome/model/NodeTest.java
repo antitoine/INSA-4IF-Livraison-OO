@@ -43,9 +43,9 @@ public class NodeTest {
         
         node3.attachOutgoingArc(arc); //Function tested
         
-        ArrayList<Arc> expResult = new ArrayList<>();
+        List<Arc> expResult = new ArrayList<>();
         expResult.add(arc);
-        ArrayList<Arc> result = (ArrayList<Arc>) node3.getOutgoingArcs();
+        List<Arc> result = node3.getOutgoingArcs();
         assertEquals(expResult, result);
     }
 
@@ -55,16 +55,18 @@ public class NodeTest {
     @Test
     public void testGetOutgoingArcs() {
         System.out.println("getOutgoingArcs");
-        Node node1 = new Node(1, new Point(10,10));
-        Node node2 = new Node(2, new Point(10,20));
-        Node node3 = new Node(3, new Point(10,30));
-        Arc arc = new Arc("hollywood",12,31,node1,node2);
+        
+        Node node1 = new Node(1, new Point(10, 10));
+        Node node2 = new Node(2, new Point(10, 20));
+        Node node3 = new Node(3, new Point(10, 30));
+        
+        Arc arc = new Arc("hollywood", 12, 31, node1, node2);
         
         node3.attachOutgoingArc(arc); 
         
-        ArrayList<Arc> expResult = new ArrayList<>();
+        List<Arc> expResult = new ArrayList<>();
         expResult.add(arc);
-        ArrayList<Arc> result = (ArrayList<Arc>) node3.getOutgoingArcs(); //Function tested
+        List<Arc> result = node3.getOutgoingArcs(); //Function tested
         assertEquals(expResult, result);
     }
 
@@ -75,17 +77,19 @@ public class NodeTest {
     public void testGetOutgoingArc() {
         System.out.println("getOutgoingArc");
         
-        Node dest = new Node(1, new Point(10,10));
-        Node src = new Node(2, new Point(10,20));
-        Arc expResult = new Arc("hollywood",12,31,src,dest);
+        Node src = new Node(1, new Point(10, 20));
+        Node dest = new Node(2, new Point(10, 10));
         
-        //first senario with result return arc
-        Arc result = dest.getOutgoingArc(dest);
+        Arc expResult = new Arc("hollywood", 12, 31, src, dest);
+        src.attachOutgoingArc(expResult);
+        
+        /* first scenario */
+        Arc result = src.getOutgoingArc(dest);
         assertEquals(expResult, result);
         
-        //second senario with result is null
+        /* second scenario */
         Arc result1 = dest.getOutgoingArc(src);
-        assertEquals(result1, null);
+        assertEquals(null, result1);
     }
 
     /**

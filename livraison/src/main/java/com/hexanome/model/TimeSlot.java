@@ -29,24 +29,19 @@ public class TimeSlot {
     public ArrayList<Delivery> getDeliveries() {
         return deliveries;
     }
-    
     /**
-     * Add a delivery to the current time slot
-     * @param delivery The delivery to add
+     * Returns the start time of the time slot.
+     * @return the start time.
      */
-    void addDelivery(Delivery delivery) {
-        deliveries.add(delivery);
-        delivery.attachTimeSlot(this);
+    public int getStartTime() {
+        return startTime;
     }
-    
     /**
-     * Remove the delivery passed by parameter in the list of deliveries.
-     * Unattach the time slot to the delivery.
-     * @param delivery The delivery to remove.
+     * Returns the end time of the time slot.
+     * @return the end time.
      */
-    void removeDelivery(Delivery delivery) {
-        deliveries.remove(delivery);
-        delivery.attachTimeSlot(null);
+    public int getEndTime() {
+        return endTime;
     }
 
     /**
@@ -66,21 +61,22 @@ public class TimeSlot {
     }
 
     /**
-     * Returns the start time of the time slot.
-     * @return the start time.
+     * Add a delivery to the current time slot
+     * @param delivery The delivery to add
      */
-    public int getStartTime() {
-        return startTime;
-    }
-
+    void addDelivery(Delivery delivery) {
+        deliveries.add(delivery);
+        delivery.attachTimeSlot(this);
+    } 
     /**
-     * Returns the end time of the time slot.
-     * @return the end time.
+     * Remove the delivery passed by parameter in the list of deliveries.
+     * Unattach the time slot to the delivery.
+     * @param delivery The delivery to remove.
      */
-    public int getEndTime() {
-        return endTime;
+    void removeDelivery(Delivery delivery) {
+        deliveries.remove(delivery);
+        delivery.attachTimeSlot(null);
     }
-
     /**
      * Checks if the time passed by parameter is betweend the start time and the
      * end time of the current time slot.
@@ -90,21 +86,6 @@ public class TimeSlot {
      */
     public boolean containsTime(float time) {
         return (time >= startTime && time <= endTime);
-    }
-
-    @Override
-    public String toString() {
-        String strdeliveries = "";
-        for (Delivery delivery : deliveries) {
-            strdeliveries += delivery.toString() + ",";
-        }
-        strdeliveries += strdeliveries.substring(0, strdeliveries.length() - 1) + "}";
-        return String.format(""
-                + "{\n"
-                + "\"startTime\":%s,\n"
-                + "\"endTime\":%s,\n"
-                + "\"deliveries\":%s\n"
-                + "}", startTime, endTime, strdeliveries);
     }
 
     @Override
@@ -126,12 +107,30 @@ public class TimeSlot {
         
         return true;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 71 * hash + this.startTime;
         hash += 71 * hash + this.endTime;
         return hash;
+    }    
+    /**
+     * Returns the string describing the objet, used for debug only
+     * @return a string describing the object
+     */
+    @Override
+    public String toString() {
+        String strdeliveries = "";
+        for (Delivery delivery : deliveries) {
+            strdeliveries += delivery.toString() + ",";
+        }
+        strdeliveries += strdeliveries.substring(0, strdeliveries.length() - 1) + "}";
+        return String.format(""
+                + "{\n"
+                + "\"startTime\":%s,\n"
+                + "\"endTime\":%s,\n"
+                + "\"deliveries\":%s\n"
+                + "}", startTime, endTime, strdeliveries);
     }
 }
