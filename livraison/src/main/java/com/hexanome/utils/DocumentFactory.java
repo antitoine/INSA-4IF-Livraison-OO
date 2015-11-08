@@ -21,6 +21,9 @@ import java.util.logging.Logger;
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class DocumentFactory {
+    
+    private static String error = null;
+    
     /**
      * Creates a MapDocument object from the given File object
      *
@@ -28,6 +31,9 @@ public class DocumentFactory {
      * @return null if the given file doesn't exists or is a directory
      */
     public static MapDocument createMapDocument(File file) {
+        // Reset factory error
+        DocumentFactory.error = null;
+        // Create MapDocument
         MapDocument mapdoc = null;
         if (file.exists() && !file.isDirectory()) {
             SAXBuilder builder = new SAXBuilder();
@@ -35,10 +41,10 @@ public class DocumentFactory {
                 Document document = builder.build(file);
                 mapdoc = new MapDocument(document);
             } catch (IOException | JDOMException ex) {
-                Logger.getLogger(DocumentFactory.class.getName()).log(Level.SEVERE, null, ex);
+                DocumentFactory.error = "Invalid XML file";
             }
         } else {
-            // \todo treat error case
+            DocumentFactory.error = "File is not a regular file";
         }
         return mapdoc;
     }
@@ -50,20 +56,22 @@ public class DocumentFactory {
      * @return
      */
     public static PlanningDocument createPlanningDocument(File file) {
+        // Reset factory error
+        DocumentFactory.error = null;
+        // Create a PlanningDocument
+        PlanningDocument plandoc = null;
         if (file.exists() && !file.isDirectory()) {
             SAXBuilder builder = new SAXBuilder();
             try {
                 Document document = (Document) builder.build(file);
-                PlanningDocument plandoc = new PlanningDocument(document);
-                return plandoc;
+                plandoc = new PlanningDocument(document);
             } catch (IOException | JDOMException ex) {
-                Logger.getLogger(DocumentFactory.class.getName()).log(Level.SEVERE, null, ex);
+                DocumentFactory.error = "Invalid XML file";
             }
         } else {
-            // \todo treat error case
+            DocumentFactory.error = "File is not a regular file";
         }
-
-        return null;
+        return plandoc;
     }
 
     /**
@@ -74,5 +82,13 @@ public class DocumentFactory {
      */
     public static RouteDocument createRouteDocument(File file) {
         return new RouteDocument(file);
+    }
+    /**
+     * Returns last error that occured in the XML factory described in
+     * a string, if no error is set, returns null.
+     * @return 
+     */
+    public static String getLastError() {
+        return DocumentFactory.error;
     }
 }
