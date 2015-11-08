@@ -99,11 +99,11 @@
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="%zoom">
                                     <items>
-                                        <MenuItem fx:id="mntmUndo1" disable="true" mnemonicParsing="false"
+                                        <MenuItem fx:id="mntmUndo1" disable="false" mnemonicParsing="false"
                                                   onAction="#zoomIn" text="%zoomin"/>
-                                        <MenuItem fx:id="mntmRedo1" disable="true" mnemonicParsing="false"
+                                        <MenuItem fx:id="mntmRedo1" disable="false" mnemonicParsing="false"
                                                   onAction="#zoomOut" text="%zoomout"/>
-                                        <MenuItem fx:id="mntmUndo11" disable="true" mnemonicParsing="false"
+                                        <MenuItem fx:id="mntmUndo11" disable="false" mnemonicParsing="false"
                                                   onAction="#resetZoom" text="%resetzoom">
                                             <accelerator>
                                                 <KeyCodeCombination alt="UP" code="ESCAPE" control="UP" meta="UP"
