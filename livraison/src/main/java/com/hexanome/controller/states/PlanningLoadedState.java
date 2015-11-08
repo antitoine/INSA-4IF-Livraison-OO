@@ -62,7 +62,6 @@ public class PlanningLoadedState extends DefaultState {
     public void btnLoadPlanning() {
         // WARNING : calls order matters
         // Clear current model's planning
-        System.out.println("ici");
         if (UIManager.getInstance().askConfirmation("Current planning will be lost.")) {
             ModelManager.getInstance().clearPlanning();
             // Jump to PlanningSelectState
@@ -103,8 +102,8 @@ public class PlanningLoadedState extends DefaultState {
      */
     @Override
     public void btnGenerateRoute() {
-        ChangeListener<Worker.State> listenerComputeRoute
-                = new ChangeListener<Worker.State>() {
+        ChangeListener<Worker.State>
+                listenerComputeRoute = new ChangeListener<Worker.State>() {
                     @Override
                     public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldValue,
                             Worker.State newValue) {
@@ -121,6 +120,7 @@ public class PlanningLoadedState extends DefaultState {
                                 // Change current state to nothing selected state
                                 ContextManager.getInstance()
                                 .setCurrentState(NothingSelectedState.getInstance());
+                                UIManager.getInstance().endComputingRoute();
                                 // Enable ROAD_MAP button
                                 UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
                                 break;
@@ -129,6 +129,7 @@ public class PlanningLoadedState extends DefaultState {
                 };
         // Launch asynchronous Route computation algorithm
 
+        UIManager.getInstance().beginComputingRoute();
         ModelManager.getInstance().getPlanning().computeRoute(listenerComputeRoute);
 
 
