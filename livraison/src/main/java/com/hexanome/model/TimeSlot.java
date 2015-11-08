@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class TimeSlot {
+public class TimeSlot implements Comparable<TimeSlot> {
 
     /**
      * Start time of the time slot.
@@ -132,5 +132,10 @@ public class TimeSlot {
                 + "\"endTime\":%s,\n"
                 + "\"deliveries\":%s\n"
                 + "}", startTime, endTime, strdeliveries);
+    }
+
+    @Override
+    public int compareTo(TimeSlot o) {
+        return this.startTime - o.startTime;
     }
 }

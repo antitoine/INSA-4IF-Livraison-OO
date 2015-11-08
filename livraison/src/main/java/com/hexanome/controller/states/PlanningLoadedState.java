@@ -7,17 +7,15 @@ import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.view.ConstView;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 
 /**
- * This class represents the logic state when a planning has been 
- * loaded
- * 
+ * This class represents the logic state when a planning has been loaded
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class PlanningLoadedState extends DefaultState {
+public class PlanningLoadedState extends DefaultState implements EventHandler {
 
     private static PlanningLoadedState planningLoadedState = null;
 
@@ -102,48 +100,40 @@ public class PlanningLoadedState extends DefaultState {
      */
     @Override
     public void btnGenerateRoute() {
-        ChangeListener<Worker.State>
-                listenerComputeRoute = new ChangeListener<Worker.State>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldValue,
-                            Worker.State newValue) {
-                        switch (newValue) {
-                            case FAILED:
-                                System.err.println("btnGenerateRoute : task failed"); // DEBUG
-                                break;
-                            case CANCELLED:
-                                System.err.println("btnGenerateRoute : task cancelled"); // DEBUG
-                                break;
-                            case SUCCEEDED:
-                                // Add MapView as a subscriber of route
-                                UIManager.getInstance().endRouteComputation();
-                                // Change current state to nothing selected state
-                                ContextManager.getInstance()
-                                .setCurrentState(NothingSelectedState.getInstance());
-                                // Enable ROAD_MAP button
-                                UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
-                                break;
-                        }
-                    }
-                };
-        // Launch asynchronous Route computation algorithm
-
-        UIManager.getInstance().beginComputingRoute();
-        ModelManager.getInstance().getPlanning().computeRoute(listenerComputeRoute);
-
-
-        // \todo Catch potential errors, for instance, no Route found 
         // Jump to ComputingRouteState
         ContextManager.getInstance().setCurrentState(ComputingRouteState.getInstance());
+
+        // Launch asynchronous Route computation algorithm
+        UIManager.getInstance().beginComputingRoute();
+        ModelManager.getInstance().getPlanning().computeRoute(this);
+
+        // \todo Catch potential errors, for instance, no Route found         
     }
 
     /**
      * Returns the string describing the state, used for debug only
+     *
      * @return a string describing the state
      */
     @Override
     public String toString() {
         return "PlanningLoadedState"; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * Handler for the end of the route computing.
+     * @param event 
+     */
+    @Override
+    public void handle(Event event) {
+        // Change current state to nothing selected state
+        ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
+        
+        // Enable ROAD_MAP button
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
+
+        // Add MapView as a subscriber of route
+        UIManager.getInstance().endRouteComputation();
     }
 
 }

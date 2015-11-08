@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * This class represents a road, that goes from a node to another one.
@@ -92,7 +94,7 @@ public class Arc {
         this.duration = length / avgSpeed; // Unit : s
         this.dest = dest;
         this.src = src;
-        this.associatedTimeSlot = new HashSet<>();
+        this.associatedTimeSlot = new TreeSet<>();
     }
     
     /**
@@ -122,6 +124,7 @@ public class Arc {
     public String toString() {
         return String.format(""
                 + "{\n"
+                + ((associatedTimeSlot == null) ? "" : (associatedTimeSlot.size() + "\n"))
                 + "\"streetName\":\"%s\",\n"
                 + "\"length\":%s,\n"
                 + "\"avgSpeed\":%s,\n"
