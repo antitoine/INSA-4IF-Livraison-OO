@@ -20,9 +20,8 @@ public class ColorsGenerator {
     private final ArrayList<Color> colors;
 
     /**
-     * Allow to generate colors for timeSlots
-     *
-     * */
+     * Builds a new instance of ColorsGenerator
+     */
     private ColorsGenerator() {
         colors = new ArrayList<>();
         timeSlotColors = new HashMap<>();
@@ -42,7 +41,10 @@ public class ColorsGenerator {
         colors.add(Color.CHARTREUSE);
 
     }
-
+    /**
+     * Returns a single instance of colors generator (Singleton)
+     * @return 
+     */
     public static ColorsGenerator getInstance() {
         if (colorgenerator == null) {
             colorgenerator = new ColorsGenerator();
@@ -51,8 +53,7 @@ public class ColorsGenerator {
     }
 
     /**
-     * Return the timeSlot color
-     *
+     * Return the timeSlot associated color
      * @param ts timeSlot
      * @return the timeSlot's color
      */
@@ -62,8 +63,7 @@ public class ColorsGenerator {
 
 
     /**
-     * Allow to generate colors for timeSlots
-     *
+     * Creates a color for each timeslot in the collection
      * @param timeSlots Collection of timeSlots
      */
     public void createColors(Collection<TimeSlot> timeSlots) {

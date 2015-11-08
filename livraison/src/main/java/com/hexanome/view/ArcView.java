@@ -27,8 +27,7 @@ public class ArcView extends Pane {
     LinkedList<Arc> arcs;
 
     /**
-     * Initializes the controller class.
-     *
+     * Builds a new instance of arc view
      * @param tsArcs list of arcs for the arcView
      */
     public ArcView(final LinkedList<Arc> tsArcs) {
@@ -55,9 +54,13 @@ public class ArcView extends Pane {
         }
         addArcs(arcs);
     }
-
+    /**
+     * Draws arcs in the view 
+     * @param arcs 
+     *      Arcs to be drawn in the view
+     */
     public void addArcs(LinkedList<Arc> arcs) {
-
+       
         ArrayList<Node> arcElements = new ArrayList<>();
         boolean isATwoWayTrip = false;
         if (colors.size() <= 2) {
@@ -80,7 +83,7 @@ public class ArcView extends Pane {
 
         int arcNb = arcs.size();
 
-
+        // Draws a line between two nodes
         if ((arcNb % 2) == 1) {
             // draw line
             Arc arc = arcs.remove(0);
@@ -95,6 +98,7 @@ public class ArcView extends Pane {
             arcNb--;
         }
 
+        // Draws as many cubic curves as needed between two nodes
         for (int i = 1; i <= arcNb / 2; i++) {
             Arc a1 = arcs.remove(0);
             Arc a2 = arcs.remove(0);
@@ -153,7 +157,12 @@ public class ArcView extends Pane {
 
     }
 
-
+    /**
+     * Draws an arrow on an arc 
+     * @param src
+     * @param dest
+     * @return 
+     */
     private Polygon drawArrow(Point src, Point dest) {
         double angle = Math.atan2(dest.y - src.y, dest.x - src.x);
         double deltaX = Math.cos(angle) * ConstView.SIZE_NODE;
@@ -174,7 +183,12 @@ public class ArcView extends Pane {
         return arrow;
     }
 
-
+    /**
+     * Draws a line between two points
+     * @param src
+     * @param dest
+     * @return 
+     */
     private Line drawLine(Point src, Point dest) {
         Line line = new Line();
 
