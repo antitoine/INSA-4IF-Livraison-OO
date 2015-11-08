@@ -15,6 +15,4 @@ public class RouteTSP extends AbstractTSP {
         return 0;
         // \todo Améliorer la borne pour accélérer l'algo
     }
-
-    
 }

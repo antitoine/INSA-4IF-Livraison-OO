@@ -133,7 +133,7 @@ public class PathTest {
         arcsList.add(arc2);
         Path instance = new Path(arcsList);
 
-        float expResult = 240.0F;
+        float expResult = 2.4F;
         float result = instance.getPathDuration();
         assertEquals(expResult, result, 0.0);
     }    
