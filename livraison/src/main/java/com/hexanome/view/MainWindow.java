@@ -241,13 +241,21 @@ public class MainWindow extends AnchorPane {
     public void setLegend() {
         legendGridPane.getChildren().clear();
         legendGridPane.setVisible(true);
-        int i = 1;
+        Text txtWarehouse = new Text("Warehouse");
+        Rectangle warehouseLegend = new Rectangle(10, 10);
+        GridPane.setMargin(warehouseLegend, new Insets(0, 12, 0, 0));
+        GridPane.setMargin(txtWarehouse, new Insets(0, 0, 0, 12));
+        legendGridPane.add(txtWarehouse, 0, 0);
+        legendGridPane.add(warehouseLegend, 1, 0);
+
         Text txtNotInTime = new Text("Out of time slot");
         Circle circle = new Circle(5.0, Color.RED);
         GridPane.setMargin(circle, new Insets(0, 12, 0, 0));
         GridPane.setMargin(txtNotInTime, new Insets(0, 0, 0, 12));
-        legendGridPane.add(txtNotInTime, 0, 0);
-        legendGridPane.add(circle, 1, 0);
+        legendGridPane.add(txtNotInTime, 0, 1);
+        legendGridPane.add(circle, 1, 1);
+
+        int i = 2;
         for (TimeSlot ts : ModelManager.getInstance().getPlanning().getTimeSlots()) {
             Rectangle rect = new Rectangle(40, 5, ColorsGenerator.getTimeSlotColor(ts));
             String start = TypeWrapper.secondsToTimestamp(ts.getStartTime());
