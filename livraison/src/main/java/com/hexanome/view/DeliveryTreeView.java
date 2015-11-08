@@ -143,21 +143,22 @@ public class DeliveryTreeView extends VBox implements Subscriber {
 
         if (p instanceof Planning) {
             clearTree();
-            int nbTimeSlots = 0;
             for (TimeSlot ts : ((Planning) (p)).getTimeSlots()) {
-                nbTimeSlots++;
-
                 String start = TypeWrapper.secondsToTimestamp(ts.getStartTime());
                 String end = TypeWrapper.secondsToTimestamp(ts.getEndTime());
 
-                TreeItem<String> tsItem = null;
+                TreeItem<String> tsItem;
                 tsItem = makeBranch(start + " - " + end,
                         ConstView.TreeItemType.TIMESLOT, rootItem, null);
 
                 timeSlotBranch.put(ts, tsItem);
 
                 for (Delivery d : ts.getDeliveries()) {
-                    TreeItem<String> dItem = makeBranch("Delivery " + d.getId() +" - "+nbTimeSlots,
+                    String time = TypeWrapper.secondsToTimestamp((int) d.getDeliveryTime());
+                    TreeItem<String> dItem = makeBranch("Delivery " +
+                                    "" + d.getId() + " (" +
+                                    d.getNode().getLocation().x + ", "
+                                    + d.getNode().getLocation().y + ")",
                             ConstView.TreeItemType.DELIVERY, tsItem, d);
                     deliveryBranch.put(d, dItem);
                 }
