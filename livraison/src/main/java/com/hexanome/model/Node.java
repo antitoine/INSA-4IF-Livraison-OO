@@ -31,12 +31,62 @@ public class Node {
      */
     private Delivery delivery;
 
+    /**
+     * Returns the id of the node.
+     * @return the id.
+     */
+    public int getId() {
+        return id;
+    }
+    /**
+     * Returns the location of the node.
+     * @return the location point.
+     */
+    public Point getLocation() {
+        return location;
+    }
+    /**
+     * Returns the delivery attached to this node.
+     * @return the delivery attached to this node.
+     */
+    public Delivery getDelivery() {
+        return delivery;
+    }
+    /**
+     * Returns all the outgoing arcs.
+     * @return the list of outgoing arcs.
+     */
+    public List<Arc> getOutgoingArcs() {
+        return Collections.unmodifiableList(outgoings);
+    }
+    /**
+     * Returns an outgoing arc, knowing its ending node.
+     * @param dest the ending node of the arc we are looking for.
+     * @return the arc.
+     */
+    Arc getOutgoingArc(Node dest) {
+        for (Arc arc : outgoings) {
+            if (arc.getDest().equals(dest)) {
+                return arc;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
     @Override
     public int hashCode() {
         int hash = 7;
         return hash;
     }
-
+    /**
+     * 
+     * @param obj
+     * @return 
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -73,59 +123,17 @@ public class Node {
     }
     
     /**
-     * Returns all the outgoing arcs.
-     * @return the list of outgoing arcs.
-     */
-    public List<Arc> getOutgoingArcs() {
-        return Collections.unmodifiableList(outgoings);
-    }
-    
-    /**
-     * Returns an outgoing arc, knowing its ending node.
-     * @param dest the ending node of the arc we are looking for.
-     * @return the arc.
-     */
-    Arc getOutgoingArc(Node dest) {
-        for (Arc arc : outgoings) {
-            if (arc.getDest().equals(dest)) {
-                return arc;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Returns the id of the node.
-     * @return the id.
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Returns the location of the node.
-     * @return the location point.
-     */
-    public Point getLocation() {
-        return location;
-    }
-    
-    /**
      * Attaches a delivery to this node.
      * @param delivery the delivery to attach.
      */
     void attachDelivery(Delivery delivery) {
         this.delivery = delivery;
     }
-    
-    /**
-     * Returns the delivery attached to this node.
-     * @return the delivery attached to this node.
-     */
-    public Delivery getDelivery() {
-        return delivery;
-    }
 
+    /**
+     * Returns the string describing the objet, used for debug only
+     * @return a string describing the object
+     */
     @Override
     public String toString() {
         String arcs = "";

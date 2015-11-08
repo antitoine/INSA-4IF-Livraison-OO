@@ -5,7 +5,6 @@ package com.hexanome.model;
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-
 public class Delivery {
     /**
      * The time when the delivery will be executed.
@@ -44,9 +43,19 @@ public class Delivery {
     public int getId(){
         return id;
     }
-    
+    /**
+     * Returns the effective delivery time
+     * @return a float that is the sum in seconds of a timestamp 
+     */
     public float getDeliveryTime() {
         return deliveryTime;
+    }
+    /**
+     * Returns the node associated with the delivery.
+     * @return the node
+     */
+    public Node getNode() {
+        return node;
     }
 
     /**
@@ -57,13 +66,7 @@ public class Delivery {
         this.deliveryTime = deliveryTime;
     }
     
-    /**
-     * Returns the node associated with the delivery.
-     * @return the node
-     */
-    public Node getNode() {
-        return node;
-    }
+    
     
     /**
      * Associates the delivery with a given time slot.
@@ -81,6 +84,10 @@ public class Delivery {
         return timeSlot;
     }
 
+    /**
+     * Returns the string describing the objet, used for debug only
+     * @return a string describing the object
+     */
     @Override
     public String toString() {
         return String.format(""

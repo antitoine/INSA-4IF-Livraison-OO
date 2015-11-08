@@ -40,15 +40,84 @@ public class Planning implements Publisher {
      * The subscribers of this class.
      */
     private ArrayList<Subscriber> subscribers;
-
     /**
      * Computes the route from this planning.
      */
     private PlanningComputeRouteWorker planningComputeRouteWorker;
 
     /**
-     * Constructor.
+     * Finds the delivery passed by parameter and returns the node which
+     * contains the delivery done before. A route must be computed when you
+     * call this method. Otherwise, it will return null.
      *
+     * @param delivery The delivery to find in the current planning.
+     * @return The node of the previous delivery.
+     */
+    public Node getNodePreviousDelivery(Delivery delivery) {
+        if (route != null) {
+            return route.getNodePreviousDelivery(delivery);
+        }
+        return null;
+    }
+    /**
+     * Returns all the time slots.
+     * @return the list of all the time slots.
+     */
+    public List<TimeSlot> getTimeSlots() {
+        return Collections.unmodifiableList(timeSlots);
+    }
+    /**
+     * Returns the first time slot, with the lowest start date.
+     * @return The first time slot, or null if it doesn't exist.
+     */
+    public TimeSlot getFirstTimeSlot() {
+        return (timeSlots.isEmpty()) ? null : timeSlots.get(0);
+    }
+    /**
+     * Returns the map corresponding to this planning.
+     * @return the map.
+     */
+    public Map getMap() {
+        return map;
+    }
+    /**
+     * Returns the unique warehouse of this planning.
+     * @return the warehouse.
+     */
+    public Node getWarehouse() {
+        return warehouse;
+    }
+    /**
+     * Returns a collection of deliveries present in the planning whatever the 
+     * associated timeslot is.
+     * @return a collection of deliveries
+     */
+    public List<Delivery> getDeliveries() {
+        ArrayList<Delivery> deliveries = new ArrayList<>();
+        for (TimeSlot ts : timeSlots) {
+            deliveries.addAll(ts.getDeliveries());
+        }
+        return deliveries;
+    }
+    /**
+     * Returns the route created from this planning.
+     * @return the route.
+     */
+    public Route getRoute() {
+        return route;
+    }
+    /**
+     * Update the route and notify the subscribers.
+     *
+     * @param route The new route tu use.
+     */
+    void setRoute(Route route) {
+        this.route = route;
+        notifySubscribers();
+    }
+    
+    /**
+     * Constructor.
      * @param map the map related to this planning.
      * @param warehouse the warehouse.
      * @param timeSlots all the timeslots where a delivery can be executed.
@@ -68,7 +137,6 @@ public class Planning implements Publisher {
     public void abortComputeRoute() {
         planningComputeRouteWorker.cancel();
     }
-
     /**
      * Start the route computing. The observers will be notified when the route
      * is set. Update the deliveries time as well.
@@ -84,7 +152,6 @@ public class Planning implements Publisher {
         service.stateProperty().addListener(listenerComputeRoute);
         service.start();
     }
-    
     /**
      * Compute the route synchronously. Update the deliveries time.
      * @throws java.lang.Exception Ifthe route can't be computed.
@@ -93,7 +160,6 @@ public class Planning implements Publisher {
         planningComputeRouteWorker = new PlanningComputeRouteWorker(this);
         planningComputeRouteWorker.call();
     }
-
     /**
      * Adds a delivery to the planning, after another delivery.
      *
@@ -115,7 +181,6 @@ public class Planning implements Publisher {
 
         return null;
     }
-
     /**
      * Removes a delivery from the planning.
      *
@@ -126,21 +191,6 @@ public class Planning implements Publisher {
             route.removeDelivery(delivery);          
             notifySubscribers();
         }
-    }
-
-    /**
-     * Finds the delivery passed by parameter and returns the node which
-     * contains the delivery done before. A route must be computed when you
-     * call this method. Otherwise, it will return null.
-     *
-     * @param delivery The delivery to find in the current planning.
-     * @return The node of the previous delivery.
-     */
-    public Node getNodePreviousDelivery(Delivery delivery) {
-        if (route != null) {
-            return route.getNodePreviousDelivery(delivery);
-        }
-        return null;
     }
 
     /**
@@ -155,63 +205,46 @@ public class Planning implements Publisher {
             notifySubscribers();
         }
     }
-
     /**
-     * Returns all the time slots.
-     *
-     * @return the list of all the time slots.
+     * Adds a subscriber
+     * @param s 
+     *      Subscriber to add
      */
-    public List<TimeSlot> getTimeSlots() {
-        return Collections.unmodifiableList(timeSlots);
+    @Override
+    public void addSubscriber(Subscriber s) {
+        subscribers.add(s);
+        s.update(this, null);
     }
-
     /**
-     * Returns the first time slot, with the lowest start date.
-     *
-     * @return The first time slot, or null if it doesn't exist.
+     * Remove one subscriber
+     * @param s 
+     *      Subscriber to remove
      */
-    public TimeSlot getFirstTimeSlot() {
-        return (timeSlots.isEmpty()) ? null : timeSlots.get(0);
+    @Override
+    public void removeSubscriber(Subscriber s) {
+        subscribers.remove(s);
     }
-
     /**
-     * Returns the map corresponding to this planning.
-     *
-     * @return the map.
+     * Notifies all subscribers
      */
-    public Map getMap() {
-        return map;
+    @Override
+    public void notifySubscribers() {
+        for (Subscriber s : subscribers) {
+            s.update(this, null);
+        }
     }
-
     /**
-     * Returns the unique warehouse of this planning.
-     *
-     * @return the warehouse.
+     * Removes all subscribers
      */
-    public Node getWarehouse() {
-        return warehouse;
+    @Override
+    public void clearSubscribers() {
+        subscribers.clear();
     }
-
+    
     /**
-     * Returns the route created from this planning.
-     *
-     * @return the route.
+     * Returns the string describing the objet, used for debug only
+     * @return a string describing the object
      */
-    public Route getRoute() {
-        return route;
-    }
-
-    /**
-     * Update the route and notify the subscribers.
-     *
-     * @param route The new route tu use.
-     */
-    void setRoute(Route route) {
-        this.route = route;
-        notifySubscribers();
-    }
-
-    // \todo add methods here
     @Override
     public String toString() {
         String strts = "";
@@ -226,37 +259,6 @@ public class Planning implements Publisher {
                 + "%s\n"
                 + "}"
                 + "}", warehouse.getId(), strts);
-    }
-
-    @Override
-    public void addSubscriber(Subscriber s) {
-        subscribers.add(s);
-        s.update(this, null);
-    }
-
-    @Override
-    public void removeSubscriber(Subscriber s) {
-        subscribers.remove(s);
-    }
-
-    @Override
-    public void notifySubscribers() {
-        for (Subscriber s : subscribers) {
-            s.update(this, null);
-        }
-    }
-
-    @Override
-    public void clearSubscribers() {
-        subscribers.clear();
-    }
-
-    public List<Delivery> getDeliveries() {
-        ArrayList<Delivery> deliveries = new ArrayList<>();
-        for (TimeSlot ts : timeSlots) {
-            deliveries.addAll(ts.getDeliveries());
-        }
-        return deliveries;
     }
 
 }
