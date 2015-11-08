@@ -98,6 +98,7 @@ public class UIManager {
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
         mainWindow.resetCursorAndInfoLabel();
         mainWindow.clearLegend();
+        mainWindow.resetZoom();
     }
     /**
      * Modifies mainwindow according to the action of loading a planning
@@ -118,6 +119,7 @@ public class UIManager {
         mainWindow.clearLegend();
         mainWindow.setLegend();
         // Update mainwindow
+        mainWindow.resetZoom();
         mainWindow.resetCursorAndInfoLabel();
     }
     /**

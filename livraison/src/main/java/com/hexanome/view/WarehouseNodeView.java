@@ -1,7 +1,6 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
-import com.hexanome.controller.UIManager;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import org.controlsfx.control.PopOver;
@@ -25,7 +24,6 @@ public class WarehouseNodeView extends Label implements INodeViewShape {
     @Override
     public void onMouseClickedNotify(NodeView context) {
         ContextManager.getInstance().getCurrentState().clickOnWarehouse(node);
-        UIManager.getInstance().getMainWindow().disablePanning();
     }
 
     @Override

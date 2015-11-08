@@ -86,6 +86,7 @@ public class EmptyNodeSelectedState extends SelectionsStates {
         // Jump to DeliverySelectedState
         ContextManager.getInstance().setCurrentState(DeliverySelectedState.getInstance());
         // Show new pop over
+        UIManager.getInstance().getMainWindow().repositionToLatestPosition();
         UIManager.getInstance().getMainWindow().getMapView().showPopOver(node);
     }
     

@@ -2,7 +2,6 @@ package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.ModelManager;
-import com.hexanome.controller.UIManager;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -41,8 +40,6 @@ public class EmptyNodeView extends Circle implements INodeViewShape {
         }
         // Call current state related action
         ContextManager.getInstance().getCurrentState().clickOnEmptyNode(node);
-        // Disable panning
-        UIManager.getInstance().getMainWindow().disablePanning();
     }
 
     @Override

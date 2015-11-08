@@ -7,7 +7,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import org.controlsfx.glyphfont.*?>
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" type="AnchorPane"
+         xmlns="http://javafx.com/javafx/8">
     <children>
         <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <bottom>
@@ -51,7 +53,7 @@
                 </BorderPane>          
             </left>
             <center>
-                <ScrollPane fx:id="scrollPaneMap" pannable="true" BorderPane.alignment="CENTER" />
+                <StackPane fx:id="parentMapPane" BorderPane.alignment="CENTER"/>
             </center>
             <right>
             </right>
@@ -95,6 +97,21 @@
                                         </MenuItem>
                                     </items>
                                 </Menu>
+                                <Menu mnemonicParsing="false" text="%zoom">
+                                    <items>
+                                        <MenuItem fx:id="mntmUndo1" disable="true" mnemonicParsing="false"
+                                                  onAction="#zoomIn" text="%zoomin"/>
+                                        <MenuItem fx:id="mntmRedo1" disable="true" mnemonicParsing="false"
+                                                  onAction="#zoomOut" text="%zoomout"/>
+                                        <MenuItem fx:id="mntmUndo11" disable="true" mnemonicParsing="false"
+                                                  onAction="#resetZoom" text="%resetzoom">
+                                            <accelerator>
+                                                <KeyCodeCombination alt="UP" code="ESCAPE" control="UP" meta="UP"
+                                                                    shift="UP" shortcut="UP"/>
+                                            </accelerator>
+                                        </MenuItem>
+                                    </items>
+                                </Menu>
                             </menus>
                         </MenuBar>
                         <ToolBar>
@@ -127,6 +144,11 @@
                                 <Button mnemonicParsing="false" onAction="#zoomOut">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="SEARCH_MINUS" />
+                                    </graphic>
+                                </Button>
+                                <Button mnemonicParsing="false" onAction="#resetZoom">
+                                    <graphic>
+                                        <Glyph fontFamily="FontAwesome" icon="SEARCH"/>
                                     </graphic>
                                 </Button>
                             </items>
