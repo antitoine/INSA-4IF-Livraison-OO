@@ -7,7 +7,7 @@ plan-arc_missing_nomRue.xml 	-> Ok
 plan-arc_missing_vitesse.xml 	-> Ok
 plan-empty_map.xml		-> Ok
 plan-id_duplicate.xml 		-> Ok
-plan-malformed_xml.xml		-> KO
+plan-malformed_xml.xml		-> Ok
 plan-missing_dest_node.xml 	-> Ok
 plan-missing_id.xml 		-> Ok
 plan-missing_id_noeud_dest.xml 	-> Ok
@@ -15,8 +15,8 @@ plan-missing_x.xml 		-> Ok
 plan-missing_y.xml 		-> Ok
 plan-no_outgoing_arc.xml 	-> Ok
 plan-not_enough_child.xml 	-> Ok
-plan-not-xml-json.xml		-> KO
-plan-not-xml-binary.xml		-> KO
+plan-not-xml-json.xml		-> Ok
+plan-not-xml-binary.xml		-> Ok
 plan-same_coordinates.xml 	-> Ok
 
 
