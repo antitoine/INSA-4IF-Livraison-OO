@@ -124,7 +124,6 @@ public class Arc {
     public String toString() {
         return String.format(""
                 + "{\n"
-                + ((associatedTimeSlot == null) ? "" : (associatedTimeSlot.size() + "\n"))
                 + "\"streetName\":\"%s\",\n"
                 + "\"length\":%s,\n"
                 + "\"avgSpeed\":%s,\n"

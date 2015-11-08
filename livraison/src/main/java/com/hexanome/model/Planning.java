@@ -2,14 +2,9 @@ package com.hexanome.model;
 
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
-import javafx.beans.value.ChangeListener;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EventListener;
 import java.util.List;
 import javafx.event.EventHandler;
 
@@ -175,6 +170,7 @@ public class Planning implements Publisher {
             timeSlot.addDelivery(newDelivery);
 
             route.addDelivery(newDelivery, nodePreviousDelivery);
+            notifySubscribers();
             return newDelivery;
         }
 
@@ -187,7 +183,8 @@ public class Planning implements Publisher {
      */
     public void removeDelivery(Delivery delivery) {
         if (route != null) {
-            route.removeDelivery(delivery);          
+            route.removeDelivery(delivery);   
+            notifySubscribers();
         }
     }
 
@@ -200,6 +197,7 @@ public class Planning implements Publisher {
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
         if (route != null) {
             route.swapDeliveries(delivery1, delivery2);
+            notifySubscribers();
         }
     }
     /**

@@ -92,8 +92,8 @@ public class MapView extends AnchorPane implements Subscriber {
             }
         }
 
-        (nodeList.get(planning.getWarehouse())).setType(ConstView.WAREHOUSE_NODE);
-
+        NodeView warehouseNodeView = nodeList.get(planning.getWarehouse());
+        warehouseNodeView.setType(ConstView.WAREHOUSE_NODE);        
     }
 
     private void addArcs(Collection <Arc> arcs){
