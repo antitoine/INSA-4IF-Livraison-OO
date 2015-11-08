@@ -13,7 +13,7 @@ import com.hexanome.view.ConstView;
 public class InitState extends DefaultState {
 
     private static InitState initState = null;
-
+    
     private InitState(){
         // Nothing to do here
     }
@@ -44,6 +44,10 @@ public class InitState extends DefaultState {
         UIManager.getInstance().getMainWindow().askFile();
     }
 
+    /**
+     * Returns the string describing the state, used for debug only
+     * @return a string describing the state
+     */
     @Override
     public String toString() {
         return "InitState"; //To change body of generated methods, choose Tools | Templates.

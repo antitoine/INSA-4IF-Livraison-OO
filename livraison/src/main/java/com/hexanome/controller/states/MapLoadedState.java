@@ -77,6 +77,10 @@ public class MapLoadedState extends DefaultState {
         }
     }
 
+    /**
+     * Returns the string describing the state, used for debug only
+     * @return a string describing the state
+     */
     @Override
     public String toString() {
         return "MapLoadedState"; //To change body of generated methods, choose Tools | Templates.

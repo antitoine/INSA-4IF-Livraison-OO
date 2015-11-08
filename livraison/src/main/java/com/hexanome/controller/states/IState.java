@@ -36,24 +36,29 @@ public interface IState {
 
     /**
      * Click on button to load file
+     * @param file
+     *      file to load as a map or a planning depending on the state
      */
     public void btnValidateFile(File file);
 
     /**
      * Left click pressed on a delivery
-     * @param delivery The delivery clicked
      */
     public void leftClickPressedOnDelivery();
 
     /**
      * Left click released on another delivery
-     * @param delivery another delivery
+     * @param sourceDelivery
+     *      Delivery to switch with target delivery
+     * @param targetDelivery 
+     *      Delivery to switch with sourceDelivery
      */
     public void leftClickReleased(Delivery sourceDelivery, Delivery targetDelivery);
 
     /**
      * Simple click on a delivery
-     * @param delivery the delivery clicked
+     * @param delivery 
+     *      the delivery clicked
      */
     public void clickOnDelivery(Delivery delivery);
 
@@ -69,25 +74,33 @@ public interface IState {
 
     /**
      * Click on an empty node (not a delivery or warehouse node)
-     * @param node The empty node clicked
+     * @param node 
+     *      The empty node clicked
      */
     public void clickOnEmptyNode(Node node);
 
     /**
      * Click on button to add a new delivery
-     * @param node The node to deliver
-     * @param previousDeliveryNode The nodewith the previous delivery
-     * @param timeSlot The time slot of the new delivery
+     * @param node 
+     *      The node to deliver
+     * @param previousDeliveryNode 
+     *      The nodewith the previous delivery
+     * @param timeSlot 
+     *      The time slot of the new delivery
      */
     public void btnAddDelivery(Node node, Node previousDeliveryNode, TimeSlot timeSlot);
 
     /**
      * Click on button to remove a delivery
+     * @param delivery
+     *      The delivery to remove
      */
     public void btnRemoveDelivery(Delivery delivery);
 
     /**
      * Click on a specific node : the warehouse
+     * @param warehouse
+     *      The warehouse node clicked
      */
     public void clickOnWarehouse(Node warehouse);
 

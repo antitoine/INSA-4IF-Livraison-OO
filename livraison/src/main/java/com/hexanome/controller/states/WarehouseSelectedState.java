@@ -81,6 +81,10 @@ public class WarehouseSelectedState extends SelectionsStates {
         // \todo TODO
     }
 
+    /**
+     * Returns the string describing the state, used for debug only
+     * @return a string describing the state
+     */
     @Override
     public String toString() {
         return "WarehouseSelectedState"; //To change body of generated methods, choose Tools | Templates.

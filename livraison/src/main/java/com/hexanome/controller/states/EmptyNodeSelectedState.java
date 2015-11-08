@@ -73,18 +73,8 @@ public class EmptyNodeSelectedState extends SelectionsStates {
     }
 
     /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#closePopOver()
+     * @see com.hexanome.controller.states.IState#btnAddDelivery(com.hexanome.model.Node)
      */
-    @Override
-    public void closePopOver() {
-        // \todo TODO
-    }
-
-    @Override
-    public String toString() {
-        return "EmptyNodeSelectedState"; //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public void btnAddDelivery(Node node, Node previousDeliveryNode, TimeSlot timeSlot) {
         // Close current pop over
@@ -97,6 +87,23 @@ public class EmptyNodeSelectedState extends SelectionsStates {
         ContextManager.getInstance().setCurrentState(DeliverySelectedState.getInstance());
         // Show new pop over
         UIManager.getInstance().getMainWindow().getMapView().showPopOver(node);
+    }
+    
+    /* (non-Javadoc)
+     * @see com.hexanome.controller.states.IState#closePopOver()
+     */
+    @Override
+    public void closePopOver() {
+        // \todo TODO
+    }
+
+    /**
+     * Returns the string describing the state, used for debug only
+     * @return a string describing the state
+     */
+    @Override
+    public String toString() {
+        return "EmptyNodeSelectedState"; //To change body of generated methods, choose Tools | Templates.
     }
 
 }
