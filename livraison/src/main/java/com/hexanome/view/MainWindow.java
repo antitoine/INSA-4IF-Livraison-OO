@@ -180,7 +180,7 @@ public class MainWindow extends AnchorPane {
         alert.setTitle("Error - " + msg);
         alert.setContentText(msg);
         alert.setResizable(true);
-        alert.getDialogPane().setPrefSize(480, 320);
+        alert.getDialogPane().setPrefSize(400, 200);
         alert.showAndWait();
     }
 
