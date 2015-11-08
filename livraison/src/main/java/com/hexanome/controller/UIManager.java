@@ -188,8 +188,7 @@ public class UIManager {
         // TODO give this command to the context Manager
         // ContextManager.getInstance().getCurrentState().swapDeliveries();
         SwapDeliveriesCommand sc = new SwapDeliveriesCommand(delivery1, delivery2);
-        sc.execute();
-
+        ContextManager.getInstance().executeCommand(sc);
     }
 
 }
