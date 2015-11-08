@@ -63,9 +63,9 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 Dragboard sourceCell = event.getDragboard();
                 if (targetCellSwap != null) {
                     Delivery delivery1 = DeliveryTreeView
-                            .getDeliveryIdFromName(event.getDragboard().getString());
+                            .getDeliveryFromName(event.getDragboard().getString());
                     Delivery delivery2 = DeliveryTreeView
-                            .getDeliveryIdFromName(targetCellSwap.getString());
+                            .getDeliveryFromName(targetCellSwap.getString());
                     System.out.println("Drag done " + sourceCell.getString() + " <->" +
                             targetCellSwap.getString());
                     UIManager.getInstance().swapDelivery(delivery1, delivery2);

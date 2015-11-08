@@ -11,14 +11,39 @@ public class Path {
      * All the arcs to take, in the right order.
      */
     private ArrayList<Arc> arcs;
-
-    public ArrayList<Arc> getArcs() {
-        return arcs;
-    }
     /**
      * The total duration of the path.
      */
     private float pathDuration;
+    
+    /**
+     * Returns a collection of arcs present in the path
+     * @return a collection of arcs
+     */
+    public ArrayList<Arc> getArcs() {
+        return arcs;
+    }
+    /**
+     * Returns the first node of the path.
+     * @return the first node of the path.
+     */
+    public Node getFirstNode() {
+        return arcs.get(0).getSrc();
+    }
+    /**
+     * Returns the last node of the path.
+     * @return the last node of the path.
+     */
+    public Node getLastNode() {
+        return arcs.get(arcs.size() - 1).getDest();
+    }
+    /**
+     * Returns the total duration of the path, ie the sum of the arc's durations
+     * @return The duration of the path.
+     */
+    public float getPathDuration() {
+        return pathDuration;
+    }
     
     /**
      * Constructor.
@@ -30,22 +55,6 @@ public class Path {
         for (Arc arc : arcs) {
             this.pathDuration += arc.getDuration();
         }
-    }
-    
-    /**
-     * Returns the first node of the path.
-     * @return the first node of the path.
-     */
-    public Node getFirstNode() {
-        return arcs.get(0).getSrc();
-    }
-    
-    /**
-     * Returns the last node of the path.
-     * @return the last node of the path.
-     */
-    public Node getLastNode() {
-        return arcs.get(arcs.size() - 1).getDest();
     }
     
     /**
@@ -65,26 +74,10 @@ public class Path {
     }
     
     /**
-     * Returns the total duration of the path, ie the sum of the arc's durations
-     * @return The duration of the path.
+     * Comparison operator for equality
+     * @param obj
+     * @return 
      */
-    public float getPathDuration() {
-        return pathDuration;
-    }
-    
-
-    @Override
-    public String toString() {
-        String strarcs = "{";
-        for (Arc arc : arcs) {
-            strarcs += arc.toString() + ",";
-        }
-        strarcs += strarcs.substring(0, strarcs.length()-1) + "}";
-        return String.format("\"Path\" : {\n"
-                + "\"pathDuration\":%s, \"arcs\":\"%s\"\n"
-                + "}", strarcs, pathDuration);
-    }
-
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Path)) {
@@ -102,5 +95,21 @@ public class Path {
             }
         }
         return true; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * Returns the string describing the objet, used for debug only
+     * @return a string describing the object
+     */
+    @Override
+    public String toString() {
+        String strarcs = "{";
+        for (Arc arc : arcs) {
+            strarcs += arc.toString() + ",";
+        }
+        strarcs += strarcs.substring(0, strarcs.length()-1) + "}";
+        return String.format("\"Path\" : {\n"
+                + "\"pathDuration\":%s, \"arcs\":\"%s\"\n"
+                + "}", strarcs, pathDuration);
     }
 }

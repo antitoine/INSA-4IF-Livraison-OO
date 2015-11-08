@@ -18,29 +18,31 @@ public class PathGraph implements IGraph {
     private HashMap<Integer, HashMap<Integer, Path>> graph;
     
     /**
-     * Map with the association of an edge number and its id.
+     * Map with the association of an edge number and its id :
      *  - Key : Edge number (0-based)
-     *  - Value : Edge id
+     *  - Value : Edge id.
      */
     private HashMap<Integer, Integer> nodes;
     
-    /** The number of nodes stored in the graph. */
-    private int nodesSize;
-
-    /**
-     * Constructor of an empty Path Graph.
+    /** 
+     * The number of nodes stored in the graph. 
      */
-    public PathGraph() {
-        graph = new HashMap<>();
-        nodes = new HashMap<>();  
-        nodesSize = 0;
-    }    
-
+    private int nodesSize;
+    
+    /**
+     * Returns the total count of arcs in the graph
+     * @return 
+     */
     @Override
     public int getNbArcs() {
         return graph.keySet().size();
     }
-
+    /**
+     * Returns the cost of the walk between two nodes
+     * @param i
+     * @param j
+     * @return 
+     */
     @Override
     public float getCost(int i, int j) {
         if (!nodes.containsKey(i) || !nodes.containsKey(j)) {
@@ -61,6 +63,15 @@ public class PathGraph implements IGraph {
         
         return (path == null) ? -1 : path.getPathDuration();
     }
+    
+    /**
+     * Constructor of an empty Path Graph.
+     */
+    public PathGraph() {
+        graph = new HashMap<>();
+        nodes = new HashMap<>();  
+        nodesSize = 0;
+    }    
 
     @Override
     public boolean isArc(int i, int j) {

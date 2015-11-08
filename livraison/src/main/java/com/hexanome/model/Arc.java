@@ -36,7 +36,6 @@ public class Arc {
      * The node at the beginning of the arc.
      */
     private Node src;
-    
     /**
      * The time slots associated with the arc when the arc is in a route.
      */
@@ -49,7 +48,6 @@ public class Arc {
     public Node getDest() {
         return dest;
     }
-
     /**
      * Returns the node that starts the arc.
      * @return the node "src".
@@ -57,7 +55,28 @@ public class Arc {
     public Node getSrc() {
         return src;
     }    
-    
+    /**
+     * Returns street's name
+     * @return a string containing street's name
+     */
+    public String getStreetName() {
+        return streetName;
+    }
+    /**
+     * Returns the duration (seconds) needed to go from the start to the end of the arc.
+     * @return the attribute "duration".
+     */
+    public float getDuration() {
+        return duration;
+    }
+    /**
+     * Returns the time slots associated with the arc, if it exists.
+     * @return The time slot if it exists, empty list otherwise.
+     */
+    public Set<TimeSlot> getAssociatedTimeSlots() {
+        return Collections.unmodifiableSet(associatedTimeSlot);
+    }
+
     /**
      * Constructor.
      * @param streetName the name of the street
@@ -74,14 +93,6 @@ public class Arc {
         this.dest = dest;
         this.src = src;
         this.associatedTimeSlot = new HashSet<>();
-    }
-    
-    /**
-     * Returns the time slots associated with the arc, if it exists.
-     * @return The time slot if it exists, empty list otherwise.
-     */
-    public Set<TimeSlot> getAssociatedTimeSlots() {
-        return Collections.unmodifiableSet(associatedTimeSlot);
     }
     
     /**
@@ -102,15 +113,11 @@ public class Arc {
             associatedTimeSlot.clear();
         }         
     }
-    
-    /**
-     * Returns the duration (seconds) needed to go from the start to the end of the arc.
-     * @return the attribute "duration".
-     */
-    public float getDuration() {
-        return duration;
-    }
 
+    /**
+     * Returns the string describing the objet, used for debug only
+     * @return a string describing the object
+     */
     @Override
     public String toString() {
         return String.format(""
@@ -122,10 +129,6 @@ public class Arc {
                 + "\"destNodeId\":%s,\n"
                 + "\"srcNodeId\":%s\n"
                 + "}", streetName, length, avgSpeed, duration, dest.getId(), src.getId());
-    }
-
-    public String getStreetName() {
-        return streetName;
     }
     
 }

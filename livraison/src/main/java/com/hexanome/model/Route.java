@@ -30,7 +30,51 @@ public class Route implements Publisher {
      * Planning associated with this route.
      */
     private Planning planning;
+    
+    /**
+     * Rteurns a list of paths
+     * @return 
+     */
+    public List<Path> getPaths() {
+        return Collections.unmodifiableList(paths);
+    }
+    /**
+     * Find the delivery passed by parameter and return the next delivery if
+     * exists.
+     *
+     * @param delivery The delivery to find in the route.
+     * @return The next delivery, or null if it doesn't exist.
+     */
+    public Delivery getNextDelivery(Delivery delivery) {
+        for (Path p : paths) {
+            Delivery currentDelivery = p.getFirstNode().getDelivery();
 
+            if (currentDelivery != null) {
+                if (currentDelivery.equals(delivery)) {
+                    return p.getLastNode().getDelivery();
+                }
+            }
+        }
+
+        return null;
+    }
+    /**
+     * Find and return the node of the previous delivery done before the
+     * delivery passed by parameter.
+     *
+     * @param delivery The delivery to find.
+     * @return The node of the previous delivery in the current route.
+     */
+    Node getNodePreviousDelivery(Delivery delivery) {
+        for (Path p : paths) {
+            if (p.getLastNode().getDelivery() != null
+                    && p.getLastNode().getDelivery().equals(delivery)) {
+                return p.getFirstNode();
+            }
+        }
+        return null;
+    }
+    
     /**
      * Construct the route with the paths passed by parameter and update the
      * deliveries times.
@@ -97,27 +141,6 @@ public class Route implements Publisher {
                 }
             }
         }
-    }
-
-    /**
-     * Find the delivery passed by parameter and return the next delivery if
-     * exists.
-     *
-     * @param delivery The delivery to find in the route.
-     * @return The next delivery, or null if it doesn't exist.
-     */
-    public Delivery getNextDelivery(Delivery delivery) {
-        for (Path p : paths) {
-            Delivery currentDelivery = p.getFirstNode().getDelivery();
-
-            if (currentDelivery != null) {
-                if (currentDelivery.equals(delivery)) {
-                    return p.getLastNode().getDelivery();
-                }
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -308,61 +331,48 @@ public class Route implements Publisher {
             notifySubscribers();
         }
     }
-
+    
     /**
-     * Find and return the node of the previous delivery done before the
-     * delivery passed by parameter.
-     *
-     * @param delivery The delivery to find.
-     * @return The node of the previous delivery in the current route.
+     * Add one subscriber
+     * @param s 
+     *      Subscriber to add
      */
-    Node getNodePreviousDelivery(Delivery delivery) {
-        for (Path p : paths) {
-            if (p.getLastNode().getDelivery() != null
-                    && p.getLastNode().getDelivery().equals(delivery)) {
-                return p.getFirstNode();
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        String strpaths = "{";
-        for (Path path : paths) {
-            strpaths += path.toString() + ",";
-        }
-        strpaths = strpaths.substring(0, strpaths.length() - 1) + "}";
-        return String.format("{ \"Route\" : { \"paths\":%s } }", strpaths);
-    }
-
     @Override
     public void addSubscriber(Subscriber s) {
         subscribers.add(s);
         s.update(this, planning);
     }
-
+    /**
+     * Removes one subscriber
+     * @param s 
+     *      Subscriber to remove
+     */
     @Override
     public void removeSubscriber(Subscriber s) {
         subscribers.remove(s);
     }
-
+    /**
+     * Notifies all subscribers
+     */
     @Override
     public void notifySubscribers() {
         for (Subscriber s : subscribers) {
             s.update(this, planning);
         }
     }
-
+    /**
+     * Remove all subscribers
+     */
     @Override
     public void clearSubscribers() {
         subscribers.clear();
     }
-
-    public List<Path> getPaths() {
-        return Collections.unmodifiableList(paths);
-    }
-
+    
+    /**
+     * Comparison operator for equality
+     * @param obj
+     * @return 
+     */
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Route)) {
@@ -388,7 +398,18 @@ public class Route implements Publisher {
         }
         return true;  
     }
-    
-    
+    /**
+     * Returns the string describing the objet, used for debug only
+     * @return a string describing the object
+     */
+    @Override
+    public String toString() {
+        String strpaths = "{";
+        for (Path path : paths) {
+            strpaths += path.toString() + ",";
+        }
+        strpaths = strpaths.substring(0, strpaths.length() - 1) + "}";
+        return String.format("{ \"Route\" : { \"paths\":%s } }", strpaths);
+    }
 
 }
