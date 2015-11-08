@@ -3,8 +3,6 @@
  */
 package com.hexanome.controller.states;
 
-import java.io.File;
-
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.IOManager;
 import com.hexanome.controller.ModelManager;
@@ -15,6 +13,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
+
+import java.io.File;
 
 /**
  * This class represents the logic state when user is selecting a
@@ -104,13 +104,7 @@ public class PlanningSelectState extends DefaultState {
                                             .setCurrentState(PlanningLoadedState.getInstance());
                                     // update the view
                                     UIManager.getInstance().endLoadPlanning();
-
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            ContextManager.getInstance().getCurrentState().btnGenerateRoute();
-                                        }
-                                    }).start();
+                                    ContextManager.getInstance().getCurrentState().btnGenerateRoute();
                                     break;
                                 }
                         }
