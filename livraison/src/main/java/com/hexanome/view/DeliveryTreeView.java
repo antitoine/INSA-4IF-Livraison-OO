@@ -154,9 +154,8 @@ public class DeliveryTreeView extends VBox implements Subscriber {
                 timeSlotBranch.put(ts, tsItem);
 
                 for (Delivery d : ts.getDeliveries()) {
-                    String time = TypeWrapper.secondsToTimestamp((int) d.getDeliveryTime());
                     TreeItem<String> dItem = makeBranch("Delivery " +
-                                    "" + d.getId() + " (" +
+                                    "" + d.getNode().getId() + " (" +
                                     d.getNode().getLocation().x + ", "
                                     + d.getNode().getLocation().y + ")",
                             ConstView.TreeItemType.DELIVERY, tsItem, d);
