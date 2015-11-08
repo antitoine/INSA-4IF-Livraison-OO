@@ -31,13 +31,6 @@ public class EmptyNodeView extends Circle implements INodeViewShape {
      */
     @Override
     public void onMouseClickedNotify(NodeView context) {
-        // Set popover content
-        if (ModelManager.getInstance().getPlanning() != null) {
-            PopOverContentEmptyNode pop = (PopOverContentEmptyNode) context.getPopoverContent();
-            pop.setComboxBox(ModelManager.getInstance().getPlanning().getWarehouse(),
-                             ModelManager.getInstance().getPlanning().getDeliveries(),
-                             ModelManager.getInstance().getPlanning().getTimeSlots());
-        }
         // Call current state related action
         ContextManager.getInstance().getCurrentState().clickOnEmptyNode(node);
     }
