@@ -12,21 +12,22 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 
 import java.awt.*;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 
 /**
  * This class is the graphic component equivalent to the arc defined
  * in the model
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class ArcView {
 
     final double ARC_DISTANCE = 4;
     final double COEF_ARC_DISTANCE = 0.8;
-    LinkedList<Color> colors;
-    LinkedList<Arc> arcs;
+    LinkedList<Entry<Arc, Color>> arcs;
     Pane mapPane;
 
     /**
@@ -34,48 +35,43 @@ public class ArcView {
      * @param tsArcs list of arcs for the arcView
      */
     public ArcView(final LinkedList<Arc> tsArcs, Pane pane) {
-        // setMouseTransparent(true);
         mapPane = pane;
-        colors = new LinkedList<>();
-        arcs = new LinkedList<>(tsArcs);
+        arcs = new LinkedList<>();
 
-        boolean moreThanOneTimeSlot;
         for (Arc arc : tsArcs) {
-            moreThanOneTimeSlot = false;
             if (arc.getAssociatedTimeSlots().isEmpty()) {
-                colors.add(Color.GRAY);
+                arcs.add(new AbstractMap.SimpleEntry<>(arc, Color.GRAY));
             } else {
                 for (TimeSlot ts : arc.getAssociatedTimeSlots()) {
-                    if (!moreThanOneTimeSlot) {
-                        moreThanOneTimeSlot = true;
-                    } else {
-                        arcs.add(arc);
-                    }
-                    colors.add(ColorsGenerator.getTimeSlotColor(ts));
+                    arcs.add(new AbstractMap.SimpleEntry<>(arc,
+                            ColorsGenerator.getTimeSlotColor(ts)));
                 }
             }
         }
-        addArcs(arcs);
+        addArcs();
     }
 
-    /**
-     * Draws arcs in the view 
-     * @param arcs 
-     *      Arcs to be drawn in the view
-     */
-    public void addArcs(LinkedList<Arc> arcs) {
-        ArrayList<Node> arcElements = new ArrayList<>();
+    private boolean isATwoWayTrip() {
         boolean isATwoWayTrip = false;
-        if (colors.size() <= 2) {
+        if (arcs.size() == 2) {
             isATwoWayTrip = true;
-            Color tempColor = colors.get(0);
-            for (Color c : colors) {
-                if (!c.equals(tempColor)) {
+            Color tempColor = arcs.get(0).getValue();
+            for (Entry<Arc, Color> entry : arcs) {
+                if (!entry.getValue().equals(tempColor)) {
                     isATwoWayTrip = false;
                     break;
                 }
             }
         }
+        return isATwoWayTrip;
+    }
+
+    /**
+     * Draws arcs in the view
+     */
+    public final void addArcs() {
+        ArrayList<Node> arcElements = new ArrayList<>();
+        boolean isATwoWayTrip = isATwoWayTrip();
 
         int numberOfArcs;
         if (isATwoWayTrip) {
@@ -89,8 +85,9 @@ public class ArcView {
         // Draws a line between two nodes
         if ((arcNb % 2) == 1) {
             // draw line
-            Arc arc = arcs.remove(0);
-            Color color = colors.remove(0);
+            Entry<Arc, Color> entry = arcs.remove(0);
+            Arc arc = entry.getKey();
+            Color color = entry.getValue();
 
             Line line = drawLine(arc.getSrc().getLocation(), arc.getDest().getLocation());
             Polygon arrow = drawArrow(arc.getSrc().getLocation(), arc.getDest().getLocation());
@@ -106,10 +103,12 @@ public class ArcView {
 
         // Draws as many cubic curves as needed between two nodes
         for (int i = 1; i <= arcNb / 2; i++) {
-            Arc a1 = arcs.remove(0);
-            Arc a2 = arcs.remove(0);
-            Color color1 = colors.remove(0);
-            Color color2 = colors.remove(0);
+            Entry<Arc, Color> entry1 = arcs.remove(0);
+            Entry<Arc, Color> entry2 = arcs.remove(0);
+            Arc a1 = entry1.getKey();
+            Arc a2 = entry2.getKey();
+            Color color1 = entry1.getValue();
+            Color color2 = entry2.getValue();
 
             double ptStartX = a1.getSrc().getLocation().x;
             double ptStartY = a1.getSrc().getLocation().y;
@@ -178,10 +177,10 @@ public class ArcView {
     }
 
     /**
-     * Draws an arrow on an arc 
+     * Draws an arrow on an arc
      * @param src
      * @param dest
-     * @return 
+     * @return
      */
     private Polygon drawArrow(Point src, Point dest) {
         double angle = Math.atan2(dest.y - src.y, dest.x - src.x);
@@ -207,7 +206,7 @@ public class ArcView {
      * Draws a line between two points
      * @param src
      * @param dest
-     * @return 
+     * @return
      */
     private Line drawLine(Point src, Point dest) {
         Line line = new Line();
