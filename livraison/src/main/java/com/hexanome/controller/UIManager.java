@@ -127,14 +127,11 @@ public class UIManager {
         mainWindow.setLoadingState("Computing Route...");
     }
 
-    public void endComputingRoute() {
-        mainWindow.resetCursorAndInfoLabel();
-    }
-
     /**
      * Change subscribers of the route
      */
     public void endRouteComputation() {
+        mainWindow.resetCursorAndInfoLabel();
         ModelManager.getInstance().getPlanning().getRoute().removeSubscriber(mainWindow.getMapView());
         ModelManager.getInstance().getPlanning().getRoute().addSubscriber(mainWindow.getMapView());
     }

@@ -120,7 +120,6 @@ public class PlanningLoadedState extends DefaultState {
                                 // Change current state to nothing selected state
                                 ContextManager.getInstance()
                                 .setCurrentState(NothingSelectedState.getInstance());
-                                UIManager.getInstance().endComputingRoute();
                                 // Enable ROAD_MAP button
                                 UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
                                 break;
