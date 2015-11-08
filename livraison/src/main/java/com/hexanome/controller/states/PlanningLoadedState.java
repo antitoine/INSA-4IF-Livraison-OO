@@ -129,19 +129,8 @@ public class PlanningLoadedState extends DefaultState {
                 };
         // Launch asynchronous Route computation algorithm
 
-        try {
-            ModelManager.getInstance().getPlanning().computeRoute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ModelManager.getInstance().getPlanning().computeRoute(listenerComputeRoute);
 
-        ContextManager.getInstance()
-                .setCurrentState(NothingSelectedState.getInstance());
-        // Add MapView as a subscriber of route
-        UIManager.getInstance().endRouteComputation();
-        // Change current state to nothing selected state
-        // Enable ROAD_MAP button
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
 
         // \todo Catch potential errors, for instance, no Route found 
         // Jump to ComputingRouteState
