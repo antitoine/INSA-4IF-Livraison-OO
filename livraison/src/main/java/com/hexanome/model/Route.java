@@ -16,6 +16,9 @@ import java.util.List;
  */
 public class Route implements Publisher {
 
+    /** The duration of a delivery. */
+    private static final float DELIVERY_DURATION = 10f;
+    
     /**
      * Collection of path representing the route.
      */
@@ -109,7 +112,7 @@ public class Route implements Publisher {
                 float deliveryTime = path.getPathDuration();
 
                 if (previousDelivery != null) {
-                    deliveryTime += previousDelivery.getDeliveryTime();
+                    deliveryTime += DELIVERY_DURATION + previousDelivery.getDeliveryTime();
                 } else { // Start is warehouse
                     deliveryTime += delivery.getTimeSlot().getStartTime();
                 }
