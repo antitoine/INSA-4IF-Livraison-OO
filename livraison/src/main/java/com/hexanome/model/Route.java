@@ -32,12 +32,29 @@ public class Route implements Publisher {
     private Planning planning;
     
     /**
+     * Construct the route with the paths passed by parameter and update the
+     * deliveries times.
+     *
+     * @param planning
+     * @param paths The paths representing the route.
+     */
+    public Route(Planning planning, LinkedList<Path> paths) {
+        this.planning = planning;
+        this.paths = paths;
+        subscribers = new ArrayList<>();
+
+        updateDeliveriesTime();
+        updateArcTimeSlots();
+    }
+
+    /**
      * Rteurns a list of paths
-     * @return 
+     * @return
      */
     public List<Path> getPaths() {
         return Collections.unmodifiableList(paths);
     }
+
     /**
      * Find the delivery passed by parameter and return the next delivery if
      * exists.
@@ -58,6 +75,7 @@ public class Route implements Publisher {
 
         return null;
     }
+
     /**
      * Find and return the node of the previous delivery done before the
      * delivery passed by parameter.
@@ -73,22 +91,6 @@ public class Route implements Publisher {
             }
         }
         return null;
-    }
-    
-    /**
-     * Construct the route with the paths passed by parameter and update the
-     * deliveries times.
-     *
-     * @param planning
-     * @param paths The paths representing the route.
-     */
-    public Route(Planning planning, LinkedList<Path> paths) {
-        this.planning = planning;
-        this.paths = paths;
-        subscribers = new ArrayList<>();
-
-        updateDeliveriesTime();
-        updateArcTimeSlots();
     }
 
     /**
@@ -242,8 +244,6 @@ public class Route implements Publisher {
 
             updateDeliveriesTime();
             updateArcTimeSlots();
-
-            notifySubscribers();
         }
     }
 
