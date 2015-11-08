@@ -32,14 +32,16 @@ final class DeliveryTreeCell extends TreeCell<String> {
             public void handle(MouseEvent event) {
                 /* drag was detected, start a drag-and-drop gesture*/
                 /* allow any transfer mode */
+
                 DeliveryTreeCell source = ((DeliveryTreeCell) (event.getSource()));
-                Dragboard db = source.startDragAndDrop(TransferMode.ANY);
+                if (source.getString().startsWith("D")) {
+                    Dragboard db = source.startDragAndDrop(TransferMode.ANY);
 
                 /* Put a string on a dragboard */
-                ClipboardContent content = new ClipboardContent();
-                content.putString(source.getString());
-                db.setContent(content);
-
+                    ClipboardContent content = new ClipboardContent();
+                    content.putString(source.getString());
+                    db.setContent(content);
+                }
                 event.consume();
             }
         });
