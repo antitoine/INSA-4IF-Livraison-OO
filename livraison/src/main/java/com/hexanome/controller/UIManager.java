@@ -122,6 +122,15 @@ public class UIManager {
         mainWindow.resetZoom();
         mainWindow.resetCursorAndInfoLabel();
     }
+
+    public void beginComputingRoute() {
+        mainWindow.setLoadingState("Computing Route...");
+    }
+
+    public void endComputingRoute() {
+        mainWindow.resetCursorAndInfoLabel();
+    }
+
     /**
      * Change subscribers of the route
      */
@@ -185,4 +194,6 @@ public class UIManager {
         sc.execute();
 
     }
+
+
 }
