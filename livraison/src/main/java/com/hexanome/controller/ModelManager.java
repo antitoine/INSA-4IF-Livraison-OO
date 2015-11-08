@@ -1,14 +1,10 @@
 package com.hexanome.controller;
 
-import com.hexanome.model.Arc;
 import com.hexanome.model.Map;
-import com.hexanome.model.Path;
 import com.hexanome.model.Planning;
 import com.hexanome.utils.DocumentFactory;
 import com.hexanome.utils.MapDocument;
 import com.hexanome.utils.PlanningDocument;
-import com.hexanome.utils.RouteDocument;
-import java.io.File;
 
 /**
  * This class manages the model of the application, it is responsible of
@@ -51,16 +47,20 @@ public class ModelManager {
      */
     public String initModelMap(MapDocument mapDoc) {
         String s = null;
-        if (map == null) {
-            // Map creation
-            map = new Map();
-            if (mapDoc.checkIntegrity()) {
-                mapDoc.fillMap(map);
+        if( mapDoc != null ) {
+            if (map == null) {
+                // Map creation
+                map = new Map();
+                if (mapDoc.checkIntegrity()) {
+                    mapDoc.fillMap(map);
+                } else {
+                    s = mapDoc.getErrorMsg();
+                }
             } else {
-                s = mapDoc.getErrorMsg();
+                s = "ModelManager: a map already exists !";
             }
         } else {
-            s = "ModelManager: a map already exists !";
+            s = DocumentFactory.getLastError();
         }
         return s;
     }
@@ -75,15 +75,19 @@ public class ModelManager {
      */
     public String initModelPlanning(PlanningDocument planDoc) {
         String s = null;
-        if (map != null && planning == null) {
-            // Planning creation
-            if (planDoc.checkIntegrity(map)) { // TODO : always true  
-                planning = new Planning(map, planDoc.getWarehouse(map), planDoc.getTimeSlots(map));
+        if( planDoc != null ) {
+            if (map != null && planning == null) {
+                // Planning creation
+                if (planDoc.checkIntegrity(map)) { 
+                    planning = new Planning(map, planDoc.getWarehouse(map), planDoc.getTimeSlots(map));
+                } else {
+                    s = planDoc.getErrorMsg();
+                }
             } else {
-                s = planDoc.getErrorMsg();
+                s = "ModelManager: map wasn't initialized or a planning already exists !";
             }
         } else {
-            s = "ModelManager: map wasn't initialized or a planning already exists !";
+            s = DocumentFactory.getLastError();
         }
         return s;
     }
