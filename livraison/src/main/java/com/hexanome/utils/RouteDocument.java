@@ -20,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.StyleConstants;
 
 /**
  *  This class provides a convenient interface to write a Route output file 
@@ -98,15 +99,39 @@ public class RouteDocument {
         Text title = new Text("Road Map \n\n");
         title.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
         texts.add(title);
+        
+        String time;
+        
+        Text warehouseText = new Text("From the warehouse\n");
+        warehouseText.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+        texts.add(warehouseText);
         for(Path path : route.getPaths()){
-            texts.add(new Text("From intersection "));
-            texts.add(new Text(nodeToString(path.getFirstNode())+ "\n"));
-            for(Arc arc : path.getArcs()){
-                texts.add(new Text("take the road : "));
-                texts.add(new Text(arc.getStreetName()+"\n"));
+            Node start = path.getFirstNode();
+            Node end = path.getLastNode();
+            
+            if(start.getDelivery() != null) {
+                time = TypeWrapper.secondsToTimestamp((int) start.getDelivery().getDeliveryTime());
+                Text timeText = new Text("At " + time + "\n");
+                timeText.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+                texts.add(timeText);
             }
-            texts.add(new Text("Then, go to intersection "));
-            texts.add(new Text(nodeToString(path.getLastNode())+"\n\n"));
+            
+            Arc previousArc = path.getArcs().get(0);
+            texts.add(new Text("- Take the road : "));
+            texts.add(new Text(previousArc.getStreetName()+"\n"));
+            for(Arc arc : path.getArcs().subList(0, path.getArcs().size())){
+                if(! arc.getStreetName().equals(previousArc.getStreetName())) {
+                    texts.add(new Text("- Then turn on : "));
+                    texts.add(new Text(arc.getStreetName()+"\n"));
+                    previousArc = arc;
+                }
+            }
+            if(end.getDelivery() != null) {
+                time = TypeWrapper.secondsToTimestamp((int) end.getDelivery().getDeliveryTime());
+                texts.add(new Text("- Stop there at " + time + " for a delivery\n\n"));
+            } else {
+                texts.add(new Text("- And you're back to the warehouse !\n"));
+            }
         }
         return texts;
     }
