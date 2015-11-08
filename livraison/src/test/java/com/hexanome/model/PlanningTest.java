@@ -5,7 +5,6 @@
  */
 package com.hexanome.model;
 
-import com.hexanome.utils.Subscriber;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -34,43 +33,6 @@ public class PlanningTest {
     
     @AfterClass
     public static void tearDownClass() {
-    }
-
-    /**
-     * Test of abortComputeRoute method, of class Planning.
-     */
-    @Test
-    public void testAbortComputeRoute() {
-        System.out.println("abortComputeRoute");
-        Planning instance = null;
-        instance.abortComputeRoute();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of computeRoute method, of class Planning.
-     */
-    @Test
-    public void testComputeRoute_ChangeListener() {
-        System.out.println("computeRoute");
-        ChangeListener<Worker.State> listenerComputeRoute = null;
-        Planning instance = null;
-        instance.computeRoute(listenerComputeRoute);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of computeRoute method, of class Planning.
-     */
-    @Test
-    public void testComputeRoute_0args() throws Exception {
-        System.out.println("computeRoute");
-        Planning instance = null;
-        instance.computeRoute();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

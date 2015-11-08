@@ -1,7 +1,6 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
-import com.hexanome.controller.UIManager;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -27,8 +26,8 @@ public class NodeView extends StackPane {
     public NodeView(String nodeType, com.hexanome.model.Node node) {
         final NodeView self = this;
 
-        setPrefHeight(20);
-        setPrefWidth(20);
+        setPrefHeight(10);
+        setPrefWidth(10);
         setCursor(Cursor.HAND);
 
         this.node = node;
@@ -73,7 +72,6 @@ public class NodeView extends StackPane {
             @Override
             public void handle(Event event) {
                 ContextManager.getInstance().getCurrentState().clickSomewhereElse();
-                UIManager.getInstance().getMainWindow().enablePanning();
             }
         });
     }

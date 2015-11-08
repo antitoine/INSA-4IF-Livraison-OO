@@ -31,9 +31,16 @@ public class Delivery {
      */
     public Delivery(int id, Node node) {
         this.id = id;
-        this.node = node;
-        this.node.attachDelivery(this);
+        this.node = node;        
         deliveryTime = 0.0f;
+        updateNode();
+    }
+    
+    /**
+     * Update the node associated with the current delivery.
+     */
+    final void updateNode() {
+        node.attachDelivery(this);
     }
 
     /**

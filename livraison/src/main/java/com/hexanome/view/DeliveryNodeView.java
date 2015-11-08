@@ -39,8 +39,6 @@ public class DeliveryNodeView extends Circle implements INodeViewShape {
         UIManager.getInstance().getMainWindow().getDeliveryTreeView().selectDelivery(context);
         //
         ContextManager.getInstance().getCurrentState().clickOnDelivery(node.getDelivery());
-        //
-        UIManager.getInstance().getMainWindow().disablePanning();
     }
     
     @Override

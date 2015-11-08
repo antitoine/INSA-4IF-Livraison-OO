@@ -99,6 +99,7 @@ public class Planning implements Publisher {
         }
         return deliveries;
     }
+    
     /**
      * Returns the route created from this planning.
      * @return the route.
@@ -129,6 +130,9 @@ public class Planning implements Publisher {
         this.timeSlots = timeSlots;
 
         subscribers = new ArrayList<>();
+        
+        initNodesTimeSlot();
+        
     }
 
     /**
@@ -259,6 +263,15 @@ public class Planning implements Publisher {
                 + "%s\n"
                 + "}"
                 + "}", warehouse.getId(), strts);
+    }
+
+    private void initNodesTimeSlot() {
+        map.resetNodes();
+        for (TimeSlot ts : timeSlots) {
+            for (Delivery delivery : ts.getDeliveries()) {
+                delivery.updateNode();
+            }
+        }
     }
 
 }

@@ -2,7 +2,6 @@ package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.ModelManager;
-import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
@@ -112,6 +111,9 @@ public class PopOverContentEmptyNode extends PopOverContent {
             timeSlotsComboBox.getItems().add(tsDesc);
             timeSlotsMap.put(tsDesc, ts);
         }
+
+        timeSlotsComboBox.setDisable(true);
+        btnValidateAddDelivery.setDisable(true);
     }
 
     private void initComboBoxDeliveries() {
@@ -131,7 +133,8 @@ public class PopOverContentEmptyNode extends PopOverContent {
                 
                 if (nodePreviousDelivery != null) {
                     Delivery previousDelivery = nodePreviousDelivery.getDelivery();
-                    
+                    timeSlotsComboBox.setDisable(false);
+                    btnValidateAddDelivery.setDisable(false);
                     if (previousDelivery == null) {
                         timeSlotsComboBox.getSelectionModel().selectFirst();
                     } else {
@@ -140,7 +143,8 @@ public class PopOverContentEmptyNode extends PopOverContent {
                                             getTimeSlotComboBoxText(previousDelivery.getTimeSlot())
                                          );
                     }
-                } 
+                }
+
             }
         });
         

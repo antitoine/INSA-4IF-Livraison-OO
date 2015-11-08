@@ -67,8 +67,8 @@ public class PathGraphTest {
         Node second = new Node(2, new Point(10,20));
         Node third = new Node(3, new Point(10,30));
         
-        Arc arc1 = new Arc("hollywood",5,31,first,second);
-        Arc arc2 = new Arc("doowylloh",6,31,second,third);   
+        Arc arc1 = new Arc("hollywood", 5, 10, first, second);
+        Arc arc2 = new Arc("doowylloh", 6, 10, second, third);   
         
         ArrayList<Arc> arcsList = new ArrayList<>();
         arcsList.add(arc1);
@@ -79,7 +79,10 @@ public class PathGraphTest {
         PathGraph pathGraph = new PathGraph();
         pathGraph.addPath(path);
         
-        assertEquals(341, pathGraph.getCost(0, 1), 0);
+        float result = pathGraph.getCost(0, 1);
+        float expResult = 1.1F;
+        
+        assertEquals(expResult, result, 0);
     }
 
     /**

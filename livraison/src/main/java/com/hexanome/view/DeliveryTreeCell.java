@@ -24,6 +24,8 @@ final class DeliveryTreeCell extends TreeCell<String> {
 
     public DeliveryTreeCell() {
 
+        setStyle("-fx-border-color: white;");
+
         // DRAG SOURCE
         setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
@@ -61,7 +63,8 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 event.acceptTransferModes(TransferMode.ANY);
 
                 Dragboard sourceCell = event.getDragboard();
-                if (targetCellSwap != null) {
+                if (targetCellSwap != null && !targetCellSwap.getString()
+                        .equals(sourceCell.getString())) {
                     Delivery delivery1 = DeliveryTreeView
                             .getDeliveryFromName(event.getDragboard().getString());
                     Delivery delivery2 = DeliveryTreeView
@@ -85,7 +88,7 @@ final class DeliveryTreeCell extends TreeCell<String> {
                     if(! targetCell.getString().equals(sourceCell.getString())) {
                         if (targetCell.getString().startsWith("D")) {
                             targetCell.setTextFill(Color.RED);
-                            targetCell.setUnderline(true);
+                            targetCell.setStyle("-fx-border-color: red;");
                             targetCellSwap = targetCell;
                         }
                     }
@@ -101,9 +104,9 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 Dragboard sourceCell = event.getDragboard();
                 DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
                 if(! targetCell.getString().equals(sourceCell.getString())) {
-                    targetCell.setUnderline(false);
+                    targetCell.setStyle("-fx-border-color: white;");
                     targetCell.setTextFill(Color.BLACK);
-                    //targetCellSwap =null;
+                    targetCellSwap = null;
                 }
                 event.consume();
             }

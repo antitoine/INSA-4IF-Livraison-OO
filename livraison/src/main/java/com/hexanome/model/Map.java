@@ -220,6 +220,14 @@ public class Map implements Publisher {
             arc.clearAssociatedTimeSlot();
         }
     }
+    /**
+     * Reset the nodes in their original state, without any delivery.
+     */
+    void resetNodes() {
+        for (Node node : nodes.values()) {
+            node.attachDelivery(null);
+        }
+    }
     
     /**
      * Add one subscriber

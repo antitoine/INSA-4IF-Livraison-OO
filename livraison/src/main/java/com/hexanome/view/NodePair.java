@@ -21,8 +21,8 @@ public class NodePair {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 79 * hash + Objects.hashCode(this.node1);
-        hash = 79 * hash + Objects.hashCode(this.node2);
+        hash = 79 * hash + Objects.hashCode(this.node1) +
+               79 * hash + Objects.hashCode(this.node2);
         return hash;
     }
 
@@ -36,11 +36,8 @@ public class NodePair {
         }
         final NodePair other = (NodePair) obj;
 
-        if ((this.node1 == other.node1 || this.node1 == other.node2)
-                && (this.node2 == other.node1 || this.node2 == other.node2)) {
-            return true;
-        }
-        return false;
+       return (this.node1 == other.node1 && this.node2 == other.node2)
+               || (this.node1 == other.node2 && this.node2 == other.node1);
     }
 
 }

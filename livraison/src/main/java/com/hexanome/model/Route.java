@@ -99,18 +99,17 @@ public class Route implements Publisher {
         // Get for each path the delivery object to update
         for (int i = 0, iMax = paths.size() - 1; i <= iMax; ++i) {
             Path path = paths.get(i);
-            Path previousPath = (i == 0) ? null : paths.get(i - 1);
 
-            Delivery delivery = path.getFirstNode().getDelivery();
+            Delivery delivery = path.getLastNode().getDelivery();
+            Delivery previousDelivery = path.getFirstNode().getDelivery();
 
             if (delivery != null) {
                 float deliveryTime = path.getPathDuration();
 
-                if (previousPath != null) {
-                    Delivery previousDelivery = previousPath.getFirstNode().getDelivery();
-                    if (previousDelivery != null) {
-                        deliveryTime += previousDelivery.getDeliveryTime();
-                    }
+                if (previousDelivery != null) {
+                    deliveryTime += previousDelivery.getDeliveryTime();
+                } else { // Start is warehouse
+                    deliveryTime += delivery.getTimeSlot().getStartTime();
                 }
 
                 if (deliveryTime < delivery.getTimeSlot().getStartTime()) {

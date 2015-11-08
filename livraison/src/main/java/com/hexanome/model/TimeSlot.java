@@ -99,8 +99,8 @@ public class TimeSlot {
             return false;
         }
         
-        for(int i = 0; i < this.deliveries.size(); i++) {
-            if(!this.deliveries.get(i).equals(timeSlot.deliveries.get(i))) {
+        for (int i = 0; i < this.deliveries.size(); i++) {
+            if (!this.deliveries.get(i).equals(timeSlot.deliveries.get(i))) {
                 return false;
             }
         }
@@ -108,6 +108,13 @@ public class TimeSlot {
         return true;
     }
     
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.startTime;
+        hash += 71 * hash + this.endTime;
+        return hash;
+    }    
     /**
      * Returns the string describing the objet, used for debug only
      * @return a string describing the object
@@ -126,5 +133,4 @@ public class TimeSlot {
                 + "\"deliveries\":%s\n"
                 + "}", startTime, endTime, strdeliveries);
     }
-    
 }
