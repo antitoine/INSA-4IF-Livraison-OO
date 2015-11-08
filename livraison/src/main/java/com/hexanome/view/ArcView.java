@@ -56,8 +56,8 @@ public class ArcView extends Pane {
         addArcs(arcs);
     }
 
-    public void addArcs(LinkedList<Arc> arcs) {
-
+    public final void addArcs(LinkedList<Arc> arcs) {
+        
         ArrayList<Node> arcElements = new ArrayList<>();
         boolean isATwoWayTrip = false;
         if (colors.size() <= 2) {

@@ -118,12 +118,20 @@ public class TimeSlot {
             return false;
         }
         
-        for(int i = 0; i < this.deliveries.size(); i++) {
-            if(!this.deliveries.get(i).equals(timeSlot.deliveries.get(i))) {
+        for (int i = 0; i < this.deliveries.size(); i++) {
+            if (!this.deliveries.get(i).equals(timeSlot.deliveries.get(i))) {
                 return false;
             }
         }
         
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.startTime;
+        hash += 71 * hash + this.endTime;
+        return hash;
     }
 }

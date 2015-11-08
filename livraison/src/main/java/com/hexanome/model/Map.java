@@ -212,6 +212,15 @@ public class Map implements Publisher {
         }
     }
 
+    /**
+     * Reset the nodes in their original state, without any delivery.
+     */
+    void resetNodes() {
+        for (Node node : nodes.values()) {
+            node.attachDelivery(null);
+        }
+    }
+
     @Override
     public String toString() {
 

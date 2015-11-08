@@ -33,6 +33,8 @@ public class PlanningComputeRouteWorker extends Task<Void> {
         List<TimeSlot> timeSlots = planning.getTimeSlots();
         Node warehouse = planning.getWarehouse();
         Map map = planning.getMap();
+        
+        map.resetArcs();
 
         // Time slots processing
         for (int numTimeSlot = 0, maxTimeSlot = timeSlots.size() - 1; numTimeSlot <= maxTimeSlot; ++numTimeSlot) {

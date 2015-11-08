@@ -60,6 +60,9 @@ public class Planning implements Publisher {
         this.timeSlots = timeSlots;
 
         subscribers = new ArrayList<>();
+        
+        initNodesTimeSlot();
+        
     }
 
     /**
@@ -257,6 +260,15 @@ public class Planning implements Publisher {
             deliveries.addAll(ts.getDeliveries());
         }
         return deliveries;
+    }
+
+    private void initNodesTimeSlot() {
+        map.resetNodes();
+        for (TimeSlot ts : timeSlots) {
+            for (Delivery delivery : ts.getDeliveries()) {
+                delivery.updateNode();
+            }
+        }
     }
 
 }
