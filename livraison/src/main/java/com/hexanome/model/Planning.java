@@ -2,11 +2,11 @@ package com.hexanome.model;
 
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
+import javafx.event.EventHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javafx.event.EventHandler;
 
 /**
  * This class represents a planning, a collection of deliveries 
@@ -43,6 +43,24 @@ public class Planning implements Publisher {
     private PlanningComputeRouteWorker planningComputeRouteWorker;
 
     /**
+     * Constructor.
+     * @param map the map related to this planning.
+     * @param warehouse the warehouse.
+     * @param timeSlots all the timeslots where a delivery can be executed.
+     */
+    public Planning(Map map, Node warehouse, ArrayList<TimeSlot> timeSlots) {
+        this.map = map;
+        this.warehouse = warehouse;
+        this.route = null; // On initialise à null pour l'instant
+        this.timeSlots = timeSlots;
+
+        subscribers = new ArrayList<>();
+
+        initNodesTimeSlot();
+
+    }
+
+    /**
      * Finds the delivery passed by parameter and returns the node which
      * contains the delivery done before. A route must be computed when you
      * call this method. Otherwise, it will return null.
@@ -56,6 +74,7 @@ public class Planning implements Publisher {
         }
         return null;
     }
+
     /**
      * Returns all the time slots.
      * @return the list of all the time slots.
@@ -63,6 +82,7 @@ public class Planning implements Publisher {
     public List<TimeSlot> getTimeSlots() {
         return Collections.unmodifiableList(timeSlots);
     }
+
     /**
      * Returns the first time slot, with the lowest start date.
      * @return The first time slot, or null if it doesn't exist.
@@ -70,6 +90,7 @@ public class Planning implements Publisher {
     public TimeSlot getFirstTimeSlot() {
         return (timeSlots.isEmpty()) ? null : timeSlots.get(0);
     }
+
     /**
      * Returns the map corresponding to this planning.
      * @return the map.
@@ -77,6 +98,7 @@ public class Planning implements Publisher {
     public Map getMap() {
         return map;
     }
+
     /**
      * Returns the unique warehouse of this planning.
      * @return the warehouse.
@@ -84,8 +106,9 @@ public class Planning implements Publisher {
     public Node getWarehouse() {
         return warehouse;
     }
+    
     /**
-     * Returns a collection of deliveries present in the planning whatever the 
+     * Returns a collection of deliveries present in the planning whatever the
      * associated timeslot is.
      * @return a collection of deliveries
      */
@@ -96,7 +119,7 @@ public class Planning implements Publisher {
         }
         return deliveries;
     }
-    
+
     /**
      * Returns the route created from this planning.
      * @return the route.
@@ -104,6 +127,7 @@ public class Planning implements Publisher {
     public Route getRoute() {
         return route;
     }
+    
     /**
      * Update the route and notify the subscribers.
      *
@@ -113,24 +137,6 @@ public class Planning implements Publisher {
         this.route = route;
         //notifySubscribers();
     }
-    
-    /**
-     * Constructor.
-     * @param map the map related to this planning.
-     * @param warehouse the warehouse.
-     * @param timeSlots all the timeslots where a delivery can be executed.
-     */
-    public Planning(Map map, Node warehouse, ArrayList<TimeSlot> timeSlots) {
-        this.map = map;
-        this.warehouse = warehouse;
-        this.route = null; // On initialise à null pour l'instant
-        this.timeSlots = timeSlots;
-
-        subscribers = new ArrayList<>();
-        
-        initNodesTimeSlot();
-        
-    }
 
     /**
      * Abort the route computing if it is running.
@@ -138,6 +144,7 @@ public class Planning implements Publisher {
     public void abortComputeRoute() {
         planningComputeRouteWorker.cancel();
     }
+
     /**
      * Start the route computing. The observers will be notified when the route
      * is set. Update the deliveries time as well.

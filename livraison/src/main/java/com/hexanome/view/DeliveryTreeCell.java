@@ -66,6 +66,8 @@ final class DeliveryTreeCell extends TreeCell<String> {
                         .getDeliveryFromName(targetCell.getString());
                 System.out.println("Drag done " + sourceCell.getString() + " <->" +
                         targetCell.getString());
+                targetCell.setStyle("-fx-border-color: white;");
+                targetCell.setTextFill(Color.BLACK);
                 ContextManager.getInstance().getCurrentState()
                         .leftClickReleased(delivery1, delivery2);
             } else {

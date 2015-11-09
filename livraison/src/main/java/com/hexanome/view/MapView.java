@@ -148,7 +148,7 @@ public class MapView extends AnchorPane implements Subscriber {
     /**
      * Remove everything from the mapView
      */
-    private void clearMap() {
+    public void clearMap() {
         nodeList.clear();
         arcsMap.clear();
         getChildren().clear();

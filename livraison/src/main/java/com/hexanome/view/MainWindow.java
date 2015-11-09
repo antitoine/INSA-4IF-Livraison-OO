@@ -14,17 +14,19 @@ import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.controlsfx.control.StatusBar;
+import org.controlsfx.glyphfont.Glyph;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,8 +56,10 @@ public class MainWindow extends AnchorPane {
     private double latestWPan = -1;
     private MapView mapView;
     private DeliveryTreeView deliveryTreeView;
+    private Stage stage;
+    private Button btnCancelLoading;
     @FXML
-    private Label labelInfos;
+    private StatusBar statusBar;
     @FXML
     private MenuItem mntmLoadPlanning;
     @FXML
@@ -76,7 +80,6 @@ public class MainWindow extends AnchorPane {
     private BorderPane deliveriesPane;
     @FXML
     private GridPane legendGridPane;
-    private Stage stage;
 
     /**
      * Main window
@@ -108,6 +111,16 @@ public class MainWindow extends AnchorPane {
         mapGroup = new Group(mapView);
 
         Parent zoomPane = configureZoomScrollPane(mapGroup);
+
+        btnCancelLoading = new Button(null, new Glyph("FontAwesome", "REMOVE"));
+        btnCancelLoading.setVisible(true);
+        btnCancelLoading.setCancelButton(true);
+        btnCancelLoading.setBorder(Border.EMPTY);
+        btnCancelLoading.setOnAction(event -> {
+            ContextManager.getInstance().getCurrentState().btnCancel();
+            btnCancelLoading.setDisable(true);
+        });
+        statusBar.getRightItems().add(btnCancelLoading);
 
         parentMapPane.getChildren().add(zoomPane);
         legendGridPane.setVisible(false);
@@ -147,7 +160,10 @@ public class MainWindow extends AnchorPane {
      * @param text set info text to display at the bottom
      */
     public void setLoadingState(final String text) {
-        labelInfos.setText(text);
+        btnCancelLoading.setDisable(false);
+        statusBar.setText(text);
+        btnCancelLoading.setVisible(true);
+        statusBar.setProgress(-1);
         stage.getScene().setCursor(Cursor.WAIT);
     }
 
@@ -155,9 +171,10 @@ public class MainWindow extends AnchorPane {
      * Reset the cursor and the info label at the end of a loading for example
      */
     public void resetCursorAndInfoLabel() {
-        labelInfos.setText("");
+        statusBar.setText("");
+        btnCancelLoading.setVisible(false);
+        statusBar.setProgress(0);
         stage.getScene().setCursor(Cursor.DEFAULT);
-
     }
 
     /**

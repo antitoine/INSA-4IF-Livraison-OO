@@ -86,6 +86,7 @@ public class UIManager {
      */
     public void beginLoadMap() {
         mainWindow.setLoadingState("Loading Map...");
+        mainWindow.getMapView().clearMap();
         mainWindow.getDeliveryTreeView().clearTree();
     }
     /**

@@ -6,21 +6,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.StatusBar?>
 <?import org.controlsfx.glyphfont.*?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
          minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" type="AnchorPane"
          xmlns="http://javafx.com/javafx/8">
     <children>
         <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <bottom>
-                <BorderPane fx:id="bottomPane" prefHeight="36.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                    <center>
-                        <Label fx:id="labelInfos" text="%waiting" BorderPane.alignment="CENTER" />
-                    </center>
-                    <bottom>
-                    </bottom>
-                </BorderPane>
-            </bottom>
             <left>
                 <BorderPane fx:id="deliveriesPane">
                     <bottom>
@@ -32,7 +24,8 @@
                                     </columnConstraints>
                                 </GridPane>
                                 <Button fx:id="btnComputeRoute" disable="true" mnemonicParsing="false"
-                                        onAction="#computeRoute" prefHeight="40.0" prefWidth="300.0" text="%compute_route">
+                                        onAction="#computeRoute" prefHeight="40.0" prefWidth="300.0"
+                                        text="%compute_route">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="TRUCK" />
                                     </graphic>
@@ -172,6 +165,11 @@
                     </children>
                 </VBox>
             </top>
+            <bottom>
+                <StatusBar fx:id="statusBar">
+
+                </StatusBar>
+            </bottom>
         </BorderPane>
     </children>
 </fx:root>
