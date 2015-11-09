@@ -45,6 +45,7 @@ public class MainWindow extends AnchorPane {
     private final FileChooser fileChooser;
     private final double SCALE_DELTA_WHEEL = 1.1;
     private final double SCALE_DELTA_BUTTON = 1.5;
+    private final double ZOOM_MAX_IN = 1.8;
     private Group mapGroup = null;
     private ScrollPane scroller;
     private Group scrollContent;
@@ -390,7 +391,6 @@ public class MainWindow extends AnchorPane {
         if (latestHPan != -1 && latestWPan != -1) {
             scroller.setHvalue(Math.max(0, Math.min(scroller.getHmax(), latestHPan)));
             scroller.setVvalue(Math.max(0, Math.min(scroller.getVmax(), latestWPan)));
-
         }
     }
 
@@ -427,11 +427,14 @@ public class MainWindow extends AnchorPane {
                 scaleFactor = 1 / SCALE_DELTA_WHEEL;
             }
 
-            Point2D scrollOffset = measureScrollOffset();
-            group.setScaleX(group.getScaleX() * scaleFactor);
-            group.setScaleY(group.getScaleY() * scaleFactor);
+            if (group.getScaleX() * scaleFactor < ZOOM_MAX_IN) {
+                Point2D scrollOffset = measureScrollOffset();
+                group.setScaleX(group.getScaleX() * scaleFactor);
+                group.setScaleY(group.getScaleY() * scaleFactor);
 
-            repositionScroller(scaleFactor, scrollOffset);
+                repositionScroller(scaleFactor, scrollOffset);
+            }
+
         });
 
         // Configuration for Panning -----------
@@ -467,7 +470,7 @@ public class MainWindow extends AnchorPane {
      * Permits to move the viewport so that old center remains in the center after the
      * scaling
      */
-    private void repositionScroller(double scaleFactor, Point2D scrollOffset) {
+    public void repositionScroller(double scaleFactor, Point2D scrollOffset) {
         latestScaleFactor = scaleFactor;
         latestScrollOffset = scrollOffset;
 
