@@ -129,6 +129,6 @@ public class Path {
         strarcs += strarcs.substring(0, strarcs.length()-1) + "}";
         return String.format("\"Path\" : {\n"
                 + "\"pathDuration\":%s, \"arcs\":\"%s\"\n"
-                + "}", strarcs, pathDuration);
+                + "}", pathDuration, strarcs);
     }
 }

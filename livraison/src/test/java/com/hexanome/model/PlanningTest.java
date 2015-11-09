@@ -42,41 +42,6 @@ public class PlanningTest {
     public void testAddDelivery() {
         System.out.println("addDelivery");
         
-        /*Map map = new Map();   
-        Node warehouse = map.createNode(1, new Point(20,10));
-        Node node1 = map.createNode(2, new Point(20,20));
-        Node node2 = map.createNode(3, new Point(20,30));
-        Node node3 = map.createNode(4, new Point(20,40));
-        Arc arc2 = map.createArc("route1",12,31,1,2);
-        Arc arc3 = map.createArc("route2",12,31,2,3);
-        Arc arc4 = map.createArc("route3",12,31,3,4);
-        Delivery delivery1 = new Delivery(1,node1);
-        Delivery delivery2 = new Delivery(2,node2);
-        ArrayList<Delivery> arrayList1 = new ArrayList<>();
-        ArrayList<Delivery> arrayList2 = new ArrayList<>();
-        arrayList1.add(delivery1);
-        arrayList2.add(delivery2);
-        TimeSlot timeSlot1 = new TimeSlot(8,9,arrayList1);
-        TimeSlot timeSlot2 = new TimeSlot(9,10,arrayList2);
-        ArrayList<TimeSlot> arrayTimeSlot = new ArrayList<>();
-        arrayTimeSlot.add(timeSlot1);
-        
-        
-        Planning planning = new Planning(map,warehouse,arrayTimeSlot);
-        planning.addDelivery(node2, node1, timeSlot2);
-        
-        ArrayList<Delivery> expResult = new ArrayList<>();
-        expResult.add(delivery1);
-        expResult.add(delivery2);
-       
-        List<Delivery> result = new ArrayList<>();
-        result = planning.getDeliveries();
-        
-         for(int i=0;i<expResult.size();i++)
-        {
-            assertEquals(expResult.get(i), result.get(i));
-        } */
-        
         Map map = new Map();
         
         Node node1 = map.createNode(1, new Point(20, 30));
@@ -153,8 +118,6 @@ public class PlanningTest {
     @Test
     public void testRemoveDelivery() {
         System.out.println("removeDelivery");
-        
-        
         
         Map map = new Map();   
         Node warehouse = map.createNode(1, new Point(20,10));
@@ -312,15 +275,16 @@ public class PlanningTest {
         plan.swapDeliveries(delivery2, delivery6); /* swap node2 and node6 */
         
         List<Path> result = route.getPaths();
+                
         List<Path> expResult = new ArrayList<>();
         expResult.add(map.getFastestPath(warehouse, node1));
-        expResult.add(map.getFastestPath(node1, node6));
-        expResult.add(map.getFastestPath(node6, node4));
-        expResult.add(map.getFastestPath(node4, node2));
+        expResult.add(map.getFastestPath(node1, node4));
+        expResult.add(map.getFastestPath(node4, node6));
+        expResult.add(map.getFastestPath(node6, node2));
         expResult.add(map.getFastestPath(node2, warehouse));
         
         assertEquals(expResult.size(), result.size());
-        for(int i = 0; i<expResult.size(); i++)
+        for (int i = 0; i < expResult.size(); i++)
         {
             assertEquals(expResult.get(i), result.get(i));
         }
@@ -683,41 +647,6 @@ public class PlanningTest {
     @Test
     public void testGetDeliveries() {
         System.out.println("getDeliveries");
-        
-        /*Map map = new Map();   
-        Node warehouse = map.createNode(1, new Point(20,10));
-        Node node1 = map.createNode(2, new Point(20,20));
-        Node node2 = map.createNode(3, new Point(20,30));
-        Node node3 = map.createNode(4, new Point(20,40));
-        Arc arc2 = map.createArc("route1",12,31,1,2);
-        Arc arc3 = map.createArc("route2",12,31,2,3);
-        Arc arc4 = map.createArc("route3",12,31,3,4);
-        Delivery delivery1 = new Delivery(1,node1);
-        Delivery delivery2 = new Delivery(2,node2);
-        ArrayList<Delivery> arrayList1 = new ArrayList<>();
-        ArrayList<Delivery> arrayList2 = new ArrayList<>();
-        arrayList1.add(delivery1);
-        arrayList2.add(delivery2);
-        TimeSlot timeSlot1 = new TimeSlot(8,9,arrayList1);
-        TimeSlot timeSlot2 = new TimeSlot(9,10,arrayList2);
-        ArrayList<TimeSlot> arrayTimeSlot = new ArrayList<>();
-        arrayTimeSlot.add(timeSlot1);
-        
-        
-        Planning planning = new Planning(map,warehouse,arrayTimeSlot);
-        planning.addDelivery(node2, node1, timeSlot2);
-        
-        ArrayList<Delivery> expResult = new ArrayList<>();
-        expResult.add(delivery1);
-        expResult.add(delivery2);
-       
-        List<Delivery> result = new ArrayList<>();
-        result = planning.getDeliveries();              //Function tested
-        
-         for(int i=0;i<expResult.size();i++)
-        {
-            assertEquals(expResult.get(i), result.get(i));
-        }*/
         
         Map map = new Map();
         
