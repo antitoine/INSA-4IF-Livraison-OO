@@ -36,9 +36,7 @@ public class DeliveryNodeView extends Circle implements INodeViewShape {
      */
     @Override
     public void onMouseClickedNotify(NodeView context) {
-        // 
         UIManager.getInstance().getMainWindow().getDeliveryTreeView().selectDelivery(context);
-        //
         ContextManager.getInstance().getCurrentState().clickOnDelivery(node.getDelivery());
     }
     

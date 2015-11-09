@@ -1,12 +1,14 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Planning;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import com.hexanome.utils.TypeWrapper;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -28,6 +30,7 @@ import java.util.Map;
 public class DeliveryTreeView extends VBox implements Subscriber {
 
     private static HashMap<String, Delivery> deliveresByName;
+    Boolean displaceViewtoNode = true;
     private TreeView<String> deliveryTree;
     private TreeItem<String> rootItem;
     private HashMap<Delivery, TreeItem<String>> deliveryBranch;
@@ -51,9 +54,14 @@ public class DeliveryTreeView extends VBox implements Subscriber {
         deliveryTree.getSelectionModel().selectedItemProperty().
                 addListener((observable, oldValue, newValue) -> {
                     if (newValue != null && newValue.isLeaf()) {
+                        Delivery d = getDeliveryFromTreeItem(newValue);
+                        if (displaceViewtoNode) {
+                            UIManager.getInstance().getMainWindow()
+                                    .repositionScroller(1, new Point2D(d.getNode().getLocation().x,
+                                            d.getNode().getLocation().y));
+                        }
                         ContextManager.getInstance().getCurrentState()
-                                .clickOnDelivery(getDeliveryFromTreeItem(newValue));
-
+                                .clickOnDelivery(d);
                     }
                 });
     }
@@ -158,11 +166,12 @@ public class DeliveryTreeView extends VBox implements Subscriber {
      */
     public void selectDelivery(NodeView nodeView) {
         for (Map.Entry<Delivery, TreeItem<String>> entrySet : deliveryBranch.entrySet()) {
+            displaceViewtoNode = false;
             if (entrySet.getKey().getNode() == nodeView.getNode()) {
                 deliveryTree.getSelectionModel()
                         .clearAndSelect(deliveryTree.getRow(entrySet.getValue()));
-                break;
             }
+            displaceViewtoNode = true;
         }
     }
 
