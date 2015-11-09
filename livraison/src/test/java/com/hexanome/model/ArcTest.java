@@ -15,8 +15,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.junit.Assert;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -68,66 +70,73 @@ public class ArcTest {
      * Test of getAssociatedTimeSlot method, of class Arc.
      */
     @Test
-    public void testGetAssociatedTimeSlot() {
-        System.out.println("getAssociatedTimeSlot");
+    public void testGetAssociatedTimeSlots() {
+        System.out.println("getAssociatedTimeSlots");
         
+        // Create a map
         Map map = new Map();
         
-        /* Simple nodes */
-        Node node1 = map.createNode(1, new Point(10,30));
-        Node node2 = map.createNode(2, new Point(10,20));
-        Arc arc1 = map.createArc("route1", 12, 31, 1, 2);
-              
-        Set<TimeSlot> result1 = arc1.getAssociatedTimeSlots();
-        assertEquals(result1, new HashSet<TimeSlot>());
+        // Fill map
+        Node warehouse = map.createNode(0, new Point(0,0));
+        map.createNode(1, new Point(20,20));
+        Node deliv0 = map.createNode(2, new Point(10,10));
+        map.createNode(3, new Point(10,0));
+        Node deliv1 = map.createNode(4, new Point(0,10));
+        map.createNode(5, new Point(20,0));
+        // Add arcs
+        map.createArc("a", 1000, 10, 0, 1);
+        //map.createArc("b", 1000, 10, 0, 2);
+        map.createArc("c", 1000, 10, 0, 3);
+        Arc A04 = map.createArc("d", 1000, 10, 0, 4);
+        map.createArc("e", 1000, 10, 0, 5);
+        map.createArc("f", 1000, 10, 1, 2);
+        map.createArc("g", 1000, 10, 1, 3);
+        map.createArc("h", 1000, 10, 1, 4);
+        map.createArc("i", 1000, 10, 1, 5);
+        map.createArc("j", 1000, 10, 2, 3);
+        //map.createArc("k", 1000, 10, 2, 4);
+        map.createArc("l", 1000, 10, 2, 5);
+        map.createArc("m", 1000, 10, 3, 4);
+        map.createArc("n", 1000, 10, 3, 5);
+        map.createArc("o", 1000, 10, 4, 5);
+        map.createArc("e", 1000, 10, 5, 0);
+        map.createArc("i", 1000, 10, 5, 1);
+        map.createArc("l", 1000, 10, 5, 2);
+        map.createArc("n", 1000, 10, 5, 3);
+        map.createArc("o", 1000, 10, 5, 4);
+        //map.createArc("d", 1000, 10, 4, 0);
+        map.createArc("h", 1000, 10, 4, 1);
+        Arc A42 = map.createArc("k", 1000, 10, 4, 2);
+        map.createArc("m", 1000, 10, 4, 3);
+        map.createArc("j", 1000, 10, 3, 2);
+        map.createArc("g", 1000, 10, 3, 1);
+        map.createArc("c", 1000, 10, 3, 0);
+        map.createArc("f", 1000, 10, 2, 1);
+        Arc A20 = map.createArc("b", 1000, 10, 2, 0);
+        map.createArc("a", 1000, 10, 1, 0);
         
-        /* Nodes with delivery and TimeSlot */
-        Node warehouse = map.createNode(3, new Point(20,10));
-        Node node4 = map.createNode(4, new Point(20,20));
-        Node node5 = map.createNode(5, new Point(20,30));
+        // Create deliveries
+        ArrayList<Delivery> deliveries = new ArrayList<>();
+        deliveries.add(new Delivery(0, deliv0));
+        deliveries.add(new Delivery(1, deliv1));
         
-        Arc arc2 = map.createArc("route2", 12, 31, 3, 4);
-        Arc arc3 = map.createArc("route3", 12, 31, 4, 5);
+        // Create a timeslot
+        ArrayList<TimeSlot> timeslots = new ArrayList<>();
+        timeslots.add(new TimeSlot(8*3600, 12*3600, deliveries));
         
-        Delivery delivery1 = new Delivery(1, node4);
-        ArrayList<Delivery> deliveries1 = new ArrayList<>();
-        deliveries1.add(delivery1);
+        // Create a planning
+        Planning planning = new Planning(map, warehouse, timeslots);
         
-        TimeSlot timeSlot = new TimeSlot(8, 9, deliveries1);
-        
-        ArrayList<TimeSlot> timeSlotList1 = new ArrayList<>();
-        timeSlotList1.add(timeSlot);
-        
-        Planning planning1 = new Planning(map, warehouse, timeSlotList1);
-        
-        try { 
-            planning1.computeRoute();
-        } catch (Exception ex) {
-            Logger.getLogger(ArcTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        Set<TimeSlot> result2 = arc2.getAssociatedTimeSlots();
-        assertEquals(timeSlot, result2);
-
-        /* Node with delivery and without TimeSlot */
-        Node node6 = new Node(6, new Point(30,30));
-        Node node7 = new Node(7, new Point(30,20));
-        final Arc arc4 = new Arc("route4",12,31,node6,node7);
-
-        Delivery delivery2 = new Delivery(1,node6);
-        ArrayList<Delivery> deliveries2 = new ArrayList<>();
-        deliveries2.add(delivery2);
-        
-        ArrayList<TimeSlot> timeSlotList2 = new ArrayList<>();
-        
-        Planning planning2 = new Planning(map,warehouse,timeSlotList2);
         try {
-            planning2.computeRoute();
+            // Compute route
+            planning.computeRoute();
         } catch (Exception ex) {
-            Logger.getLogger(ArcTest.class.getName()).log(Level.SEVERE, null, ex);
+            fail("planning.computeRoute() failed !");
         }
-        Set<TimeSlot> result3 = arc4.getAssociatedTimeSlots();
-        assertEquals(result3, null);
+        
+        assertEquals(A04.getAssociatedTimeSlots().size(), 1);
+        assertEquals(A42.getAssociatedTimeSlots().size(), 1);
+        assertEquals(A20.getAssociatedTimeSlots().size(), 1);
     }
 
     /**
