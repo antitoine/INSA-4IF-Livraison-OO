@@ -44,7 +44,7 @@ public class MainWindow extends AnchorPane {
 
     private final FileChooser fileChooser;
     private final double SCALE_DELTA_WHEEL = 1.1;
-    private final double SCALE_DELTA_BUTTON = 1.5;
+    private final double SCALE_DELTA_BUTTON = 1.2;
     private final double ZOOM_MAX_IN = 1.8;
     private Group mapGroup = null;
     private ScrollPane scroller;
@@ -119,7 +119,7 @@ public class MainWindow extends AnchorPane {
         Parent zoomPane = configureZoomScrollPane(mapGroup);
 
         btnCancelLoading = new Button(null, new Glyph("FontAwesome", "REMOVE"));
-        btnCancelLoading.setVisible(true);
+        btnCancelLoading.setVisible(false);
         btnCancelLoading.setCancelButton(true);
         btnCancelLoading.setBorder(Border.EMPTY);
         btnCancelLoading.setOnAction(event -> {
@@ -127,10 +127,10 @@ public class MainWindow extends AnchorPane {
             btnCancelLoading.setDisable(true);
         });
         statusBar.getRightItems().add(btnCancelLoading);
+        statusBar.setText("Open a map to begin.");
 
         parentMapPane.getChildren().add(zoomPane);
         legendGridPane.setVisible(false);
-
     }
 
     private static void configureFileChooser(final FileChooser fileChooser) {
@@ -168,6 +168,7 @@ public class MainWindow extends AnchorPane {
             ContextManager.getInstance().getCurrentState().btnValidateFile(file);
         } else {
             ContextManager.getInstance().getCurrentState().btnCancel();
+            repositionToLatestPosition();
         }
     }
 
@@ -309,6 +310,9 @@ public class MainWindow extends AnchorPane {
         }
     }
 
+    /**
+     * Clear the legend
+     */
     public void clearLegend() {
         legendGridPane.getChildren().clear();
     }
@@ -361,8 +365,10 @@ public class MainWindow extends AnchorPane {
     @SuppressWarnings("ConstantConditions")
     @FXML
     private void zoomIn() {
-        mapGroup.setScaleX(mapGroup.getScaleX() * SCALE_DELTA_BUTTON);
-        mapGroup.setScaleY(mapGroup.getScaleY() * SCALE_DELTA_BUTTON);
+        if (mapGroup.getScaleX() * SCALE_DELTA_BUTTON < 1.8) {
+            mapGroup.setScaleX(mapGroup.getScaleX() * SCALE_DELTA_BUTTON);
+            mapGroup.setScaleY(mapGroup.getScaleY() * SCALE_DELTA_BUTTON);
+        }
     }
 
     @SuppressWarnings("ConstantConditions")

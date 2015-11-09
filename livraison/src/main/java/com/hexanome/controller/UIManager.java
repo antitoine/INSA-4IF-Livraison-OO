@@ -139,6 +139,7 @@ public class UIManager {
         ModelManager.getInstance().getPlanning().getRoute().removeSubscriber(mainWindow.getMapView());
         ModelManager.getInstance().getPlanning().getRoute().addSubscriber(mainWindow.getMapView());
         ModelManager.getInstance().getPlanning().notifySubscribers();
+        mainWindow.repositionToLatestPosition();
     }
 
     /**
