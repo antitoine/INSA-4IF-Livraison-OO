@@ -11,8 +11,6 @@ import org.jdom2.input.SAXBuilder;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class is a factory used to build objects providing convenient interfaces
@@ -63,7 +61,7 @@ public class DocumentFactory {
         if (file.exists() && !file.isDirectory()) {
             SAXBuilder builder = new SAXBuilder();
             try {
-                Document document = (Document) builder.build(file);
+                Document document = builder.build(file);
                 plandoc = new PlanningDocument(document);
             } catch (IOException | JDOMException ex) {
                 DocumentFactory.error = "Invalid XML file";

@@ -105,7 +105,7 @@ public class MapDocument extends XMLParser {
             } else {
                 try {
                     id = node.getAttribute("id").getIntValue();
-                    idList.add(new Integer(id));
+                    idList.add(id);
                 } catch (DataConversionException ex) {
                     Logger.getLogger(MapDocument.class.getName()).log(Level.SEVERE, null, ex);
                 }

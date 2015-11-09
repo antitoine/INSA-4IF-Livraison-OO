@@ -9,14 +9,15 @@ import com.hexanome.model.Delivery;
 import com.hexanome.model.Map;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
+import org.jdom2.DataConversionException;
+import org.jdom2.Document;
+import org.jdom2.Element;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom2.DataConversionException;
-import org.jdom2.Document;
-import org.jdom2.Element;
 
 /**
  * This class provides a convenient interface to extract information from the 
@@ -64,7 +65,7 @@ public class PlanningDocument extends XMLParser {
         // Loop on timeslots XML nodes
         for(Element timeSlotElement : timeSlotElements) {
             // Create current timeslot
-            TimeSlot ts = null;
+            TimeSlot ts;
             // Get all deliveries scheduled in the current timeslot
             List<Element> deliveryElements = timeSlotElement.getChildren("Livraisons").get(0).getChildren();
             // Create a list of deliveries to attach to timeslot
@@ -135,8 +136,8 @@ public class PlanningDocument extends XMLParser {
             for( Element ts : root.getChildren("Plage") ) {
                 
                 // TEST : check if timeSlot attributes are not missing and correct
-                int startTime=-1; 
-                int endTime=-1; 
+                int startTime;
+                int endTime;
                 if(ts.getAttributeValue("heureDebut") != null) {
                     startTime = TypeWrapper.timestampToSeconds(ts.getAttributeValue("heureDebut"));                    
                 } else {
@@ -172,9 +173,9 @@ public class PlanningDocument extends XMLParser {
                         try {
                             
                             int address = delivery.getAttribute("adresse").getIntValue();
-                            addresses.add(new Integer(address));
+                            addresses.add(address);
                             int id = delivery.getAttribute("id").getIntValue();
-                            ids.add(new Integer(id));
+                            ids.add(id);
                             // TEST : if delivery reference an existing node in the map
                             if(map.getNodeById(id) == null) {
                                 setErrorMsg("At least one delivery has its node missing in the map !");

@@ -42,7 +42,7 @@ public class PopOverContentEmptyNode extends PopOverContent {
      * @param node Node as described in the model
      */
     public PopOverContentEmptyNode(Node node) {
-        super(ConstView.POPOVEREMPTY, node);
+        super(node);
         
         prevDeliveryMap = new HashMap<>();
         timeSlotsMap = new HashMap<>();

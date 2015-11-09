@@ -1,9 +1,5 @@
 package com.hexanome.utils;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;
-
 /**
  * This class provides type conversion static methods
  *
@@ -33,7 +29,7 @@ public class TypeWrapper {
      * @see timestampToSeconds
      */
     public static String secondsToTimestamp(int seconds) {
-        int hour = (int) (seconds / 3600);
+        int hour = seconds / 3600;
         int min = (int) ((seconds - hour * 3600.) / 60.);
         int sec = (int) (seconds - min * 60. - hour * 3600.);
         return String.format("%02d:%02d:%02d", hour, min, sec);

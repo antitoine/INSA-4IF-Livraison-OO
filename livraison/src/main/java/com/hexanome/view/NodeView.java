@@ -32,14 +32,10 @@ public class NodeView extends StackPane {
         setOnMouseClicked(event -> nodeShape.onMouseClickedNotify(self));
     }
 
-    public PopOverContent getPopoverContent() {
-        return (PopOverContent) popover.getContentNode();
-    }
-
     /**
      * Set the type of the node See Constview in order to see the node types
      *
-     * @param nodeType
+     * @param nodeType Node type
      */
     final void setType(String nodeType) {
         getChildren().clear();
@@ -48,8 +44,6 @@ public class NodeView extends StackPane {
         getChildren().add(nodeShape.asSceneNode());
         configurePopOver();
         setAlignment(nodeShape.asSceneNode(), Pos.CENTER);
-
-        currentNodeType = nodeType;
     }
 
     private void configurePopOver() {

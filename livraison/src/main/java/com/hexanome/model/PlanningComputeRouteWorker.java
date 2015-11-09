@@ -98,7 +98,7 @@ public class PlanningComputeRouteWorker extends Task<Void> {
         ITSP tsp = new RouteTSP();
 
         long tempsDebut = System.currentTimeMillis();
-        Integer[] solutions = null;
+        Integer[] solutions;
 
         try {
             solutions = tsp.computeSolution(TIME_LIMIT, graph);

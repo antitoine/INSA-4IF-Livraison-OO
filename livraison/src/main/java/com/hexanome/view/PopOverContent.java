@@ -12,7 +12,7 @@ public abstract class PopOverContent extends BorderPane{
     
     Node node;
 
-    public PopOverContent(String popOverType, Node node) {      
+    public PopOverContent(Node node) {
         this.node = node;
     }
 

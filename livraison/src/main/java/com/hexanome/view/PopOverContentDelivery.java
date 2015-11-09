@@ -26,7 +26,7 @@ public class PopOverContentDelivery extends PopOverContent {
      * @param node
      */
     public PopOverContentDelivery(Node node) {
-        super(ConstView.POPOVERDELIVERY, node);
+        super(node);
         adressText = new Text();
         btnDelete = new Button("  Delete\n Delivery", new Glyph("FontAwesome", "TRASH"));
         BorderPane.setMargin(adressText, new Insets(12, 12, 12, 12));

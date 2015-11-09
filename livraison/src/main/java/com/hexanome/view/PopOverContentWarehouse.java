@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 public class PopOverContentWarehouse extends PopOverContent {
 
     public PopOverContentWarehouse(Node node) {
-        super(ConstView.POPOVERWAREHOUSE, node);
+        super(node);
 
         Text adressText = new Text("Warehouse");
         BorderPane.setMargin(adressText, new Insets(12, 12, 12, 12));

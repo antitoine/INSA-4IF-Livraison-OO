@@ -27,13 +27,11 @@ public class DeliveryTreeView extends VBox implements Subscriber {
     private static HashMap<String, Delivery> deliveresByName;
     private TreeView<String> deliveryTree;
     private TreeItem<String> rootItem;
-    private HashMap<TimeSlot, TreeItem<String>> timeSlotBranch;
     private HashMap<Delivery, TreeItem<String>> deliveryBranch;
 
     public DeliveryTreeView() {
         BorderPane.setAlignment(this, Pos.CENTER);
         deliveryBranch = new HashMap<>();
-        timeSlotBranch = new HashMap<>();
         deliveresByName = new HashMap<>();
 
         deliveryTree = new TreeView<>();
@@ -76,7 +74,6 @@ public class DeliveryTreeView extends VBox implements Subscriber {
     public void clearTree() {
         rootItem.getChildren().clear();
         deliveryBranch.clear();
-        timeSlotBranch.clear();
         deliveresByName.clear();
     }
 
@@ -135,8 +132,6 @@ public class DeliveryTreeView extends VBox implements Subscriber {
                 TreeItem<String> tsItem;
                 tsItem = makeBranch(start + " - " + end,
                         ConstView.TreeItemType.TIMESLOT, rootItem, null);
-
-                timeSlotBranch.put(ts, tsItem);
 
                 for (Delivery d : ts.getDeliveries()) {
                     TreeItem<String> dItem = makeBranch("Delivery " +

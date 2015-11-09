@@ -55,31 +55,17 @@ public class MapView extends AnchorPane implements Subscriber {
      */
     private void updateMapWithDeliveries(Planning planning) {
         resetNodes();
-        
-        planning.getTimeSlots().stream().forEach((ts) -> {
-            ts.getDeliveries().stream().forEach((d) -> {
-                (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE);
-            });
-        });
+
+        planning.getTimeSlots().stream().forEach((ts) ->
+                ts.getDeliveries().stream().forEach((d) ->
+                        (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE)));
 
         NodeView warehouseNodeView = nodeList.get(planning.getWarehouse());
         warehouseNodeView.setType(ConstView.WAREHOUSE_NODE);
     }
 
     private void resetNodes() {
-        nodeList.values().stream().forEach((nodeView) -> {
-            nodeView.setType(ConstView.EMPTY_NODE);
-        });
-    }
-
-
-    /**
-     * Select the delivery passed as parameter
-     *
-     * @param delivery delivery to be selected
-     */
-    void selectDelivery(Delivery delivery) {
-        showPopOver(delivery.getNode());
+        nodeList.values().stream().forEach((nodeView) -> nodeView.setType(ConstView.EMPTY_NODE));
     }
 
     /**

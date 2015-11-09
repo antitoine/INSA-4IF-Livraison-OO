@@ -19,7 +19,6 @@ public final class ConstView {
 
     public static final String MAINWINDOW = "/fxml/MainWindow.fxml";
     public static final String ROAD_MAP = "/fxml/RoadMap.fxml";
-    public static final String DIALOG = "/fxml/Dialog.fxml";
 
 
     public static final double SIZE_NODE = 6.0;
@@ -43,10 +42,4 @@ public final class ConstView {
         TIMESLOT, DELIVERY
     }
 
-    /**
-     * Enumeration of arcview types
-     */
-    public enum ArcViewType {
-        STANDARD, ROUTE
-    }
 }

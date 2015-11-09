@@ -25,7 +25,6 @@ import java.util.Map.Entry;
  */
 public class ArcView {
 
-    private final double ARC_DISTANCE = 4;
     private LinkedList<Entry<Arc, Color>> arcs;
     private Pane mapPane;
 
@@ -122,6 +121,7 @@ public class ArcView {
 
             double coef = 0;
             if (!isATwoWayTrip) {
+                double ARC_DISTANCE = 4;
                 coef = i * 2 * ARC_DISTANCE;
             }
             double ptCtrlX1 = ptMiddleX + (coef * vecOrthoMiddleX) / (normVecOrthoMiddle);

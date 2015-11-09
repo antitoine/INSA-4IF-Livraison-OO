@@ -29,9 +29,7 @@ public class TSLGraphIterator implements Iterator<Integer> {
      */
     public TSLGraphIterator(Collection<Integer> nonVus, int sommetCrt, IGraph g) {
         this.candidates = new Integer[nonVus.size()];
-        Iterator<Integer> it = nonVus.iterator();
-        while (it.hasNext()) {
-            Integer s = it.next();
+        for (Integer s : nonVus) {
             if (g.isArc(sommetCrt, s)) {
                 candidates[nbCandidates++] = s;
             }

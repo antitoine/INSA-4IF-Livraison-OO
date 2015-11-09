@@ -300,7 +300,7 @@ public class Route implements Publisher {
         }
 
         // Swap deliveries
-        if (previousDelivery != null && nextDelivery != null) {
+        if (previousDelivery != null) {
             TimeSlot timeSlot = nextDelivery.getTimeSlot();
             removeDelivery(nextDelivery, false);
             

@@ -18,8 +18,6 @@ public class WarehouseNodeView extends Rectangle implements INodeViewShape {
      * Initializes the controller class.
      */
     public WarehouseNodeView(com.hexanome.model.Node node) {
-        //setGraphic(new Glyph("FontAwesome", "HOME"));
-        
         setHeight(10);
         setWidth(10);
         setFill(Color.BLACK);
