@@ -322,7 +322,6 @@ public class MainWindow extends AnchorPane {
         ContextManager.getInstance().getCurrentState().btnClearPlanning();
     }
 
-
     @FXML
     private void loadPlanning() {
         ContextManager.getInstance().getCurrentState().btnLoadPlanning();
