@@ -128,7 +128,7 @@ public class PlanningDocument extends XMLParser {
                 return false; // Interrupt check here
             }
             // TEST : check if planning file specifies one or more timeslots
-            if(root.getChildren("PlagesHoraires").size() < 1) {
+            if(root.getChildren("PlagesHoraires").get(0).getChildren().size() < 1) {
                 setErrorMsg("At least one timeslot should be specified by planning file !");
                 return false; // Interrupt check here
             }
@@ -141,7 +141,7 @@ public class PlanningDocument extends XMLParser {
                 if(ts.getAttributeValue("heureDebut") != null) {
                     startTime = TypeWrapper.timestampToSeconds(ts.getAttributeValue("heureDebut"));                    
                 } else {
-                    setErrorMsg("Missing <heureD> attribute in at least one timeSlot !");
+                    setErrorMsg("Missing <heureDebut> attribute in at least one timeSlot !");
                     return false; // Interrupt check here
                 }
                 if(ts.getAttributeValue("heureFin") != null) {
