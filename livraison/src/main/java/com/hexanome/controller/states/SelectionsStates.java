@@ -27,6 +27,8 @@ public abstract class SelectionsStates extends DefaultState {
             // Full clear of the model
             ModelManager.getInstance().clearModel();
             UIManager.getInstance().getMainWindow().getMapView().clearMap();
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
 
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();
@@ -75,6 +77,7 @@ public abstract class SelectionsStates extends DefaultState {
             ModelManager.getInstance().clearModel();
             UIManager.getInstance().getMainWindow().getMapView().clearMap();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
 
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();
@@ -98,6 +101,7 @@ public abstract class SelectionsStates extends DefaultState {
             // Clear model's current planning
             ModelManager.getInstance().clearPlanning();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
 
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();

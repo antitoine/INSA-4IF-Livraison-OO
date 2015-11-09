@@ -37,17 +37,7 @@ public class AppMediator extends Application{
         // Contructs the main scene that will include all the UI
         stage.setTitle(ConstView.APP_TITLE);
         stage.setScene(scene);
-        
-        
-        /* For Java 8 :
-        stage.setMaximized(true); */
-        /* For Java 7 : */
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-        stage.setX(bounds.getMinX());
-        stage.setY(bounds.getMinY());
-        stage.setWidth(bounds.getWidth());
-        stage.setHeight(bounds.getHeight());
+        stage.setMaximized(true);
         
         stage.show();
 

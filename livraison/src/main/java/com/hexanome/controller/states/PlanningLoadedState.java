@@ -80,6 +80,7 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
             ModelManager.getInstance().clearModel();
             UIManager.getInstance().getMainWindow().getMapView().clearMap();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
 
             UIManager.getInstance().getMainWindow().endLoadingState();
 
@@ -100,6 +101,7 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
             // Clear model's current planning
             ModelManager.getInstance().clearPlanning();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
 
             UIManager.getInstance().getMainWindow().endLoadingState();
 

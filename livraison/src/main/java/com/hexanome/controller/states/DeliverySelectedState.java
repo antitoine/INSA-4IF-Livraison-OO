@@ -91,7 +91,7 @@ public class DeliverySelectedState extends SelectionsStates {
      */
     @Override
     public void closePopOver() {
-        // \todo TODO
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
     }
 
     /**
