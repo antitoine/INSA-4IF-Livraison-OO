@@ -3,6 +3,10 @@
  */
 package com.hexanome.controller.states;
 
+import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.ModelManager;
+import com.hexanome.controller.UIManager;
+import com.hexanome.controller.command.SwapDeliveriesCommand;
 import com.hexanome.model.Delivery;
 
 /**
@@ -37,7 +41,14 @@ public class SwapDeliveriesState extends DefaultState {
      */
     @Override
     public void leftClickReleased(Delivery sourceDelivery, Delivery targetDelivery) {
-        // \todo TODO
+        // If both nodes are not null 
+        if( sourceDelivery != null && targetDelivery != null) {
+            // Create and execute command
+            SwapDeliveriesCommand cmd = new SwapDeliveriesCommand(sourceDelivery, targetDelivery);
+            ContextManager.getInstance().executeCommand(cmd);
+        }
+        // Jump to NothingSelectedState
+        ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
     }
 
     /**
