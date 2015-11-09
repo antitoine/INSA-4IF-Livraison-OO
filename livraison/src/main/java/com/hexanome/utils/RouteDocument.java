@@ -6,6 +6,7 @@
 package com.hexanome.utils;
 
 import com.hexanome.model.Arc;
+import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.Path;
 import com.hexanome.model.Route;
@@ -97,6 +98,8 @@ public class RouteDocument {
         texts.add(title);
 
         String time;
+        float routeDuration = 0;
+        float routeLength = 0;
 
         Text warehouseText = new Text("From the warehouse\n");
         warehouseText.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
@@ -116,10 +119,12 @@ public class RouteDocument {
             texts.add(new Text("- Take the road : "));
             texts.add(new Text(previousArc.getStreetName()));
             float length = previousArc.getLength();
+            routeDuration += previousArc.getDuration();
+            routeLength += length;
 
             for (Arc arc : path.getArcs().subList(1, path.getArcs().size())) {
                 if (!arc.getStreetName().equals(previousArc.getStreetName())) {
-                    texts.add(new Text(String.format(" for %.2f m\n", length)));
+                    texts.add(new Text(String.format(" for %.0f m\n", length)));
                     texts.add(new Text("- Then turn on the road : "));
                     texts.add(new Text(arc.getStreetName()));
                     previousArc = arc;
@@ -127,15 +132,24 @@ public class RouteDocument {
                 } else {
                     length += arc.getLength();
                 }
+                routeDuration += arc.getDuration();
+                routeLength += arc.getLength();
             }
-            texts.add(new Text(String.format(" for %.2f m\n", length)));
+            texts.add(new Text(String.format(" for %.0f m\n", length)));
             if (end.getDelivery() != null) {
                 time = TypeWrapper.secondsToTimestamp((int) end.getDelivery().getDeliveryTime());
                 texts.add(new Text("- Stop there at " + time + " for a delivery\n\n"));
+                routeDuration += Delivery.DELIVERY_DURATION;
             } else {
                 texts.add(new Text("- And you're back to the warehouse !\n"));
             }
         }
+        Text totalText = new Text("\nSummary :\n");
+        totalText.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+        texts.add(totalText);
+        texts.add(new Text(String.format("Total distance travelled : %.0f m\n", routeLength)));
+        texts.add(new Text("Duration : " + TypeWrapper.secondsToTimestamp((int)  routeDuration) + " min"));
+        // \TODO : Duration pas bonne
         return texts;
     }
 
