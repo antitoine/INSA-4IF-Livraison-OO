@@ -5,7 +5,7 @@ package com.hexanome.model;
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class Delivery {
+public class Delivery implements Comparable<Delivery> {
 
     /**
      * The duration of a delivery.
@@ -126,4 +126,8 @@ public class Delivery {
                 + "}", id, deliveryTime, node.toString());
     }
 
+    @Override
+    public int compareTo(Delivery o) {
+        return (int) (this.deliveryTime - o.deliveryTime);
+    }
 }

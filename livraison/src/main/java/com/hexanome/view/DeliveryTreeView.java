@@ -48,7 +48,7 @@ public class DeliveryTreeView extends VBox implements Subscriber {
 
         deliveryTree.setCellFactory(p -> new DeliveryTreeCell());
 
-        // Ask the map to show a popover over the selected delivery
+        // indicate that a delivery is selected
         deliveryTree.getSelectionModel().selectedItemProperty().
                 addListener((observable, oldValue, newValue) -> {
                     if (newValue != null && newValue.isLeaf()) {
