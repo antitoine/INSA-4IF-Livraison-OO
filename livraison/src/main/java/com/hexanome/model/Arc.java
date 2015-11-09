@@ -57,6 +57,15 @@ public class Arc {
     public Node getSrc() {
         return src;
     }    
+
+    /**
+     * Returns arc's length
+     * @return the length in meters
+     */
+    public float getLength() {
+        return length;
+    }
+    
     /**
      * Returns street's name
      * @return a string containing street's name

@@ -10,7 +10,7 @@ public class Delivery {
     /**
      * The duration of a delivery.
      */
-    private static final float DELIVERY_DURATION = 10f;
+    private static final float DELIVERY_DURATION = 600f;
 
     /**
      * The time when the delivery will be executed.
