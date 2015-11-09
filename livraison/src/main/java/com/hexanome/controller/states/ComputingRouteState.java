@@ -1,5 +1,7 @@
 package com.hexanome.controller.states;
 
+import com.hexanome.controller.ModelManager;
+
 /**
  * This class represent the logic state in which the application
  * is computing the best route to reach all delivery points
@@ -32,8 +34,9 @@ public class ComputingRouteState extends DefaultState {
      */
     @Override
     public void btnCancel() {
-        // \todo TODO
+        ModelManager.getInstance().getPlanning().abortComputeRoute();
     }
+
     /**
      * Returns the string describing the state, used for debug only
      * @return a string describing the state
