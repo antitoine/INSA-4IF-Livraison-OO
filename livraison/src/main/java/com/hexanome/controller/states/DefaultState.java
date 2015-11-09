@@ -8,6 +8,8 @@ import java.io.File;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class represents the default logic state extended by all
@@ -22,7 +24,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnLoadMap() {
-        System.err.println("btnLoadMap In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "btnLoadMap In DefaultState");
         // Nothing to do here
     }
 
@@ -31,7 +33,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnLoadPlanning() {
-        System.err.println("btnLoadPlanning In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "btnLoadPlanning In DefaultState");
         // Nothing to do here
     }
 
@@ -40,7 +42,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnGenerateRoute() {
-        System.err.println("btnGenerateRoute In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "btnGenerateRoute In DefaultState");
         // Nothing to do here
     }
 
@@ -49,7 +51,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnCancel() {
-        System.err.println("btnCancel In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "btnCancel In DefaultState");
         // Nothing to do here
     }
 
@@ -58,7 +60,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnValidateFile(File file) {
-        System.err.println("btnValidateFile In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "btnValidateFile In DefaultState");
         // Nothing to do here
     }
 
@@ -67,7 +69,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void leftClickPressedOnDelivery() {
-        System.err.println("leftClickPressedOnDelivery In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "leftClickPressedOnDelivery In DefaultState");
         // Nothing to do here
     }
 
@@ -76,7 +78,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void leftClickReleased(Delivery sourceDelivery, Delivery targetDelivery) {
-        System.err.println("leftClickReleased In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "leftClickReleased In DefaultState");
         // Nothing to do here
     }
 
@@ -85,7 +87,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void clickOnDelivery(Delivery delivery) {
-        System.err.println("clickOnDelivery In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "clickOnDelivery In DefaultState");
         // Nothing to do here
     }
 
@@ -94,7 +96,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void clickSomewhereElse() {
-        System.err.println("clickSomewhereElse In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "clickSomewhereElse In DefaultState");
         // Nothing to do here
     }
 
@@ -103,7 +105,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void closePopOver() {
-        System.err.println("closePopOver In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "closePopOver In DefaultState");
         // Nothing to do here
     }
 
@@ -112,7 +114,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void clickOnEmptyNode(Node node) {
-        System.err.println("clickOnEmptyNode In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "clickOnEmptyNode In DefaultState");
         // Nothing to do here
     }
 
@@ -121,7 +123,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnAddDelivery(Node node, Node previousDeliveryNode, TimeSlot timeSlot) {
-        System.err.println("btnAddDelivery In DefaultState"); //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "btnAddDelivery In DefaultState");
         // Nothing to do here
     }
 
@@ -130,7 +132,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnRemoveDelivery(Delivery delivery) {
-        System.err.println("btnRemoveDelivery In DefaultState");  //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "btnRemoveDelivery In DefaultState");
         // Nothing to do here
     }
 
@@ -139,7 +141,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void clickOnWarehouse(Node warehouse) {
-        System.err.println("clickOnWarehouse In DefaultState");  //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "clickOnWarehouse In DefaultState");
         // Nothing to do here
     }
 
@@ -148,7 +150,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnCloseMap() {
-        System.err.println("btnCloseMap In DefaultState");  //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "btnCloseMap In DefaultState");
         // Nothing to do here
     }
 
@@ -157,7 +159,7 @@ public abstract class DefaultState implements IState {
      */
     @Override
     public void btnClearPlanning() {
-        System.err.println("btnClearPlanning In DefaultState");  //DEBUG
+        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "btnClearPlanning In DefaultState");
         // Nothing to do here
     }
     

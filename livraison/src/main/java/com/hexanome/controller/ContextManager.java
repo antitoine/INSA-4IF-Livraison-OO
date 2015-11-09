@@ -6,6 +6,8 @@ import java.util.Stack;
 import com.hexanome.controller.states.IState;
 import com.hexanome.controller.states.InitState;
 import com.hexanome.view.ConstView;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class manages both commands and the main state machine of the application
@@ -122,7 +124,7 @@ public class ContextManager {
     public void setCurrentState(IState currentState) {
         this.currentState = currentState;
         // removeMeLater DEBUG --------------
-        System.out.println(currentState.toString());
+        Logger.getLogger(ContextManager.class.getName()).log(Level.INFO, currentState.toString());
         // ----------------------------------
     }
 }
