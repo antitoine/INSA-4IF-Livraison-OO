@@ -32,7 +32,6 @@ public class DeliveryTreeView extends VBox implements Subscriber {
     TreeView<String> deliveryTree;
     TreeItem<String> rootItem;
     HashMap<TimeSlot, TreeItem<String>> timeSlotBranch;
-    HashMap<TimeSlot, Integer> timeSlotRow;
     HashMap<Delivery, TreeItem<String>> deliveryBranch;
 
     public DeliveryTreeView() {
