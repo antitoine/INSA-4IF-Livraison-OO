@@ -27,10 +27,11 @@ public class ColorsGenerator {
         timeSlotColors = new HashMap<>();
 
         colors.add(Color.BLUE);
-        colors.add(Color.DARKGREEN);
+        colors.add(Color.SPRINGGREEN);
         colors.add(Color.ORANGE);
         colors.add(Color.BROWN);
         colors.add(Color.PINK);
+        colors.add(Color.DARKGREEN);
         colors.add(Color.LIGHTGOLDENRODYELLOW);
         colors.add(Color.web("#89CFF0"));
         colors.add(Color.YELLOW);
