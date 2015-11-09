@@ -30,6 +30,11 @@ public class Route implements Publisher {
      * Planning associated with this route.
      */
     private Planning planning;
+    
+    /**
+     * Total duration of the route.
+     */
+    private float totalDistance;
 
     /**
      * Construct the route with the paths passed by parameter and update the
@@ -41,8 +46,9 @@ public class Route implements Publisher {
     public Route(Planning planning, LinkedList<Path> paths) {
         this.planning = planning;
         this.paths = paths;
+        this.totalDistance = 0f;
         subscribers = new ArrayList<>();
-
+        
         updateDeliveriesTime();
         updateArcTimeSlots();
     }
@@ -54,6 +60,38 @@ public class Route implements Publisher {
      */
     public List<Path> getPaths() {
         return Collections.unmodifiableList(paths);
+    }
+    
+    /**
+     * Returns the total distance travelled with the compute route.
+     * @return The total distance of the route.
+     */
+    public float getTotalDistance() {
+        return totalDistance;
+    }
+    
+    public float getStartTime() {
+        if (paths.isEmpty()) {
+            return 0;
+        }
+        Path firstPath = paths.get(0);
+        return firstPath.getLastNode().getDelivery().getDeliveryTime() - firstPath.getPathDuration();
+    }
+    
+    public float getEndTime() {
+        if (paths.isEmpty()) {
+            return 0;
+        }
+        Path lastPath = paths.get(paths.size()-1);
+        return lastPath.getFirstNode().getDelivery().getDeliveryEndTime() + lastPath.getPathDuration();
+    }
+    
+    public float getTotalDuration() {        
+        if (paths.isEmpty()) {
+            return 0;
+        }
+        
+        return getEndTime() - getStartTime();
     }
 
     /**
@@ -106,6 +144,8 @@ public class Route implements Publisher {
             Delivery delivery = path.getLastNode().getDelivery();
             Delivery previousDelivery = path.getFirstNode().getDelivery();
 
+            totalDistance += path.getPathDistance();
+            
             if (delivery != null) {
                 float deliveryTime = path.getPathDuration();
 
@@ -300,7 +340,7 @@ public class Route implements Publisher {
         }
 
         // Swap deliveries
-        if (previousDelivery != null) {
+        if (previousDelivery != null && nextDelivery != null) {
             TimeSlot timeSlot = nextDelivery.getTimeSlot();
             removeDelivery(nextDelivery, false);
             

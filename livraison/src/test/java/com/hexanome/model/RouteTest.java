@@ -316,9 +316,9 @@ public class RouteTest {
         List<Path> result = route.getPaths();
         List<Path> expResult = new ArrayList<>();
         expResult.add(map.getFastestPath(warehouse, node1));
-        expResult.add(map.getFastestPath(node1, node6));
-        expResult.add(map.getFastestPath(node6, node4));
-        expResult.add(map.getFastestPath(node4, node2));
+        expResult.add(map.getFastestPath(node1, node4));
+        expResult.add(map.getFastestPath(node4, node6));
+        expResult.add(map.getFastestPath(node6, node2));
         expResult.add(map.getFastestPath(node2, warehouse));
         
         assertEquals(expResult.size(), result.size());

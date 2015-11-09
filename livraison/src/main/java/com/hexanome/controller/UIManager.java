@@ -155,15 +155,20 @@ public class UIManager {
      * (TODO : display it in a dialog)
      */
     public void generateRoadMap() {
-        new RoadMapView(RouteDocument.generateFormatedRouteDocumentContent(
-                ModelManager.getInstance().getPlanning().getRoute()));
+        RoadMapView roadMapView = new RoadMapView(
+                RouteDocument.generateFormatedRouteDocumentContent(
+                        ModelManager.getInstance().getPlanning().getRoute()
+                )
+        );
+        roadMapView.display();
     }
 
     /**
      * Saves the roadmap to a file
      * @param stage 
+     * @param text The text describing the road map.
      */
-    public void saveRoadMapDocument(Stage stage) {
+    public void saveRoadMapDocument(Stage stage, String text) {
         FileChooser fileChooser = new FileChooser();
 
         //Set extension filter
@@ -175,7 +180,7 @@ public class UIManager {
         File file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
-            if (!IOManager.getInstance().saveRouteDocument(file)) {
+            if (!IOManager.getInstance().saveRouteDocument(file, text)) {
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("There was a problem when saving your file ! ");
