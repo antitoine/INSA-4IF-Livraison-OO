@@ -79,13 +79,51 @@ public class RouteDocument {
      */
     public static String generateRouteDocumentContent(Route route) {   
         String docContent = " --- ROAD MAP ---\n\n";
-        for(Path path : route.getPaths()){
+        /*for(Path path : route.getPaths()){
             docContent += "From : "+path.getFirstNode().getLocation() + "\n";
             for(Arc arc : path.getArcs()){
                 docContent += "take the road : "+arc.getStreetName()+"\n";
             }
             docContent += "Then, go to "+path.getLastNode().getLocation()+"\n";
+        }*/
+        
+        String time;
+        
+        docContent += "From the warehouse\n";
+        for(Path path : route.getPaths()){
+            Node start = path.getFirstNode();
+            Node end = path.getLastNode();
+            
+            if(start.getDelivery() != null) {
+                time = TypeWrapper.secondsToTimestamp((int) start.getDelivery().getDeliveryEndTime());
+                docContent += "At " + time + "\n";
+            }
+            
+            Arc previousArc = path.getArcs().get(0);
+            docContent +="- Take the road : ";
+            docContent += previousArc.getStreetName();
+            float length = previousArc.getLength();
+            
+            for(Arc arc : path.getArcs().subList(1, path.getArcs().size())){
+                if(! arc.getStreetName().equals(previousArc.getStreetName())) {
+                    docContent += String.format(" for %.2f m\n", length);
+                    docContent += "- Then turn on the road : ";
+                    docContent += arc.getStreetName();
+                    previousArc = arc;
+                    length = arc.getLength();
+                } else {
+                    length += arc.getLength();
+                }
+            }
+            docContent += String.format(" for %.2f m\n", length);
+            if(end.getDelivery() != null) {
+                time = TypeWrapper.secondsToTimestamp((int) end.getDelivery().getDeliveryTime());
+                docContent += "- Stop there at " + time + " for a delivery\n\n";
+            } else {
+                docContent += "- And you're back to the warehouse !\n";
+            }
         }
+        
         return docContent;
     }
 
@@ -110,7 +148,7 @@ public class RouteDocument {
             Node end = path.getLastNode();
             
             if(start.getDelivery() != null) {
-                time = TypeWrapper.secondsToTimestamp((int) start.getDelivery().getDeliveryTime());
+                time = TypeWrapper.secondsToTimestamp((int) start.getDelivery().getDeliveryEndTime());
                 Text timeText = new Text("At " + time + "\n");
                 timeText.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
                 texts.add(timeText);
@@ -118,14 +156,21 @@ public class RouteDocument {
             
             Arc previousArc = path.getArcs().get(0);
             texts.add(new Text("- Take the road : "));
-            texts.add(new Text(previousArc.getStreetName()+"\n"));
-            for(Arc arc : path.getArcs().subList(0, path.getArcs().size())){
+            texts.add(new Text(previousArc.getStreetName()));
+            float length = previousArc.getLength();
+            
+            for(Arc arc : path.getArcs().subList(1, path.getArcs().size())){
                 if(! arc.getStreetName().equals(previousArc.getStreetName())) {
-                    texts.add(new Text("- Then turn on : "));
-                    texts.add(new Text(arc.getStreetName()+"\n"));
+                    texts.add(new Text(String.format(" for %.2f m\n", length)));
+                    texts.add(new Text("- Then turn on the road : "));
+                    texts.add(new Text(arc.getStreetName()));
                     previousArc = arc;
+                    length = arc.getLength();
+                } else {
+                    length += arc.getLength();
                 }
             }
+            texts.add(new Text(String.format(" for %.2f m\n", length)));
             if(end.getDelivery() != null) {
                 time = TypeWrapper.secondsToTimestamp((int) end.getDelivery().getDeliveryTime());
                 texts.add(new Text("- Stop there at " + time + " for a delivery\n\n"));

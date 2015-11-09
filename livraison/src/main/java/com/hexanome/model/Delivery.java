@@ -10,7 +10,7 @@ public class Delivery {
     /**
      * The duration of a delivery.
      */
-    private static final float DELIVERY_DURATION = 10f;
+    private static final float DELIVERY_DURATION = 600f;
 
     /**
      * The time when the delivery will be executed.
@@ -20,7 +20,6 @@ public class Delivery {
      * The node where this delivery will be executed.
      */
     private Node node;
-    // removeMeLater : delivery must have its own id cause swaping deliveries is not equivalent to swaping nodes
     /**
      * The id of the delivery.
      */

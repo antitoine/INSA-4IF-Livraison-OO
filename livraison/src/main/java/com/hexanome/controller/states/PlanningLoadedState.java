@@ -106,8 +106,6 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
         // Launch asynchronous Route computation algorithm
         UIManager.getInstance().beginComputingRoute();
         ModelManager.getInstance().getPlanning().computeRoute(this);
-
-        // \todo Catch potential errors, for instance, no Route found         
     }
 
     /**
