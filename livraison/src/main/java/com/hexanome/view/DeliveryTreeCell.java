@@ -2,8 +2,6 @@ package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
 import com.hexanome.model.Delivery;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeCell;
@@ -11,6 +9,9 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class is the graphic component used to display an element 
@@ -24,11 +25,8 @@ final class DeliveryTreeCell extends TreeCell<String> {
     @SuppressWarnings("unused")
     private TextField textField;
     private ContextMenu addMenu = new ContextMenu();
-    private Boolean enableDragAndDrop;
 
     public DeliveryTreeCell(Boolean enableDragAndDrop) {
-
-        this.enableDragAndDrop = enableDragAndDrop;
 
         setStyle("-fx-border-color: white;");
 

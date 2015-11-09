@@ -65,12 +65,14 @@
                                     <items>
                                         <MenuItem mnemonicParsing="false" onAction="#loadMap" text="%load_map">
                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                                <KeyCodeCombination alt="UP" code="M" control="DOWN" meta="UP"
+                                                                    shift="UP" shortcut="UP"/>
                                             </accelerator>
                                         </MenuItem>
                                         <MenuItem fx:id="mntmLoadPlanning" disable="true" mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                                                <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP"
+                                                                    shift="UP" shortcut="UP"/>
                                             </accelerator>
                                         </MenuItem>
                                         <MenuItem disable="true" fx:id="mntmClearMap" mnemonicParsing="false"
