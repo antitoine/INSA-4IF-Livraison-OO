@@ -5,15 +5,7 @@ import java.util.Stack;
 
 import com.hexanome.controller.states.IState;
 import com.hexanome.controller.states.InitState;
-import com.hexanome.controller.states.MapLoadedState;
-import com.hexanome.controller.states.PlanningLoadedState;
 import com.hexanome.view.ConstView;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 
 /**
  * This class manages both commands and the main state machine of the application
@@ -24,8 +16,8 @@ public class ContextManager {
 
     private static ContextManager contextManager = null;
     private IState currentState;
-    private Stack<ICommand> done;
-    private Stack<ICommand> undone;
+    private final Stack<ICommand> done;
+    private final Stack<ICommand> undone;
 
     /**
      * Builds a new ContextManager instance 
@@ -110,26 +102,9 @@ public class ContextManager {
     }
 
     /**
-     * Clear the current id planning loaded in the model
-     */
-    void resetPlanning() {
-        // \todo (security) check if current state allows reset
-        // Clear the planning
-        ModelManager.getInstance().clearPlanning();
-        // \todo update application state
-    }
-
-    void resetModel() {
-        // \todo (security) check if current state allows reset
-        ModelManager.getInstance().clearModel();
-        // \todo update application state
-    }
-
-    /**
      * Closes the application
      */
     public void exit() {
-        // \todo Check if Route should be saved
         // EXIT application
         System.exit(0);
     }
