@@ -11,10 +11,16 @@ public class Path {
      * All the arcs to take, in the right order.
      */
     private ArrayList<Arc> arcs;
+    
     /**
      * The total duration of the path.
      */
     private float pathDuration;
+    
+    /**
+     * The total distance of the path.
+     */
+    private float pathDistance;
     
     /**
      * Returns a collection of arcs present in the path
@@ -23,6 +29,7 @@ public class Path {
     public ArrayList<Arc> getArcs() {
         return arcs;
     }
+    
     /**
      * Returns the first node of the path.
      * @return the first node of the path.
@@ -30,6 +37,7 @@ public class Path {
     public Node getFirstNode() {
         return arcs.get(0).getSrc();
     }
+    
     /**
      * Returns the last node of the path.
      * @return the last node of the path.
@@ -37,6 +45,7 @@ public class Path {
     public Node getLastNode() {
         return arcs.get(arcs.size() - 1).getDest();
     }
+    
     /**
      * Returns the total duration of the path, ie the sum of the arc's durations
      * @return The duration of the path.
@@ -46,14 +55,24 @@ public class Path {
     }
     
     /**
+     * Returns the total distance of the path, ie the sum of the arc's distances
+     * @return The distance of the path.
+     */
+    public float getPathDistance() {
+        return pathDistance;
+    }
+    
+    /**
      * Constructor.
      * @param arcs the list of arcs of the path.
      */
     public Path(ArrayList<Arc> arcs) {
         this.arcs = arcs;
         this.pathDuration = 0;
+        
         for (Arc arc : arcs) {
             this.pathDuration += arc.getDuration();
+            this.pathDistance += arc.getLength();
         }
     }
     
