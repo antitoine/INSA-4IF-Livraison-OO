@@ -56,7 +56,8 @@ public class PlanningComputeRouteWorker extends Task<Void> {
         map.resetArcs();
 
         // Time slots processing
-        for (int numTimeSlot = 0, maxTimeSlot = timeSlots.size() - 1; numTimeSlot <= maxTimeSlot; ++numTimeSlot) {
+        for (int numTimeSlot = 0, maxTimeSlot = timeSlots.size() - 1;
+             numTimeSlot <= maxTimeSlot; ++numTimeSlot) {
 
             TimeSlot ts = timeSlots.get(numTimeSlot);
 

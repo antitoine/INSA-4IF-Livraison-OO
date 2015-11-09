@@ -73,8 +73,10 @@
                                                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                                             </accelerator>
                                         </MenuItem>
-                                        <MenuItem disable="true" mnemonicParsing="false" text="%clear_map" />
-                                        <MenuItem disable="true" mnemonicParsing="false" text="%delete_planning" />
+                                        <MenuItem disable="true" fx:id="mntmClearMap" mnemonicParsing="false"
+                                                  onAction="#clearMap" text="%clear_map"/>
+                                        <MenuItem disable="true" fx:id="mntmClearPlanning" mnemonicParsing="false"
+                                                  onAction="#clearPlanning" text="%delete_planning"/>
                                         <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="%exit">
                                             <accelerator>
                                                 <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -115,7 +117,7 @@
                                         <MenuItem fx:id="mntmUndo11" disable="false" mnemonicParsing="false"
                                                   onAction="#resetZoom" text="%resetzoom">
                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="ESCAPE" control="UP" meta="UP"
+                                                <KeyCodeCombination alt="UP" code="NUMPAD0" control="DOWN" meta="UP"
                                                                     shift="UP" shortcut="UP"/>
                                             </accelerator>
                                         </MenuItem>
@@ -167,7 +169,6 @@
             </top>
             <bottom>
                 <StatusBar fx:id="statusBar">
-
                 </StatusBar>
             </bottom>
         </BorderPane>

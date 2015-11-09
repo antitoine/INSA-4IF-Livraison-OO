@@ -63,6 +63,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     private MenuItem mntmLoadPlanning;
     @FXML
+    private MenuItem mntmClearPlanning;
+    @FXML
+    private MenuItem mntmClearMap;
+    @FXML
     private Button btnLoadPlanning;
     @FXML
     private Button btnRedo;
@@ -216,6 +220,12 @@ public class MainWindow extends AnchorPane {
             case COMPUTE_ROUTE:
                 btnComputeRoute.setDisable(true);
                 break;
+            case CLEAR_MAP:
+                mntmClearMap.setDisable(true);
+                break;
+            case CLEAR_PLANNING:
+                mntmClearPlanning.setDisable(true);
+                break;
         }
     }
 
@@ -243,6 +253,12 @@ public class MainWindow extends AnchorPane {
                 break;
             case COMPUTE_ROUTE:
                 btnComputeRoute.setDisable(false);
+                break;
+            case CLEAR_MAP:
+                mntmClearMap.setDisable(false);
+                break;
+            case CLEAR_PLANNING:
+                mntmClearPlanning.setDisable(false);
                 break;
         }
     }
@@ -286,7 +302,6 @@ public class MainWindow extends AnchorPane {
         legendGridPane.getChildren().clear();
     }
 
-
     @FXML
     private void quitApplication() {
         ContextManager.getInstance().exit(); // Special undoable
@@ -296,6 +311,17 @@ public class MainWindow extends AnchorPane {
     private void loadMap() {
         ContextManager.getInstance().getCurrentState().btnLoadMap();
     }
+
+    @FXML
+    private void clearMap() {
+        ContextManager.getInstance().getCurrentState().btnCloseMap();
+    }
+
+    @FXML
+    private void clearPlanning() {
+        ContextManager.getInstance().getCurrentState().btnClearPlanning();
+    }
+
 
     @FXML
     private void loadPlanning() {

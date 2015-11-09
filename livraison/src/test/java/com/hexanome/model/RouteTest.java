@@ -237,8 +237,12 @@ public class RouteTest {
             Logger.getLogger(RouteTest.class.getName()).log(Level.SEVERE, null, ex);
         }
         Route route = plan.getRoute();
-        route.removeDelivery(delivery3);
-        
+        try {
+            route.removeDelivery(delivery3);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         List<Path> result = route.getPaths();
         List<Path> expResult = new ArrayList<>();
         expResult.add(path1);

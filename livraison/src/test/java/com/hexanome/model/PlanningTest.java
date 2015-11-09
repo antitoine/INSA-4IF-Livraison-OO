@@ -177,8 +177,12 @@ public class PlanningTest {
         arrayTimeSlot.add(timeSlot2);
           
         Planning planning = new Planning(map,warehouse,arrayTimeSlot);
-        planning.removeDelivery(delivery2);
-        
+        try {
+            planning.removeDelivery(delivery2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         ArrayList<Delivery> expResult = new ArrayList<>();
         expResult.add(delivery1);
        

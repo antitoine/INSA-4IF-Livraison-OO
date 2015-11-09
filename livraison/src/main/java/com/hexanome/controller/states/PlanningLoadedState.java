@@ -33,6 +33,7 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
             planningLoadedState = new PlanningLoadedState();
         }
         UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.COMPUTE_ROUTE);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_PLANNING);
         UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.ROAD_MAP);
         return planningLoadedState;
     }

@@ -7,7 +7,6 @@ import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.view.ConstView;
-import javafx.application.Platform;
 
 /**
  * This class represents the logic state when a map has been loaded
@@ -32,6 +31,7 @@ public class MapLoadedState extends DefaultState {
             mapLoadedState = new MapLoadedState();
         }
         UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
         UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.COMPUTE_ROUTE);
         return mapLoadedState;
     }

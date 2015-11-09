@@ -86,8 +86,8 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
                 if(! targetCell.getString().equals(sourceCell.getString())) {
                     if (DeliveryTreeView.getDeliveryFromName(targetCell.getString()) != null) {
-                        targetCell.setTextFill(Color.RED);
-                        targetCell.setStyle("-fx-border-color: red;");
+                        targetCell.setTextFill(Color.GREEN);
+                        targetCell.setStyle("-fx-border-color: green;");
                     }
                 }
             }

@@ -33,7 +33,7 @@ public final class ConstView {
      * Enumeration of the buttons existing in the user interface
      */
     public enum Button {
-        REDO, UNDO, LOAD_PLANNING, COMPUTE_ROUTE, ROAD_MAP
+        REDO, UNDO, LOAD_PLANNING, COMPUTE_ROUTE, ROAD_MAP, CLEAR_MAP, CLEAR_PLANNING
     }
     /**
      * Enumeration of the tree item types
