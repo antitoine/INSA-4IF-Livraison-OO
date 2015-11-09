@@ -49,6 +49,8 @@ public class SwapDeliveriesState extends DefaultState {
         }
         // Jump to NothingSelectedState
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
+        // Replace mainwindow map view
+        UIManager.getInstance().getMainWindow().repositionToLatestPosition();
     }
 
     /**
