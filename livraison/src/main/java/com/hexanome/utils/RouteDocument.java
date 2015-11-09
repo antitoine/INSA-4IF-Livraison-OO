@@ -79,13 +79,51 @@ public class RouteDocument {
      */
     public static String generateRouteDocumentContent(Route route) {   
         String docContent = " --- ROAD MAP ---\n\n";
-        for(Path path : route.getPaths()){
+        /*for(Path path : route.getPaths()){
             docContent += "From : "+path.getFirstNode().getLocation() + "\n";
             for(Arc arc : path.getArcs()){
                 docContent += "take the road : "+arc.getStreetName()+"\n";
             }
             docContent += "Then, go to "+path.getLastNode().getLocation()+"\n";
+        }*/
+        
+        String time;
+        
+        docContent += "From the warehouse\n";
+        for(Path path : route.getPaths()){
+            Node start = path.getFirstNode();
+            Node end = path.getLastNode();
+            
+            if(start.getDelivery() != null) {
+                time = TypeWrapper.secondsToTimestamp((int) start.getDelivery().getDeliveryEndTime());
+                docContent += "At " + time + "\n";
+            }
+            
+            Arc previousArc = path.getArcs().get(0);
+            docContent +="- Take the road : ";
+            docContent += previousArc.getStreetName();
+            float length = previousArc.getLength();
+            
+            for(Arc arc : path.getArcs().subList(1, path.getArcs().size())){
+                if(! arc.getStreetName().equals(previousArc.getStreetName())) {
+                    docContent += String.format(" for %.2f m\n", length);
+                    docContent += "- Then turn on the road : ";
+                    docContent += arc.getStreetName();
+                    previousArc = arc;
+                    length = arc.getLength();
+                } else {
+                    length += arc.getLength();
+                }
+            }
+            docContent += String.format(" for %.2f m\n", length);
+            if(end.getDelivery() != null) {
+                time = TypeWrapper.secondsToTimestamp((int) end.getDelivery().getDeliveryTime());
+                docContent += "- Stop there at " + time + " for a delivery\n\n";
+            } else {
+                docContent += "- And you're back to the warehouse !\n";
+            }
         }
+        
         return docContent;
     }
 
