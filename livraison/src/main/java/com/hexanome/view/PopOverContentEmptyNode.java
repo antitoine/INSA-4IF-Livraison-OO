@@ -100,7 +100,7 @@ public class PopOverContentEmptyNode extends PopOverContent {
         for (Delivery deliveryToAdd : deliveriesToAdd) {
             String start = TypeWrapper.secondsToTimestamp(deliveryToAdd.getTimeSlot().getStartTime());
             String end = TypeWrapper.secondsToTimestamp(deliveryToAdd.getTimeSlot().getEndTime());
-            String info = "Delivery " + deliveryToAdd.getId()
+            String info = "Delivery " + deliveryToAdd.getNode().getId()
                     + " (" + start + " - " + end + ")";
             prevDeliveryMap.put(info, deliveryToAdd.getNode());
             prevDeliveryComboBox.getItems().add(info);
@@ -197,22 +197,24 @@ public class PopOverContentEmptyNode extends PopOverContent {
         panelForm.setHgap(10);
         panelForm.setVgap(10);
         panelForm.setPadding(new Insets(0, 10, 0, 10));
-        
-        addressText = new Text();
-        addressText.setText("(" + node.getLocation().x + ", " + node.getLocation().y + ")");
-        panelForm.add(new Text("Address: "), 0, 0);
-        panelForm.add(addressText, 1, 0);
-        
+
+        panelForm.add(new Text("ID: "), 0, 0);
+        panelForm.add(new Text(node.getId() + ""), 1, 0);
+
+        addressText = new Text("(" + node.getLocation().x + ", " + node.getLocation().y + ")");
+        panelForm.add(new Text("Address: "), 0, 1);
+        panelForm.add(addressText, 1, 1);
+
         Text prevDeliveryTitle = new Text("Previous point: ");
-        panelForm.add(prevDeliveryTitle, 0, 1);
-        panelForm.add(prevDeliveryComboBox, 1, 1);
-        
+        panelForm.add(prevDeliveryTitle, 0, 2);
+        panelForm.add(prevDeliveryComboBox, 1, 2);
+
         Text timeSlotTitle = new Text("Time slot: ");
-        panelForm.add(timeSlotTitle, 0, 2);
-        panelForm.add(timeSlotsComboBox, 1, 2);
+        panelForm.add(timeSlotTitle, 0, 3);
+        panelForm.add(timeSlotsComboBox, 1, 3);
         
         initBtnAddDelivery();
-        panelForm.add(btnValidateAddDelivery, 0, 3, 2, 1);
+        panelForm.add(btnValidateAddDelivery, 0, 4, 2, 1);
         GridPane.setHalignment(btnValidateAddDelivery, HPos.CENTER);
         
         setCenter(panelForm);

@@ -73,13 +73,6 @@ public class ArcView {
         ArrayList<Node> arcElements = new ArrayList<>();
         boolean isATwoWayTrip = isATwoWayTrip();
 
-        int numberOfArcs;
-        if (isATwoWayTrip) {
-            numberOfArcs = 0;
-        } else {
-            numberOfArcs = arcs.size();
-        }
-
         int arcNb = arcs.size();
 
         // Draws a line between two nodes
@@ -128,7 +121,10 @@ public class ArcView {
             double normVecOrthoMiddle = Math.sqrt((vecOrthoMiddleX * vecOrthoMiddleX)
                     + (vecOrthoMiddleY * vecOrthoMiddleY));
 
-            double coef = i * ARC_DISTANCE * (numberOfArcs * COEF_ARC_DISTANCE);
+            double coef = 0;
+            if (!isATwoWayTrip) {
+                coef = i * 2 * ARC_DISTANCE;
+            }
             double ptCtrlX1 = ptMiddleX + (coef * vecOrthoMiddleX) / (normVecOrthoMiddle);
             double ptCtrlY1 = ptMiddleY + (coef * vecOrthoMiddleY) / (normVecOrthoMiddle);
 

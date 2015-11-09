@@ -15,7 +15,7 @@ public interface IGraph {
     /**
      * @return The number of arcs of the implemented graph.
      */
-    public int getNbArcs();
+    int getNbArcs();
 
     /**
      * @param i The number of the initial vertex. (starts to 0)
@@ -23,7 +23,7 @@ public interface IGraph {
      * @return The cost associated with the directed arc (i, j), if it exists. 
      * Otherwise, returns -1.
      */
-    public float getCost(int i, int j);
+    float getCost(int i, int j);
 
     /**
      * Check if an arc exists.
@@ -31,6 +31,6 @@ public interface IGraph {
      * @param j The number of the terminal vertex. (starts to 0)
      * @return True if the directed arc (i, j) exists, false otherwise.
      */
-    public boolean isArc(int i, int j);
+    boolean isArc(int i, int j);
 
 }

@@ -10,10 +10,10 @@ public interface ICommand {
      * Execute the command
      * @return 
      */
-    public ICommand execute();
+    ICommand execute();
     /**
      * Reverse execution of the command executing the exact opposite command
      * @return 
      */
-    public ICommand reverse();
+    ICommand reverse();
 }

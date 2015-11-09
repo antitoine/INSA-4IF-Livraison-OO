@@ -17,6 +17,11 @@ import java.util.List;
 public class Route implements Publisher {
 
     /**
+     * The duration of a delivery.
+     */
+    private static final float DELIVERY_DURATION = 10f;
+
+    /**
      * Collection of path representing the route.
      */
     private LinkedList<Path> paths;
@@ -30,7 +35,7 @@ public class Route implements Publisher {
      * Planning associated with this route.
      */
     private Planning planning;
-    
+
     /**
      * Construct the route with the paths passed by parameter and update the
      * deliveries times.
@@ -49,6 +54,7 @@ public class Route implements Publisher {
 
     /**
      * Rteurns a list of paths
+     *
      * @return
      */
     public List<Path> getPaths() {
@@ -109,7 +115,7 @@ public class Route implements Publisher {
                 float deliveryTime = path.getPathDuration();
 
                 if (previousDelivery != null) {
-                    deliveryTime += previousDelivery.getDeliveryTime();
+                    deliveryTime += DELIVERY_DURATION + previousDelivery.getDeliveryTime();
                 } else { // Start is warehouse
                     deliveryTime += delivery.getTimeSlot().getStartTime();
                 }
@@ -131,7 +137,7 @@ public class Route implements Publisher {
 
         for (Path p : paths) {
             Delivery delivery = p.getLastNode().getDelivery();
-            
+
             if (delivery == null) {
                 delivery = p.getFirstNode().getDelivery();
             }
@@ -144,6 +150,10 @@ public class Route implements Publisher {
         }
     }
 
+    void addDelivery(Delivery delivery, Node nodePreviousDelivery) {
+        addDelivery(delivery, nodePreviousDelivery, true);
+    }
+
     /**
      * Adds a delivery to the route.
      *
@@ -151,7 +161,7 @@ public class Route implements Publisher {
      * @param nodePreviousDelivery The node with the delivery that will be
      * executed before the one to add.
      */
-    void addDelivery(Delivery delivery, Node nodePreviousDelivery) {
+    private void addDelivery(Delivery delivery, Node nodePreviousDelivery, boolean update) {
         // Find the previous delivery in the list of paths
         int indexPreviousPath = -1;
         Path pathToReplace = null;
@@ -193,10 +203,16 @@ public class Route implements Publisher {
             paths.add(nextPath);
         }
 
-        updateDeliveriesTime();
-        updateArcTimeSlots();
+        if (update) {
+            updateDeliveriesTime();
+            updateArcTimeSlots();
 
-        notifySubscribers();
+            notifySubscribers();
+        }
+    }
+
+    void removeDelivery(Delivery deliveryToRemove) {
+        removeDelivery(deliveryToRemove, true);
     }
 
     /**
@@ -204,7 +220,7 @@ public class Route implements Publisher {
      *
      * @param deliveryToRemove the delivery to remove.
      */
-    void removeDelivery(Delivery deliveryToRemove) {
+    private void removeDelivery(Delivery deliveryToRemove, boolean update) {
         // Search the path to remove, according to the delivery to remove
         int indexPathtoRemove = -1;
         boolean pathToRemoveFound = false;
@@ -242,8 +258,12 @@ public class Route implements Publisher {
             TimeSlot ts = deliveryToRemove.getTimeSlot();
             ts.removeDelivery(deliveryToRemove);
 
-            updateDeliveriesTime();
-            updateArcTimeSlots();
+            if (update) {
+                updateDeliveriesTime();
+                updateArcTimeSlots();
+
+                notifySubscribers();
+            }            
         }
     }
 
@@ -254,6 +274,7 @@ public class Route implements Publisher {
      * @param delivery2 the second delivery to swap.
      */
     void swapDeliveries(Delivery delivery1, Delivery delivery2) {
+
         // Find the first path with delivery 1 or delivery 2 as source
         int indexPreviousPath = -1, indexNextPath = -1;
         Delivery previousDelivery = null, nextDelivery = null;
@@ -291,38 +312,42 @@ public class Route implements Publisher {
         }
 
         if (previousPath != null && nextPath != null) {
+            TimeSlot timeSlot = nextDelivery.getTimeSlot();
+            removeDelivery(nextDelivery, false);
+            timeSlot.addDelivery(nextDelivery);
+            addDelivery(nextDelivery, previousDelivery.getNode(), false);
+            /*
+             Path pathToNewFirstDelivery = planning.getMap().getFastestPath(
+             previousPath.getFirstNode(),
+             nextPath.getFirstNode()
+             );
 
-            Path pathToNewFirstDelivery = planning.getMap().getFastestPath(
-                    previousPath.getFirstNode(),
-                    nextPath.getFirstNode()
-            );
+             Path newFirstDeliveryToNextDelivery = planning.getMap().getFastestPath(
+             nextPath.getFirstNode(),
+             paths.get(indexPreviousPath + 1).getLastNode()
+             );
 
-            Path newFirstDeliveryToNextDelivery = planning.getMap().getFastestPath(
-                    nextPath.getFirstNode(),
-                    paths.get(indexPreviousPath + 1).getLastNode()
-            );
+             Path previousNewFirstDeliveryToNewLastDelivery = planning.getMap().getFastestPath(
+             paths.get(indexNextPath - 1).getFirstNode(),
+             previousPath.getLastNode()
+             );
 
-            Path previousNewFirstDeliveryToNewLastDelivery = planning.getMap().getFastestPath(
-                    paths.get(indexNextPath - 1).getFirstNode(),
-                    previousPath.getLastNode()
-            );
+             Path newLastDeliveryToNewFirstDeliveryNext = planning.getMap().getFastestPath(
+             previousPath.getLastNode(),
+             nextPath.getLastNode()
+             );
 
-            Path newLastDeliveryToNewFirstDeliveryNext = planning.getMap().getFastestPath(
-                    previousPath.getLastNode(),
-                    nextPath.getLastNode()
-            );
+             paths.remove(indexPreviousPath);
+             paths.add(indexPreviousPath, pathToNewFirstDelivery);
 
-            paths.remove(indexPreviousPath);
-            paths.add(indexPreviousPath, pathToNewFirstDelivery);
+             paths.remove(indexPreviousPath + 1);
+             paths.add(indexPreviousPath + 1, newFirstDeliveryToNextDelivery);
 
-            paths.remove(indexPreviousPath + 1);
-            paths.add(indexPreviousPath + 1, newFirstDeliveryToNextDelivery);
+             paths.remove(indexNextPath - 1);
+             paths.add(indexNextPath - 1, previousNewFirstDeliveryToNewLastDelivery);
 
-            paths.remove(indexNextPath - 1);
-            paths.add(indexNextPath - 1, previousNewFirstDeliveryToNewLastDelivery);
-
-            paths.remove(indexNextPath);
-            paths.add(indexNextPath, newLastDeliveryToNewFirstDeliveryNext);
+             paths.remove(indexNextPath);
+             paths.add(indexNextPath, newLastDeliveryToNewFirstDeliveryNext);*/
 
             updateDeliveriesTime();
             updateArcTimeSlots();
@@ -330,26 +355,28 @@ public class Route implements Publisher {
             notifySubscribers();
         }
     }
-    
+
     /**
      * Add one subscriber
-     * @param s 
-     *      Subscriber to add
+     *
+     * @param s Subscriber to add
      */
     @Override
     public void addSubscriber(Subscriber s) {
         subscribers.add(s);
         s.update(this, planning);
     }
+
     /**
      * Removes one subscriber
-     * @param s 
-     *      Subscriber to remove
+     *
+     * @param s Subscriber to remove
      */
     @Override
     public void removeSubscriber(Subscriber s) {
         subscribers.remove(s);
     }
+
     /**
      * Notifies all subscribers
      */
@@ -359,6 +386,7 @@ public class Route implements Publisher {
             s.update(this, planning);
         }
     }
+
     /**
      * Remove all subscribers
      */
@@ -366,39 +394,42 @@ public class Route implements Publisher {
     public void clearSubscribers() {
         subscribers.clear();
     }
-    
+
     /**
      * Comparison operator for equality
+     *
      * @param obj
-     * @return 
+     * @return
      */
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof Route)) {
+        if (!(obj instanceof Route)) {
             return false;
         }
-        
+
         Route route = (Route) obj;
-        
-        if(this.subscribers.size() != route.subscribers.size() || this.paths.size() != route.paths.size() || !(this.planning.equals(route.planning))) {
+
+        if (this.subscribers.size() != route.subscribers.size() || this.paths.size() != route.paths.size() || !(this.planning.equals(route.planning))) {
             return false;
         }
-        
-        for(int i = 0; i<this.paths.size(); i++){
-            if(!(this.paths.get(i).equals(route.paths.get(i)))){
+
+        for (int i = 0; i < this.paths.size(); i++) {
+            if (!(this.paths.get(i).equals(route.paths.get(i)))) {
                 return false;
             }
         }
-        
-        for(int j = 0; j<this.subscribers.size(); j++) {
-            if(!(this.subscribers.get(j).equals(route.subscribers.get(j)))) {
+
+        for (int j = 0; j < this.subscribers.size(); j++) {
+            if (!(this.subscribers.get(j).equals(route.subscribers.get(j)))) {
                 return false;
             }
         }
-        return true;  
+        return true;
     }
+
     /**
      * Returns the string describing the objet, used for debug only
+     *
      * @return a string describing the object
      */
     @Override

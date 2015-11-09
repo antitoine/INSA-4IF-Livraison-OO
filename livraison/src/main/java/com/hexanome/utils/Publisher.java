@@ -15,8 +15,11 @@ package com.hexanome.utils;
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface Publisher {
-    public void addSubscriber(Subscriber s);
-    public void removeSubscriber(Subscriber s);
-    public void notifySubscribers();
-    public void clearSubscribers();
+    void addSubscriber(Subscriber s);
+
+    void removeSubscriber(Subscriber s);
+
+    void notifySubscribers();
+
+    void clearSubscribers();
 }

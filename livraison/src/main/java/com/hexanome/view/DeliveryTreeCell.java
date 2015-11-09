@@ -1,6 +1,6 @@
 package com.hexanome.view;
 
-import com.hexanome.controller.UIManager;
+import com.hexanome.controller.ContextManager;
 import com.hexanome.model.Delivery;
 import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
@@ -18,9 +18,9 @@ import javafx.scene.paint.Color;
  */
 final class DeliveryTreeCell extends TreeCell<String> {
 
+    @SuppressWarnings("unused")
     private TextField textField;
     private ContextMenu addMenu = new ContextMenu();
-    private DeliveryTreeCell targetCellSwap = null;
 
     public DeliveryTreeCell() {
 
@@ -34,7 +34,9 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 /* allow any transfer mode */
 
                 DeliveryTreeCell source = ((DeliveryTreeCell) (event.getSource()));
-                if (source.getString().startsWith("D")) {
+                if (DeliveryTreeView.getDeliveryFromName(source.getString()) != null) {
+                    ContextManager.getInstance().getCurrentState().clickSomewhereElse();
+                    ContextManager.getInstance().getCurrentState().leftClickPressedOnDelivery();
                     Dragboard db = source.startDragAndDrop(TransferMode.ANY);
 
                 /* Put a string on a dragboard */
@@ -45,7 +47,6 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 event.consume();
             }
         });
-
 
 
         // DRAG TARGET    
@@ -63,17 +64,21 @@ final class DeliveryTreeCell extends TreeCell<String> {
             public void handle(DragEvent event) {
                 /* data is dragged over the target */
                 event.acceptTransferModes(TransferMode.ANY);
-
                 Dragboard sourceCell = event.getDragboard();
-                if (targetCellSwap != null && !targetCellSwap.getString()
+                DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
+                if (targetCell != null && !targetCell.getString()
                         .equals(sourceCell.getString())) {
                     Delivery delivery1 = DeliveryTreeView
                             .getDeliveryFromName(event.getDragboard().getString());
                     Delivery delivery2 = DeliveryTreeView
-                            .getDeliveryFromName(targetCellSwap.getString());
+                            .getDeliveryFromName(targetCell.getString());
                     System.out.println("Drag done " + sourceCell.getString() + " <->" +
-                            targetCellSwap.getString());
-                    UIManager.getInstance().swapDelivery(delivery1, delivery2);
+                            targetCell.getString());
+                    ContextManager.getInstance().getCurrentState()
+                            .leftClickReleased(delivery1, delivery2);
+                } else {
+                    ContextManager.getInstance().getCurrentState()
+                            .leftClickReleased(null, null);
                 }
 
                 event.consume();
@@ -88,10 +93,9 @@ final class DeliveryTreeCell extends TreeCell<String> {
                     Dragboard sourceCell = event.getDragboard();
                     DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
                     if(! targetCell.getString().equals(sourceCell.getString())) {
-                        if (targetCell.getString().startsWith("D")) {
+                        if (DeliveryTreeView.getDeliveryFromName(targetCell.getString()) != null) {
                             targetCell.setTextFill(Color.RED);
                             targetCell.setStyle("-fx-border-color: red;");
-                            targetCellSwap = targetCell;
                         }
                     }
                 }
@@ -108,12 +112,10 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 if(! targetCell.getString().equals(sourceCell.getString())) {
                     targetCell.setStyle("-fx-border-color: white;");
                     targetCell.setTextFill(Color.BLACK);
-                    targetCellSwap = null;
                 }
                 event.consume();
             }
         });
-
     }
 
     @Override

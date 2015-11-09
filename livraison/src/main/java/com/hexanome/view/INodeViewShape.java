@@ -19,7 +19,7 @@ public interface INodeViewShape {
      * Notify the controller of a click on the node view shape.
      * @param context The parent context of the node view shape.
      */
-    public void onMouseClickedNotify(NodeView context);
+    void onMouseClickedNotify(NodeView context);
     
     /**
      * Create the pop over to associate with the node view shape and the node
@@ -27,11 +27,11 @@ public interface INodeViewShape {
      * @param node The model node to represent by the popover.
      * @return The created PopOver object.
      */
-    public PopOver createPopOver(com.hexanome.model.Node node);
+    PopOver createPopOver(com.hexanome.model.Node node);
     
     /**
      * Cast the object to a javafx.scene.Node object.
      * @return The same object, as javafx.scene.Node.
      */
-    public Node asSceneNode();
+    Node asSceneNode();
 }

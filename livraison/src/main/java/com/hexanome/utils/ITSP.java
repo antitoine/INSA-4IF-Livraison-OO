@@ -24,11 +24,11 @@ public interface ITSP {
      * @throws java.lang.InterruptedException Throws the exception in case of 
      * interruption.
      */
-    public Integer[] computeSolution(int timeLimit, IGraph graph) throws InterruptedException;
+    Integer[] computeSolution(int timeLimit, IGraph graph) throws InterruptedException;
 
     /**
      * @return The total cost of the last computed solution, or -1 if computeSolution
      * was never called.
      */
-    public float getSolutionCost();
+    float getSolutionCost();
 }

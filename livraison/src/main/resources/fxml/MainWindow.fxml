@@ -100,9 +100,19 @@
                                 <Menu mnemonicParsing="false" text="%zoom">
                                     <items>
                                         <MenuItem fx:id="mntmUndo1" disable="false" mnemonicParsing="false"
-                                                  onAction="#zoomIn" text="%zoomin"/>
+                                                  onAction="#zoomIn" text="%zoomin">
+                                            <accelerator>
+                                                <KeyCodeCombination alt="UP" code="ADD" control="DOWN" meta="UP"
+                                                                    shift="UP" shortcut="UP"/>
+                                            </accelerator>
+                                        </MenuItem>
                                         <MenuItem fx:id="mntmRedo1" disable="false" mnemonicParsing="false"
-                                                  onAction="#zoomOut" text="%zoomout"/>
+                                                  onAction="#zoomOut" text="%zoomout">
+                                            <accelerator>
+                                                <KeyCodeCombination alt="UP" code="SUBTRACT" control="DOWN" meta="UP"
+                                                                    shift="UP" shortcut="UP"/>
+                                            </accelerator>
+                                        </MenuItem>
                                         <MenuItem fx:id="mntmUndo11" disable="false" mnemonicParsing="false"
                                                   onAction="#resetZoom" text="%resetzoom">
                                             <accelerator>
@@ -146,7 +156,7 @@
                                         <Glyph fontFamily="FontAwesome" icon="SEARCH_MINUS" />
                                     </graphic>
                                 </Button>
-                                <Button mnemonicParsing="false" onAction="#resetZoom">
+                                <Button mnemonicParsing="false" onAction="#resetZoom" text="1:1">
                                     <graphic>
                                         <Glyph fontFamily="FontAwesome" icon="SEARCH"/>
                                     </graphic>

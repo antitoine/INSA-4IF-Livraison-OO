@@ -5,16 +5,18 @@
  */
 package com.hexanome.model;
 
-import java.awt.Point;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -44,9 +46,8 @@ public class ArcTest {
         Node src = map.createNode(1, new Point(20,30));
         Node dest = map.createNode(2, new Point(30,30));      
         Arc arc = map.createArc("hollywood", 12, 31, 1, 2);
-        Node expResult = dest;
         Node result = arc.getDest();
-        assertEquals(expResult, result);
+        assertEquals(dest, result);
     }
 
     /**
