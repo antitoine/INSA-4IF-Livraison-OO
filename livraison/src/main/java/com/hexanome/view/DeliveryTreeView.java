@@ -12,6 +12,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import org.controlsfx.glyphfont.Glyph;
 
 import java.util.Collections;
@@ -93,12 +94,18 @@ public class DeliveryTreeView extends VBox implements Subscriber {
      * Create a branch in the treeView
      */
     private TreeItem<String> makeBranch(String title, ConstView.TreeItemType treeItemType,
-                                        TreeItem<String> parent, Delivery d) {
+                                        TreeItem<String> parent, Delivery d, Boolean outOfTimeSlot) {
         TreeItem<String> item = null;
         switch (treeItemType) {
             case DELIVERY:
                 deliveresByName.put(title, d);
-                item = new TreeItem<>(title, new Glyph("FontAwesome", "TRUCK"));
+                if (outOfTimeSlot) {
+                    Glyph g = new Glyph("FontAwesome", "EXCLAMATION_TRIANGLE");
+                    g.setColor(Color.RED);
+                    item = new TreeItem<>(title, g);
+                } else {
+                    item = new TreeItem<>(title, new Glyph("FontAwesome", "TRUCK"));
+                }
                 break;
             case TIMESLOT:
                 item = new TreeItem<>(title, new Glyph("FontAwesome", "CLOCK_ALT"));
@@ -121,19 +128,23 @@ public class DeliveryTreeView extends VBox implements Subscriber {
 
                 TreeItem<String> tsItem;
                 tsItem = makeBranch(start + " - " + end,
-                        ConstView.TreeItemType.TIMESLOT, rootItem, null);
+                        ConstView.TreeItemType.TIMESLOT, rootItem, null, null);
 
                 List<Delivery> deliveries = ts.getDeliveries();
                 Collections.sort(deliveries);
 
                 for (Delivery d : deliveries) {
-
                     String deliveryName = "Delivery " + d.getNode().getId();
                     if (d.getDeliveryTime() > 0) {
                         deliveryName = TypeWrapper.secondsToTimestamp((int)d.getDeliveryTime()) + " | " + deliveryName;
                     }
 
-                    TreeItem<String> dItem = makeBranch( deliveryName, ConstView.TreeItemType.DELIVERY, tsItem, d);
+                    TreeItem<String> dItem;
+                    if (d.getDeliveryTime() > 0 && d.getDeliveryTime() > d.getTimeSlot().getEndTime()) {
+                        dItem = makeBranch(deliveryName, ConstView.TreeItemType.DELIVERY, tsItem, d, true);
+                    } else {
+                        dItem = makeBranch(deliveryName, ConstView.TreeItemType.DELIVERY, tsItem, d, false);
+                    }
                     deliveryBranch.put(d, dItem);
                 }
             }
