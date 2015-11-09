@@ -131,6 +131,8 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
         
         // Enable ROAD_MAP button
         UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
+        
+        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.COMPUTE_ROUTE);
 
         // Add MapView as a subscriber of route
         UIManager.getInstance().endRouteComputation();

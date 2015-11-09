@@ -105,6 +105,9 @@ public class ModelManager {
      */
     public void clearPlanning() {
         planning = null;
+        map.resetArcs();
+        map.resetNodes();
+        map.notifySubscribers();
     }
 
     /**

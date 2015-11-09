@@ -112,8 +112,9 @@ public class UIManager {
         // Add view subscribers to the model
         ModelManager.getInstance().getPlanning().clearSubscribers();
         ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTreeView());
-        ColorsGenerator.getInstance()
-                .createColors(ModelManager.getInstance().getPlanning().getTimeSlots());
+        ColorsGenerator.getInstance().createColors(ModelManager.getInstance().getPlanning().getTimeSlots());
+        ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getMapView());
+        
         mainWindow.clearLegend();
         mainWindow.setLegend();
         // Update mainwindow

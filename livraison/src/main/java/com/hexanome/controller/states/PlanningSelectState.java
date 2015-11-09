@@ -46,6 +46,9 @@ public class PlanningSelectState extends DefaultState {
      */
     @Override
     public void btnCancel() {
+        ModelManager.getInstance().clearPlanning();
+        UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+        
         // Jump to MapLoadedState
         ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
     }
@@ -97,7 +100,6 @@ public class PlanningSelectState extends DefaultState {
                                         .setCurrentState(PlanningLoadedState.getInstance());
                                 // update the view
                                 UIManager.getInstance().endLoadPlanning();
-                                ContextManager.getInstance().getCurrentState().btnGenerateRoute();
                                 break;
                             }
                     }

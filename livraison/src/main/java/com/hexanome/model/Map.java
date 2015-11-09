@@ -210,7 +210,7 @@ public class Map implements Publisher {
     /**
      * Reset the arcs in their original state.
      */
-    void resetArcs() {
+    public void resetArcs() {
         for (Arc arc : arcs) {
             arc.clearAssociatedTimeSlot();
         }
@@ -218,7 +218,7 @@ public class Map implements Publisher {
     /**
      * Reset the nodes in their original state, without any delivery.
      */
-    void resetNodes() {
+    public void resetNodes() {
         for (Node node : nodes.values()) {
             node.attachDelivery(null);
         }

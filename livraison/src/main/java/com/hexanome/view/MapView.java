@@ -34,15 +34,42 @@ public class MapView extends AnchorPane implements Subscriber {
             addArcs(map.getArcs());
             addEmptyNodes(map.getNodes().values());
         }
+        
+        else if (p instanceof Planning) {
+            updateMapWithDeliveries((Planning) p);
+        }
 
         // called when a new Route is computed
-        if (p instanceof Route) {
+        else if (p instanceof Route) {
             clearMap();
             Planning planning = (Planning) arg;
             Map map = planning.getMap();
 
             updateRouteOnMap(planning, map);
         }
+    }
+    
+    /**
+     * Update the nodes which contain a delivery.
+     * @param planning The planning loaded
+     */
+    private void updateMapWithDeliveries(Planning planning) {
+        resetNodes();
+        
+        planning.getTimeSlots().stream().forEach((ts) -> {
+            ts.getDeliveries().stream().forEach((d) -> {
+                (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE);
+            });
+        });
+
+        NodeView warehouseNodeView = nodeList.get(planning.getWarehouse());
+        warehouseNodeView.setType(ConstView.WAREHOUSE_NODE);
+    }
+    
+    public void resetNodes() {
+        nodeList.values().stream().forEach((nodeView) -> {
+            nodeView.setType(ConstView.EMPTY_NODE);
+        });
     }
 
 
@@ -140,6 +167,11 @@ public class MapView extends AnchorPane implements Subscriber {
         arcsMap.clear();
         getChildren().clear();
     }
+
+    
+
+    
+  
 
 
 }

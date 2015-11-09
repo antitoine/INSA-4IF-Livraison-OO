@@ -31,6 +31,12 @@
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     </columnConstraints>
                                 </GridPane>
+                                <Button fx:id="btnComputeRoute" disable="true" mnemonicParsing="false"
+                                        onAction="#computeRoute" prefHeight="40.0" prefWidth="300.0" text="%compute_route">
+                                    <graphic>
+                                        <Glyph fontFamily="FontAwesome" icon="TRUCK" />
+                                    </graphic>
+                                </Button>
                                 <Button fx:id="btnRoadMap" disable="true" mnemonicParsing="false"
                                         onAction="#generateRoadMap" prefHeight="40.0" prefWidth="300.0" text="%roadmap">
                                     <graphic>

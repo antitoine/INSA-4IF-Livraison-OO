@@ -69,6 +69,8 @@ public class MainWindow extends AnchorPane {
     @FXML
     private MenuItem mntmRedo;
     @FXML
+    private Button btnComputeRoute;
+    @FXML
     private Button btnRoadMap;
     @FXML
     private BorderPane deliveriesPane;
@@ -194,6 +196,9 @@ public class MainWindow extends AnchorPane {
                 mntmLoadPlanning.setDisable(true);
                 btnLoadPlanning.setDisable(true);
                 break;
+            case COMPUTE_ROUTE:
+                btnComputeRoute.setDisable(true);
+                break;
         }
     }
 
@@ -218,6 +223,9 @@ public class MainWindow extends AnchorPane {
             case LOAD_PLANNING:
                 mntmLoadPlanning.setDisable(false);
                 btnLoadPlanning.setDisable(false);
+                break;
+            case COMPUTE_ROUTE:
+                btnComputeRoute.setDisable(false);
                 break;
         }
     }
@@ -276,10 +284,14 @@ public class MainWindow extends AnchorPane {
     private void loadPlanning() {
         ContextManager.getInstance().getCurrentState().btnLoadPlanning();
     }
+    
+    @FXML
+    private void computeRoute() {
+        ContextManager.getInstance().getCurrentState().btnGenerateRoute();
+    }
 
     @FXML
     private void generateRoadMap() {
-        // ContextManager.getInstance().getCurrentState().
         UIManager.getInstance().generateRoadMap();
     }
 
@@ -450,6 +462,8 @@ public class MainWindow extends AnchorPane {
         double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
         return new Point2D(scrollXOffset, scrollYOffset);
     }
+
+    
 
 
 }
