@@ -1,7 +1,6 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
-import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
@@ -36,6 +35,7 @@ final class DeliveryTreeCell extends TreeCell<String> {
 
                 DeliveryTreeCell source = ((DeliveryTreeCell) (event.getSource()));
                 if (DeliveryTreeView.getDeliveryFromName(source.getString()) != null) {
+                    ContextManager.getInstance().getCurrentState().clickSomewhereElse();
                     ContextManager.getInstance().getCurrentState().leftClickPressedOnDelivery();
                     Dragboard db = source.startDragAndDrop(TransferMode.ANY);
 
@@ -74,7 +74,11 @@ final class DeliveryTreeCell extends TreeCell<String> {
                             .getDeliveryFromName(targetCell.getString());
                     System.out.println("Drag done " + sourceCell.getString() + " <->" +
                             targetCell.getString());
-                    UIManager.getInstance().swapDelivery(delivery1, delivery2);
+                    ContextManager.getInstance().getCurrentState()
+                            .leftClickReleased(delivery1, delivery2);
+                } else {
+                    ContextManager.getInstance().getCurrentState()
+                            .leftClickReleased(null, null);
                 }
 
                 event.consume();

@@ -1,7 +1,5 @@
 package com.hexanome.controller;
 
-import com.hexanome.controller.command.SwapDeliveriesCommand;
-import com.hexanome.model.Delivery;
 import com.hexanome.utils.RouteDocument;
 import com.hexanome.view.ColorsGenerator;
 import com.hexanome.view.MainWindow;
@@ -182,13 +180,4 @@ public class UIManager {
 
         }
     }
-
-
-    public void swapDelivery(Delivery delivery1, Delivery delivery2) {
-        // TODO give this command to the context Manager
-        // ContextManager.getInstance().getCurrentState().swapDeliveries();
-        SwapDeliveriesCommand sc = new SwapDeliveriesCommand(delivery1, delivery2);
-        ContextManager.getInstance().executeCommand(sc);
-    }
-
 }
