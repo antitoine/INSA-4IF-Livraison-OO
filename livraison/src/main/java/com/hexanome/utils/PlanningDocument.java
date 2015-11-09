@@ -102,8 +102,6 @@ public class PlanningDocument extends XMLParser {
      *      Map used to check the semantic
      * @return 
      */
-    // RemoveMeLater : must have a map to check if nodes used in the planning 
-    //                 also exist in the map.
     public boolean checkIntegrity(Map map) {
         Element root = getDom().getRootElement();
         // TEST : check if there is only one warehouse

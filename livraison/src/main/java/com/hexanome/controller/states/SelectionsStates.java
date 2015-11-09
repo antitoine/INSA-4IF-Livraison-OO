@@ -6,7 +6,7 @@ package com.hexanome.controller.states;
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
-import com.hexanome.model.Delivery;
+import com.hexanome.view.ConstView;
 
 /**
  * This abstract class provides common code for logic states when 
@@ -59,10 +59,20 @@ public abstract class SelectionsStates extends DefaultState {
     @Override
     public void btnCloseMap() {
         if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
+
+            UIManager.getInstance().getMainWindow().setLoadingState("Closing Map...");
+
             // Full clear model
             ModelManager.getInstance().clearModel();
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();
+
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_PLANNING);
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_MAP);
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.LOAD_PLANNING);
+            UIManager.getInstance().getMainWindow().endLoadingState();
+
             // Jump to InitState
             ContextManager.getInstance().setCurrentState(InitState.getInstance());
         }
@@ -74,10 +84,18 @@ public abstract class SelectionsStates extends DefaultState {
     @Override
     public void btnClearPlanning() {
         if (UIManager.getInstance().askConfirmation("Current planning will be lost.")) {
+
+            UIManager.getInstance().getMainWindow().setLoadingState("Clearing Planning...");
+
             // Clear model's current planning
             ModelManager.getInstance().clearPlanning();
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();
+
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_PLANNING);
+            UIManager.getInstance().getMainWindow().endLoadingState();
+
             // Jump to MapLoadedState
             ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
         }

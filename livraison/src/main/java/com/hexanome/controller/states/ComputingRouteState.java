@@ -38,7 +38,7 @@ public class ComputingRouteState extends DefaultState {
     public void btnCancel() {
         ContextManager.getInstance().setCurrentState(PlanningLoadedState.getInstance());
         ModelManager.getInstance().getPlanning().abortComputeRoute();
-        UIManager.getInstance().getMainWindow().resetCursorAndInfoLabel();
+        UIManager.getInstance().getMainWindow().endLoadingState();
     }
 
     /**
