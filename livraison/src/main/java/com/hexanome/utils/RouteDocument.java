@@ -97,9 +97,25 @@ public class RouteDocument {
         title.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
         texts.add(title);
 
+        Text totalText = new Text("Summary :\n");
+        totalText.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+        texts.add(totalText);
+        texts.add(
+            new Text(
+                String.format(
+                    "Total distance travelled : %.0f meters\n" +
+                    "Departure time : %s\n" +
+                    "Arrival time : %s\n" + 
+                    "Total duration : %s\n\n\n",
+                    route.getTotalDistance(),
+                    TypeWrapper.secondsToTimestamp((int) route.getStartTime()),
+                    TypeWrapper.secondsToTimestamp((int) route.getEndTime()),
+                    TypeWrapper.secondsToTimestamp((int) route.getTotalDuration())
+                )
+            )
+        );
+        
         String time;
-        float routeDuration = 0;
-        float routeLength = 0;
 
         Text warehouseText = new Text("From the warehouse\n");
         warehouseText.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
@@ -119,8 +135,6 @@ public class RouteDocument {
             texts.add(new Text("- Take the road : "));
             texts.add(new Text(previousArc.getStreetName()));
             float length = previousArc.getLength();
-            routeDuration += previousArc.getDuration();
-            routeLength += length;
 
             for (Arc arc : path.getArcs().subList(1, path.getArcs().size())) {
                 if (!arc.getStreetName().equals(previousArc.getStreetName())) {
@@ -132,24 +146,16 @@ public class RouteDocument {
                 } else {
                     length += arc.getLength();
                 }
-                routeDuration += arc.getDuration();
-                routeLength += arc.getLength();
             }
             texts.add(new Text(String.format(" for %.0f m\n", length)));
             if (end.getDelivery() != null) {
                 time = TypeWrapper.secondsToTimestamp((int) end.getDelivery().getDeliveryTime());
                 texts.add(new Text("- Stop there at " + time + " for a delivery\n\n"));
-                routeDuration += Delivery.DELIVERY_DURATION;
             } else {
-                texts.add(new Text("- And you're back to the warehouse !\n"));
+                texts.add(new Text("- And you're back to the warehouse at " + TypeWrapper.secondsToTimestamp((int) route.getEndTime()) + " !\n"));
             }
-        }
-        Text totalText = new Text("\nSummary :\n");
-        totalText.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
-        texts.add(totalText);
-        texts.add(new Text(String.format("Total distance travelled : %.0f m\n", routeLength)));
-        texts.add(new Text("Duration : " + TypeWrapper.secondsToTimestamp((int)  routeDuration) + " min"));
-        // \TODO : Duration pas bonne
+        }        
+
         return texts;
     }
 
@@ -159,10 +165,10 @@ public class RouteDocument {
 
     /**
      * Writes the route to the document content
-     * @param route
+     * @param text The text to write
      */
-    public void writeRoute(Route route) {
-        content = generateRouteDocumentContent(route);
+    public void writeRoute(String text) {
+        content = text;
     }
 
     /**

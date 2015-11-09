@@ -52,13 +52,13 @@ public class IOManager {
     }
     /**
      * Save the current route of the model into a file.
-     * @param file
-     *      file to write
+     * @param file File to write
+     * @param text The text to write in the file.
      * @return true if the file was successfully written, else it returns false
      */
-    boolean saveRouteDocument(File file) {
+    boolean saveRouteDocument(File file, String text) {
         RouteDocument rdoc = DocumentFactory.createRouteDocument(file);
-        rdoc.writeRoute(ModelManager.getInstance().getPlanning().getRoute());
+        rdoc.writeRoute(text);
         return rdoc.save();
     }
 }
