@@ -19,9 +19,9 @@ import javafx.scene.paint.Color;
  */
 final class DeliveryTreeCell extends TreeCell<String> {
 
+    @SuppressWarnings("unused")
     private TextField textField;
     private ContextMenu addMenu = new ContextMenu();
-    private DeliveryTreeCell targetCellSwap = null;
 
     public DeliveryTreeCell() {
 
@@ -49,7 +49,6 @@ final class DeliveryTreeCell extends TreeCell<String> {
         });
 
 
-
         // DRAG TARGET    
         setOnDragOver(new EventHandler<DragEvent>() {
             @Override
@@ -65,16 +64,16 @@ final class DeliveryTreeCell extends TreeCell<String> {
             public void handle(DragEvent event) {
                 /* data is dragged over the target */
                 event.acceptTransferModes(TransferMode.ANY);
-
                 Dragboard sourceCell = event.getDragboard();
-                if (targetCellSwap != null && !targetCellSwap.getString()
+                DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
+                if (targetCell != null && !targetCell.getString()
                         .equals(sourceCell.getString())) {
                     Delivery delivery1 = DeliveryTreeView
                             .getDeliveryFromName(event.getDragboard().getString());
                     Delivery delivery2 = DeliveryTreeView
-                            .getDeliveryFromName(targetCellSwap.getString());
+                            .getDeliveryFromName(targetCell.getString());
                     System.out.println("Drag done " + sourceCell.getString() + " <->" +
-                            targetCellSwap.getString());
+                            targetCell.getString());
                     UIManager.getInstance().swapDelivery(delivery1, delivery2);
                 }
 
@@ -93,7 +92,6 @@ final class DeliveryTreeCell extends TreeCell<String> {
                         if (DeliveryTreeView.getDeliveryFromName(targetCell.getString()) != null) {
                             targetCell.setTextFill(Color.RED);
                             targetCell.setStyle("-fx-border-color: red;");
-                            targetCellSwap = targetCell;
                         }
                     }
                 }
@@ -110,12 +108,10 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 if(! targetCell.getString().equals(sourceCell.getString())) {
                     targetCell.setStyle("-fx-border-color: white;");
                     targetCell.setTextFill(Color.BLACK);
-                    targetCellSwap = null;
                 }
                 event.consume();
             }
         });
-
     }
 
     @Override
