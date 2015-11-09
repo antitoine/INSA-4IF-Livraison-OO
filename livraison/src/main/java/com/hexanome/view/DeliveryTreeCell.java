@@ -22,8 +22,11 @@ final class DeliveryTreeCell extends TreeCell<String> {
     @SuppressWarnings("unused")
     private TextField textField;
     private ContextMenu addMenu = new ContextMenu();
+    private Boolean enableDragAndDrop;
 
-    public DeliveryTreeCell() {
+    public DeliveryTreeCell(Boolean enableDragAndDrop) {
+
+        this.enableDragAndDrop = enableDragAndDrop;
 
         setStyle("-fx-border-color: white;");
 
@@ -33,7 +36,8 @@ final class DeliveryTreeCell extends TreeCell<String> {
             /* allow any transfer mode */
 
             DeliveryTreeCell source = ((DeliveryTreeCell) (event.getSource()));
-            if (DeliveryTreeView.getDeliveryFromName(source.getString()) != null) {
+            if (DeliveryTreeView.getDeliveryFromName(source.getString()) != null &&
+                    enableDragAndDrop) {
                 ContextManager.getInstance().getCurrentState().leftClickPressedOnDelivery();
                 Dragboard db = source.startDragAndDrop(TransferMode.ANY);
 
