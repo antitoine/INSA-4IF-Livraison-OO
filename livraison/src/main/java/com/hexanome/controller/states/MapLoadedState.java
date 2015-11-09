@@ -70,8 +70,16 @@ public class MapLoadedState extends DefaultState {
     @Override
     public void btnCloseMap() {
         if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
+
+            UIManager.getInstance().getMainWindow().setLoadingState("Closing Map...");
+
             // Full clear of the model
             ModelManager.getInstance().clearModel();
+
+            UIManager.getInstance().getMainWindow().endLoadingState();
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_MAP);
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.LOAD_PLANNING);
+
             // Jump to InitState
             ContextManager.getInstance().setCurrentState(InitState.getInstance());
         }

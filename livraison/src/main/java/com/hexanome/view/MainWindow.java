@@ -184,7 +184,7 @@ public class MainWindow extends AnchorPane {
     /**
      * Reset the cursor and the info label at the end of a loading for example
      */
-    public void resetCursorAndInfoLabel() {
+    public void endLoadingState() {
         statusBar.setText("");
         btnCancelLoading.setVisible(false);
         statusBar.setProgress(0);

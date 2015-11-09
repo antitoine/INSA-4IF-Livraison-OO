@@ -1,10 +1,8 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
-import com.hexanome.controller.ModelManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Planning;
-import com.hexanome.model.Route;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
@@ -37,20 +35,16 @@ public class DeliveryTreeView extends VBox implements Subscriber {
         BorderPane.setAlignment(this, Pos.CENTER);
         deliveryBranch = new HashMap<>();
         deliveresByName = new HashMap<>();
-
         deliveryTree = new TreeView<>();
+        deliveryTree.setPrefHeight(1000);
 
         rootItem = new TreeItem<>("root");
         rootItem.setExpanded(true);
-
         deliveryTree.setRoot(rootItem);
         deliveryTree.setShowRoot(false);
 
         this.getChildren().add(deliveryTree);
-
-        deliveryTree.setPrefHeight(1000);
-
-        deliveryTree.setCellFactory(p -> new DeliveryTreeCell());
+        deliveryTree.setCellFactory(p -> new DeliveryTreeCell(false));
 
         // indicate that a delivery is selected
         deliveryTree.getSelectionModel().selectedItemProperty().
@@ -65,10 +59,10 @@ public class DeliveryTreeView extends VBox implements Subscriber {
 
     /**
      * Returns a delivery using its name
-     * @param string
-     * @return 
+     * @param string delivery as displayed in the treeView
+     * @return a Delivery as described in the model
      */
-    public static Delivery getDeliveryFromName(String string) {
+    static Delivery getDeliveryFromName(String string) {
         return deliveresByName.get(string);
     }
 
@@ -83,9 +77,6 @@ public class DeliveryTreeView extends VBox implements Subscriber {
 
     /**
      * Return a delivery from an item in the treeView
-     *
-     * @param treeItem
-     * @return
      */
     private Delivery getDeliveryFromTreeItem(TreeItem<String> treeItem) {
         Delivery result = null;
@@ -100,11 +91,6 @@ public class DeliveryTreeView extends VBox implements Subscriber {
 
     /**
      * Create a branch in the treeView
-     *
-     * @param title
-     * @param treeItemType
-     * @param parent
-     * @return
      */
     private TreeItem<String> makeBranch(String title, ConstView.TreeItemType treeItemType,
                                         TreeItem<String> parent, Delivery d) {
@@ -167,5 +153,14 @@ public class DeliveryTreeView extends VBox implements Subscriber {
                 break;
             }
         }
+    }
+
+    /**
+     * Allow to enable drag and drop interaction on the treeView
+     *
+     * @param setEnable true if you want to enable drag and drop
+     */
+    public void enableDragAndDrop(Boolean setEnable) {
+        deliveryTree.setCellFactory(p -> new DeliveryTreeCell(setEnable));
     }
 }

@@ -87,9 +87,8 @@ public class ArcView {
             arcElements.add(line);
             arcElements.add(arrow);
             arcNb--;
-            Tooltip t1 = new Tooltip(arc.toString());
-            Tooltip.install(line, t1);
-            line.setCursor(Cursor.CROSSHAIR);
+            addTooltip(line, arc);
+
         }
 
         // Draws as many cubic curves as needed between two nodes
@@ -153,29 +152,19 @@ public class ArcView {
             arcElements.add(arrow2);
 
             if (isATwoWayTrip) {
-                Tooltip t1 = new Tooltip(a1.toString() + a2.toString());
-                Tooltip.install(curve2, t1);
-                curve2.setCursor(Cursor.CROSSHAIR);
+                addTwoWayTooltip(curve2, a1, a2);
             } else {
-                Tooltip t1 = new Tooltip(a1.toString());
-                Tooltip t2 = new Tooltip(a2.toString());
-                Tooltip.install(curve1, t1);
-                Tooltip.install(curve2, t2);
-                curve1.setCursor(Cursor.CROSSHAIR);
-                curve2.setCursor(Cursor.CROSSHAIR);
+                addTooltip(curve2, a2);
             }
-
         }
 
         mapPane.getChildren().addAll(arcElements);
 
     }
 
+
     /**
-     * Draws an arrow on an arc
-     * @param src
-     * @param dest
-     * @return
+     * Draws an arrow at the end of a imaginary line
      */
     private Polygon drawArrow(Point src, Point dest) {
         double angle = Math.atan2(dest.y - src.y, dest.x - src.x);
@@ -199,9 +188,6 @@ public class ArcView {
 
     /**
      * Draws a line between two points
-     * @param src
-     * @param dest
-     * @return
      */
     private Line drawLine(Point src, Point dest) {
         Line line = new Line();
@@ -220,5 +206,37 @@ public class ArcView {
         return line;
     }
 
+    private void addTooltip(Node node, Arc arc) {
+        String arcDescription = "" +
+                "Street: " + arc.getStreetName() + "\n" +
+                "Start: " + arc.getSrc().getId() + "\n" +
+                "End: " + arc.getDest().getId() + "\n" +
+                "Length: " + arc.getLength() + " m\n" +
+                "Duration: " + (int) arc.getDuration() + " s";
+
+        Tooltip t1 = new Tooltip(arcDescription);
+        Tooltip.install(node, t1);
+        node.setCursor(Cursor.CROSSHAIR);
+    }
+
+    private void addTwoWayTooltip(Node node, Arc arc1, Arc arc2) {
+        String arcDescription1 = "" +
+                "Street: " + arc1.getStreetName() + "\n" +
+                "Start: " + arc1.getSrc().getId() + "\n" +
+                "End: " + arc1.getDest().getId() + "\n" +
+                "Length: " + arc1.getLength() + " m\n" +
+                "Duration: " + (int) arc1.getDuration() + " s";
+
+        String arcDescription2 = "" +
+                "Street: " + arc2.getStreetName() + "\n" +
+                "Start: " + arc2.getSrc().getId() + "\n" +
+                "End: " + arc2.getDest().getId() + "\n" +
+                "Length: " + arc2.getLength() + " m\n" +
+                "Duration: " + (int) arc2.getDuration() + " s";
+
+        Tooltip t1 = new Tooltip(arcDescription1 + " \n --- \n" + arcDescription2);
+        Tooltip.install(node, t1);
+        node.setCursor(Cursor.CROSSHAIR);
+    }
 
 }
