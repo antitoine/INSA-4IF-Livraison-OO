@@ -45,7 +45,7 @@ public class MapDocumentTest {
             MapDocument instance = null;
             
             SAXBuilder builder = new SAXBuilder();
-            File file = new File("src\\test\\java\\com\\hexanome\\utils\\plan10x10.xml");
+            File file = new File("src/test/java/com/hexanome/utils/plan10x10.xml");
             Document document = (Document) builder.build(file);
             MapDocument mapdoc = new MapDocument(document);
             mapdoc.fillMap(map);
@@ -63,13 +63,17 @@ public class MapDocumentTest {
      */
     @org.junit.Test
     public void testCheckIntegrity() {
-        System.out.println("checkIntegrity");
-        MapDocument instance = null;
-        boolean expResult = false;
-        boolean result = instance.checkIntegrity();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            System.out.println("checkIntegrity");
+            File file = new File("src/test/java/com/hexanome/utils/plan10x10.xml");
+            SAXBuilder builder = new SAXBuilder();
+            MapDocument instance = new MapDocument(builder.build(file));
+            boolean expResult = true;
+            boolean result = instance.checkIntegrity();
+            assertEquals(expResult, result);
+        } catch (JDOMException | IOException ex) {
+            Logger.getLogger(MapDocumentTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
