@@ -164,10 +164,7 @@ public class ArcView {
 
 
     /**
-     * Draws an arrow on an arc
-     * @param src
-     * @param dest
-     * @return
+     * Draws an arrow at the end of a imaginary line
      */
     private Polygon drawArrow(Point src, Point dest) {
         double angle = Math.atan2(dest.y - src.y, dest.x - src.x);
@@ -191,9 +188,6 @@ public class ArcView {
 
     /**
      * Draws a line between two points
-     * @param src
-     * @param dest
-     * @return
      */
     private Line drawLine(Point src, Point dest) {
         Line line = new Line();
