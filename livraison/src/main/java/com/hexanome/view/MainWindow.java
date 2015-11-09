@@ -46,7 +46,7 @@ public class MainWindow extends AnchorPane {
     private final double SCALE_DELTA_WHEEL = 1.1;
     private final double SCALE_DELTA_BUTTON = 1.5;
     @FXML
-    StackPane parentMapPane;
+    private StackPane parentMapPane;
     private Group mapGroup = null;
     private ScrollPane scroller;
     private Group scrollContent;
