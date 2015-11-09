@@ -4,12 +4,15 @@
 package com.hexanome.controller.states;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.hexanome.view.ConstView;
+import com.hexanome.view.MainWindow;
 
 /**
  * This class represents the default logic state extended by all
@@ -162,7 +165,23 @@ public abstract class DefaultState implements IState {
         Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "btnClearPlanning In DefaultState");
         // Nothing to do here
     }
-    
+
+    @Override
+    public void initView() {
+        Logger.getLogger(DefaultState.class.getName()).log(Level.FINEST, "Disable all buttons with initView in DefaultState");
+        // By default disable all buttons
+        MainWindow mainWindow = UIManager.getInstance().getMainWindow();
+        if (mainWindow != null) {
+            for (ConstView.Button button : ConstView.Button.values()) {
+                if (!button.equals(ConstView.Button.UNDO) && !button.equals(ConstView.Button.REDO)) {
+                    mainWindow.disableButton(button);
+                }
+            }
+            // Disable Drag-and-drop
+            mainWindow.getDeliveryTreeView().enableDragAndDrop(false);
+        }
+    }
+
     /**
      * Returns the string describing the state, used for debug only
      * @return a string describing the state

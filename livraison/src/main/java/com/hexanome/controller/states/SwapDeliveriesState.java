@@ -8,6 +8,7 @@ import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.controller.command.SwapDeliveriesCommand;
 import com.hexanome.model.Delivery;
+import com.hexanome.view.ConstView;
 
 /**
  * This class represents the state when to deliveries are being 
@@ -61,5 +62,10 @@ public class SwapDeliveriesState extends DefaultState {
     public String toString() {
         return "SwapDeliveriesState"; //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public void initView() {
+        // Nothing to do here
+        // Override to not disable all buttons
+    }
 }

@@ -28,7 +28,6 @@ public class InitState extends DefaultState {
         {
             initState = new InitState();
         }
-        // Do NOT disable any button in this state
         return initState;
     }
 

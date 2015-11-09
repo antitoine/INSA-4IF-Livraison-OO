@@ -113,4 +113,9 @@ public interface IState {
      * Click on button to clear the current planning already loaded
      */
     void btnClearPlanning();
+
+    /**
+     * Set the default view for this state (enable/disable buttons ...)
+     */
+    void initView();
 }

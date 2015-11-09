@@ -30,9 +30,6 @@ public class MapLoadedState extends DefaultState {
         if (mapLoadedState == null) {
             mapLoadedState = new MapLoadedState();
         }
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
-        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.COMPUTE_ROUTE);
         return mapLoadedState;
     }
 
@@ -43,10 +40,14 @@ public class MapLoadedState extends DefaultState {
     public void btnLoadMap() {
         // WARNING : calls order matters
         if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
+
             // Full clear of the model
             ModelManager.getInstance().clearModel();
+            UIManager.getInstance().getMainWindow().getMapView().clearMap();
+
             // Jump to MapSelectState
             ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
+
             // Ask user for a file to load
             UIManager.getInstance().getMainWindow().askFile();
         } 
@@ -75,10 +76,9 @@ public class MapLoadedState extends DefaultState {
 
             // Full clear of the model
             ModelManager.getInstance().clearModel();
+            UIManager.getInstance().getMainWindow().getMapView().clearMap();
 
             UIManager.getInstance().getMainWindow().endLoadingState();
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_MAP);
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.LOAD_PLANNING);
 
             // Jump to InitState
             ContextManager.getInstance().setCurrentState(InitState.getInstance());
@@ -94,4 +94,10 @@ public class MapLoadedState extends DefaultState {
         return "MapLoadedState"; //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void initView() {
+        super.initView();
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
+    }
 }

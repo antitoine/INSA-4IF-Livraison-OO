@@ -36,8 +36,6 @@ public class PlanningSelectState extends DefaultState {
         if (planningSelectState == null) {
             planningSelectState = new PlanningSelectState();
         }
-        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.COMPUTE_ROUTE);
-        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.ROAD_MAP);
         return planningSelectState;
     }
 
@@ -117,4 +115,9 @@ public class PlanningSelectState extends DefaultState {
         return "PlanningSelectState"; //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void initView() {
+        // Nothing to do here
+        // Override to not disable all buttons
+    }
 }

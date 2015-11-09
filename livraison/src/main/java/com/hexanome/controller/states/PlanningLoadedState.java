@@ -32,9 +32,6 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
         if (planningLoadedState == null) {
             planningLoadedState = new PlanningLoadedState();
         }
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.COMPUTE_ROUTE);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_PLANNING);
-        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.ROAD_MAP);
         return planningLoadedState;
     }
 
@@ -81,11 +78,9 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
 
             // Full clear model
             ModelManager.getInstance().clearModel();
-
+            UIManager.getInstance().getMainWindow().getMapView().clearMap();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_PLANNING);
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_MAP);
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.LOAD_PLANNING);
+
             UIManager.getInstance().getMainWindow().endLoadingState();
 
             // Jump to InitState
@@ -104,9 +99,8 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
 
             // Clear model's current planning
             ModelManager.getInstance().clearPlanning();
-
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_PLANNING);
+
             UIManager.getInstance().getMainWindow().endLoadingState();
 
             // Jump to MapLoadedState
@@ -139,7 +133,7 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
 
     /**
      * Handler for the end of the route computing.
-     * @param event 
+     * @param event an event to handle the end of route computing
      */
     @Override
     public void handle(Event event) {
@@ -155,4 +149,12 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
         UIManager.getInstance().endRouteComputation();
     }
 
+    @Override
+    public void initView() {
+        super.initView();
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_PLANNING);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.COMPUTE_ROUTE);
+    }
 }

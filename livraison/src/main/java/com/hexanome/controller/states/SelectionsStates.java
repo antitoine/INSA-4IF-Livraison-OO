@@ -23,12 +23,17 @@ public abstract class SelectionsStates extends DefaultState {
     public void btnLoadMap() {
         // WARNING : calls order matters
         if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
+
             // Full clear of the model
             ModelManager.getInstance().clearModel();
+            UIManager.getInstance().getMainWindow().getMapView().clearMap();
+
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();
+
             // Jump to MapSelectState
             ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
+
             // Ask user for a file to load
             UIManager.getInstance().getMainWindow().askFile();
         }
@@ -42,12 +47,16 @@ public abstract class SelectionsStates extends DefaultState {
         // WARNING : calls order matters
         // Clear current model's planning
         if (UIManager.getInstance().askConfirmation("Current planning will be lost.")) {
+
             // Clear planning in model
             ModelManager.getInstance().clearPlanning();
+
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();
+
             // Jump to PlanningSelectState
             ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
+
             // Ask user for planning file to load
             UIManager.getInstance().getMainWindow().askFile();
         }
@@ -64,13 +73,12 @@ public abstract class SelectionsStates extends DefaultState {
 
             // Full clear model
             ModelManager.getInstance().clearModel();
+            UIManager.getInstance().getMainWindow().getMapView().clearMap();
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();
 
-            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_PLANNING);
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_MAP);
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.LOAD_PLANNING);
             UIManager.getInstance().getMainWindow().endLoadingState();
 
             // Jump to InitState
@@ -89,11 +97,11 @@ public abstract class SelectionsStates extends DefaultState {
 
             // Clear model's current planning
             ModelManager.getInstance().clearPlanning();
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();
 
-            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_PLANNING);
             UIManager.getInstance().getMainWindow().endLoadingState();
 
             // Jump to MapLoadedState
@@ -112,4 +120,14 @@ public abstract class SelectionsStates extends DefaultState {
         ContextManager.getInstance().setCurrentState(SwapDeliveriesState.getInstance());
     }
 
+    @Override
+    public void initView() {
+        super.initView();
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_PLANNING);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
+        // Enable Drag-and-drop
+        UIManager.getInstance().getMainWindow().getDeliveryTreeView().enableDragAndDrop(true);
+    }
 }

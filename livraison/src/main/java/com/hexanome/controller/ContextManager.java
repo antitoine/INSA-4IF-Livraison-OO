@@ -2,12 +2,12 @@ package com.hexanome.controller;
 
 import com.hexanome.controller.command.ICommand;
 import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.hexanome.controller.states.IState;
 import com.hexanome.controller.states.InitState;
 import com.hexanome.view.ConstView;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class manages both commands and the main state machine of the application
@@ -31,10 +31,8 @@ public class ContextManager {
     }
 
     /**
-     * Returns the instance of ContextManager in the application, it is a
+     * @return the instance of ContextManager in the application, it is a
      * Singleton
-     *
-     * @return
      */
     public static ContextManager getInstance() {
         if (contextManager == null) {
@@ -46,7 +44,7 @@ public class ContextManager {
     /**
      * Execute the given command and add it to commands history
      *
-     * @param cmd
+     * @param cmd the command to execute
      */
     public void executeCommand(final ICommand cmd) {
         cmd.execute();
@@ -119,10 +117,12 @@ public class ContextManager {
     }
 
     /**
+     * Set a new state and call the method initView of this state
      * @param currentState the currentState to set
      */
     public void setCurrentState(IState currentState) {
         this.currentState = currentState;
+        this.currentState.initView();
         // removeMeLater DEBUG --------------
         Logger.getLogger(ContextManager.class.getName()).log(Level.INFO, currentState.toString());
         // ----------------------------------
