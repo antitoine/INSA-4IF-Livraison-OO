@@ -29,17 +29,13 @@ import java.util.HashMap;
  */
 public class PopOverContentEmptyNode extends PopOverContent {
 
-    Button btnValidateAddDelivery;
-    
-    Text addressText;
-    
-    ComboBox<String> prevDeliveryComboBox;
-    HashMap<String, Node> prevDeliveryMap;
-    
-    ComboBox<String> timeSlotsComboBox;
-    HashMap<String, TimeSlot> timeSlotsMap;
-    
-    GridPane panelForm;
+    private Button btnValidateAddDelivery;
+
+    private ComboBox<String> prevDeliveryComboBox;
+    private HashMap<String, Node> prevDeliveryMap;
+
+    private ComboBox<String> timeSlotsComboBox;
+    private HashMap<String, TimeSlot> timeSlotsMap;
 
     /**
      *
@@ -80,7 +76,7 @@ public class PopOverContentEmptyNode extends PopOverContent {
      * @param deliveriesToAdd The collection of deliveries to add in combo box
      * @param timeSlots The collection of time slots to add in combo box
      */
-    public void setComboxBox(Node warehouse, Collection<Delivery> deliveriesToAdd, Collection<TimeSlot> timeSlots) {
+    private void setComboxBox(Node warehouse, Collection<Delivery> deliveriesToAdd, Collection<TimeSlot> timeSlots) {
         //getChildren().remove(panelForm);
         //setCenter(panelForm);
         
@@ -175,8 +171,8 @@ public class PopOverContentEmptyNode extends PopOverContent {
     private void initCenterLayout() {
         initComboBoxDeliveries();
         initComboBoxTimeSlots();
-        
-        panelForm = new GridPane();
+
+        GridPane panelForm = new GridPane();
         
         panelForm.setHgap(10);
         panelForm.setVgap(10);
@@ -185,7 +181,7 @@ public class PopOverContentEmptyNode extends PopOverContent {
         panelForm.add(new Text("ID: "), 0, 0);
         panelForm.add(new Text(node.getId() + ""), 1, 0);
 
-        addressText = new Text("(" + node.getLocation().x + ", " + node.getLocation().y + ")");
+        Text addressText = new Text("(" + node.getLocation().x + ", " + node.getLocation().y + ")");
         panelForm.add(new Text("Address: "), 0, 1);
         panelForm.add(addressText, 1, 1);
 

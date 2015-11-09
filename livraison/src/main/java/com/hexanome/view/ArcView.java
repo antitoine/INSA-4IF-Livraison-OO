@@ -25,10 +25,9 @@ import java.util.Map.Entry;
  */
 public class ArcView {
 
-    final double ARC_DISTANCE = 4;
-    final double COEF_ARC_DISTANCE = 0.8;
-    LinkedList<Entry<Arc, Color>> arcs;
-    Pane mapPane;
+    private final double ARC_DISTANCE = 4;
+    private LinkedList<Entry<Arc, Color>> arcs;
+    private Pane mapPane;
 
     /**
      * Builds a new instance of arc view

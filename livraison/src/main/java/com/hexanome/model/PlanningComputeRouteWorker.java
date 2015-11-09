@@ -1,10 +1,11 @@
 package com.hexanome.model;
 
 import com.hexanome.utils.ITSP;
-import java.util.LinkedList;
-import java.util.List;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Worker Thread used to compute a route of a planning. Can be interrupted.
@@ -12,6 +13,11 @@ import javafx.event.EventHandler;
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PlanningComputeRouteWorker extends Task<Void> {
+
+    /**
+     * timeout computation time
+     */
+    final int TIME_LIMIT = 3600000;
 
     /**
      * The planning to work with.
@@ -95,7 +101,7 @@ public class PlanningComputeRouteWorker extends Task<Void> {
         Integer[] solutions = null;
 
         try {
-            solutions = tsp.computeSolution(3600000, graph);
+            solutions = tsp.computeSolution(TIME_LIMIT, graph);
         } catch (InterruptedException ex) {
             return null;
         }

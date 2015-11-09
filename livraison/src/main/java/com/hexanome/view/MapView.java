@@ -19,10 +19,10 @@ import java.util.Map.Entry;
  */
 public class MapView extends AnchorPane implements Subscriber {
 
-    HashMap<Node, NodeView> nodeList = new HashMap<>();
-    HashMap<NodePair, LinkedList<Arc>> arcsMap = new HashMap<>();
+    private HashMap<Node, NodeView> nodeList = new HashMap<>();
+    private HashMap<NodePair, LinkedList<Arc>> arcsMap = new HashMap<>();
 
-    Node latestNodeForOpenPopOver = null;
+    private Node latestNodeForOpenPopOver = null;
     
     @Override
     public void update(Publisher p, Object arg) {
@@ -65,8 +65,8 @@ public class MapView extends AnchorPane implements Subscriber {
         NodeView warehouseNodeView = nodeList.get(planning.getWarehouse());
         warehouseNodeView.setType(ConstView.WAREHOUSE_NODE);
     }
-    
-    public void resetNodes() {
+
+    private void resetNodes() {
         nodeList.values().stream().forEach((nodeView) -> {
             nodeView.setType(ConstView.EMPTY_NODE);
         });

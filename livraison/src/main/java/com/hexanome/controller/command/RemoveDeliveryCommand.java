@@ -7,11 +7,6 @@ import com.hexanome.controller.states.EmptyNodeSelectedState;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 
 /**
  * This class represent the action of removing a delivery from the planning
@@ -48,7 +43,6 @@ public class RemoveDeliveryCommand implements ICommand {
         if (ModelManager.getInstance().getPlanning() != null) {
             nodePreviousDelivery = ModelManager.getInstance()
                     .getPlanning().getNodePreviousDelivery(delivery);
-            UIManager.getInstance().beginComputingRoute();
 
             ModelManager.getInstance().getPlanning().removeDelivery(delivery);
 

@@ -40,18 +40,18 @@ import java.util.logging.Logger;
  */
 public class MainWindow extends AnchorPane {
 
-    final FileChooser fileChooser;
-    final double SCALE_DELTA_WHEEL = 1.1;
-    final double SCALE_DELTA_BUTTON = 1.5;
+    private final FileChooser fileChooser;
+    private final double SCALE_DELTA_WHEEL = 1.1;
+    private final double SCALE_DELTA_BUTTON = 1.5;
     @FXML
     StackPane parentMapPane;
-    Group mapGroup = null;
-    ScrollPane scroller;
-    Group scrollContent;
-    double latestScaleFactor;
-    Point2D latestScrollOffset;
-    double latestHPan = -1;
-    double latestWPan = -1;
+    private Group mapGroup = null;
+    private ScrollPane scroller;
+    private Group scrollContent;
+    private double latestScaleFactor;
+    private Point2D latestScrollOffset;
+    private double latestHPan = -1;
+    private double latestWPan = -1;
     private MapView mapView;
     private DeliveryTreeView deliveryTreeView;
     @FXML
@@ -85,7 +85,7 @@ public class MainWindow extends AnchorPane {
      */
     public MainWindow(Stage stage) {
         fileChooser = new FileChooser();
-        configureFileChooser(fileChooser, "Load file...");
+        configureFileChooser(fileChooser);
         this.stage = stage;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.MAINWINDOW));
@@ -114,8 +114,8 @@ public class MainWindow extends AnchorPane {
 
     }
 
-    private static void configureFileChooser(final FileChooser fileChooser, String title) {
-        fileChooser.setTitle(title);
+    private static void configureFileChooser(final FileChooser fileChooser) {
+        fileChooser.setTitle("Load file...");
         fileChooser.setInitialDirectory(
                 new File(System.getProperty("user.home"))
         );

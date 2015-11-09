@@ -134,9 +134,8 @@ public class Map implements Publisher {
         }
 
         Collections.reverse(arcs); /* reversing it so that the arcs are in the right order */
-        Path path = new Path(arcs);
 
-        return path;
+        return new Path(arcs);
     }
     /**
     * Computes the 

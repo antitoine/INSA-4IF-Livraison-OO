@@ -1,6 +1,6 @@
 package com.hexanome.model;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,12 +32,25 @@ public class Node {
     private Delivery delivery;
 
     /**
+     * Constructor.
+     * @param id the id of the node.
+     * @param location the location of the node on the map.
+     */
+    public Node(int id, Point location) {
+        this.id = id;
+        this.location = location;
+        this.outgoings = new ArrayList<>();
+        this.delivery = null;
+    }
+
+    /**
      * Returns the id of the node.
      * @return the id.
      */
     public int getId() {
         return id;
     }
+
     /**
      * Returns the location of the node.
      * @return the location point.
@@ -45,6 +58,7 @@ public class Node {
     public Point getLocation() {
         return location;
     }
+
     /**
      * Returns the delivery attached to this node.
      * @return the delivery attached to this node.
@@ -52,6 +66,7 @@ public class Node {
     public Delivery getDelivery() {
         return delivery;
     }
+
     /**
      * Returns all the outgoing arcs.
      * @return the list of outgoing arcs.
@@ -59,6 +74,7 @@ public class Node {
     public List<Arc> getOutgoingArcs() {
         return Collections.unmodifiableList(outgoings);
     }
+
     /**
      * Returns an outgoing arc, knowing its ending node.
      * @param dest the ending node of the arc we are looking for.
@@ -72,20 +88,20 @@ public class Node {
         }
         return null;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     @Override
     public int hashCode() {
-        int hash = 7;
-        return hash;
+        return 7;
     }
+
     /**
-     * 
+     *
      * @param obj
-     * @return 
+     * @return
      */
     @Override
     public boolean equals(Object obj) {
@@ -96,22 +112,7 @@ public class Node {
             return false;
         }
         final Node other = (Node) obj;
-        if (!Objects.equals(this.location, other.location)) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Constructor.
-     * @param id the id of the node.
-     * @param location the location of the node on the map.
-     */
-    public Node(int id, Point location) {
-        this.id = id;
-        this.location = location;
-        this.outgoings = new ArrayList<>();
-        this.delivery = null;
+        return Objects.equals(this.location, other.location);
     }
 
     /**

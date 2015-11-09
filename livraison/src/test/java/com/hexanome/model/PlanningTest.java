@@ -249,9 +249,8 @@ public class PlanningTest {
         }
         
         Node result = plan.getNodePreviousDelivery(delivery2);
-        Node expResult = node1;
-        
-        assertEquals(expResult, result);
+
+        assertEquals(node1, result);
     }
 
     /**
@@ -425,9 +424,8 @@ public class PlanningTest {
         Planning plan = new Planning(map, warehouse, timeSlotList);
         
         TimeSlot result = plan.getFirstTimeSlot();
-        TimeSlot expResult = time;
-        
-        assertEquals(expResult, result);
+
+        assertEquals(time, result);
     }
 
     /**
@@ -476,9 +474,8 @@ public class PlanningTest {
         Planning plan = new Planning(map, warehouse, timeSlotList);
         
         Map result = plan.getMap();
-        Map expResult = map;
-        
-        assertEquals(expResult, result);
+
+        assertEquals(map, result);
     }
 
     /**
@@ -527,9 +524,8 @@ public class PlanningTest {
         Planning plan = new Planning(map, warehouse, timeSlotList);
         
         Node result = plan.getWarehouse();
-        Node expResult = warehouse;
-        
-        assertEquals(expResult, result);
+
+        assertEquals(warehouse, result);
     }
     
     /**
@@ -671,12 +667,11 @@ public class PlanningTest {
         
         Route route = new Route(planning, paths);
         planning.setRoute(route);
-        
-        Route expResult = route;
-        Route result = planning.getRoute();        
-        
-        
-        assertEquals(expResult, result);
+
+        Route result = planning.getRoute();
+
+
+        assertEquals(route, result);
     }
     /**
      * Test of getDeliveries method, of class Planning.

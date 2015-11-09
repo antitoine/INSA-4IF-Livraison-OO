@@ -24,11 +24,11 @@ import java.util.Map;
  */
 public class DeliveryTreeView extends VBox implements Subscriber {
 
-    static HashMap<String, Delivery> deliveresByName;
-    TreeView<String> deliveryTree;
-    TreeItem<String> rootItem;
-    HashMap<TimeSlot, TreeItem<String>> timeSlotBranch;
-    HashMap<Delivery, TreeItem<String>> deliveryBranch;
+    private static HashMap<String, Delivery> deliveresByName;
+    private TreeView<String> deliveryTree;
+    private TreeItem<String> rootItem;
+    private HashMap<TimeSlot, TreeItem<String>> timeSlotBranch;
+    private HashMap<Delivery, TreeItem<String>> deliveryBranch;
 
     public DeliveryTreeView() {
         BorderPane.setAlignment(this, Pos.CENTER);

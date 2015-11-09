@@ -32,7 +32,7 @@ public class RoadMapView extends GridPane {
     @FXML
     Button cancelButton;
 
-    Stage stage;
+    private Stage stage;
 
     public RoadMapView(final LinkedList<Text> texts) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ConstView.ROAD_MAP));

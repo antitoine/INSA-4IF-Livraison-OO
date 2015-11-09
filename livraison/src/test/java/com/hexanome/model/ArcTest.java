@@ -60,9 +60,8 @@ public class ArcTest {
         Node src = map.createNode(1, new Point(20,30));
         Node dest = map.createNode(2, new Point(30,30));
         Arc arc = map.createArc("hollywood", 12, 31, 1, 2);
-        Node expResult = src;
         Node result = arc.getSrc();
-        assertEquals(expResult, result);
+        assertEquals(src, result);
     }
 
     /**

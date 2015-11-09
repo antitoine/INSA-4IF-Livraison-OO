@@ -94,9 +94,8 @@ public class RouteTest {
         Route route = plan.getRoute();
         
         Delivery result = route.getNextDelivery(delivery2);
-        Delivery expResult = delivery3;
-        
-        assertEquals(expResult, result);
+
+        assertEquals(delivery3, result);
         
         System.out.println("------------TestGetNextDeliveryOK");
     }
@@ -387,9 +386,8 @@ public class RouteTest {
         Route route = plan.getRoute();
         
         Node result = route.getNodePreviousDelivery(delivery2);
-        Node expResult = node1;
-        
-        assertEquals(expResult, result);
+
+        assertEquals(node1, result);
         System.out.println("------------TestGetNodePreviousDeliveryOK");
     }
 

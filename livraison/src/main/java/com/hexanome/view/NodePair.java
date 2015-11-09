@@ -1,6 +1,7 @@
 package com.hexanome.view;
 
 import com.hexanome.model.Node;
+
 import java.util.Objects;
 
 /**
@@ -8,10 +9,10 @@ import java.util.Objects;
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class NodePair {
+class NodePair {
 
-    Node node1;
-    Node node2;
+    private Node node1;
+    private Node node2;
 
     public NodePair(Node node1, Node node2) {
         this.node1 = node1;

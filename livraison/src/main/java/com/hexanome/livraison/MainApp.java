@@ -2,7 +2,7 @@ package com.hexanome.livraison;
 
 import com.hexanome.controller.Controller;
 
-public class MainApp {
+class MainApp {
 
     /** 
      * Main Method : start the application

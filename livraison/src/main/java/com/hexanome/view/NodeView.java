@@ -14,11 +14,10 @@ import org.controlsfx.control.PopOver;
  */
 public class NodeView extends StackPane {
 
-    PopOver popover;
-    String currentNodeType;
-    INodeViewShape nodeShape;
+    private PopOver popover;
+    private INodeViewShape nodeShape;
 
-    com.hexanome.model.Node node;
+    private com.hexanome.model.Node node;
 
     public NodeView(String nodeType, com.hexanome.model.Node node) {
         final NodeView self = this;
@@ -28,7 +27,6 @@ public class NodeView extends StackPane {
         setCursor(Cursor.HAND);
 
         this.node = node;
-        currentNodeType = nodeType;
         setType(nodeType);
 
         setOnMouseClicked(event -> nodeShape.onMouseClickedNotify(self));

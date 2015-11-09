@@ -14,7 +14,7 @@ import org.controlsfx.control.PopOver;
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class DeliveryNodeView extends Circle implements INodeViewShape {
-    com.hexanome.model.Node node;
+    private com.hexanome.model.Node node;
 
     public DeliveryNodeView(com.hexanome.model.Node node) {
         if (node.getDelivery().getTimeSlot() == null ||
