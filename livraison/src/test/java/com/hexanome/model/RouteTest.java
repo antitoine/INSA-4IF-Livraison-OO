@@ -5,15 +5,17 @@
  */
 package com.hexanome.model;
 
-import java.awt.Point;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -71,8 +73,8 @@ public class RouteTest {
         deliveries.add(delivery2);
         deliveries.add(delivery3);
         deliveries.add(delivery4);
-        
-        ArrayList<TimeSlot> timeSlotList = new ArrayList<TimeSlot>();
+
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
         TimeSlot time = new TimeSlot(8, 11, deliveries);
         timeSlotList.add(time);
         
@@ -217,8 +219,8 @@ public class RouteTest {
         deliveries.add(delivery2);
         deliveries.add(delivery3);
         deliveries.add(delivery4);
-        
-        ArrayList<TimeSlot> timeSlotList = new ArrayList<TimeSlot>();
+
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
         TimeSlot time = new TimeSlot(8, 11, deliveries);
         timeSlotList.add(time);
         
@@ -239,7 +241,7 @@ public class RouteTest {
         route.removeDelivery(delivery3);
         
         List<Path> result = route.getPaths();
-        List<Path> expResult = new ArrayList<Path>();
+        List<Path> expResult = new ArrayList<>();
         expResult.add(path1);
         expResult.add(path2);
         expResult.add(map.getFastestPath(node2, node6));
@@ -364,8 +366,8 @@ public class RouteTest {
         deliveries.add(delivery2);
         deliveries.add(delivery3);
         deliveries.add(delivery4);
-        
-        ArrayList<TimeSlot> timeSlotList = new ArrayList<TimeSlot>();
+
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
         TimeSlot time = new TimeSlot(8, 11, deliveries);
         timeSlotList.add(time);
         
@@ -430,8 +432,8 @@ public class RouteTest {
         deliveries.add(delivery2);
         deliveries.add(delivery3);
         deliveries.add(delivery4);
-        
-        ArrayList<TimeSlot> timeSlotList = new ArrayList<TimeSlot>();
+
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
         TimeSlot time = new TimeSlot(8, 11, deliveries);
         timeSlotList.add(time);
         
@@ -442,8 +444,8 @@ public class RouteTest {
         Path path5 = map.getFastestPath(node6, warehouse);
         
         Planning plan = new Planning(map, warehouse, timeSlotList);
-        
-        List<Path> expResult = new ArrayList<Path>();
+
+        List<Path> expResult = new ArrayList<>();
         expResult.add(path1);
         expResult.add(path2);
         expResult.add(path3);

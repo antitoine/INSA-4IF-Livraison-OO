@@ -1,21 +1,17 @@
 package com.hexanome.view;
 
-import com.hexanome.controller.UIManager;
+import com.hexanome.controller.ContextManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Planning;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
 import com.hexanome.utils.TypeWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
-import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import org.controlsfx.glyphfont.Glyph;
 
 import java.util.HashMap;
@@ -52,27 +48,17 @@ public class DeliveryTreeView extends VBox implements Subscriber {
 
         deliveryTree.setPrefHeight(1000);
 
-        deliveryTree.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
-            @Override
-            public TreeCell<String> call(TreeView<String> p) {
-                return new DeliveryTreeCell();
-            }
-
-        });
+        deliveryTree.setCellFactory(p -> new DeliveryTreeCell());
 
         // Ask the map to show a popover over the selected delivery
         deliveryTree.getSelectionModel().selectedItemProperty().
-                addListener(new ChangeListener<TreeItem<String>>() {
-                    @Override
-                    public void changed(ObservableValue<? extends TreeItem<String>> observable,
-                            TreeItem<String> oldValue, TreeItem<String> newValue) {
-                        if (newValue != null && newValue.isLeaf()) {
-                            UIManager.getInstance().getMainWindow()
-                                    .getMapView().selectDelivery(getDeliveryFromTreeItem(newValue));
-                        }
+                addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null && newValue.isLeaf()) {
+                        ContextManager.getInstance().getCurrentState()
+                                .clickOnDelivery(getDeliveryFromTreeItem(newValue));
+
                     }
                 });
-
     }
 
     /**

@@ -1,16 +1,16 @@
 package com.hexanome.utils;
 
-import com.hexanome.controller.UIManager;
 import com.hexanome.model.Map;
-import java.awt.Point;
+import org.jdom2.DataConversionException;
+import org.jdom2.Document;
+import org.jdom2.Element;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom2.DataConversionException;
-import org.jdom2.Document;
-import org.jdom2.Element;
 
 /**
  * This class provides a convenient interface to extract information from the 
@@ -83,7 +83,7 @@ public class MapDocument extends XMLParser {
             setErrorMsg("Root has not enough children to build a map !");
             return false; // Interrupt check here
         }
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Integer> idList = new ArrayList<>();
         ArrayList<Point> ps = new ArrayList<>();
         ArrayList<Element> arcs = new ArrayList<>();
         for (Element node : root.getChildren()) {
@@ -105,7 +105,7 @@ public class MapDocument extends XMLParser {
             } else {
                 try {
                     id = node.getAttribute("id").getIntValue();
-                    ids.add(new Integer(id));
+                    idList.add(new Integer(id));
                 } catch (DataConversionException ex) {
                     Logger.getLogger(MapDocument.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -133,8 +133,8 @@ public class MapDocument extends XMLParser {
             ps.add(new Point(x,y));
         }
         // TEST : check if two nodes have the same id
-        for (Integer i : ids) {
-            if(Collections.frequency(ids, i) > 1) {
+        for (Integer i : idList) {
+            if (Collections.frequency(idList, i) > 1) {
                 setErrorMsg("At least two nodes share the same id !");
                 return false; // Interrupt check here
             }
@@ -184,8 +184,8 @@ public class MapDocument extends XMLParser {
                     // TEST : check if arc's destination node is present in the map
                     int id = arc.getAttribute("idNoeudDestination").getIntValue();
                     boolean found = false;
-                    for (Integer i : ids) {
-                        if(i.intValue() == id) {
+                    for (Integer i : idList) {
+                        if (i == id) {
                             found = true;
                         }
                     }

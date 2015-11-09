@@ -8,11 +8,8 @@ import com.hexanome.controller.IOManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.view.ConstView;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 
 import java.io.File;
 
@@ -83,31 +80,26 @@ public class PlanningSelectState extends DefaultState {
             }
         };
         loadService.stateProperty()
-                .addListener(new ChangeListener<Worker.State>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Worker.State> observableValue,
-                            Worker.State oldValue,
-                            Worker.State newValue) {
-                        switch (newValue) {
-                            case SUCCEEDED:
-                                if (loadService.getValue() != null) {
-                                    // Clear current model's planning
-                                    ModelManager.getInstance().clearPlanning();
-                                    // Jump to MapLoadedState
-                                    ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
-                                    // Update mainWindow
-                                    UIManager.getInstance().showError(loadService.getValue());
-                                    break;
-                                } else {
-                                    // Jump to PlanningLoadedState
-                                    ContextManager.getInstance()
-                                            .setCurrentState(PlanningLoadedState.getInstance());
-                                    // update the view
-                                    UIManager.getInstance().endLoadPlanning();
-                                    ContextManager.getInstance().getCurrentState().btnGenerateRoute();
-                                    break;
-                                }
-                        }
+                .addListener((observableValue, oldValue, newValue) -> {
+                    switch (newValue) {
+                        case SUCCEEDED:
+                            if (loadService.getValue() != null) {
+                                // Clear current model's planning
+                                ModelManager.getInstance().clearPlanning();
+                                // Jump to MapLoadedState
+                                ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
+                                // Update mainWindow
+                                UIManager.getInstance().showError(loadService.getValue());
+                                break;
+                            } else {
+                                // Jump to PlanningLoadedState
+                                ContextManager.getInstance()
+                                        .setCurrentState(PlanningLoadedState.getInstance());
+                                // update the view
+                                UIManager.getInstance().endLoadPlanning();
+                                ContextManager.getInstance().getCurrentState().btnGenerateRoute();
+                                break;
+                            }
                     }
                 });
         loadService.start();

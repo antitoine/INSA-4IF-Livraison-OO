@@ -7,20 +7,14 @@ import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.TypeWrapper;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -31,7 +25,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -105,12 +98,7 @@ public class MainWindow extends AnchorPane {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent t) {
-                quitApplication();
-            }
-        });
+        stage.setOnCloseRequest(t -> quitApplication());
 
         deliveryTreeView = new DeliveryTreeView();
         deliveriesPane.setCenter(deliveryTreeView);
@@ -355,75 +343,57 @@ public class MainWindow extends AnchorPane {
         scrollContent = new Group(zoomPane);
         scroller.setContent(scrollContent);
 
-        scroller.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
-            @Override
-            public void changed(ObservableValue<? extends Bounds> observable,
-                                Bounds oldValue, Bounds newValue) {
-                zoomPane.setMinSize(newValue.getWidth(), newValue.getHeight());
-            }
+        scroller.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
+            zoomPane.setMinSize(newValue.getWidth(), newValue.getHeight());
         });
 
         /**
          * Allow the zoom with mouse wheel
          */
-        zoomPane.setOnScroll(new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent event) {
-                event.consume();
+        zoomPane.setOnScroll(event -> {
+            event.consume();
 
-                if (event.getDeltaY() == 0) {
-                    return;
-                }
-
-                double scaleFactor;
-                if (event.getDeltaY() > 0) {
-                    scaleFactor = SCALE_DELTA_WHEEL;
-                } else {
-                    scaleFactor = 1 / SCALE_DELTA_WHEEL;
-                }
-
-                Point2D scrollOffset = measureScrollOffset();
-                group.setScaleX(group.getScaleX() * scaleFactor);
-                group.setScaleY(group.getScaleY() * scaleFactor);
-
-                repositionScroller(scaleFactor, scrollOffset);
+            if (event.getDeltaY() == 0) {
+                return;
             }
+
+            double scaleFactor;
+            if (event.getDeltaY() > 0) {
+                scaleFactor = SCALE_DELTA_WHEEL;
+            } else {
+                scaleFactor = 1 / SCALE_DELTA_WHEEL;
+            }
+
+            Point2D scrollOffset = measureScrollOffset();
+            group.setScaleX(group.getScaleX() * scaleFactor);
+            group.setScaleY(group.getScaleY() * scaleFactor);
+
+            repositionScroller(scaleFactor, scrollOffset);
         });
 
         // Configuration for Panning -----------
         final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<>();
-        scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
-                setCursor(Cursor.MOVE);
-            }
+        scrollContent.setOnMousePressed(event -> {
+            lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+            setCursor(Cursor.MOVE);
         });
 
-        scrollContent.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setCursor(Cursor.DEFAULT);
-            }
-        });
+        scrollContent.setOnMouseReleased(event -> setCursor(Cursor.DEFAULT));
 
-        scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                double deltaX = event.getX() - lastMouseCoordinates.get().getX();
-                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
-                double deltaH = deltaX * (scroller.getHmax() - scroller.getHmin()) / extraWidth;
-                double desiredH = scroller.getHvalue() - deltaH;
-                scroller.setHvalue(Math.max(0, Math.min(scroller.getHmax(), desiredH)));
-                latestHPan = desiredH;
+        scrollContent.setOnMouseDragged(event -> {
+            double deltaX = event.getX() - lastMouseCoordinates.get().getX();
+            double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+            double deltaH = deltaX * (scroller.getHmax() - scroller.getHmin()) / extraWidth;
+            double desiredH = scroller.getHvalue() - deltaH;
+            scroller.setHvalue(Math.max(0, Math.min(scroller.getHmax(), desiredH)));
+            latestHPan = desiredH;
 
-                double deltaY = event.getY() - lastMouseCoordinates.get().getY();
-                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
-                double deltaV = deltaY * (scroller.getHmax() - scroller.getHmin()) / extraHeight;
-                double desiredV = scroller.getVvalue() - deltaV;
-                scroller.setVvalue(Math.max(0, Math.min(scroller.getVmax(), desiredV)));
-                latestWPan = desiredV;
-            }
+            double deltaY = event.getY() - lastMouseCoordinates.get().getY();
+            double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+            double deltaV = deltaY * (scroller.getHmax() - scroller.getHmin()) / extraHeight;
+            double desiredV = scroller.getVvalue() - deltaV;
+            scroller.setVvalue(Math.max(0, Math.min(scroller.getVmax(), desiredV)));
+            latestWPan = desiredV;
         });
         // end configuration for Panning -----------
 

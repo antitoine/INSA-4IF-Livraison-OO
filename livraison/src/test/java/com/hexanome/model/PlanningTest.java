@@ -5,18 +5,18 @@
  */
 package com.hexanome.model;
 
-import java.awt.Point;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.concurrent.Worker;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -229,8 +229,8 @@ public class PlanningTest {
         deliveries.add(delivery2);
         deliveries.add(delivery3);
         deliveries.add(delivery4);
-        
-        ArrayList<TimeSlot> timeSlotList = new ArrayList<TimeSlot>();
+
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
         TimeSlot time = new TimeSlot(8, 11, deliveries);
         timeSlotList.add(time);
         
@@ -571,8 +571,8 @@ public class PlanningTest {
         deliveries.add(delivery2);
         deliveries.add(delivery3);
         deliveries.add(delivery4);
-        
-        ArrayList<TimeSlot> timeSlotList = new ArrayList<TimeSlot>();
+
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
         TimeSlot time = new TimeSlot(8, 11, deliveries);
         timeSlotList.add(time);
         
@@ -591,8 +591,8 @@ public class PlanningTest {
         }
         
         Route result = planning.getRoute();
-        
-        LinkedList<Path> paths = new LinkedList<Path>();
+
+        LinkedList<Path> paths = new LinkedList<>();
         paths.add(path1);
         paths.add(path2);
         paths.add(path3);
@@ -643,8 +643,8 @@ public class PlanningTest {
         deliveries.add(delivery2);
         deliveries.add(delivery3);
         deliveries.add(delivery4);
-        
-        ArrayList<TimeSlot> timeSlotList = new ArrayList<TimeSlot>();
+
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
         TimeSlot time = new TimeSlot(8, 11, deliveries);
         timeSlotList.add(time);
         
@@ -661,8 +661,8 @@ public class PlanningTest {
         } catch (Exception ex) {
             Logger.getLogger(RouteTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        LinkedList<Path> paths = new LinkedList<Path>();
+
+        LinkedList<Path> paths = new LinkedList<>();
         paths.add(path1);
         paths.add(path2);
         paths.add(path3);

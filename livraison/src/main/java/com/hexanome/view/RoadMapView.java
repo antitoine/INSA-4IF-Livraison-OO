@@ -1,8 +1,6 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.UIManager;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -57,19 +55,9 @@ public class RoadMapView extends GridPane {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                stage.close();
-            }
-        });
+        cancelButton.setOnAction(event -> stage.close());
 
-        saveButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                UIManager.getInstance().saveRoadMapDocument(stage);
-            }
-        });
+        saveButton.setOnAction(event -> UIManager.getInstance().saveRoadMapDocument(stage));
 
     }
 

@@ -1,12 +1,9 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import org.controlsfx.control.PopOver;
 
@@ -34,12 +31,7 @@ public class NodeView extends StackPane {
         currentNodeType = nodeType;
         setType(nodeType);
 
-        setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                nodeShape.onMouseClickedNotify(self);
-            }
-        });
+        setOnMouseClicked(event -> nodeShape.onMouseClickedNotify(self));
     }
 
     public PopOverContent getPopoverContent() {
@@ -68,12 +60,7 @@ public class NodeView extends StackPane {
         popover.setAutoHide(true);
         popover.setDetachable(false);
 
-        popover.setOnAutoHide(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                ContextManager.getInstance().getCurrentState().clickSomewhereElse();
-            }
-        });
+        popover.setOnAutoHide(event -> ContextManager.getInstance().getCurrentState().clickSomewhereElse());
     }
 
     /**

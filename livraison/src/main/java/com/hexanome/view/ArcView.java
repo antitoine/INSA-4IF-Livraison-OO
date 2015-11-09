@@ -48,8 +48,8 @@ public class ArcView {
                 }
             }
         }
-        addArcs();
     }
+
 
     private boolean isATwoWayTrip() {
         boolean isATwoWayTrip = false;
@@ -69,7 +69,7 @@ public class ArcView {
     /**
      * Draws arcs in the view
      */
-    public final void addArcs() {
+    void addArcs() {
         ArrayList<Node> arcElements = new ArrayList<>();
         boolean isATwoWayTrip = isATwoWayTrip();
 

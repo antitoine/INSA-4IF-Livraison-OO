@@ -2,12 +2,9 @@ package com.hexanome.model;
 
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.PriorityQueue;
+
+import java.awt.*;
+import java.util.*;
 
 /**
  * This class represents a map, a graph, composed of arcs (streets) 
@@ -25,31 +22,6 @@ public class Map implements Publisher {
     private HashMap<Integer, HashMap<Integer, Node>> globalPreviousNodes; // int = id of the current node, Node = the previous node
 
     /**
-     * Returns the node of the map which id is given or null if 
-     * the id doesn't exists
-     * @param id
-     *      Id of the node to return
-     * @return
-     */
-    public Node getNodeById(int id) {
-        return nodes.get(id);
-    }
-    /**
-     * Returns a collection of all arcs present in the map
-     * @return
-     */
-    public ArrayList<Arc> getArcs() {
-        return arcs;
-    }
-    /**
-     * Returns a collection of all nodes present in the map
-     * @return
-     */
-    public HashMap<Integer, Node> getNodes() {
-        return nodes;
-    }
-    
-    /**
      * Builds a new instance of Map
      * @param nodes
      * @param arcs
@@ -61,6 +33,33 @@ public class Map implements Publisher {
 
         globalMinDistances = new HashMap<>();
         globalPreviousNodes = new HashMap<>();
+    }
+
+    /**
+     * Returns the node of the map which id is given or null if
+     * the id doesn't exists
+     * @param id
+     *      Id of the node to return
+     * @return
+     */
+    public Node getNodeById(int id) {
+        return nodes.get(id);
+    }
+
+    /**
+     * Returns a collection of all arcs present in the map
+     * @return
+     */
+    public ArrayList<Arc> getArcs() {
+        return arcs;
+    }
+
+    /**
+     * Returns a collection of all nodes present in the map
+     * @return
+     */
+    public HashMap<Integer, Node> getNodes() {
+        return nodes;
     }
 
     /**
@@ -149,24 +148,20 @@ public class Map implements Publisher {
         HashMap<Integer, Double> minDistances = new HashMap<>();
         globalPreviousNodes.put(firstNode.getId(), previousNodes);
         globalMinDistances.put(firstNode.getId(), minDistances);
-        
-        PriorityQueue<Node> nodesQueue = new PriorityQueue<>(1, new Comparator<Node>() {
 
-            @Override
-            public int compare(Node node1, Node node2) {
-                if (!globalMinDistances.containsKey(firstNode.getId())) {
-                    return 0;
-                }
-                
-                if (!globalMinDistances.get(firstNode.getId()).containsKey(node1.getId())) {
-                    return -1;
-                }
-                if (!globalMinDistances.get(firstNode.getId()).containsKey(node2.getId())) {
-                    return 1;
-                }
-
-                return (int) (globalMinDistances.get(firstNode.getId()).get(node1.getId()) - globalMinDistances.get(firstNode.getId()).get(node2.getId()));
+        PriorityQueue<Node> nodesQueue = new PriorityQueue<>(1, (Comparator<Node>) (node1, node2) -> {
+            if (!globalMinDistances.containsKey(firstNode.getId())) {
+                return 0;
             }
+
+            if (!globalMinDistances.get(firstNode.getId()).containsKey(node1.getId())) {
+                return -1;
+            }
+            if (!globalMinDistances.get(firstNode.getId()).containsKey(node2.getId())) {
+                return 1;
+            }
+
+            return (int) (globalMinDistances.get(firstNode.getId()).get(node1.getId()) - globalMinDistances.get(firstNode.getId()).get(node2.getId()));
         });
 
         // Initialize data        

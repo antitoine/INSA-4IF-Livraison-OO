@@ -3,18 +3,15 @@
  */
 package com.hexanome.controller.states;
 
-import java.io.File;
-
 import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.IOManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 import com.hexanome.view.ConstView;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.Worker.State;
+
+import java.io.File;
 
 /**
  * This class represents the logic state when the user is selecting 
@@ -82,27 +79,23 @@ public class MapSelectState extends DefaultState {
             }
         };
         loadService.stateProperty()
-                .addListener(new ChangeListener<State>() {
-                    @Override
-                    public void changed(ObservableValue<? extends State> observableValue,
-                            State oldValue, State newValue) {
-                        switch (newValue) {
-                            case SUCCEEDED:
-                                if (loadService.getValue() != null) {
-                                    // Full clear of the model
-                                    ModelManager.getInstance().clearModel();
-                                    // Jump to InitState
-                                    ContextManager.getInstance()
-                                            .setCurrentState(InitState.getInstance());
-                                    // Update mainWindow
-                                    UIManager.getInstance().showError(loadService.getValue());
-                                } else {
-                                    ContextManager.getInstance()
-                                            .setCurrentState(MapLoadedState.getInstance());
-                                    UIManager.getInstance().endLoadMap();
-                                }
-                                break;
-                        }
+                .addListener((observableValue, oldValue, newValue) -> {
+                    switch (newValue) {
+                        case SUCCEEDED:
+                            if (loadService.getValue() != null) {
+                                // Full clear of the model
+                                ModelManager.getInstance().clearModel();
+                                // Jump to InitState
+                                ContextManager.getInstance()
+                                        .setCurrentState(InitState.getInstance());
+                                // Update mainWindow
+                                UIManager.getInstance().showError(loadService.getValue());
+                            } else {
+                                ContextManager.getInstance()
+                                        .setCurrentState(MapLoadedState.getInstance());
+                                UIManager.getInstance().endLoadMap();
+                            }
+                            break;
                     }
                 });
         loadService.start();

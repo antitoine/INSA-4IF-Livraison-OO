@@ -6,10 +6,6 @@ import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.TypeWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -122,31 +118,24 @@ public class PopOverContentEmptyNode extends PopOverContent {
         prevDeliveryComboBox.prefWidth(150);
         prevDeliveryComboBox.getSelectionModel()
                             .selectedItemProperty()
-                            .addListener(new ChangeListener<String>() {
-              
-            /**
-             * Update the time slot combobox when a preivous delivery is selected
-             */
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                Node nodePreviousDelivery = prevDeliveryMap.get(newValue);
-                
-                if (nodePreviousDelivery != null) {
-                    Delivery previousDelivery = nodePreviousDelivery.getDelivery();
-                    timeSlotsComboBox.setDisable(false);
-                    btnValidateAddDelivery.setDisable(false);
-                    if (previousDelivery == null) {
-                        timeSlotsComboBox.getSelectionModel().selectFirst();
-                    } else {
-                        timeSlotsComboBox.getSelectionModel()
-                                         .select(
-                                            getTimeSlotComboBoxText(previousDelivery.getTimeSlot())
-                                         );
-                    }
-                }
+                .addListener((observable, oldValue, newValue) -> {
+                    Node nodePreviousDelivery = prevDeliveryMap.get(newValue);
 
-            }
-        });
+                    if (nodePreviousDelivery != null) {
+                        Delivery previousDelivery = nodePreviousDelivery.getDelivery();
+                        timeSlotsComboBox.setDisable(false);
+                        btnValidateAddDelivery.setDisable(false);
+                        if (previousDelivery == null) {
+                            timeSlotsComboBox.getSelectionModel().selectFirst();
+                        } else {
+                            timeSlotsComboBox.getSelectionModel()
+                                    .select(
+                                            getTimeSlotComboBoxText(previousDelivery.getTimeSlot())
+                                    );
+                        }
+                    }
+
+                });
         
     }
 
@@ -157,12 +146,7 @@ public class PopOverContentEmptyNode extends PopOverContent {
     
     private void initBtnAddDelivery() {
         btnValidateAddDelivery = new Button("Add delivery", new Glyph("FontAwesome", "PLUS"));
-        btnValidateAddDelivery.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                onBtnAddDelivery();
-            }
-        });
+        btnValidateAddDelivery.setOnAction(event -> onBtnAddDelivery());
     }
 
     private void initPopOverLayout() {

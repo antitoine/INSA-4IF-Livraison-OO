@@ -3,8 +3,6 @@ package com.hexanome.view;
 import com.hexanome.controller.ContextManager;
 import com.hexanome.model.Node;
 import com.hexanome.utils.TypeWrapper;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -40,12 +38,7 @@ public class PopOverContentDelivery extends PopOverContent {
         adressText.setText("ID: " + node.getId() + "\nAdress : (" + node.getLocation().x
                 + ", " + node.getLocation().y + ")");
 
-        btnDelete.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                delete();
-            }
-        });
+        btnDelete.setOnAction(event -> delete());
 
         if (node.getDelivery() != null && node.getDelivery().getDeliveryTime() != 0) {
             adressText.setText(adressText.getText() + "\n"

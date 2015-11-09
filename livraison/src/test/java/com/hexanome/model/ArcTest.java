@@ -146,7 +146,7 @@ public class ArcTest {
         ArrayList<Delivery> deliveries1 = new ArrayList<>();
         deliveries1.add(delivery1);
         TimeSlot ts = new TimeSlot(8,9,deliveries1);
-        Set<TimeSlot> expResult = new HashSet<TimeSlot>();
+        Set<TimeSlot> expResult = new HashSet<>();
         expResult.add(ts);
         
         arc1.addAssociatedTimeSlot(ts);

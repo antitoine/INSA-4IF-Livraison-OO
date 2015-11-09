@@ -1,6 +1,7 @@
 package com.hexanome.model;
 
 import com.hexanome.utils.IGraph;
+
 import java.util.HashMap;
 
 /**
@@ -30,48 +31,49 @@ public class PathGraph implements IGraph {
     private int nodesSize;
     
     /**
+     * Constructor of an empty Path Graph.
+     */
+    public PathGraph() {
+        graph = new HashMap<>();
+        nodes = new HashMap<>();
+        nodesSize = 0;
+    }
+
+    /**
      * Returns the total count of arcs in the graph
-     * @return 
+     * @return
      */
     @Override
     public int getNbArcs() {
         return graph.keySet().size();
     }
+
     /**
      * Returns the cost of the walk between two nodes
      * @param i
      * @param j
-     * @return 
+     * @return
      */
     @Override
     public float getCost(int i, int j) {
         if (!nodes.containsKey(i) || !nodes.containsKey(j)) {
             return -1;
         }
-        
+
         // Convert the index to ids
         int srcId = nodes.get(i);
-        int destId = nodes.get(j);              
-        
+        int destId = nodes.get(j);
+
         HashMap<Integer, Path> initialVertex = graph.get(srcId);
-        
+
         if (initialVertex == null) {
             return -1;
         }
-        
+
         Path path = initialVertex.get(destId);
-        
+
         return (path == null) ? -1 : path.getPathDuration();
     }
-    
-    /**
-     * Constructor of an empty Path Graph.
-     */
-    public PathGraph() {
-        graph = new HashMap<>();
-        nodes = new HashMap<>();  
-        nodesSize = 0;
-    }    
 
     @Override
     public boolean isArc(int i, int j) {
@@ -84,8 +86,8 @@ public class PathGraph implements IGraph {
         int destId = nodes.get(j);        
         
         HashMap<Integer, Path> initialVertex = graph.get(srcId);
-        
-        return (initialVertex == null) ? false : initialVertex.containsKey(destId);
+
+        return initialVertex != null && initialVertex.containsKey(destId);
     }
     
     /**

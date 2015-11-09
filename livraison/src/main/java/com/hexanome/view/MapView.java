@@ -114,6 +114,7 @@ public class MapView extends AnchorPane implements Subscriber {
 
         for (Entry<NodePair, LinkedList<Arc>> entrySet : arcsMap.entrySet()) {
             ArcView arcView = new ArcView(entrySet.getValue(), this);
+            arcView.addArcs();
         }
     }
 
