@@ -2,6 +2,7 @@ package com.hexanome.controller.command;
 
 import com.hexanome.controller.ModelManager;
 import com.hexanome.model.Delivery;
+import java.util.logging.Logger;
 
 /**
  * This class represent the action of swaping two deliveries in the planning
@@ -35,7 +36,7 @@ public class SwapDeliveriesCommand implements ICommand {
         }
         else
         {
-            // \todo treat error case
+            
         }
         return this;
     }

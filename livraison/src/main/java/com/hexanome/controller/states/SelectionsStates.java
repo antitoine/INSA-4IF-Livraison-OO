@@ -88,6 +88,8 @@ public abstract class SelectionsStates extends DefaultState {
      */
     @Override
     public void leftClickPressedOnDelivery() {
+        // Hide popover
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
         // Jump to SwapDeliveryState
         ContextManager.getInstance().setCurrentState(SwapDeliveriesState.getInstance());
     }
