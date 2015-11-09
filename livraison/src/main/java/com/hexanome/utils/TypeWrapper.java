@@ -35,5 +35,4 @@ public class TypeWrapper {
         return String.format("%02d:%02d:%02d", hour, min, sec);
     }
 
-
 }
