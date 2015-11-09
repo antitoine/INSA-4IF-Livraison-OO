@@ -27,6 +27,7 @@ import java.util.Optional;
 public class UIManager {
 
     private static UIManager uimanager = null;
+
     /**
      * Main Window of the application see MainWindow class for more information
      */
@@ -89,6 +90,7 @@ public class UIManager {
         mainWindow.getMapView().clearMap();
         mainWindow.getDeliveryTreeView().clearTree();
     }
+
     /**
      * Modifies mainwindow according to the action of stoping map loading process
      */
@@ -99,6 +101,7 @@ public class UIManager {
         mainWindow.clearLegend();
         mainWindow.resetZoom();
     }
+
     /**
      * Modifies mainwindow according to the action of loading a planning
      */
@@ -106,6 +109,7 @@ public class UIManager {
         mainWindow.setLoadingState("Loading Planning...");
         mainWindow.getDeliveryTreeView().clearTree();
     }
+
     /**
      * Modifies mainwindow according to the action of stoping planning loading process
      */
@@ -134,7 +138,9 @@ public class UIManager {
         mainWindow.resetCursorAndInfoLabel();
         ModelManager.getInstance().getPlanning().getRoute().removeSubscriber(mainWindow.getMapView());
         ModelManager.getInstance().getPlanning().getRoute().addSubscriber(mainWindow.getMapView());
+        ModelManager.getInstance().getPlanning().notifySubscribers();
     }
+
     /**
      * Modifies mainwindow to display an error message
      */
@@ -152,6 +158,7 @@ public class UIManager {
         new RoadMapView(RouteDocument.generateFormatedRouteDocumentContent(
                 ModelManager.getInstance().getPlanning().getRoute()));
     }
+
     /**
      * Saves the roadmap to a file
      * @param stage 

@@ -1,8 +1,10 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
+import com.hexanome.controller.ModelManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Planning;
+import com.hexanome.model.Route;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
@@ -14,7 +16,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.glyphfont.Glyph;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -133,12 +137,17 @@ public class DeliveryTreeView extends VBox implements Subscriber {
                 tsItem = makeBranch(start + " - " + end,
                         ConstView.TreeItemType.TIMESLOT, rootItem, null);
 
-                for (Delivery d : ts.getDeliveries()) {
-                    TreeItem<String> dItem = makeBranch("Delivery " +
-                                    "" + d.getNode().getId() + " (" +
-                                    d.getNode().getLocation().x + ", "
-                                    + d.getNode().getLocation().y + ")",
-                            ConstView.TreeItemType.DELIVERY, tsItem, d);
+                List<Delivery> deliveries = ts.getDeliveries();
+                Collections.sort(deliveries);
+
+                for (Delivery d : deliveries) {
+
+                    String deliveryName = "Delivery " + d.getNode().getId();
+                    if (d.getDeliveryTime() > 0) {
+                        deliveryName = TypeWrapper.secondsToTimestamp((int)d.getDeliveryTime()) + " | " + deliveryName;
+                    }
+
+                    TreeItem<String> dItem = makeBranch( deliveryName, ConstView.TreeItemType.DELIVERY, tsItem, d);
                     deliveryBranch.put(d, dItem);
                 }
             }
