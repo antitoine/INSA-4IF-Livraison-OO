@@ -2,6 +2,8 @@ package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
 import com.hexanome.model.Delivery;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeCell;
@@ -22,8 +24,11 @@ final class DeliveryTreeCell extends TreeCell<String> {
     @SuppressWarnings("unused")
     private TextField textField;
     private ContextMenu addMenu = new ContextMenu();
+    private Boolean enableDragAndDrop;
 
-    public DeliveryTreeCell() {
+    public DeliveryTreeCell(Boolean enableDragAndDrop) {
+
+        this.enableDragAndDrop = enableDragAndDrop;
 
         setStyle("-fx-border-color: white;");
 
@@ -33,7 +38,8 @@ final class DeliveryTreeCell extends TreeCell<String> {
             /* allow any transfer mode */
 
             DeliveryTreeCell source = ((DeliveryTreeCell) (event.getSource()));
-            if (DeliveryTreeView.getDeliveryFromName(source.getString()) != null) {
+            if (DeliveryTreeView.getDeliveryFromName(source.getString()) != null &&
+                    enableDragAndDrop) {
                 ContextManager.getInstance().getCurrentState().leftClickPressedOnDelivery();
                 Dragboard db = source.startDragAndDrop(TransferMode.ANY);
 
@@ -64,8 +70,12 @@ final class DeliveryTreeCell extends TreeCell<String> {
                         .getDeliveryFromName(event.getDragboard().getString());
                 Delivery delivery2 = DeliveryTreeView
                         .getDeliveryFromName(targetCell.getString());
-                System.out.println("Drag done " + sourceCell.getString() + " <->" +
-                        targetCell.getString());
+                // DEBUG
+                Logger.getLogger(DeliveryTreeCell.class.getName()).log(Level.INFO, 
+                        String.format("Drag done %s <-> %s", 
+                        sourceCell.getString(),
+                        targetCell.getString()));
+                
                 targetCell.setStyle("-fx-border-color: white;");
                 targetCell.setTextFill(Color.BLACK);
                 ContextManager.getInstance().getCurrentState()

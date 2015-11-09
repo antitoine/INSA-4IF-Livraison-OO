@@ -111,8 +111,6 @@ public class PlanningComputeRouteWorker extends Task<Void> {
             throw new ArithmeticException("Any route can't be found with the current map and planning");
         }
 
-        System.out.print("Solution de longueur " + tsp.getSolutionCost() + " trouvee en " + (System.currentTimeMillis() - tempsDebut) + "ms : ");
-
         // Recreate the path to create the Route
         int nbEdges = graph.getNbArcs();
         LinkedList<Path> paths = new LinkedList<>();
@@ -123,21 +121,10 @@ public class PlanningComputeRouteWorker extends Task<Void> {
 
         paths.add(graph.indexAsPath(solutions[nbEdges - 1], solutions[0]));
 
-        for (int i = 0; i < graph.getNbArcs(); ++i) {
-            System.out.print(solutions[i] + " ");
-        }
-        System.out.print("\n");
-
         Route route = new Route(planning, paths);
 
         planning.setRoute(route);
         return null;
     }
-/*
-    @Override
-    protected void succeeded() {
-        super.succeeded();
-        System.out.println("Done!");
-    }*/
 
 }

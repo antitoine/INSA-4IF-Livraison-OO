@@ -97,7 +97,7 @@ public class UIManager {
     public void endLoadMap() {
         ModelManager.getInstance().getMap().clearSubscribers();
         ModelManager.getInstance().getMap().addSubscriber(mainWindow.getMapView());
-        mainWindow.resetCursorAndInfoLabel();
+        mainWindow.endLoadingState();
         mainWindow.clearLegend();
         mainWindow.resetZoom();
     }
@@ -124,7 +124,7 @@ public class UIManager {
         mainWindow.setLegend();
         // Update mainwindow
         mainWindow.resetZoom();
-        mainWindow.resetCursorAndInfoLabel();
+        mainWindow.endLoadingState();
     }
 
     public void beginComputingRoute() {
@@ -135,7 +135,7 @@ public class UIManager {
      * Change subscribers of the route
      */
     public void endRouteComputation() {
-        mainWindow.resetCursorAndInfoLabel();
+        mainWindow.endLoadingState();
         ModelManager.getInstance().getPlanning().getRoute().removeSubscriber(mainWindow.getMapView());
         ModelManager.getInstance().getPlanning().getRoute().addSubscriber(mainWindow.getMapView());
         ModelManager.getInstance().getPlanning().notifySubscribers();
@@ -145,7 +145,7 @@ public class UIManager {
      * Modifies mainwindow to display an error message
      */
     public void showError(String msg) {
-        mainWindow.resetCursorAndInfoLabel();
+        mainWindow.endLoadingState();
         // Ask main window to display error
         mainWindow.displayError(msg);
     }

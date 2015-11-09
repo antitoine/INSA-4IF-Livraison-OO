@@ -64,7 +64,7 @@ public class MapDocument extends XMLParser {
                     int idDestNode = arc.getAttribute("idNoeudDestination").getIntValue();
                     // Add arc to the map using its factory method
                     map.createArc(streetName, length, avgSpeed, idSrcNode, idDestNode);
-                }   
+                }
             } catch (DataConversionException ex) {
                 Logger.getLogger(MapDocument.class.getName()).log(Level.SEVERE, null, ex);
             }

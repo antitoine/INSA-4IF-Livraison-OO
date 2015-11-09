@@ -76,8 +76,18 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
     @Override
     public void btnCloseMap() {
         if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
+
+            UIManager.getInstance().getMainWindow().setLoadingState("Closing Map...");
+
             // Full clear model
             ModelManager.getInstance().clearModel();
+
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_PLANNING);
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_MAP);
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.LOAD_PLANNING);
+            UIManager.getInstance().getMainWindow().endLoadingState();
+
             // Jump to InitState
             ContextManager.getInstance().setCurrentState(InitState.getInstance());
         }
@@ -89,8 +99,16 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
     @Override
     public void btnClearPlanning() {
         if (UIManager.getInstance().askConfirmation("Current planning will be lost.")) {
+
+            UIManager.getInstance().getMainWindow().setLoadingState("Clearing Planning...");
+
             // Clear model's current planning
             ModelManager.getInstance().clearPlanning();
+
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.CLEAR_PLANNING);
+            UIManager.getInstance().getMainWindow().endLoadingState();
+
             // Jump to MapLoadedState
             ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
         }
