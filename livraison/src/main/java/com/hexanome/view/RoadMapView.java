@@ -55,6 +55,7 @@ public class RoadMapView extends GridPane {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        stage.setResizable(false);
         cancelButton.setOnAction(event -> stage.close());
 
         saveButton.setOnAction(event -> UIManager.getInstance().saveRoadMapDocument(stage));

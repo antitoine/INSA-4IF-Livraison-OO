@@ -3,6 +3,7 @@ package com.hexanome.view;
 import com.hexanome.model.*;
 import com.hexanome.utils.Publisher;
 import com.hexanome.utils.Subscriber;
+import javafx.scene.Cursor;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class MapView extends AnchorPane implements Subscriber {
             clearMap();
             Map map = (Map) p;
             addArcs(map.getArcs());
-            addEmptyNodes(map.getNodes().values());
+            addEmptyNodes(map.getNodes().values(), Cursor.DEFAULT);
         }
         
         else if (p instanceof Planning) {
@@ -65,7 +66,8 @@ public class MapView extends AnchorPane implements Subscriber {
     }
 
     private void resetNodes() {
-        nodeList.values().stream().forEach((nodeView) -> nodeView.setType(ConstView.EMPTY_NODE));
+        nodeList.values().stream().forEach((nodeView) ->
+                nodeView.setType(ConstView.EMPTY_NODE));
     }
 
     /**
@@ -97,7 +99,7 @@ public class MapView extends AnchorPane implements Subscriber {
 
         addArcs(mapArc);
 
-        addEmptyNodes(map.getNodes().values());
+        addEmptyNodes(map.getNodes().values(), Cursor.HAND);
 
         for (TimeSlot ts : planning.getTimeSlots()) {
             for (Delivery d : ts.getDeliveries()) {
@@ -131,10 +133,10 @@ public class MapView extends AnchorPane implements Subscriber {
         }
     }
 
-    private void addEmptyNodes(Collection<Node> nodes) {
+    private void addEmptyNodes(Collection<Node> nodes, Cursor cursor) {
         if (nodes != null) {
             for (Node node : nodes) {
-                NodeView nv = new NodeView(ConstView.EMPTY_NODE, node);
+                NodeView nv = new NodeView(ConstView.EMPTY_NODE, node, cursor);
                 nodeList.put(node, nv);
                 nv.relocate(node.getLocation().x - nv.getPrefWidth() / 2,
                         node.getLocation().y - nv.getPrefHeight() / 2);

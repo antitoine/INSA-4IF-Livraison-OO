@@ -45,8 +45,6 @@ public class MainWindow extends AnchorPane {
     private final FileChooser fileChooser;
     private final double SCALE_DELTA_WHEEL = 1.1;
     private final double SCALE_DELTA_BUTTON = 1.5;
-    @FXML
-    StackPane parentMapPane;
     private Group mapGroup = null;
     private ScrollPane scroller;
     private Group scrollContent;
@@ -58,6 +56,9 @@ public class MainWindow extends AnchorPane {
     private DeliveryTreeView deliveryTreeView;
     private Stage stage;
     private Button btnCancelLoading;
+
+    @FXML
+    private StackPane parentMapPane;
     @FXML
     private StatusBar statusBar;
     @FXML
@@ -143,14 +144,23 @@ public class MainWindow extends AnchorPane {
         );
     }
 
+    /**
+     * @return the deliveryTreeView
+     */
     public DeliveryTreeView getDeliveryTreeView() {
         return deliveryTreeView;
     }
 
+    /**
+     * @return the map View
+     */
     public MapView getMapView() {
         return mapView;
     }
 
+    /**
+     * Ask the view to open a file chooser
+     */
     public void askFile() {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
@@ -304,7 +314,7 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private void quitApplication() {
-        ContextManager.getInstance().exit(); // Special undoable
+        ContextManager.getInstance().exit();
     }
 
     @FXML
@@ -321,7 +331,6 @@ public class MainWindow extends AnchorPane {
     private void clearPlanning() {
         ContextManager.getInstance().getCurrentState().btnClearPlanning();
     }
-
 
     @FXML
     private void loadPlanning() {
@@ -387,7 +396,6 @@ public class MainWindow extends AnchorPane {
 
     /**
      * Method to create a zoomable scroll pane
-     * inspired from http://stackoverflow.com/questions/16680295/javafx-correct-scaling
      */
     private Parent configureZoomScrollPane(final Group group) {
         final StackPane zoomPane = new StackPane();
@@ -505,8 +513,5 @@ public class MainWindow extends AnchorPane {
         double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
         return new Point2D(scrollXOffset, scrollYOffset);
     }
-
-    
-
 
 }

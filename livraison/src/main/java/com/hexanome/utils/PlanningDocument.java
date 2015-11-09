@@ -126,12 +126,12 @@ public class PlanningDocument extends XMLParser {
                 return false; // Interrupt check here
             }
             // TEST : check if planning file specifies one or more timeslots
-            if(root.getChildren("PlagesHoraires").size() < 1) {
+            if(root.getChildren("PlagesHoraires").get(0).getChildren().size() < 1) {
                 setErrorMsg("At least one timeslot should be specified by planning file !");
                 return false; // Interrupt check here
             }
             // TEST : check if each timeSlot contains at least one delivery
-            for( Element ts : root.getChildren("Plage") ) {
+            for( Element ts : root.getChildren("PlagesHoraires").get(0).getChildren() ) {
                 
                 // TEST : check if timeSlot attributes are not missing and correct
                 int startTime;
@@ -139,7 +139,7 @@ public class PlanningDocument extends XMLParser {
                 if(ts.getAttributeValue("heureDebut") != null) {
                     startTime = TypeWrapper.timestampToSeconds(ts.getAttributeValue("heureDebut"));                    
                 } else {
-                    setErrorMsg("Missing <heureD> attribute in at least one timeSlot !");
+                    setErrorMsg("Missing <heureDebut> attribute in at least one timeSlot !");
                     return false; // Interrupt check here
                 }
                 if(ts.getAttributeValue("heureFin") != null) {
@@ -154,7 +154,7 @@ public class PlanningDocument extends XMLParser {
                     return false; // Interrupt check here
                 }
                 
-                List<Element> deliveries = root.getChildren("Livraison");
+                List<Element> deliveries = ts.getChildren("Livraisons").get(0).getChildren();
                 if(deliveries.size() < 1) {
                     setErrorMsg("All timeslots must specify at least one delivery !");
                     return false; // Interrupt check here
