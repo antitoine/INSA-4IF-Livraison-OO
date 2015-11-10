@@ -1,6 +1,7 @@
 package com.hexanome.view;
 
 import com.hexanome.controller.ContextManager;
+import com.hexanome.model.Node;
 import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -12,7 +13,7 @@ import org.controlsfx.control.PopOver;
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class NodeView extends StackPane {
+class NodeView extends StackPane {
 
     private PopOver popover;
     private INodeViewShape nodeShape;
@@ -21,13 +22,12 @@ public class NodeView extends StackPane {
 
     /**
      * Create a node view of a defined type
-     *
-     * @param nodeType node type
+     *  @param nodeType node type
      * @param node     Node as described in the model,
      *                 which should be associated with the node view
      * @param cursor   cursor shape when overing node
      */
-    public NodeView(String nodeType, com.hexanome.model.Node node, Cursor cursor) {
+    public NodeView(Node node, Cursor cursor) {
         final NodeView self = this;
 
         setPrefHeight(10);
@@ -35,7 +35,7 @@ public class NodeView extends StackPane {
         setCursor(Cursor.HAND);
 
         this.node = node;
-        setType(nodeType);
+        setType(ConstView.EMPTY_NODE);
 
         setCursor(cursor);
         setOnMouseClicked(event -> nodeShape.onMouseClickedNotify(self));

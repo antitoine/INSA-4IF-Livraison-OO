@@ -13,7 +13,7 @@ import java.util.Iterator;
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class TSLGraphIterator implements Iterator<Integer> {
+class TSLGraphIterator implements Iterator<Integer> {
 
     private Integer[] candidates;
     private int nbCandidates;

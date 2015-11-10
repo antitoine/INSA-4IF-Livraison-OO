@@ -2,7 +2,6 @@ package com.hexanome.controller.command;
 
 import com.hexanome.controller.ModelManager;
 import com.hexanome.model.Delivery;
-import java.util.logging.Logger;
 
 /**
  * This class represent the action of swaping two deliveries in the planning
@@ -29,16 +28,10 @@ public class SwapDeliveriesCommand implements ICommand {
      * @see ICommand
      */
     @Override
-    public ICommand execute() {
-        if(ModelManager.getInstance().getPlanning()!= null)
-        {
+    public void execute() {
+        if (ModelManager.getInstance().getPlanning() != null) {
             ModelManager.getInstance().getPlanning().swapDeliveries(firstDelivery, secondDelivery);
         }
-        else
-        {
-            
-        }
-        return this;
     }
     /**
      * Reverse execution of a command swaping again the two deliveries 
@@ -46,16 +39,10 @@ public class SwapDeliveriesCommand implements ICommand {
      * @see ICommand
      */
     @Override
-    public ICommand reverse() {
-        if(ModelManager.getInstance().getPlanning()!= null)
-        {
+    public void reverse() {
+        if (ModelManager.getInstance().getPlanning() != null) {
             ModelManager.getInstance().getPlanning().swapDeliveries(secondDelivery, firstDelivery);
         }
-        else
-        {
-            // \todo treat error case
-        }
-        return this;
     }
     
 }

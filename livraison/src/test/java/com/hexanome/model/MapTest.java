@@ -5,13 +5,13 @@
  */
 package com.hexanome.model;
 
-import java.awt.Point;
+import org.junit.Test;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -20,14 +20,6 @@ import static org.junit.Assert.*;
 public class MapTest {
     
     public MapTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
     }
 
     /**
@@ -90,9 +82,9 @@ public class MapTest {
     public void testGetArcs() {
         System.out.println("getArcs");
         Map map = new Map();
-        Node node1 = map.createNode(1, new Point(20,30));
-        Node node2 = map.createNode(2, new Point(30,20));
-        Node node3 = map.createNode(3, new Point(20,20));
+        map.createNode(1, new Point(20, 30));
+        map.createNode(2, new Point(30, 20));
+        map.createNode(3, new Point(20, 20));
         Arc arc1 = map.createArc("hollywood", 12, 31, 1, 2);       
         
         //For one arc 
@@ -101,7 +93,6 @@ public class MapTest {
         
         ArrayList<Arc> result = map.getArcs();
         
-        result.get(0).toString();
         assertEquals(result.get(0).toString(), arc1.toString());
         assertEquals(result, expResult);
         //For several arc
@@ -134,10 +125,10 @@ public class MapTest {
         System.out.println("getFastestPath");
         Map map = new Map();
         Node start = map.createNode(1, new Point(20,30));
-        Node inter = map.createNode(2, new Point(20,20));
-        Node end = map.createNode(3, new Point(10,20));    
-        
-        Arc arc1 = map.createArc("route1", 12, 31, 1, 3);
+        map.createNode(2, new Point(20, 20));
+        Node end = map.createNode(3, new Point(10,20));
+
+        map.createArc("route1", 12, 31, 1, 3);
         Arc arc2 = map.createArc("route2", 6, 31, 1, 2);
         Arc arc3 = map.createArc("route3", 5, 31, 2, 3);
         

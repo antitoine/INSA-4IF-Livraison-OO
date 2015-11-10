@@ -5,13 +5,13 @@
  */
 package com.hexanome.model;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -20,14 +20,6 @@ import static org.junit.Assert.*;
 public class NodeTest {
     
     public NodeTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
     }
 
     /**

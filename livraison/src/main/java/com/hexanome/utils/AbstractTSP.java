@@ -17,7 +17,7 @@ import java.util.Iterator;
 public abstract class AbstractTSP implements ITSP  {
 
     private Integer[] bestSolutions;
-    protected IGraph graph;
+    private IGraph graph;
     private float costBestSolution;
     private int limitTime;
     private long startTime;
@@ -82,7 +82,7 @@ public abstract class AbstractTSP implements ITSP  {
      * @param graph
      * @return 
      */
-    protected Iterator<Integer> iterator(Integer currentEdge, Collection<Integer> nonVus, IGraph graph) {
+    private Iterator<Integer> iterator(Integer currentEdge, Collection<Integer> nonVus, IGraph graph) {
         return new TSLGraphIterator(nonVus, currentEdge, graph);
     }
 

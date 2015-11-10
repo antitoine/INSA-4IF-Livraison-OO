@@ -8,18 +8,17 @@ package com.hexanome.utils;
 import com.hexanome.model.Map;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -28,14 +27,6 @@ import static org.junit.Assert.*;
 public class PlanningDocumentTest {
     
     public PlanningDocumentTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
     }
 
     /**
@@ -109,9 +100,8 @@ public class PlanningDocumentTest {
             File planningFile = new File("src/test/java/com/hexanome/utils/livraison10x10.xml");
             PlanningDocument instance = new PlanningDocument(builder.build(planningFile));
             // Check result
-            boolean expResult = true;
             boolean result = instance.checkIntegrity(map);
-            assertEquals(expResult, result);
+            assertEquals(true, result);
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(PlanningDocumentTest.class.getName()).log(Level.SEVERE, null, ex);
         }

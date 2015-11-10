@@ -5,8 +5,6 @@
  */
 package com.hexanome.model;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.awt.*;
@@ -25,14 +23,6 @@ public class RouteTest {
     
     public RouteTest() {
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
 
     /**
      * Test of getNextDelivery method, of class Route.
@@ -45,22 +35,22 @@ public class RouteTest {
         
         Node node1 = map.createNode(1, new Point(20, 30));
         Node node2 = map.createNode(2, new Point(20, 20));
-        Node node3 = map.createNode(3, new Point(20, 10));
+        map.createNode(3, new Point(20, 10));
         Node node4 = map.createNode(4, new Point(10, 10));
-        Node node5 = map.createNode(5, new Point(10, 20));
+        map.createNode(5, new Point(10, 20));
         Node node6 = map.createNode(6, new Point(10, 30));
         Node warehouse = map.createNode(7, new Point(10,40));
-        
-        Arc streetWHto1 = map.createArc("WHto1", 10, 3, 7, 1);
-        Arc street1to2 = map.createArc("1to2", 10, 1, 1, 2);
-        Arc street2to3 = map.createArc("2to3", 10, 2, 2, 3);
-        Arc street2to4 = map.createArc("2to4", 10, 4, 2, 4);
-        Arc street2to5 = map.createArc("2to5", 10, 3, 2, 5);
-        Arc street3to5 = map.createArc("3to5", 10, 3, 3, 5);
-        Arc street4to5 = map.createArc("4to5", 10, 1, 4, 5);
-        Arc street4to6 = map.createArc("4to6", 10, 5, 4, 6);
-        Arc street5to6 = map.createArc("5to6", 10, 2, 5, 6);
-        Arc street6toWH = map.createArc("6toWH", 10, 5, 6, 7);
+
+        map.createArc("WHto1", 10, 3, 7, 1);
+        map.createArc("1to2", 10, 1, 1, 2);
+        map.createArc("2to3", 10, 2, 2, 3);
+        map.createArc("2to4", 10, 4, 2, 4);
+        map.createArc("2to5", 10, 3, 2, 5);
+        map.createArc("3to5", 10, 3, 3, 5);
+        map.createArc("4to5", 10, 1, 4, 5);
+        map.createArc("4to6", 10, 5, 4, 6);
+        map.createArc("5to6", 10, 2, 5, 6);
+        map.createArc("6toWH", 10, 5, 6, 7);
         
         
         Delivery delivery1 = new Delivery(1, node1);
@@ -77,12 +67,12 @@ public class RouteTest {
         ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
         TimeSlot time = new TimeSlot(8, 11, deliveries);
         timeSlotList.add(time);
-        
-        Path path1 = map.getFastestPath(warehouse, node1);
-        Path path2 = map.getFastestPath(node1, node2);
-        Path path3 = map.getFastestPath(node2, node4);
-        Path path4 = map.getFastestPath(node4, node6);
-        Path path5 = map.getFastestPath(node6, warehouse);
+
+        map.getFastestPath(warehouse, node1);
+        map.getFastestPath(node1, node2);
+        map.getFastestPath(node2, node4);
+        map.getFastestPath(node4, node6);
+        map.getFastestPath(node6, warehouse);
         
         Planning plan = new Planning(map, warehouse, timeSlotList);
         
@@ -111,22 +101,22 @@ public class RouteTest {
         
         Node node1 = map.createNode(1, new Point(20, 30));
         Node node2 = map.createNode(2, new Point(20, 20));
-        Node node3 = map.createNode(3, new Point(20, 10));
-        Node node4 = map.createNode(4, new Point(10, 10));
+        map.createNode(3, new Point(20, 10));
+        map.createNode(4, new Point(10, 10));
         Node node5 = map.createNode(5, new Point(10, 20));
         Node node6 = map.createNode(6, new Point(10, 30));
         Node warehouse = map.createNode(7, new Point(10,40));
-        
-        Arc streetWHto1 = map.createArc("WHto1", 10, 3, 7, 1);
-        Arc street1to2 = map.createArc("1to2", 10, 1, 1, 2);
-        Arc street2to3 = map.createArc("2to3", 10, 2, 2, 3);
-        Arc street2to4 = map.createArc("2to4", 10, 4, 2, 4);
-        Arc street2to5 = map.createArc("2to5", 10, 3, 2, 5);
-        Arc street3to5 = map.createArc("3to5", 10, 3, 3, 5);
-        Arc street4to5 = map.createArc("4to5", 10, 1, 4, 5);
-        Arc street4to6 = map.createArc("4to6", 10, 5, 4, 6);
-        Arc street5to6 = map.createArc("5to6", 10, 2, 5, 6);
-        Arc street6toWH = map.createArc("6toWH", 10, 5, 6, 7);        
+
+        map.createArc("WHto1", 10, 3, 7, 1);
+        map.createArc("1to2", 10, 1, 1, 2);
+        map.createArc("2to3", 10, 2, 2, 3);
+        map.createArc("2to4", 10, 4, 2, 4);
+        map.createArc("2to5", 10, 3, 2, 5);
+        map.createArc("3to5", 10, 3, 3, 5);
+        map.createArc("4to5", 10, 1, 4, 5);
+        map.createArc("4to6", 10, 5, 4, 6);
+        map.createArc("5to6", 10, 2, 5, 6);
+        map.createArc("6toWH", 10, 5, 6, 7);
         
         Delivery delivery1 = new Delivery(1, node1);
         Delivery delivery2 = new Delivery(2, node2);
@@ -190,22 +180,22 @@ public class RouteTest {
         
         Node node1 = map.createNode(1, new Point(20, 30));
         Node node2 = map.createNode(2, new Point(20, 20));
-        Node node3 = map.createNode(3, new Point(20, 10));
+        map.createNode(3, new Point(20, 10));
         Node node4 = map.createNode(4, new Point(10, 10));
-        Node node5 = map.createNode(5, new Point(10, 20));
+        map.createNode(5, new Point(10, 20));
         Node node6 = map.createNode(6, new Point(10, 30));
         Node warehouse = map.createNode(7, new Point(10,40));
-        
-        Arc streetWHto1 = map.createArc("WHto1", 10, 3, 7, 1);
-        Arc street1to2 = map.createArc("1to2", 10, 1, 1, 2);
-        Arc street2to3 = map.createArc("2to3", 10, 2, 2, 3);
-        Arc street2to4 = map.createArc("2to4", 10, 4, 2, 4);
-        Arc street2to5 = map.createArc("2to5", 10, 3, 2, 5);
-        Arc street3to5 = map.createArc("3to5", 10, 3, 3, 5);
-        Arc street4to5 = map.createArc("4to5", 10, 1, 4, 5);
-        Arc street4to6 = map.createArc("4to6", 10, 5, 4, 6);
-        Arc street5to6 = map.createArc("5to6", 10, 2, 5, 6);
-        Arc street6toWH = map.createArc("6toWH", 10, 5, 6, 7);
+
+        map.createArc("WHto1", 10, 3, 7, 1);
+        map.createArc("1to2", 10, 1, 1, 2);
+        map.createArc("2to3", 10, 2, 2, 3);
+        map.createArc("2to4", 10, 4, 2, 4);
+        map.createArc("2to5", 10, 3, 2, 5);
+        map.createArc("3to5", 10, 3, 3, 5);
+        map.createArc("4to5", 10, 1, 4, 5);
+        map.createArc("4to6", 10, 5, 4, 6);
+        map.createArc("5to6", 10, 2, 5, 6);
+        map.createArc("6toWH", 10, 5, 6, 7);
         
         
         Delivery delivery1 = new Delivery(1, node1);
@@ -225,8 +215,8 @@ public class RouteTest {
         
         Path path1 = map.getFastestPath(warehouse, node1);
         Path path2 = map.getFastestPath(node1, node2);
-        Path path3 = map.getFastestPath(node2, node4);
-        Path path4 = map.getFastestPath(node4, node6);
+        map.getFastestPath(node2, node4);
+        map.getFastestPath(node4, node6);
         Path path5 = map.getFastestPath(node6, warehouse);
         
         Planning plan = new Planning(map, warehouse, timeSlotList);
@@ -270,22 +260,22 @@ public class RouteTest {
         
         Node node1 = map.createNode(1, new Point(20, 30));
         Node node2 = map.createNode(2, new Point(20, 20));
-        Node node3 = map.createNode(3, new Point(20, 10));
+        map.createNode(3, new Point(20, 10));
         Node node4 = map.createNode(4, new Point(10, 10));
-        Node node5 = map.createNode(5, new Point(10, 20));
+        map.createNode(5, new Point(10, 20));
         Node node6 = map.createNode(6, new Point(10, 30));
         Node warehouse = map.createNode(7, new Point(10,40));
-        
-        Arc streetWHto1 = map.createArc("WHto1", 10, 3, 7, 1);
-        Arc street1to2 = map.createArc("1to2", 10, 1, 1, 2);
-        Arc street2to3 = map.createArc("2to3", 10, 2, 2, 3);
-        Arc street2to4 = map.createArc("2to4", 10, 4, 2, 4);
-        Arc street2to5 = map.createArc("2to5", 10, 3, 2, 5);
-        Arc street3to5 = map.createArc("3to5", 10, 3, 3, 5);
-        Arc street4to5 = map.createArc("4to5", 10, 1, 4, 5);
-        Arc street4to6 = map.createArc("4to6", 10, 5, 4, 6);
-        Arc street5to6 = map.createArc("5to6", 10, 2, 5, 6);
-        Arc street6toWH = map.createArc("6toWH", 10, 5, 6, 7);        
+
+        map.createArc("WHto1", 10, 3, 7, 1);
+        map.createArc("1to2", 10, 1, 1, 2);
+        map.createArc("2to3", 10, 2, 2, 3);
+        map.createArc("2to4", 10, 4, 2, 4);
+        map.createArc("2to5", 10, 3, 2, 5);
+        map.createArc("3to5", 10, 3, 3, 5);
+        map.createArc("4to5", 10, 1, 4, 5);
+        map.createArc("4to6", 10, 5, 4, 6);
+        map.createArc("5to6", 10, 2, 5, 6);
+        map.createArc("6toWH", 10, 5, 6, 7);
         
         Delivery delivery1 = new Delivery(1, node1);
         Delivery delivery2 = new Delivery(2, node2);
@@ -341,22 +331,22 @@ public class RouteTest {
         
         Node node1 = map.createNode(1, new Point(20, 30));
         Node node2 = map.createNode(2, new Point(20, 20));
-        Node node3 = map.createNode(3, new Point(20, 10));
+        map.createNode(3, new Point(20, 10));
         Node node4 = map.createNode(4, new Point(10, 10));
-        Node node5 = map.createNode(5, new Point(10, 20));
+        map.createNode(5, new Point(10, 20));
         Node node6 = map.createNode(6, new Point(10, 30));
         Node warehouse = map.createNode(7, new Point(10,40));
-        
-        Arc streetWHto1 = map.createArc("WHto1", 10, 3, 7, 1);
-        Arc street1to2 = map.createArc("1to2", 10, 1, 1, 2);
-        Arc street2to3 = map.createArc("2to3", 10, 2, 2, 3);
-        Arc street2to4 = map.createArc("2to4", 10, 4, 2, 4);
-        Arc street2to5 = map.createArc("2to5", 10, 3, 2, 5);
-        Arc street3to5 = map.createArc("3to5", 10, 3, 3, 5);
-        Arc street4to5 = map.createArc("4to5", 10, 1, 4, 5);
-        Arc street4to6 = map.createArc("4to6", 10, 5, 4, 6);
-        Arc street5to6 = map.createArc("5to6", 10, 2, 5, 6);
-        Arc street6toWH = map.createArc("6toWH", 10, 5, 6, 7);
+
+        map.createArc("WHto1", 10, 3, 7, 1);
+        map.createArc("1to2", 10, 1, 1, 2);
+        map.createArc("2to3", 10, 2, 2, 3);
+        map.createArc("2to4", 10, 4, 2, 4);
+        map.createArc("2to5", 10, 3, 2, 5);
+        map.createArc("3to5", 10, 3, 3, 5);
+        map.createArc("4to5", 10, 1, 4, 5);
+        map.createArc("4to6", 10, 5, 4, 6);
+        map.createArc("5to6", 10, 2, 5, 6);
+        map.createArc("6toWH", 10, 5, 6, 7);
         
         
         Delivery delivery1 = new Delivery(1, node1);
@@ -373,12 +363,12 @@ public class RouteTest {
         ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
         TimeSlot time = new TimeSlot(8, 11, deliveries);
         timeSlotList.add(time);
-        
-        Path path1 = map.getFastestPath(warehouse, node1);
-        Path path2 = map.getFastestPath(node1, node2);
-        Path path3 = map.getFastestPath(node2, node4);
-        Path path4 = map.getFastestPath(node4, node6);
-        Path path5 = map.getFastestPath(node6, warehouse);
+
+        map.getFastestPath(warehouse, node1);
+        map.getFastestPath(node1, node2);
+        map.getFastestPath(node2, node4);
+        map.getFastestPath(node4, node6);
+        map.getFastestPath(node6, warehouse);
         
         Planning plan = new Planning(map, warehouse, timeSlotList);
         
@@ -406,22 +396,22 @@ public class RouteTest {
         
         Node node1 = map.createNode(1, new Point(20, 30));
         Node node2 = map.createNode(2, new Point(20, 20));
-        Node node3 = map.createNode(3, new Point(20, 10));
+        map.createNode(3, new Point(20, 10));
         Node node4 = map.createNode(4, new Point(10, 10));
-        Node node5 = map.createNode(5, new Point(10, 20));
+        map.createNode(5, new Point(10, 20));
         Node node6 = map.createNode(6, new Point(10, 30));
         Node warehouse = map.createNode(7, new Point(10,40));
-        
-        Arc streetWHto1 = map.createArc("WHto1", 10, 3, 7, 1);
-        Arc street1to2 = map.createArc("1to2", 10, 1, 1, 2);
-        Arc street2to3 = map.createArc("2to3", 10, 2, 2, 3);
-        Arc street2to4 = map.createArc("2to4", 10, 4, 2, 4);
-        Arc street2to5 = map.createArc("2to5", 10, 3, 2, 5);
-        Arc street3to5 = map.createArc("3to5", 10, 3, 3, 5);
-        Arc street4to5 = map.createArc("4to5", 10, 1, 4, 5);
-        Arc street4to6 = map.createArc("4to6", 10, 5, 4, 6);
-        Arc street5to6 = map.createArc("5to6", 10, 2, 5, 6);
-        Arc street6toWH = map.createArc("6toWH", 10, 5, 6, 7);
+
+        map.createArc("WHto1", 10, 3, 7, 1);
+        map.createArc("1to2", 10, 1, 1, 2);
+        map.createArc("2to3", 10, 2, 2, 3);
+        map.createArc("2to4", 10, 4, 2, 4);
+        map.createArc("2to5", 10, 3, 2, 5);
+        map.createArc("3to5", 10, 3, 3, 5);
+        map.createArc("4to5", 10, 1, 4, 5);
+        map.createArc("4to6", 10, 5, 4, 6);
+        map.createArc("5to6", 10, 2, 5, 6);
+        map.createArc("6toWH", 10, 5, 6, 7);
         
         
         Delivery delivery1 = new Delivery(1, node1);

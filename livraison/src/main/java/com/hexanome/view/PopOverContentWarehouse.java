@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class PopOverContentWarehouse extends PopOverContent {
+class PopOverContentWarehouse extends PopOverContent {
 
     public PopOverContentWarehouse(Node node) {
         super(node);

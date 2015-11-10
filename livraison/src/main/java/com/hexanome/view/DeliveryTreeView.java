@@ -30,7 +30,7 @@ import java.util.Map;
 public class DeliveryTreeView extends VBox implements Subscriber {
 
     private static HashMap<String, Delivery> deliveresByName;
-    Boolean displaceViewtoNode = true;
+    private Boolean displaceViewtoNode = true;
     private TreeView<String> deliveryTree;
     private TreeItem<String> rootItem;
     private HashMap<Delivery, TreeItem<String>> deliveryBranch;

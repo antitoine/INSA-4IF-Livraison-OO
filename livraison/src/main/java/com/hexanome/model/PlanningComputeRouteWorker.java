@@ -12,12 +12,12 @@ import java.util.List;
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class PlanningComputeRouteWorker extends Task<Void> {
+class PlanningComputeRouteWorker extends Task<Void> {
 
     /**
      * timeout computation time
      */
-    final int TIME_LIMIT = 3600000;
+    private final int TIME_LIMIT = 3600000;
 
     /**
      * The planning to work with.

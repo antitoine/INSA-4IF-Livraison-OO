@@ -40,16 +40,13 @@ public class AddDeliveryCommand implements ICommand {
      * @return
      */
     @Override
-    public ICommand execute() {
+    public void execute() {
         if (ModelManager.getInstance().getPlanning() != null) {
 
             delivery = ModelManager.getInstance()
-                                   .getPlanning()
-                                   .addDelivery(node, nodePreviousDelivery, timeSlot);
-        } else {
-            // \todo treat error case
+                    .getPlanning()
+                    .addDelivery(node, nodePreviousDelivery, timeSlot);
         }
-        return this;
     }
 
     /**
@@ -60,13 +57,10 @@ public class AddDeliveryCommand implements ICommand {
      * @return
      */
     @Override
-    public ICommand reverse() {
+    public void reverse() {
         if (ModelManager.getInstance().getPlanning() != null && delivery != null) {
             ModelManager.getInstance().getPlanning().removeDelivery(delivery);
-        } else {
-            // \todo treat error case
         }
-        return this;
     }
 
 }

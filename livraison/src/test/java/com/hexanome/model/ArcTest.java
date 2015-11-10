@@ -5,17 +5,12 @@
  */
 package com.hexanome.model;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.junit.Assert;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -25,17 +20,6 @@ import static org.junit.Assert.fail;
  * @author guillaume
  */
 public class ArcTest {
-    
-    public ArcTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
 
     /**
      * Test of getDest method, of class Arc.
@@ -45,8 +29,8 @@ public class ArcTest {
         System.out.println("getDest");
         
         Map map = new Map();
-        Node src = map.createNode(1, new Point(20,30));
-        Node dest = map.createNode(2, new Point(30,30));      
+        map.createNode(1, new Point(20, 30));
+        Node dest = map.createNode(2, new Point(30, 30));
         Arc arc = map.createArc("hollywood", 12, 31, 1, 2);
         Node result = arc.getDest();
         assertEquals(dest, result);
@@ -60,7 +44,7 @@ public class ArcTest {
         System.out.println("getSrc");
         Map map = new Map();
         Node src = map.createNode(1, new Point(20,30));
-        Node dest = map.createNode(2, new Point(30,30));
+        map.createNode(2, new Point(30, 30));
         Arc arc = map.createArc("hollywood", 12, 31, 1, 2);
         Node result = arc.getSrc();
         assertEquals(src, result);
@@ -85,7 +69,6 @@ public class ArcTest {
         map.createNode(5, new Point(20,0));
         // Add arcs
         map.createArc("a", 1000, 10, 0, 1);
-        //map.createArc("b", 1000, 10, 0, 2);
         map.createArc("c", 1000, 10, 0, 3);
         Arc A04 = map.createArc("d", 1000, 10, 0, 4);
         map.createArc("e", 1000, 10, 0, 5);
@@ -94,7 +77,6 @@ public class ArcTest {
         map.createArc("h", 1000, 10, 1, 4);
         map.createArc("i", 1000, 10, 1, 5);
         map.createArc("j", 1000, 10, 2, 3);
-        //map.createArc("k", 1000, 10, 2, 4);
         map.createArc("l", 1000, 10, 2, 5);
         map.createArc("m", 1000, 10, 3, 4);
         map.createArc("n", 1000, 10, 3, 5);
@@ -104,7 +86,6 @@ public class ArcTest {
         map.createArc("l", 1000, 10, 5, 2);
         map.createArc("n", 1000, 10, 5, 3);
         map.createArc("o", 1000, 10, 5, 4);
-        //map.createArc("d", 1000, 10, 4, 0);
         map.createArc("h", 1000, 10, 4, 1);
         Arc A42 = map.createArc("k", 1000, 10, 4, 2);
         map.createArc("m", 1000, 10, 4, 3);
@@ -128,7 +109,6 @@ public class ArcTest {
         Planning planning = new Planning(map, warehouse, timeslots);
         
         try {
-            // Compute route
             planning.computeRoute();
         } catch (Exception ex) {
             fail("planning.computeRoute() failed !");

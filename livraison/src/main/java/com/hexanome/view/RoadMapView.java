@@ -24,12 +24,15 @@ import java.util.logging.Logger;
 public class RoadMapView extends GridPane {
 
     @FXML
+    private
     TextFlow roadMapDescription;
 
     @FXML
+    private
     Button saveButton;
 
     @FXML
+    private
     Button cancelButton;
     
     private String roadMapDescriptionBrutText;

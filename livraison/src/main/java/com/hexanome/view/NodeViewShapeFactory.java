@@ -5,7 +5,7 @@ package com.hexanome.view;
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public abstract class NodeViewShapeFactory {
+abstract class NodeViewShapeFactory {
     
     /**
      * Creates a node view shape object that matches with the node type passed

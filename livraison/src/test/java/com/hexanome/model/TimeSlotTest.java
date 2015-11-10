@@ -5,12 +5,12 @@
  */
 package com.hexanome.model;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.awt.*;
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -20,14 +20,6 @@ public class TimeSlotTest {
     
     public TimeSlotTest() {
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
 
     /**
      * Test of getDeliveries method, of class TimeSlot.
@@ -35,13 +27,13 @@ public class TimeSlotTest {
     @Test
     public void testGetDeliveries() {
         System.out.println("getDeliveries");
-        
-        Map map = new Map();      
-        Node warehouse = map.createNode(1, new Point(20,10));
+
+        Map map = new Map();
+        map.createNode(1, new Point(20, 10));
         Node node1 = map.createNode(2, new Point(20,20));
-        Node node2 = map.createNode(3, new Point(20,30));
-        Arc arc2 = map.createArc("route1",12,31,1,2);
-        Arc arc3 = map.createArc("route2",12,31,2,3);      
+        map.createNode(3, new Point(20, 30));
+        map.createArc("route1", 12, 31, 1, 2);
+        map.createArc("route2", 12, 31, 2, 3);
         Delivery delivery1 = new Delivery(1,node1);
         ArrayList<Delivery> expResult1 = new ArrayList<>(); //for timeslot attached
         ArrayList<Delivery> expResult2 = new ArrayList<>(); //for timeslot not attached
@@ -71,12 +63,12 @@ public class TimeSlotTest {
     public void testAddDelivery() {
         System.out.println("addDelivery");
         
-        Map map = new Map();   
-        Node warehouse = map.createNode(1, new Point(20,10));
+        Map map = new Map();
+        map.createNode(1, new Point(20, 10));
         Node node1 = map.createNode(2, new Point(20,20));
         Node node2 = map.createNode(3, new Point(20,30));
-        Arc arc2 = map.createArc("route1",12,31,1,2);
-        Arc arc3 = map.createArc("route2",12,31,2,3);     
+        map.createArc("route1", 12, 31, 1, 2);
+        map.createArc("route2", 12, 31, 2, 3);
         Delivery delivery1 = new Delivery(1,node1);
         Delivery delivery2 = new Delivery(2,node2);
         ArrayList<Delivery> expResult = new ArrayList<>();
@@ -85,8 +77,7 @@ public class TimeSlotTest {
         
         expResult.add(delivery2);
         timeSlot.addDelivery(delivery2);        //Function tested
-        ArrayList<Delivery> result = new ArrayList<>();
-        result = timeSlot.getDeliveries();
+        ArrayList<Delivery> result = timeSlot.getDeliveries();
         for(int i=0;i<expResult.size();i++)
         {
             assertEquals(expResult.get(i), result.get(i));
@@ -102,12 +93,12 @@ public class TimeSlotTest {
         
         int start = 8;
         int end = 9;
-        Map map = new Map();   
-        Node warehouse = map.createNode(1, new Point(20,10));
+        Map map = new Map();
+        map.createNode(1, new Point(20, 10));
         Node node1 = map.createNode(2, new Point(20,20));
-        Node node2 = map.createNode(3, new Point(20,30));
-        Arc arc2 = map.createArc("route1",12,31,1,2);
-        Arc arc3 = map.createArc("route2",12,31,2,3);     
+        map.createNode(3, new Point(20, 30));
+        map.createArc("route1", 12, 31, 1, 2);
+        map.createArc("route2", 12, 31, 2, 3);
         Delivery delivery1 = new Delivery(1,node1);
         ArrayList<Delivery> expResult = new ArrayList<>();
         expResult.add(delivery1);
@@ -126,12 +117,12 @@ public class TimeSlotTest {
         int start = 8;
         int end = 9;
         
-        Map map = new Map();   
-        Node warehouse = map.createNode(1, new Point(20,10));
+        Map map = new Map();
+        map.createNode(1, new Point(20, 10));
         Node node1 = map.createNode(2, new Point(20,20));
-        Node node2 = map.createNode(3, new Point(20,30));
-        Arc arc2 = map.createArc("route1",12,31,1,2);
-        Arc arc3 = map.createArc("route2",12,31,2,3);     
+        map.createNode(3, new Point(20, 30));
+        map.createArc("route1", 12, 31, 1, 2);
+        map.createArc("route2", 12, 31, 2, 3);
         Delivery delivery1 = new Delivery(1,node1);
         ArrayList<Delivery> expResult = new ArrayList<>();
         expResult.add(delivery1);
@@ -152,26 +143,24 @@ public class TimeSlotTest {
         int start = 8;
         int end = 9;
         
-        Map map = new Map();   
-        Node warehouse = map.createNode(1, new Point(20,10));
+        Map map = new Map();
+        map.createNode(1, new Point(20, 10));
         Node node1 = map.createNode(2, new Point(20,20));
-        Node node2 = map.createNode(3, new Point(20,30));
-        Arc arc2 = map.createArc("route1",12,31,1,2);
-        Arc arc3 = map.createArc("route2",12,31,2,3);     
+        map.createNode(3, new Point(20, 30));
+        map.createArc("route1", 12, 31, 1, 2);
+        map.createArc("route2", 12, 31, 2, 3);
         Delivery delivery1 = new Delivery(1,node1);
         ArrayList<Delivery> arrayList = new ArrayList<>();
         arrayList.add(delivery1);
         TimeSlot timeSlot = new TimeSlot(start,end,arrayList);
         
         //time is contained in the current time slot
-        boolean expResult = true;
         boolean result = timeSlot.containsTime(timeok);
-        assertEquals(expResult, result);
+        assertEquals(true, result);
         
         //time isn't contained in the current time slot
-        expResult = false;
         result = timeSlot.containsTime(timenotok);
-        assertEquals(expResult, result);
+        assertEquals(false, result);
         
     }
     /**
@@ -181,12 +170,12 @@ public class TimeSlotTest {
     public void testEquals() {
         System.out.println("equals");
         
-        Map map = new Map();   
-        Node warehouse = map.createNode(1, new Point(20,10));
+        Map map = new Map();
+        map.createNode(1, new Point(20, 10));
         Node node1 = map.createNode(2, new Point(20,20));
         Node node2 = map.createNode(3, new Point(20,30));
-        Arc arc2 = map.createArc("route1",12,31,1,2);
-        Arc arc3 = map.createArc("route2",12,31,2,3);     
+        map.createArc("route1", 12, 31, 1, 2);
+        map.createArc("route2", 12, 31, 2, 3);
         Delivery delivery1 = new Delivery(1,node1);
         Delivery delivery2 = new Delivery(2,node2);
         ArrayList<Delivery> arrayList1 = new ArrayList<>();
@@ -200,24 +189,20 @@ public class TimeSlotTest {
         TimeSlot timeSlot5 = new TimeSlot(8,9,arrayList2); //arrayList different
         
         //timeSlot1 equals timeSlot2
-        boolean expResult = true;
         boolean result = timeSlot1.equals(timeSlot2);
-        assertEquals(expResult, result);
+        assertEquals(true, result);
         
         //timeStart different
-        expResult = false;
         result = timeSlot1.equals(timeSlot3);
-        assertEquals(expResult, result);
+        assertEquals(false, result);
         
         //timeEnd different
-        expResult = false;
         result = timeSlot1.equals(timeSlot4);
-        assertEquals(expResult, result);
+        assertEquals(false, result);
         
         //arrayList different
-        expResult = false;
         result = timeSlot1.equals(timeSlot5);
-        assertEquals(expResult, result);
+        assertEquals(false, result);
     }
     
 }

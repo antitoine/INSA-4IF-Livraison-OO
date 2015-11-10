@@ -8,11 +8,11 @@ import javafx.scene.layout.BorderPane;
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public abstract class PopOverContent extends BorderPane{
+abstract class PopOverContent extends BorderPane {
     
     Node node;
 
-    public PopOverContent(Node node) {
+    PopOverContent(Node node) {
         this.node = node;
     }
 

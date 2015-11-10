@@ -5,7 +5,6 @@
  */
 package com.hexanome.utils;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import org.jdom2.Document;
 
 /**
@@ -26,12 +25,15 @@ public class XMLParser {
     private String error;
     
     /**
-     * Set the error message of the parser
-     * @param msg 
+     * Builds a new instance of XMLParser
+     * @param dom
+     *      DOM Document to parse
      */
-    protected void setErrorMsg(String msg) {
-        error = String.format("Semantic error : %s", msg);
+    XMLParser(Document dom) {
+        this.dom = dom;
+        this.error = null;
     }
+
     /**
      * Returns the latest error message or null if no error message was set
      * @return 
@@ -39,21 +41,20 @@ public class XMLParser {
     public String getErrorMsg() {
         return error;
     }
+
     /**
-     * Returns the DOM Document
-     * @return 
+     * Set the error message of the parser
+     * @param msg
      */
-    protected Document getDom() {
-        return dom;
+    void setErrorMsg(String msg) {
+        error = String.format("Semantic error : %s", msg);
     }
     
     /**
-     * Builds a new instance of XMLParser
-     * @param dom 
-     *      DOM Document to parse
+     * Returns the DOM Document
+     * @return
      */
-    protected XMLParser(Document dom) {
-        this.dom = dom;
-        this.error = null;
+    Document getDom() {
+        return dom;
     }
 }

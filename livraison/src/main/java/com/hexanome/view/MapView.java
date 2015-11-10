@@ -136,7 +136,7 @@ public class MapView extends AnchorPane implements Subscriber {
     private void addEmptyNodes(Collection<Node> nodes, Cursor cursor) {
         if (nodes != null) {
             for (Node node : nodes) {
-                NodeView nv = new NodeView(ConstView.EMPTY_NODE, node, cursor);
+                NodeView nv = new NodeView(node, cursor);
                 nodeList.put(node, nv);
                 nv.relocate(node.getLocation().x - nv.getPrefWidth() / 2,
                         node.getLocation().y - nv.getPrefHeight() / 2);

@@ -16,10 +16,10 @@ import org.controlsfx.glyphfont.Glyph;
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class PopOverContentDelivery extends PopOverContent {
+class PopOverContentDelivery extends PopOverContent {
 
-    Button btnDelete;
-    Text adressText;
+    private Button btnDelete;
+    private Text adressText;
 
     /**
      *

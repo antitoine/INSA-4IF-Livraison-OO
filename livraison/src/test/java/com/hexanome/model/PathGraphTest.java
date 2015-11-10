@@ -5,12 +5,12 @@
  */
 package com.hexanome.model;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.awt.*;
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -19,14 +19,6 @@ import static org.junit.Assert.*;
 public class PathGraphTest {
     
     public PathGraphTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
     }
 
     /**

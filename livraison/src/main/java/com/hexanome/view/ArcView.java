@@ -23,7 +23,7 @@ import java.util.Map.Entry;
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class ArcView {
+class ArcView {
 
     private LinkedList<Entry<Arc, Color>> arcs;
     private Pane mapPane;

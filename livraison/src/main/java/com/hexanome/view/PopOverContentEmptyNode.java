@@ -27,7 +27,7 @@ import java.util.HashMap;
  * 
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class PopOverContentEmptyNode extends PopOverContent {
+class PopOverContentEmptyNode extends PopOverContent {
 
     private Button btnValidateAddDelivery;
 
