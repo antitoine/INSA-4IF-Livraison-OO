@@ -22,6 +22,9 @@ Il ne faut pas oublier de configurer les JDK en java 8 dans le paramètres de l'
  - Sous Intelij IDEA : File -> Import Project. Indiquer qu'il s'agit d'un projet Maven.
  - Sous Eclipse : Import Maven Project. 
 
+Il est égalemenent possible de compiler, tester et lancer le projet grâce à Maven (``mvn`` en ligne de commande).
+ - ``mvn test`` pour lancer les tests
+ - ``mvn install`` crée un jar dans le dossier  /target du répertoire courant 
 
 ### Pour éditer les fichiers fxml :
 Pour éditer facilement les fichiers fxml, il peut être pratique d'utililser le *scene builder* de JavaFX. 
