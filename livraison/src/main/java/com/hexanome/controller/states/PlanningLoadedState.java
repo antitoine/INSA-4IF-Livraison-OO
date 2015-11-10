@@ -44,6 +44,11 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
         if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
             // Full clear model
             ModelManager.getInstance().clearModel();
+
+            UIManager.getInstance().getMainWindow().getMapView().clearMap();
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
+
             // Jump to MapSelectState
             ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
             // Ask user for the map to load
@@ -59,9 +64,15 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
         // WARNING : calls order matters
         // Clear current model's planning
         if (UIManager.getInstance().askConfirmation("Current planning will be lost.")) {
+
             ModelManager.getInstance().clearPlanning();
+
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
+
             // Jump to PlanningSelectState
             ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
+
             // Ask user for planning file to load
             UIManager.getInstance().getMainWindow().askFile();
         }
