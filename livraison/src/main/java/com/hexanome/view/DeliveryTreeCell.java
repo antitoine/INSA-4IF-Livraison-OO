@@ -68,7 +68,7 @@ final class DeliveryTreeCell extends TreeCell<String> {
                         .getDeliveryFromName(event.getDragboard().getString());
                 Delivery delivery2 = DeliveryTreeView
                         .getDeliveryFromName(targetCell.getString());
-                // DEBUG
+
                 Logger.getLogger(DeliveryTreeCell.class.getName()).log(Level.INFO,
                         String.format("Drag done %s <-> %s",
                                 sourceCell.getString(),
@@ -87,8 +87,7 @@ final class DeliveryTreeCell extends TreeCell<String> {
         });
 
         setOnDragEntered(event -> {
-            /* the drag-and-drop gesture entered the target */
-            /* show to the user that it is an actual gesture target */
+            // the drag-and-drop gesture entered the target
             if (event.getDragboard().hasString()) {
                 Dragboard sourceCell = event.getDragboard();
                 DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
@@ -103,7 +102,7 @@ final class DeliveryTreeCell extends TreeCell<String> {
         });
 
         setOnDragExited(event -> {
-            /* mouse moved away, remove the graphical cues */
+            // mouse moved away, remove the red borders
             Dragboard sourceCell = event.getDragboard();
             DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
             if (!targetCell.getString().equals(sourceCell.getString())) {

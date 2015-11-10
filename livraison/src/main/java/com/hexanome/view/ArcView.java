@@ -147,6 +147,9 @@ class ArcView {
 
     }
 
+    /**
+     * Return true if there is only two arcs of the same color
+     */
     private boolean isATwoWayTrip() {
         boolean isATwoWayTrip = false;
         if (arcs.size() == 2) {

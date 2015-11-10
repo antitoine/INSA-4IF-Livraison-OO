@@ -40,13 +40,12 @@ public class ColorsGenerator {
         colors.add(Color.AQUAMARINE);
         colors.add(Color.CHOCOLATE);
         colors.add(Color.CHARTREUSE);
-
     }
 
     /**
      * Returns a single instance of colors generator (Singleton)
      *
-     * @return
+     * @return a single instance of colors generator (Singleton)
      */
     public static ColorsGenerator getInstance() {
         if (colorgenerator == null) {
@@ -80,5 +79,4 @@ public class ColorsGenerator {
             i++;
         }
     }
-
 }

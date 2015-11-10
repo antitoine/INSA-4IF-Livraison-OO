@@ -22,7 +22,7 @@ class PopOverContentDelivery extends PopOverContent {
     private Text adressText;
 
     /**
-     * @param node
+     * @param node Node for the PopOver
      */
     public PopOverContentDelivery(Node node) {
         super(node);

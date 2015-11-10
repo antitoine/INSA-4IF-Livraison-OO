@@ -30,7 +30,7 @@ import java.util.Map;
 public class DeliveryTreeView extends VBox implements Subscriber {
 
     private static HashMap<String, Delivery> deliveresByName;
-    private Boolean displaceViewtoNode = true;
+    private Boolean displaceViewtoNode;
     private TreeView<String> deliveryTree;
     private TreeItem<String> rootItem;
     private HashMap<Delivery, TreeItem<String>> deliveryBranch;
@@ -51,6 +51,7 @@ public class DeliveryTreeView extends VBox implements Subscriber {
         deliveryTree.setCellFactory(p -> new DeliveryTreeCell(false));
 
         // indicate that a delivery is selected
+        displaceViewtoNode = true;
         deliveryTree.getSelectionModel().selectedItemProperty().
                 addListener((observable, oldValue, newValue) -> {
                     if (newValue != null && newValue.isLeaf()) {

@@ -13,13 +13,8 @@ public final class ConstView {
     public static final String DELIVERY_NODE = "DELIVERYNODE";
     public static final String WAREHOUSE_NODE = "WAREHOUSENODE";
 
-    public static final String POPOVERWAREHOUSE = "POPOVERWAREHOUSE";
-    public static final String POPOVEREMPTY = "POPOVEREMPTY";
-    public static final String POPOVERDELIVERY = "POPOVERDELIVERY";
-
     public static final String MAINWINDOW = "/fxml/MainWindow.fxml";
     public static final String ROAD_MAP = "/fxml/RoadMap.fxml";
-
 
     public static final double SIZE_NODE = 6.0;
 

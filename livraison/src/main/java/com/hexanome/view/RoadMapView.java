@@ -73,6 +73,9 @@ public class RoadMapView extends GridPane {
 
     }
 
+    /**
+     * Display the RoadMap View
+     */
     public void display() {
         stage.show();
     }

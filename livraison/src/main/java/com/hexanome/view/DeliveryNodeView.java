@@ -33,14 +33,20 @@ public class DeliveryNodeView extends Circle implements INodeViewShape {
     /**
      * Handler for mouse click events
      *
-     * @param context
+     * @param nodeView indicate which  the node view is clicked
      */
     @Override
-    public void onMouseClickedNotify(NodeView context) {
-        UIManager.getInstance().getMainWindow().getDeliveryTreeView().selectDelivery(context);
+    public void onMouseClickedNotify(NodeView nodeView) {
+        UIManager.getInstance().getMainWindow().getDeliveryTreeView().selectDelivery(nodeView);
         ContextManager.getInstance().getCurrentState().clickOnDelivery(node.getDelivery());
     }
 
+    /**
+     * Create a PopOver and return it
+     *
+     * @param node The model node to represent by the popover.
+     * @return the popover
+     */
     @Override
     public PopOver createPopOver(com.hexanome.model.Node node) {
         return new PopOver(new PopOverContentDelivery(node));
