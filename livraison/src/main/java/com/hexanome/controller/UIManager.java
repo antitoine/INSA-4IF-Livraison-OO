@@ -153,7 +153,6 @@ public class UIManager {
 
     /**
      * Generate the road Map file
-     * (TODO : display it in a dialog)
      */
     public void generateRoadMap() {
         RoadMapView roadMapView = new RoadMapView(
@@ -167,7 +166,7 @@ public class UIManager {
     /**
      * Saves the roadmap to a file
      *
-     * @param stage
+     * @param stage Stage above which should be displayed the file Chooser
      * @param text  The text describing the road map.
      */
     public void saveRoadMapDocument(Stage stage, String text) {
