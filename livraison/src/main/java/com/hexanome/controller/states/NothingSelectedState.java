@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.hexanome.controller.states;
 
@@ -11,25 +11,25 @@ import com.hexanome.model.Node;
 /**
  * This class represents the logic state when a map and a planning
  * are loaded but no node is selected
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class NothingSelectedState extends SelectionsStates {
 
     private static NothingSelectedState nothingSelectedState = null;
 
-    private NothingSelectedState(){
+    private NothingSelectedState() {
         // Nothing to do here
     }
 
     /**
      * Returns the instance of the NothingSelectedState,
      * it is a singleton
+     *
      * @return The instance of NothingSelectedState
      */
     public static NothingSelectedState getInstance() {
-        if(nothingSelectedState == null)
-        {
+        if (nothingSelectedState == null) {
             nothingSelectedState = new NothingSelectedState();
         }
         return nothingSelectedState;
@@ -63,18 +63,19 @@ public class NothingSelectedState extends SelectionsStates {
     @Override
     public void clickOnWarehouse(Node warehouse) {
         // Show new pop over assuming none is currently open (current state assumption)
-        UIManager.getInstance().getMainWindow().getMapView().showPopOver(warehouse);        
+        UIManager.getInstance().getMainWindow().getMapView().showPopOver(warehouse);
         // Jump to WarehouseSelectedState
         ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
     }
 
     /**
      * Returns the string describing the state, used for debug only
+     *
      * @return a string describing the state
      */
     @Override
     public String toString() {
         return "NothingSelectedState"; //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

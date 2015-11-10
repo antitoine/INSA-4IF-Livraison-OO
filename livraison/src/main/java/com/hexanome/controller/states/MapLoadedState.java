@@ -10,7 +10,7 @@ import com.hexanome.view.ConstView;
 
 /**
  * This class represents the logic state when a map has been loaded
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class MapLoadedState extends DefaultState {
@@ -50,7 +50,7 @@ public class MapLoadedState extends DefaultState {
 
             // Ask user for a file to load
             UIManager.getInstance().getMainWindow().askFile();
-        } 
+        }
     }
 
     /* (non-Javadoc)
@@ -85,19 +85,20 @@ public class MapLoadedState extends DefaultState {
         }
     }
 
-    /**
-     * Returns the string describing the state, used for debug only
-     * @return a string describing the state
-     */
-    @Override
-    public String toString() {
-        return "MapLoadedState"; //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public void initView() {
         super.initView();
         UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
         UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
+    }
+
+    /**
+     * Returns the string describing the state, used for debug only
+     *
+     * @return a string describing the state
+     */
+    @Override
+    public String toString() {
+        return "MapLoadedState"; //To change body of generated methods, choose Tools | Templates.
     }
 }

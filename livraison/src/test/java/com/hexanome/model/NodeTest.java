@@ -14,11 +14,10 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- *
  * @author guillaume
  */
 public class NodeTest {
-    
+
     public NodeTest() {
     }
 
@@ -28,13 +27,13 @@ public class NodeTest {
     @Test
     public void testAttachOutgoingArc() {
         System.out.println("attachOutgoingArc");
-        Node node1 = new Node(1, new Point(10,10));
-        Node node2 = new Node(2, new Point(10,20));
-        Node node3 = new Node(3, new Point(10,30));
-        Arc arc = new Arc("hollywood",12,31,node1,node2);
-        
+        Node node1 = new Node(1, new Point(10, 10));
+        Node node2 = new Node(2, new Point(10, 20));
+        Node node3 = new Node(3, new Point(10, 30));
+        Arc arc = new Arc("hollywood", 12, 31, node1, node2);
+
         node3.attachOutgoingArc(arc); //Function tested
-        
+
         List<Arc> expResult = new ArrayList<>();
         expResult.add(arc);
         List<Arc> result = node3.getOutgoingArcs();
@@ -47,15 +46,15 @@ public class NodeTest {
     @Test
     public void testGetOutgoingArcs() {
         System.out.println("getOutgoingArcs");
-        
+
         Node node1 = new Node(1, new Point(10, 10));
         Node node2 = new Node(2, new Point(10, 20));
         Node node3 = new Node(3, new Point(10, 30));
-        
+
         Arc arc = new Arc("hollywood", 12, 31, node1, node2);
-        
-        node3.attachOutgoingArc(arc); 
-        
+
+        node3.attachOutgoingArc(arc);
+
         List<Arc> expResult = new ArrayList<>();
         expResult.add(arc);
         List<Arc> result = node3.getOutgoingArcs(); //Function tested
@@ -68,10 +67,10 @@ public class NodeTest {
     @Test
     public void testGetOutgoingArc() {
         System.out.println("getOutgoingArc");
-        
+
         Node src = new Node(1, new Point(10, 20));
         Node dest = new Node(2, new Point(10, 10));
-        
+
         Arc expResult = new Arc("hollywood", 12, 31, src, dest);
         src.attachOutgoingArc(expResult);
         
@@ -91,7 +90,7 @@ public class NodeTest {
     public void testGetId() {
         System.out.println("getId");
         int id = 2;
-        Node node = new Node(id, new Point(10,10));
+        Node node = new Node(id, new Point(10, 10));
         int result = node.getId();
         assertEquals(id, result);
     }
@@ -103,7 +102,7 @@ public class NodeTest {
     public void testGetLocation() {
         System.out.println("getLocation");
         int id = 2;
-        Point expResult = new Point(10,10);
+        Point expResult = new Point(10, 10);
         Node node = new Node(id, expResult);
         Point result = node.getLocation();
         assertEquals(expResult, result);
@@ -115,8 +114,8 @@ public class NodeTest {
     @Test
     public void testAttachDelivery() {
         System.out.println("attachDelivery");
-        Node node = new Node(1, new Point(10,10));
-        Delivery expResult = new Delivery(1,node);
+        Node node = new Node(1, new Point(10, 10));
+        Delivery expResult = new Delivery(1, node);
         node.attachDelivery(expResult); //Function tested
         Delivery result = node.getDelivery();
         assertEquals(expResult, result);
@@ -128,10 +127,10 @@ public class NodeTest {
     @Test
     public void testGetDelivery() {
         System.out.println("getDelivery");
-        Node node = new Node(1, new Point(10,10));
-        Delivery expResult = new Delivery(1,node);
+        Node node = new Node(1, new Point(10, 10));
+        Delivery expResult = new Delivery(1, node);
         node.attachDelivery(expResult);
         Delivery result = node.getDelivery(); //Function tested
         assertEquals(expResult, result);
-    }    
+    }
 }

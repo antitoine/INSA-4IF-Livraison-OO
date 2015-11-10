@@ -4,10 +4,11 @@ import com.hexanome.model.Node;
 import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+
 /**
  * This class represents the popover content specific to the
  * warehouse node
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 class PopOverContentWarehouse extends PopOverContent {

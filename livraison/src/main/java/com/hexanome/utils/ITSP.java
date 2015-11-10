@@ -7,7 +7,7 @@ package com.hexanome.utils;
 
 /**
  * Interface with the methods to use to resolve the Travelling Salesman Problem.
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface ITSP {
@@ -18,11 +18,11 @@ public interface ITSP {
      * edge stored in the graph.
      *
      * @param timeLimit The limit of time, in ms.
-     * @param graph The graph to analyse.
+     * @param graph     The graph to analyse.
      * @return Array with the solutions : the value at the index "i" is the index
      * of the previous node.
-     * @throws java.lang.InterruptedException Throws the exception in case of 
-     * interruption.
+     * @throws java.lang.InterruptedException Throws the exception in case of
+     *                                        interruption.
      */
     Integer[] computeSolution(int timeLimit, IGraph graph) throws InterruptedException;
 

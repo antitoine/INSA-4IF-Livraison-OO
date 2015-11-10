@@ -79,6 +79,19 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
     }
 
     /* (non-Javadoc)
+     * @see com.hexanome.controller.states.IState#btnGenerateRoute()
+     */
+    @Override
+    public void btnGenerateRoute() {
+        // Jump to ComputingRouteState
+        ContextManager.getInstance().setCurrentState(ComputingRouteState.getInstance());
+
+        // Launch asynchronous Route computation algorithm
+        UIManager.getInstance().beginComputingRoute();
+        ModelManager.getInstance().getPlanning().computeRoute(this);
+    }
+
+    /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#btnCloseMap()
      */
     @Override
@@ -121,17 +134,13 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#btnGenerateRoute()
-     */
     @Override
-    public void btnGenerateRoute() {
-        // Jump to ComputingRouteState
-        ContextManager.getInstance().setCurrentState(ComputingRouteState.getInstance());
-
-        // Launch asynchronous Route computation algorithm
-        UIManager.getInstance().beginComputingRoute();
-        ModelManager.getInstance().getPlanning().computeRoute(this);
+    public void initView() {
+        super.initView();
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_PLANNING);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.COMPUTE_ROUTE);
     }
 
     /**
@@ -146,28 +155,20 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
 
     /**
      * Handler for the end of the route computing.
+     *
      * @param event an event to handle the end of route computing
      */
     @Override
     public void handle(Event event) {
         // Change current state to nothing selected state
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
-        
+
         // Enable ROAD_MAP button
         UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
-        
+
         UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.COMPUTE_ROUTE);
 
         // Add MapView as a subscriber of route
         UIManager.getInstance().endRouteComputation();
-    }
-
-    @Override
-    public void initView() {
-        super.initView();
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_PLANNING);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.COMPUTE_ROUTE);
     }
 }

@@ -14,9 +14,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This class is the graphic component used to display an element 
+ * This class is the graphic component used to display an element
  * in a tree
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  * @see DeliveryTreeView
  */
@@ -69,11 +69,11 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 Delivery delivery2 = DeliveryTreeView
                         .getDeliveryFromName(targetCell.getString());
                 // DEBUG
-                Logger.getLogger(DeliveryTreeCell.class.getName()).log(Level.INFO, 
-                        String.format("Drag done %s <-> %s", 
-                        sourceCell.getString(),
-                        targetCell.getString()));
-                
+                Logger.getLogger(DeliveryTreeCell.class.getName()).log(Level.INFO,
+                        String.format("Drag done %s <-> %s",
+                                sourceCell.getString(),
+                                targetCell.getString()));
+
                 targetCell.setStyle("-fx-border-color: white;");
                 targetCell.setTextFill(Color.BLACK);
                 ContextManager.getInstance().getCurrentState()
@@ -92,7 +92,7 @@ final class DeliveryTreeCell extends TreeCell<String> {
             if (event.getDragboard().hasString()) {
                 Dragboard sourceCell = event.getDragboard();
                 DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
-                if(! targetCell.getString().equals(sourceCell.getString())) {
+                if (!targetCell.getString().equals(sourceCell.getString())) {
                     if (DeliveryTreeView.getDeliveryFromName(targetCell.getString()) != null) {
                         targetCell.setTextFill(Color.GREEN);
                         targetCell.setStyle("-fx-border-color: green;");
@@ -112,6 +112,10 @@ final class DeliveryTreeCell extends TreeCell<String> {
             }
             event.consume();
         });
+    }
+
+    private String getString() {
+        return getItem() == null ? "" : getItem();
     }
 
     @Override
@@ -136,10 +140,6 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 }
             }
         }
-    }
-
-    private String getString() {
-        return getItem() == null ? "" : getItem();
     }
 
 }

@@ -10,7 +10,7 @@ import org.controlsfx.control.PopOver;
 
 /**
  * This class is the generic graphic component equivalent of the model node
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 class NodeView extends StackPane {
@@ -22,7 +22,8 @@ class NodeView extends StackPane {
 
     /**
      * Create a node view of a defined type
-     *  @param nodeType node type
+     *
+     * @param nodeType node type
      * @param node     Node as described in the model,
      *                 which should be associated with the node view
      * @param cursor   cursor shape when overing node

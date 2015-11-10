@@ -20,23 +20,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This class provides a convenient interface to extract information from the 
- * XML description of a Planning 
- * 
+ * This class provides a convenient interface to extract information from the
+ * XML description of a Planning
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PlanningDocument extends XMLParser {
     /**
      * Creates a new instance of a PlanningDocument using the given DOM document
-     * @param dom 
+     *
+     * @param dom
      */
     public PlanningDocument(Document dom) {
         super(dom);
     }
+
     /**
      * Returns the Node matching with the warehouse described in the XML file.
+     *
      * @param map
-     * @return 
+     * @return
      */
     public Node getWarehouse(Map map) {
         // Retreive warehouse element 
@@ -52,10 +55,12 @@ public class PlanningDocument extends XMLParser {
         }
         return node;
     }
+
     /**
      * Returns a collection of timeslots extracted from the XML description
+     *
      * @param map
-     * @return 
+     * @return
      */
     public ArrayList<TimeSlot> getTimeSlots(Map map) {
         // Get all the XML nodes representing timeslots
@@ -63,7 +68,7 @@ public class PlanningDocument extends XMLParser {
         // Create the list f timeslots that will be returned 
         ArrayList<TimeSlot> timeslots = new ArrayList<>();
         // Loop on timeslots XML nodes
-        for(Element timeSlotElement : timeSlotElements) {
+        for (Element timeSlotElement : timeSlotElements) {
             // Create current timeslot
             TimeSlot ts;
             // Get all deliveries scheduled in the current timeslot
@@ -71,7 +76,7 @@ public class PlanningDocument extends XMLParser {
             // Create a list of deliveries to attach to timeslot
             ArrayList<Delivery> deliveries = new ArrayList<>();
             // Loop on each delivery
-            for(Element deliveryElement : deliveryElements) {    
+            for (Element deliveryElement : deliveryElements) {
                 // Create a delivery element
                 Delivery delivery = null;
                 try {
@@ -96,111 +101,112 @@ public class PlanningDocument extends XMLParser {
         // Return the collection of timeslots
         return timeslots;
     }
+
     /**
      * Checks the semantic integrity of the XML description using the given Map
-     * @param map
-     *      Map used to check the semantic
-     * @return 
+     *
+     * @param map Map used to check the semantic
+     * @return
      */
     public boolean checkIntegrity(Map map) {
         Element root = getDom().getRootElement();
         // TEST : check if there is only one warehouse
-        if(root.getChildren("Entrepot").size() != 1) {
+        if (root.getChildren("Entrepot").size() != 1) {
             setErrorMsg("The planning specifies zero or more than one warehouse !");
             return false; // Interrupt check here
         } else {
             // TEST : check warehouse id
-            if(root.getChild("Entrepot").getAttributeValue("adresse") != null) {
+            if (root.getChild("Entrepot").getAttributeValue("adresse") != null) {
                 try {
                     // TEST : check if id of the node referenced by the warehouse exists in the map 
                     int id = root.getChild("Entrepot").getAttribute("adresse").getIntValue();
-                    if(map.getNodeById(id) == null) {
+                    if (map.getNodeById(id) == null) {
                         setErrorMsg("The node referenced by the warehouse is missing in the map !");
                         return false; // Interrupt check here
                     }
                 } catch (DataConversionException ex) {
                     Logger.getLogger(PlanningDocument.class.getName()).log(Level.SEVERE, null, ex);
-                }                
+                }
             } else {
                 setErrorMsg("Missing <adresse> attribute in warehouse node !");
                 return false; // Interrupt check here
             }
             // TEST : check if planning file specifies one or more timeslots
-            if(root.getChildren("PlagesHoraires").get(0).getChildren().size() < 1) {
+            if (root.getChildren("PlagesHoraires").get(0).getChildren().size() < 1) {
                 setErrorMsg("At least one timeslot should be specified by planning file !");
                 return false; // Interrupt check here
             }
             // TEST : check if each timeSlot contains at least one delivery
-            for( Element ts : root.getChildren("PlagesHoraires").get(0).getChildren() ) {
-                
+            for (Element ts : root.getChildren("PlagesHoraires").get(0).getChildren()) {
+
                 // TEST : check if timeSlot attributes are not missing and correct
                 int startTime;
                 int endTime;
-                if(ts.getAttributeValue("heureDebut") != null) {
-                    startTime = TypeWrapper.timestampToSeconds(ts.getAttributeValue("heureDebut"));                    
+                if (ts.getAttributeValue("heureDebut") != null) {
+                    startTime = TypeWrapper.timestampToSeconds(ts.getAttributeValue("heureDebut"));
                 } else {
                     setErrorMsg("Missing <heureDebut> attribute in at least one timeSlot !");
                     return false; // Interrupt check here
                 }
-                if(ts.getAttributeValue("heureFin") != null) {
+                if (ts.getAttributeValue("heureFin") != null) {
                     endTime = TypeWrapper.timestampToSeconds(ts.getAttributeValue("heureFin"));
                 } else {
                     setErrorMsg("Missing <heureFin> attribute in at least one timeSlot !");
                     return false; // Interrupt check here
                 }
                 // TEST : check if endTime > startTime
-                if(startTime >= endTime) {
+                if (startTime >= endTime) {
                     setErrorMsg("At least one timeSlot has an end time before its start time !");
                     return false; // Interrupt check here
                 }
-                
+
                 List<Element> deliveries = ts.getChildren("Livraisons").get(0).getChildren();
-                if(deliveries.size() < 1) {
+                if (deliveries.size() < 1) {
                     setErrorMsg("All timeslots must specify at least one delivery !");
                     return false; // Interrupt check here
                 }
                 ArrayList<Integer> ids = new ArrayList<>();
                 ArrayList<Integer> addresses = new ArrayList<>();
-           
-                for(Element delivery : deliveries) {
+
+                for (Element delivery : deliveries) {
                     // TEST : if delivery has an address
-                    if(delivery.getAttributeValue("adresse") == null) {
+                    if (delivery.getAttributeValue("adresse") == null) {
                         setErrorMsg("At least one delivery doesn't reference it's node id !");
                         return false; // Interrupt check here
                     } else {
                         try {
-                            
+
                             int address = delivery.getAttribute("adresse").getIntValue();
                             addresses.add(address);
                             int id = delivery.getAttribute("id").getIntValue();
                             ids.add(id);
                             // TEST : if delivery reference an existing node in the map
-                            if(map.getNodeById(id) == null) {
+                            if (map.getNodeById(id) == null) {
                                 setErrorMsg("At least one delivery has its node missing in the map !");
                                 return false; // Interrupt check here
                             }
                         } catch (DataConversionException ex) {
                             Logger.getLogger(PlanningDocument.class.getName()).log(Level.SEVERE, null, ex);
-                        }                        
+                        }
                     }
                 }
                 // TEST : check if two nodes share the same id in the timeslot
                 for (Integer id : ids) {
-                    if(Collections.frequency(ids, id) > 1) {
+                    if (Collections.frequency(ids, id) > 1) {
                         setErrorMsg("At least two deliveries share the same id !");
                         return false; // Interrupt check here
                     }
                 }
                 // TEST : check if two nodes share the same address in the timeslot
                 for (Integer address : addresses) {
-                    if(Collections.frequency(addresses, address) > 1) {
+                    if (Collections.frequency(addresses, address) > 1) {
                         setErrorMsg("At least two deliveries share the same <adresse> !");
                         return false; // Interrupt check here
                     }
                 }
             }
         }
-        
+
         return true;
     }
 }

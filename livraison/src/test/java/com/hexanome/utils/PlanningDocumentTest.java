@@ -21,11 +21,10 @@ import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 
 /**
- *
  * @author paul
  */
 public class PlanningDocumentTest {
-    
+
     public PlanningDocumentTest() {
     }
 
@@ -74,10 +73,10 @@ public class PlanningDocumentTest {
             ArrayList<TimeSlot> result = instance.getTimeSlots(map);
             assertEquals(result.size(), 1); // Check number of timeslots
             assertEquals(result.get(0).getDeliveries().size(), 2); // Check number of deliveries
-            assertEquals(result.get(0).getDeliveries().get(0).getNode(), map.getNodeById(0)); 
+            assertEquals(result.get(0).getDeliveries().get(0).getNode(), map.getNodeById(0));
             assertEquals(result.get(0).getDeliveries().get(1).getNode(), map.getNodeById(1));
-            assertEquals(result.get(0).getStartTime(), 8*3600);
-            assertEquals(result.get(0).getEndTime(), 12*3600);
+            assertEquals(result.get(0).getStartTime(), 8 * 3600);
+            assertEquals(result.get(0).getEndTime(), 12 * 3600);
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(PlanningDocumentTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -106,5 +105,5 @@ public class PlanningDocumentTest {
             Logger.getLogger(PlanningDocumentTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

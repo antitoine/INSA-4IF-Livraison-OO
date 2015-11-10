@@ -7,7 +7,7 @@ package com.hexanome.utils;
 
 /**
  * Inteface representing a graph which can be used by generic algorithms.
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface IGraph {
@@ -20,13 +20,14 @@ public interface IGraph {
     /**
      * @param i The number of the initial vertex. (starts to 0)
      * @param j The number of the terminal vertex. (starts to 0)
-     * @return The cost associated with the directed arc (i, j), if it exists. 
+     * @return The cost associated with the directed arc (i, j), if it exists.
      * Otherwise, returns -1.
      */
     float getCost(int i, int j);
 
     /**
      * Check if an arc exists.
+     *
      * @param i The number of the initial vertex. (starts to 0)
      * @param j The number of the terminal vertex. (starts to 0)
      * @return True if the directed arc (i, j) exists, false otherwise.

@@ -15,7 +15,7 @@ import java.util.Map.Entry;
 /**
  * Reprensents a view of the map with nodes and arc
  * This is a one-to-one representation of the Map model
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class MapView extends AnchorPane implements Subscriber {
@@ -24,7 +24,7 @@ public class MapView extends AnchorPane implements Subscriber {
     private HashMap<NodePair, LinkedList<Arc>> arcsMap = new HashMap<>();
 
     private Node latestNodeForOpenPopOver = null;
-    
+
     @Override
     public void update(Publisher p, Object arg) {
 
@@ -34,9 +34,7 @@ public class MapView extends AnchorPane implements Subscriber {
             Map map = (Map) p;
             addArcs(map.getArcs());
             addEmptyNodes(map.getNodes().values(), Cursor.DEFAULT);
-        }
-        
-        else if (p instanceof Planning) {
+        } else if (p instanceof Planning) {
             updateMapWithDeliveries((Planning) p);
         }
 
@@ -49,70 +47,18 @@ public class MapView extends AnchorPane implements Subscriber {
             updateRouteOnMap(planning, map);
         }
     }
-    
-    /**
-     * Update the nodes which contain a delivery.
-     * @param planning The planning loaded
-     */
-    private void updateMapWithDeliveries(Planning planning) {
-        resetNodes();
-
-        planning.getTimeSlots().stream().forEach((ts) ->
-                ts.getDeliveries().stream().forEach((d) ->
-                        (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE)));
-
-        NodeView warehouseNodeView = nodeList.get(planning.getWarehouse());
-        warehouseNodeView.setType(ConstView.WAREHOUSE_NODE);
-    }
-
-    private void resetNodes() {
-        nodeList.values().stream().forEach((nodeView) ->
-                nodeView.setType(ConstView.EMPTY_NODE));
-    }
 
     /**
-     * Hide the PopOver which corresponds the node passed as paramater
+     * Remove everything from the mapView
      */
-    public void hidePopOver() {
-        if(latestNodeForOpenPopOver != null) {
-            nodeList.get(latestNodeForOpenPopOver).hidePopOver();
-            // Reset memory to avoid double closure
-            latestNodeForOpenPopOver = null;
-        }
+    public void clearMap() {
+        nodeList.clear();
+        arcsMap.clear();
+        getChildren().clear();
     }
 
-    /**
-     * Show the popover above the node passed as parameter
-     *
-     * @param node node which should display a popover
-     */
-    public void showPopOver(Node node) {
-        // Memorize latest open pop over
-        latestNodeForOpenPopOver = node;
-        // Show this pop over
-        nodeList.get(node).showPopOver();
-    }
-
-
-    private void updateRouteOnMap(Planning planning, Map map){
-        ArrayList<Arc> mapArc = new ArrayList<>(map.getArcs());
-
-        addArcs(mapArc);
-
-        addEmptyNodes(map.getNodes().values(), Cursor.HAND);
-
-        for (TimeSlot ts : planning.getTimeSlots()) {
-            for (Delivery d : ts.getDeliveries()) {
-                (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE);
-            }
-        }
-
-        NodeView warehouseNodeView = nodeList.get(planning.getWarehouse());
-        warehouseNodeView.setType(ConstView.WAREHOUSE_NODE);        
-    }
-
-    private void addArcs(Collection <Arc> arcs){
-        if (arcs == null){
+    private void addArcs(Collection<Arc> arcs) {
+        if (arcs == null) {
             return;
         }
 
@@ -123,7 +69,7 @@ public class MapView extends AnchorPane implements Subscriber {
             } else {
                 LinkedList<Arc> s = new LinkedList<>();
                 s.add(arc);
-                arcsMap.put(np, s);                
+                arcsMap.put(np, s);
             }
         }
 
@@ -146,20 +92,66 @@ public class MapView extends AnchorPane implements Subscriber {
         }
     }
 
-
     /**
-     * Remove everything from the mapView
+     * Update the nodes which contain a delivery.
+     *
+     * @param planning The planning loaded
      */
-    public void clearMap() {
-        nodeList.clear();
-        arcsMap.clear();
-        getChildren().clear();
+    private void updateMapWithDeliveries(Planning planning) {
+        resetNodes();
+
+        planning.getTimeSlots().stream().forEach((ts) ->
+                ts.getDeliveries().stream().forEach((d) ->
+                        (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE)));
+
+        NodeView warehouseNodeView = nodeList.get(planning.getWarehouse());
+        warehouseNodeView.setType(ConstView.WAREHOUSE_NODE);
     }
 
-    
+    private void updateRouteOnMap(Planning planning, Map map) {
+        ArrayList<Arc> mapArc = new ArrayList<>(map.getArcs());
 
-    
-  
+        addArcs(mapArc);
+
+        addEmptyNodes(map.getNodes().values(), Cursor.HAND);
+
+        for (TimeSlot ts : planning.getTimeSlots()) {
+            for (Delivery d : ts.getDeliveries()) {
+                (nodeList.get(d.getNode())).setType(ConstView.DELIVERY_NODE);
+            }
+        }
+
+        NodeView warehouseNodeView = nodeList.get(planning.getWarehouse());
+        warehouseNodeView.setType(ConstView.WAREHOUSE_NODE);
+    }
+
+    private void resetNodes() {
+        nodeList.values().stream().forEach((nodeView) ->
+                nodeView.setType(ConstView.EMPTY_NODE));
+    }
+
+    /**
+     * Hide the PopOver which corresponds the node passed as paramater
+     */
+    public void hidePopOver() {
+        if (latestNodeForOpenPopOver != null) {
+            nodeList.get(latestNodeForOpenPopOver).hidePopOver();
+            // Reset memory to avoid double closure
+            latestNodeForOpenPopOver = null;
+        }
+    }
+
+    /**
+     * Show the popover above the node passed as parameter
+     *
+     * @param node node which should display a popover
+     */
+    public void showPopOver(Node node) {
+        // Memorize latest open pop over
+        latestNodeForOpenPopOver = node;
+        // Show this pop over
+        nodeList.get(node).showPopOver();
+    }
 
 
 }

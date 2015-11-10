@@ -18,11 +18,10 @@ import java.util.logging.Logger;
 import static org.junit.Assert.*;
 
 /**
- *
  * @author Estelle
  */
 public class MapDocumentTest {
-    
+
     public MapDocumentTest() {
     }
 
@@ -65,5 +64,5 @@ public class MapDocumentTest {
             Logger.getLogger(MapDocumentTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

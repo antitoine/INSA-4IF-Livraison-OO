@@ -47,7 +47,7 @@ public class ModelManager {
      */
     public String initModelMap(MapDocument mapDoc) {
         String s = null;
-        if( mapDoc != null ) {
+        if (mapDoc != null) {
             if (map == null) {
                 // Map creation
                 map = new Map();
@@ -75,10 +75,10 @@ public class ModelManager {
      */
     public String initModelPlanning(PlanningDocument planDoc) {
         String s = null;
-        if( planDoc != null ) {
+        if (planDoc != null) {
             if (map != null && planning == null) {
                 // Planning creation
-                if (planDoc.checkIntegrity(map)) { 
+                if (planDoc.checkIntegrity(map)) {
                     planning = new Planning(map, planDoc.getWarehouse(map), planDoc.getTimeSlots(map));
                 } else {
                     s = planDoc.getErrorMsg();
@@ -120,7 +120,6 @@ public class ModelManager {
     }
 
     /**
-     *
      * @return
      */
     public Planning getPlanning() {

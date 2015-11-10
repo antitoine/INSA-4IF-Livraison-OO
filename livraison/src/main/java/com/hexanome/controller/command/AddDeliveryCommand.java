@@ -21,23 +21,23 @@ public class AddDeliveryCommand implements ICommand {
     /**
      * Construct a new AddDeliveryCommand to add a new delivery to the planning
      *
-     * @param node Delivery to add
-     * @param nodePreviousDelivery The node with the delivery preceding the 
-     * delivery to add
-     * @param timeSlot The time slot of the new delivery to add
+     * @param node                 Delivery to add
+     * @param nodePreviousDelivery The node with the delivery preceding the
+     *                             delivery to add
+     * @param timeSlot             The time slot of the new delivery to add
      */
     public AddDeliveryCommand(Node node, Node nodePreviousDelivery, TimeSlot timeSlot) {
         this.node = node;
         this.nodePreviousDelivery = nodePreviousDelivery;
-        this.timeSlot = timeSlot;        
+        this.timeSlot = timeSlot;
         this.delivery = null;
     }
 
     /**
      * Execute the command by adding a delivery to the planning
      *
-     * @see ICommand
      * @return
+     * @see ICommand
      */
     @Override
     public void execute() {
@@ -53,8 +53,8 @@ public class AddDeliveryCommand implements ICommand {
      * Reverse execution of the command by removing the delivery from the
      * planning
      *
-     * @see ICommand
      * @return
+     * @see ICommand
      */
     @Override
     public void reverse() {

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.hexanome.controller.states;
 
@@ -9,27 +9,27 @@ import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 
 /**
- * This class represents the logic state when warehouse is selected 
+ * This class represents the logic state when warehouse is selected
  * on the map
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class WarehouseSelectedState extends SelectionsStates {
 
     private static WarehouseSelectedState warehouseSelectedState = null;
 
-    private WarehouseSelectedState(){
+    private WarehouseSelectedState() {
         // Nothing to do here
     }
 
     /**
      * Returns the instance of the SwapDeliveriesState,
      * it is a singleton
+     *
      * @return The instance of SwapDeliveriesState
      */
     public static WarehouseSelectedState getInstance() {
-        if(warehouseSelectedState == null)
-        {
+        if (warehouseSelectedState == null) {
             warehouseSelectedState = new WarehouseSelectedState();
         }
         return warehouseSelectedState;
@@ -50,6 +50,17 @@ public class WarehouseSelectedState extends SelectionsStates {
     }
 
     /* (non-Javadoc)
+     * @see com.hexanome.controller.states.IState#clickSomewhereElse()
+     */
+    @Override
+    public void clickSomewhereElse() {
+        // Hide current pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
+        // Jump to NothingSelectedState
+        ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
+    }
+
+    /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#clickOnEmptyNode()
      */
     @Override
@@ -62,27 +73,9 @@ public class WarehouseSelectedState extends SelectionsStates {
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
 
-    /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#clickSomewhereElse()
-     */
-    @Override
-    public void clickSomewhereElse() {
-        // Hide current pop over
-        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
-        // Jump to NothingSelectedState
-        ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
-    }
-
-    /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#closePopOver()
-     */
-    @Override
-    public void closePopOver() {
-        // \todo TODO
-    }
-
     /**
      * Returns the string describing the state, used for debug only
+     *
      * @return a string describing the state
      */
     @Override

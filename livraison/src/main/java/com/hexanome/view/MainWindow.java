@@ -145,6 +145,134 @@ public class MainWindow extends AnchorPane {
         );
     }
 
+    @FXML
+    private void quitApplication() {
+        ContextManager.getInstance().exit();
+    }
+
+    /**
+     * Method to create a zoomable scroll pane
+     */
+    private Parent configureZoomScrollPane(final Group group) {
+        final StackPane zoomPane = new StackPane();
+
+        zoomPane.getChildren().add(group);
+
+        scroller = new ScrollPane();
+        scrollContent = new Group(zoomPane);
+        scroller.setContent(scrollContent);
+
+        scroller.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
+            zoomPane.setMinSize(newValue.getWidth(), newValue.getHeight());
+        });
+
+        /**
+         * Allow the zoom with mouse wheel
+         */
+        zoomPane.setOnScroll(event -> {
+            event.consume();
+
+            if (event.getDeltaY() == 0) {
+                return;
+            }
+
+            double scaleFactor;
+            if (event.getDeltaY() > 0) {
+                scaleFactor = SCALE_DELTA_WHEEL;
+            } else {
+                scaleFactor = 1 / SCALE_DELTA_WHEEL;
+            }
+
+            if (group.getScaleX() * scaleFactor < ZOOM_MAX_IN) {
+                Point2D scrollOffset = measureScrollOffset();
+                group.setScaleX(group.getScaleX() * scaleFactor);
+                group.setScaleY(group.getScaleY() * scaleFactor);
+
+                repositionScroller(scaleFactor, scrollOffset);
+            }
+
+        });
+
+        // Configuration for Panning -----------
+        final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<>();
+        scrollContent.setOnMousePressed(event -> {
+            lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+            setCursor(Cursor.MOVE);
+        });
+
+        scrollContent.setOnMouseReleased(event -> setCursor(Cursor.DEFAULT));
+
+        scrollContent.setOnMouseDragged(event -> {
+            double deltaX = event.getX() - lastMouseCoordinates.get().getX();
+            double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+            double deltaH = deltaX * (scroller.getHmax() - scroller.getHmin()) / extraWidth;
+            double desiredH = scroller.getHvalue() - deltaH;
+            scroller.setHvalue(Math.max(0, Math.min(scroller.getHmax(), desiredH)));
+            latestHPan = desiredH;
+
+            double deltaY = event.getY() - lastMouseCoordinates.get().getY();
+            double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+            double deltaV = deltaY * (scroller.getHmax() - scroller.getHmin()) / extraHeight;
+            double desiredV = scroller.getVvalue() - deltaV;
+            scroller.setVvalue(Math.max(0, Math.min(scroller.getVmax(), desiredV)));
+            latestWPan = desiredV;
+        });
+        // end configuration for Panning -----------
+
+        return scroller;
+    }
+
+    /**
+     * amount of scrolling in each direction in scrollContent coordinate
+     */
+    private Point2D measureScrollOffset() {
+        double extraWidth = scrollContent.getLayoutBounds().getWidth()
+                - scroller.getViewportBounds().getWidth();
+        double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) /
+                (scroller.getHmax() - scroller.getHmin());
+        double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
+        double extraHeight = scrollContent.getLayoutBounds().getHeight()
+                - scroller.getViewportBounds().getHeight();
+        double vScrollProportion = (scroller.getVvalue() - scroller.getVmin()) /
+                (scroller.getVmax() - scroller.getVmin());
+        double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
+        return new Point2D(scrollXOffset, scrollYOffset);
+    }
+
+    /**
+     * Permits to move the viewport so that old center remains in the center after the
+     * scaling
+     */
+    public void repositionScroller(double scaleFactor, Point2D scrollOffset) {
+        latestScaleFactor = scaleFactor;
+        latestScrollOffset = scrollOffset;
+
+        double scrollXOffset = scrollOffset.getX();
+        double scrollYOffset = scrollOffset.getY();
+        double extraWidth = scrollContent.getLayoutBounds().getWidth()
+                - scroller.getViewportBounds().getWidth();
+        if (extraWidth > 0) {
+            double halfWidth = scroller.getViewportBounds().getWidth() / 2;
+            double newScrollXOffset = (scaleFactor - 1) * halfWidth + scaleFactor * scrollXOffset;
+            scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax()
+                    - scroller.getHmin()) / extraWidth);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+        double extraHeight = scrollContent.getLayoutBounds().getHeight()
+                - scroller.getViewportBounds().getHeight();
+        if (extraHeight > 0) {
+            double halfHeight = scroller.getViewportBounds().getHeight() / 2;
+            double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
+            scroller.setVvalue(scroller.getVmin() + newScrollYOffset *
+                    (scroller.getVmax() - scroller.getVmin()) / extraHeight);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+
+
+    }
+
     /**
      * @return the deliveryTreeView
      */
@@ -169,6 +297,21 @@ public class MainWindow extends AnchorPane {
         } else {
             ContextManager.getInstance().getCurrentState().btnCancel();
             repositionToLatestPosition();
+        }
+    }
+
+    /**
+     * Reset the scroller pane to its latest position
+     * Use it to prevent the view being moved while redrawing
+     * the mapView
+     */
+    public void repositionToLatestPosition() {
+        if (latestScrollOffset != null) {
+            repositionScroller(latestScaleFactor, latestScrollOffset);
+        }
+        if (latestHPan != -1 && latestWPan != -1) {
+            scroller.setHvalue(Math.max(0, Math.min(scroller.getHmax(), latestHPan)));
+            scroller.setVvalue(Math.max(0, Math.min(scroller.getVmax(), latestWPan)));
         }
     }
 
@@ -318,11 +461,6 @@ public class MainWindow extends AnchorPane {
     }
 
     @FXML
-    private void quitApplication() {
-        ContextManager.getInstance().exit();
-    }
-
-    @FXML
     private void loadMap() {
         ContextManager.getInstance().getCurrentState().btnLoadMap();
     }
@@ -341,7 +479,7 @@ public class MainWindow extends AnchorPane {
     private void loadPlanning() {
         ContextManager.getInstance().getCurrentState().btnLoadPlanning();
     }
-    
+
     @FXML
     private void computeRoute() {
         ContextManager.getInstance().getCurrentState().btnGenerateRoute();
@@ -383,144 +521,6 @@ public class MainWindow extends AnchorPane {
     public void resetZoom() {
         mapGroup.setScaleX(1);
         mapGroup.setScaleY(1);
-    }
-
-    /**
-     * Reset the scroller pane to its latest position
-     * Use it to prevent the view being moved while redrawing
-     * the mapView
-     */
-    public void repositionToLatestPosition() {
-        if (latestScrollOffset != null) {
-            repositionScroller(latestScaleFactor, latestScrollOffset);
-        }
-        if (latestHPan != -1 && latestWPan != -1) {
-            scroller.setHvalue(Math.max(0, Math.min(scroller.getHmax(), latestHPan)));
-            scroller.setVvalue(Math.max(0, Math.min(scroller.getVmax(), latestWPan)));
-        }
-    }
-
-    /**
-     * Method to create a zoomable scroll pane
-     */
-    private Parent configureZoomScrollPane(final Group group) {
-        final StackPane zoomPane = new StackPane();
-
-        zoomPane.getChildren().add(group);
-
-        scroller = new ScrollPane();
-        scrollContent = new Group(zoomPane);
-        scroller.setContent(scrollContent);
-
-        scroller.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
-            zoomPane.setMinSize(newValue.getWidth(), newValue.getHeight());
-        });
-
-        /**
-         * Allow the zoom with mouse wheel
-         */
-        zoomPane.setOnScroll(event -> {
-            event.consume();
-
-            if (event.getDeltaY() == 0) {
-                return;
-            }
-
-            double scaleFactor;
-            if (event.getDeltaY() > 0) {
-                scaleFactor = SCALE_DELTA_WHEEL;
-            } else {
-                scaleFactor = 1 / SCALE_DELTA_WHEEL;
-            }
-
-            if (group.getScaleX() * scaleFactor < ZOOM_MAX_IN) {
-                Point2D scrollOffset = measureScrollOffset();
-                group.setScaleX(group.getScaleX() * scaleFactor);
-                group.setScaleY(group.getScaleY() * scaleFactor);
-
-                repositionScroller(scaleFactor, scrollOffset);
-            }
-
-        });
-
-        // Configuration for Panning -----------
-        final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<>();
-        scrollContent.setOnMousePressed(event -> {
-            lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
-            setCursor(Cursor.MOVE);
-        });
-
-        scrollContent.setOnMouseReleased(event -> setCursor(Cursor.DEFAULT));
-
-        scrollContent.setOnMouseDragged(event -> {
-            double deltaX = event.getX() - lastMouseCoordinates.get().getX();
-            double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
-            double deltaH = deltaX * (scroller.getHmax() - scroller.getHmin()) / extraWidth;
-            double desiredH = scroller.getHvalue() - deltaH;
-            scroller.setHvalue(Math.max(0, Math.min(scroller.getHmax(), desiredH)));
-            latestHPan = desiredH;
-
-            double deltaY = event.getY() - lastMouseCoordinates.get().getY();
-            double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
-            double deltaV = deltaY * (scroller.getHmax() - scroller.getHmin()) / extraHeight;
-            double desiredV = scroller.getVvalue() - deltaV;
-            scroller.setVvalue(Math.max(0, Math.min(scroller.getVmax(), desiredV)));
-            latestWPan = desiredV;
-        });
-        // end configuration for Panning -----------
-
-        return scroller;
-    }
-
-    /**
-     * Permits to move the viewport so that old center remains in the center after the
-     * scaling
-     */
-    public void repositionScroller(double scaleFactor, Point2D scrollOffset) {
-        latestScaleFactor = scaleFactor;
-        latestScrollOffset = scrollOffset;
-
-        double scrollXOffset = scrollOffset.getX();
-        double scrollYOffset = scrollOffset.getY();
-        double extraWidth = scrollContent.getLayoutBounds().getWidth()
-                - scroller.getViewportBounds().getWidth();
-        if (extraWidth > 0) {
-            double halfWidth = scroller.getViewportBounds().getWidth() / 2;
-            double newScrollXOffset = (scaleFactor - 1) * halfWidth + scaleFactor * scrollXOffset;
-            scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax()
-                    - scroller.getHmin()) / extraWidth);
-        } else {
-            scroller.setHvalue(scroller.getHmin());
-        }
-        double extraHeight = scrollContent.getLayoutBounds().getHeight()
-                - scroller.getViewportBounds().getHeight();
-        if (extraHeight > 0) {
-            double halfHeight = scroller.getViewportBounds().getHeight() / 2;
-            double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
-            scroller.setVvalue(scroller.getVmin() + newScrollYOffset *
-                    (scroller.getVmax() - scroller.getVmin()) / extraHeight);
-        } else {
-            scroller.setHvalue(scroller.getHmin());
-        }
-
-
-    }
-
-    /**
-     * amount of scrolling in each direction in scrollContent coordinate
-     */
-    private Point2D measureScrollOffset() {
-        double extraWidth = scrollContent.getLayoutBounds().getWidth()
-                - scroller.getViewportBounds().getWidth();
-        double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) /
-                (scroller.getHmax() - scroller.getHmin());
-        double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
-        double extraHeight = scrollContent.getLayoutBounds().getHeight()
-                - scroller.getViewportBounds().getHeight();
-        double vScrollProportion = (scroller.getVvalue() - scroller.getVmin()) /
-                (scroller.getVmax() - scroller.getVmin());
-        double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
-        return new Point2D(scrollXOffset, scrollYOffset);
     }
 
 }

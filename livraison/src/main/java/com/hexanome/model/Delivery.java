@@ -32,7 +32,7 @@ public class Delivery implements Comparable<Delivery> {
     /**
      * Constructor.
      *
-     * @param id the id of the delivery
+     * @param id   the id of the delivery
      * @param node the node where the delivery will be attached
      */
     public Delivery(int id, Node node) {
@@ -78,6 +78,7 @@ public class Delivery implements Comparable<Delivery> {
 
     /**
      * Returns the time whend the delivery is done.
+     *
      * @return The end time of the delivery.
      */
     public float getDeliveryEndTime() {

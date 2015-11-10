@@ -11,9 +11,9 @@ import javafx.scene.text.Text;
 import org.controlsfx.glyphfont.Glyph;
 
 /**
- * This class represents the popover content specific to a 
+ * This class represents the popover content specific to a
  * delivery node
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 class PopOverContentDelivery extends PopOverContent {
@@ -22,7 +22,6 @@ class PopOverContentDelivery extends PopOverContent {
     private Text adressText;
 
     /**
-     *
      * @param node
      */
     public PopOverContentDelivery(Node node) {
@@ -42,7 +41,7 @@ class PopOverContentDelivery extends PopOverContent {
 
         if (node.getDelivery() != null && node.getDelivery().getDeliveryTime() != 0) {
             adressText.setText(adressText.getText() + "\n"
-                    + "Delivery Time : " 
+                    + "Delivery Time : "
                     + TypeWrapper.secondsToTimestamp((int) node.getDelivery().getDeliveryTime()));
         }
     }

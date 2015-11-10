@@ -28,13 +28,13 @@ class PlanningComputeRouteWorker extends Task<Void> {
      * Constructor of the worker thread.
      *
      * @param planning The planning to use to compute the route.
-     * @param handler The handler to notify when the task ends.
+     * @param handler  The handler to notify when the task ends.
      */
     public PlanningComputeRouteWorker(Planning planning, EventHandler handler) {
         this.planning = planning;
         setOnSucceeded(handler);
     }
-    
+
     /**
      * Constructor of the worker thread, without handler to notify when the task
      * is done.
@@ -52,7 +52,7 @@ class PlanningComputeRouteWorker extends Task<Void> {
         List<TimeSlot> timeSlots = planning.getTimeSlots();
         Node warehouse = planning.getWarehouse();
         Map map = planning.getMap();
-        
+
         map.resetArcs();
 
         // Time slots processing
@@ -106,7 +106,7 @@ class PlanningComputeRouteWorker extends Task<Void> {
         } catch (InterruptedException ex) {
             return null;
         }
-        
+
         if (solutions == null || solutions[0] == null) {
             throw new ArithmeticException("Any route can't be found with the current map and planning");
         }

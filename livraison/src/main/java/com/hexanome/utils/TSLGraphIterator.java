@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 /**
  * Iterator on IGraph for ITSP algorithm.
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 class TSLGraphIterator implements Iterator<Integer> {

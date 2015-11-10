@@ -19,9 +19,9 @@ import java.io.IOException;
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class DocumentFactory {
-    
+
     private static String error = null;
-    
+
     /**
      * Creates a MapDocument object from the given File object
      *
@@ -81,10 +81,12 @@ public class DocumentFactory {
     public static RouteDocument createRouteDocument(File file) {
         return new RouteDocument(file);
     }
+
     /**
      * Returns last error that occured in the XML factory described in
      * a string, if no error is set, returns null.
-     * @return 
+     *
+     * @return
      */
     public static String getLastError() {
         return DocumentFactory.error;

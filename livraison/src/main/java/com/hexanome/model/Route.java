@@ -30,7 +30,7 @@ public class Route implements Publisher {
      * Planning associated with this route.
      */
     private Planning planning;
-    
+
     /**
      * Total duration of the route.
      */
@@ -41,16 +41,69 @@ public class Route implements Publisher {
      * deliveries times.
      *
      * @param planning
-     * @param paths The paths representing the route.
+     * @param paths    The paths representing the route.
      */
     public Route(Planning planning, LinkedList<Path> paths) {
         this.planning = planning;
         this.paths = paths;
         this.totalDistance = 0f;
         subscribers = new ArrayList<>();
-        
+
         updateDeliveriesTime();
         updateArcTimeSlots();
+    }
+
+    /**
+     * Update the delivery time of each delivery contained in the path
+     * collection.
+     */
+    private void updateDeliveriesTime() {
+        // Get for each path the delivery object to update
+        for (int i = 0, iMax = paths.size() - 1; i <= iMax; ++i) {
+            Path path = paths.get(i);
+
+            Delivery delivery = path.getLastNode().getDelivery();
+            Delivery previousDelivery = path.getFirstNode().getDelivery();
+
+            totalDistance += path.getPathDistance();
+
+            if (delivery != null) {
+                float deliveryTime = path.getPathDuration();
+
+                if (previousDelivery != null) {
+                    deliveryTime += previousDelivery.getDeliveryEndTime();
+                } else { // Start is warehouse
+                    deliveryTime += delivery.getTimeSlot().getStartTime();
+                }
+
+                if (deliveryTime < delivery.getTimeSlot().getStartTime()) {
+                    delivery.setDeliveryTime(delivery.getTimeSlot().getStartTime());
+                } else {
+                    delivery.setDeliveryTime(deliveryTime);
+                }
+            }
+        }
+    }
+
+    /**
+     * Update the associated time slots of the arcs contained in the path.
+     */
+    private void updateArcTimeSlots() {
+        planning.getMap().resetArcs();
+
+        for (Path p : paths) {
+            Delivery delivery = p.getLastNode().getDelivery();
+
+            if (delivery == null) {
+                delivery = p.getFirstNode().getDelivery();
+            }
+
+            if (delivery != null) {
+                for (Arc arc : p.getArcs()) {
+                    arc.addAssociatedTimeSlot(delivery.getTimeSlot());
+                }
+            }
+        }
     }
 
     /**
@@ -61,37 +114,38 @@ public class Route implements Publisher {
     public List<Path> getPaths() {
         return Collections.unmodifiableList(paths);
     }
-    
+
     /**
      * Returns the total distance travelled with the compute route.
+     *
      * @return The total distance of the route.
      */
     public float getTotalDistance() {
         return totalDistance;
     }
-    
+
+    public float getTotalDuration() {
+        if (paths.isEmpty()) {
+            return 0;
+        }
+
+        return getEndTime() - getStartTime();
+    }
+
+    public float getEndTime() {
+        if (paths.isEmpty()) {
+            return 0;
+        }
+        Path lastPath = paths.get(paths.size() - 1);
+        return lastPath.getFirstNode().getDelivery().getDeliveryEndTime() + lastPath.getPathDuration();
+    }
+
     public float getStartTime() {
         if (paths.isEmpty()) {
             return 0;
         }
         Path firstPath = paths.get(0);
         return firstPath.getLastNode().getDelivery().getDeliveryTime() - firstPath.getPathDuration();
-    }
-    
-    public float getEndTime() {
-        if (paths.isEmpty()) {
-            return 0;
-        }
-        Path lastPath = paths.get(paths.size()-1);
-        return lastPath.getFirstNode().getDelivery().getDeliveryEndTime() + lastPath.getPathDuration();
-    }
-    
-    public float getTotalDuration() {        
-        if (paths.isEmpty()) {
-            return 0;
-        }
-        
-        return getEndTime() - getStartTime();
     }
 
     /**
@@ -133,63 +187,11 @@ public class Route implements Publisher {
     }
 
     /**
-     * Update the delivery time of each delivery contained in the path
-     * collection.
-     */
-    private void updateDeliveriesTime() {
-        // Get for each path the delivery object to update
-        for (int i = 0, iMax = paths.size() - 1; i <= iMax; ++i) {
-            Path path = paths.get(i);
-
-            Delivery delivery = path.getLastNode().getDelivery();
-            Delivery previousDelivery = path.getFirstNode().getDelivery();
-
-            totalDistance += path.getPathDistance();
-            
-            if (delivery != null) {
-                float deliveryTime = path.getPathDuration();
-
-                if (previousDelivery != null) {
-                    deliveryTime += previousDelivery.getDeliveryEndTime();
-                } else { // Start is warehouse
-                    deliveryTime += delivery.getTimeSlot().getStartTime();
-                }
-
-                if (deliveryTime < delivery.getTimeSlot().getStartTime()) {
-                    delivery.setDeliveryTime(delivery.getTimeSlot().getStartTime());
-                } else {
-                    delivery.setDeliveryTime(deliveryTime);
-                }
-            }
-        }
-    }
-
-    /**
-     * Update the associated time slots of the arcs contained in the path.
-     */
-    private void updateArcTimeSlots() {
-        planning.getMap().resetArcs();
-
-        for (Path p : paths) {
-            Delivery delivery = p.getLastNode().getDelivery();
-
-            if (delivery == null) {
-                delivery = p.getFirstNode().getDelivery();
-            }
-
-            if (delivery != null) {
-                for (Arc arc : p.getArcs()) {
-                    arc.addAssociatedTimeSlot(delivery.getTimeSlot());
-                }
-            }
-        }
-    }
-
-    /**
      * Adds a delivery to the route, and notify the subscribers.
-     * @param delivery The delivery to add
+     *
+     * @param delivery             The delivery to add
      * @param nodePreviousDelivery The node with the delivery that will be
-     * executed before the one to add.
+     *                             executed before the one to add.
      */
     void addDelivery(Delivery delivery, Node nodePreviousDelivery) {
         addDelivery(delivery, nodePreviousDelivery, true);
@@ -198,10 +200,10 @@ public class Route implements Publisher {
     /**
      * Adds a delivery to the route.
      *
-     * @param delivery the delivery to add.
+     * @param delivery             the delivery to add.
      * @param nodePreviousDelivery The node with the delivery that will be
-     * executed before the one to add.
-     * @param update Notify the subscribers if update is true.
+     *                             executed before the one to add.
+     * @param update               Notify the subscribers if update is true.
      */
     private void addDelivery(Delivery delivery, Node nodePreviousDelivery, boolean update) {
         // Find the previous delivery in the list of paths
@@ -210,8 +212,8 @@ public class Route implements Publisher {
 
         boolean previousPathFound = false;
         for (int indexPath = 0, maxIndexPath = paths.size() - 1;
-                !previousPathFound && indexPath <= maxIndexPath;
-                ++indexPath) {
+             !previousPathFound && indexPath <= maxIndexPath;
+             ++indexPath) {
             Path p = paths.get(indexPath);
 
             Node currentNode = p.getFirstNode();
@@ -255,7 +257,7 @@ public class Route implements Publisher {
 
     /**
      * Remove a delivery from the route and notify the subscribers.
-     * 
+     *
      * @param deliveryToRemove The delivery to remove.
      */
     void removeDelivery(Delivery deliveryToRemove) {
@@ -266,7 +268,7 @@ public class Route implements Publisher {
      * Removes a delivery from the route.
      *
      * @param deliveryToRemove the delivery to remove.
-     * @param update Notify the subscribers if update is true.
+     * @param update           Notify the subscribers if update is true.
      */
     private void removeDelivery(Delivery deliveryToRemove, boolean update) {
         // Search the path to remove, according to the delivery to remove
@@ -274,8 +276,8 @@ public class Route implements Publisher {
         boolean pathToRemoveFound = false;
         Path pathToRemove = null;
         for (int indexPath = 0, maxIndex = paths.size() - 1;
-                indexPath <= maxIndex && !pathToRemoveFound;
-                ++indexPath) {
+             indexPath <= maxIndex && !pathToRemoveFound;
+             ++indexPath) {
             Path path = paths.get(indexPath);
             Node currentNode = path.getLastNode();
             if (currentNode != null && currentNode.equals(deliveryToRemove.getNode())) {
@@ -311,7 +313,7 @@ public class Route implements Publisher {
                 updateArcTimeSlots();
 
                 notifySubscribers();
-            }            
+            }
         }
     }
 
@@ -324,7 +326,7 @@ public class Route implements Publisher {
     void swapDeliveries(Delivery delivery1, Delivery delivery2) {
 
         Delivery previousDelivery = null, nextDelivery = null;
-        
+
         // Find the delivery done first.
         for (Path path : paths) {
             Delivery destDelivery = path.getLastNode().getDelivery();
@@ -343,7 +345,7 @@ public class Route implements Publisher {
         if (previousDelivery != null && nextDelivery != null) {
             TimeSlot timeSlot = nextDelivery.getTimeSlot();
             removeDelivery(nextDelivery, false);
-            
+
             timeSlot.addDelivery(nextDelivery);
             addDelivery(nextDelivery, previousDelivery.getNode(), false);
 
