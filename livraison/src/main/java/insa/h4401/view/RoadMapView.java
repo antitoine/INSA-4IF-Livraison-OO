@@ -27,17 +27,14 @@ public class RoadMapView extends GridPane {
     @FXML
     private
     TextFlow roadMapDescription;
-
     @FXML
     private
     Button saveButton;
-
     @FXML
     private
     Button cancelButton;
 
     private String roadMapDescriptionBrutText;
-
     private Stage stage;
 
     public RoadMapView(final LinkedList<Text> texts) {
@@ -58,7 +55,6 @@ public class RoadMapView extends GridPane {
                 sb.append(text.getText());
             }
             roadMapDescriptionBrutText = sb.toString();
-
             roadMapDescription.setPrefHeight(480);
             roadMapDescription.getChildren().addAll(texts);
 
@@ -68,9 +64,8 @@ public class RoadMapView extends GridPane {
 
         stage.setResizable(false);
         cancelButton.setOnAction(event -> stage.close());
-
-        saveButton.setOnAction(event -> UIManager.getInstance().saveRoadMapDocument(stage, roadMapDescriptionBrutText));
-
+        saveButton.setOnAction(event ->
+                UIManager.getInstance().saveRoadMapDocument(stage, roadMapDescriptionBrutText));
     }
 
     /**

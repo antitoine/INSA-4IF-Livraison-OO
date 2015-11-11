@@ -8,9 +8,7 @@
 <?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.StatusBar?>
 <?import org.controlsfx.glyphfont.*?>
-<fx:root xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-         minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" type="AnchorPane"
-         xmlns="http://javafx.com/javafx/8">
+<fx:root xmlns:fx="http://javafx.com/fxml/1" type="AnchorPane" xmlns="http://javafx.com/javafx/8">
     <children>
         <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -103,6 +101,20 @@
                                                   onAction="#redo" text="%redo">
                                             <accelerator>
                                                 <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP"
+                                                                    shift="UP" shortcut="UP"/>
+                                            </accelerator>
+                                        </MenuItem>
+                                        <MenuItem fx:id="mntmComputeRoute" disable="true" mnemonicParsing="false"
+                                                  onAction="#computeRoute" text="%compute_route">
+                                            <accelerator>
+                                                <KeyCodeCombination alt="UP" code="ENTER" control="DOWN" meta="UP"
+                                                                    shift="UP" shortcut="UP"/>
+                                            </accelerator>
+                                        </MenuItem>
+                                        <MenuItem fx:id="mntmGenerateRoadMap" disable="true" mnemonicParsing="false"
+                                                  onAction="#generateRoadMap" text="%generate_roadmap">
+                                            <accelerator>
+                                                <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP"
                                                                     shift="UP" shortcut="UP"/>
                                             </accelerator>
                                         </MenuItem>

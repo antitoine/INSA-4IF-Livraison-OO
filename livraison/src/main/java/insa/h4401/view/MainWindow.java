@@ -79,6 +79,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     private MenuItem mntmRedo;
     @FXML
+    private MenuItem mntmGenerateRoadMap;
+    @FXML
+    private MenuItem mntmComputeRoute;
+    @FXML
     private Button btnComputeRoute;
     @FXML
     private Button btnRoadMap;
@@ -369,6 +373,7 @@ public class MainWindow extends AnchorPane {
                 break;
             case ROAD_MAP:
                 btnRoadMap.setDisable(isEnable);
+                mntmGenerateRoadMap.setDisable(isEnable);
                 break;
             case LOAD_PLANNING:
                 mntmLoadPlanning.setDisable(isEnable);
@@ -376,6 +381,7 @@ public class MainWindow extends AnchorPane {
                 break;
             case COMPUTE_ROUTE:
                 btnComputeRoute.setDisable(isEnable);
+                mntmComputeRoute.setDisable(isEnable);
                 break;
             case CLEAR_MAP:
                 mntmClearMap.setDisable(isEnable);
