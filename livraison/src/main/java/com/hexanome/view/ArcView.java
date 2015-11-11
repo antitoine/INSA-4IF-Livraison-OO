@@ -23,13 +23,14 @@ import java.util.Map.Entry;
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class ArcView {
+class ArcView {
 
     private LinkedList<Entry<Arc, Color>> arcs;
     private Pane mapPane;
 
     /**
      * Builds a new instance of arc view
+     *
      * @param tsArcs list of arcs for the arcView
      */
     public ArcView(final LinkedList<Arc> tsArcs, Pane pane) {
@@ -46,22 +47,6 @@ public class ArcView {
                 }
             }
         }
-    }
-
-
-    private boolean isATwoWayTrip() {
-        boolean isATwoWayTrip = false;
-        if (arcs.size() == 2) {
-            isATwoWayTrip = true;
-            Color tempColor = arcs.get(0).getValue();
-            for (Entry<Arc, Color> entry : arcs) {
-                if (!entry.getValue().equals(tempColor)) {
-                    isATwoWayTrip = false;
-                    break;
-                }
-            }
-        }
-        return isATwoWayTrip;
     }
 
     /**
@@ -162,6 +147,43 @@ public class ArcView {
 
     }
 
+    /**
+     * Return true if there is only two arcs of the same color
+     */
+    private boolean isATwoWayTrip() {
+        boolean isATwoWayTrip = false;
+        if (arcs.size() == 2) {
+            isATwoWayTrip = true;
+            Color tempColor = arcs.get(0).getValue();
+            for (Entry<Arc, Color> entry : arcs) {
+                if (!entry.getValue().equals(tempColor)) {
+                    isATwoWayTrip = false;
+                    break;
+                }
+            }
+        }
+        return isATwoWayTrip;
+    }
+
+    /**
+     * Draws a line between two points
+     */
+    private Line drawLine(Point src, Point dest) {
+        Line line = new Line();
+
+        double angle = Math.atan2(dest.y - src.y, dest.x - src.x);
+
+        double deltaX2 = Math.cos(angle) * (ConstView.SIZE_NODE + 1);
+        double deltaY2 = Math.sin(angle) * (ConstView.SIZE_NODE + 1);
+
+        line.setStartX(src.x);
+        line.setStartY(src.y);
+
+        line.setEndX(dest.x - deltaX2);
+        line.setEndY(dest.y - deltaY2);
+
+        return line;
+    }
 
     /**
      * Draws an arrow at the end of a imaginary line
@@ -184,26 +206,6 @@ public class ArcView {
         arrow.setRotate(Math.toDegrees(angle));
 
         return arrow;
-    }
-
-    /**
-     * Draws a line between two points
-     */
-    private Line drawLine(Point src, Point dest) {
-        Line line = new Line();
-
-        double angle = Math.atan2(dest.y - src.y, dest.x - src.x);
-
-        double deltaX2 = Math.cos(angle) * (ConstView.SIZE_NODE + 1);
-        double deltaY2 = Math.sin(angle) * (ConstView.SIZE_NODE + 1);
-
-        line.setStartX(src.x);
-        line.setStartY(src.y);
-
-        line.setEndX(dest.x - deltaX2);
-        line.setEndY(dest.y - deltaY2);
-
-        return line;
     }
 
     private void addTooltip(Node node, Arc arc) {

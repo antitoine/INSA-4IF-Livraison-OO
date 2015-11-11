@@ -44,6 +44,11 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
         if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
             // Full clear model
             ModelManager.getInstance().clearModel();
+
+            UIManager.getInstance().getMainWindow().getMapView().clearMap();
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
+
             // Jump to MapSelectState
             ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
             // Ask user for the map to load
@@ -59,12 +64,31 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
         // WARNING : calls order matters
         // Clear current model's planning
         if (UIManager.getInstance().askConfirmation("Current planning will be lost.")) {
+
             ModelManager.getInstance().clearPlanning();
+
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
+
             // Jump to PlanningSelectState
             ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
+
             // Ask user for planning file to load
             UIManager.getInstance().getMainWindow().askFile();
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.hexanome.controller.states.IState#btnGenerateRoute()
+     */
+    @Override
+    public void btnGenerateRoute() {
+        // Jump to ComputingRouteState
+        ContextManager.getInstance().setCurrentState(ComputingRouteState.getInstance());
+
+        // Launch asynchronous Route computation algorithm
+        UIManager.getInstance().beginComputingRoute();
+        ModelManager.getInstance().getPlanning().computeRoute(this);
     }
 
     /* (non-Javadoc)
@@ -80,6 +104,7 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
             ModelManager.getInstance().clearModel();
             UIManager.getInstance().getMainWindow().getMapView().clearMap();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
 
             UIManager.getInstance().getMainWindow().endLoadingState();
 
@@ -100,6 +125,7 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
             // Clear model's current planning
             ModelManager.getInstance().clearPlanning();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
 
             UIManager.getInstance().getMainWindow().endLoadingState();
 
@@ -108,17 +134,13 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#btnGenerateRoute()
-     */
     @Override
-    public void btnGenerateRoute() {
-        // Jump to ComputingRouteState
-        ContextManager.getInstance().setCurrentState(ComputingRouteState.getInstance());
-
-        // Launch asynchronous Route computation algorithm
-        UIManager.getInstance().beginComputingRoute();
-        ModelManager.getInstance().getPlanning().computeRoute(this);
+    public void initView() {
+        super.initView();
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_PLANNING);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
+        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.COMPUTE_ROUTE);
     }
 
     /**
@@ -133,16 +155,17 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
 
     /**
      * Handler for the end of the route computing.
+     *
      * @param event an event to handle the end of route computing
      */
     @Override
     public void handle(Event event) {
         // Change current state to nothing selected state
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
-        
-        // Enable ROAD_MAP button
-        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.ROAD_MAP, true);
 
+        // Enable ROAD_MAP button
+
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.ROAD_MAP, true);
         UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.COMPUTE_ROUTE, false);
 
         // Add MapView as a subscriber of route

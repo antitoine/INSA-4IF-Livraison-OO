@@ -9,7 +9,7 @@ import java.io.File;
 /**
  * This interface defines all the methods that should be implemented
  * by logical states
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface IState {
@@ -36,8 +36,8 @@ public interface IState {
 
     /**
      * Click on button to load file
-     * @param file
-     *      file to load as a map or a planning depending on the state
+     *
+     * @param file file to load as a map or a planning depending on the state
      */
     void btnValidateFile(File file);
 
@@ -48,17 +48,16 @@ public interface IState {
 
     /**
      * Left click released on another delivery
-     * @param sourceDelivery
-     *      Delivery to switch with target delivery
-     * @param targetDelivery 
-     *      Delivery to switch with sourceDelivery
+     *
+     * @param sourceDelivery Delivery to switch with target delivery
+     * @param targetDelivery Delivery to switch with sourceDelivery
      */
     void leftClickReleased(Delivery sourceDelivery, Delivery targetDelivery);
 
     /**
      * Simple click on a delivery
-     * @param delivery 
-     *      the delivery clicked
+     *
+     * @param delivery the delivery clicked
      */
     void clickOnDelivery(Delivery delivery);
 
@@ -68,39 +67,32 @@ public interface IState {
     void clickSomewhereElse();
 
     /**
-     * Click on button to close the pop over
-     */
-    void closePopOver();
-
-    /**
      * Click on an empty node (not a delivery or warehouse node)
-     * @param node 
-     *      The empty node clicked
+     *
+     * @param node The empty node clicked
      */
     void clickOnEmptyNode(Node node);
 
     /**
      * Click on button to add a new delivery
-     * @param node 
-     *      The node to deliver
-     * @param previousDeliveryNode 
-     *      The nodewith the previous delivery
-     * @param timeSlot 
-     *      The time slot of the new delivery
+     *
+     * @param node                 The node to deliver
+     * @param previousDeliveryNode The nodewith the previous delivery
+     * @param timeSlot             The time slot of the new delivery
      */
     void btnAddDelivery(Node node, Node previousDeliveryNode, TimeSlot timeSlot);
 
     /**
      * Click on button to remove a delivery
-     * @param delivery
-     *      The delivery to remove
+     *
+     * @param delivery The delivery to remove
      */
     void btnRemoveDelivery(Delivery delivery);
 
     /**
      * Click on a specific node : the warehouse
-     * @param warehouse
-     *      The warehouse node clicked
+     *
+     * @param warehouse The warehouse node clicked
      */
     void clickOnWarehouse(Node warehouse);
 

@@ -1,11 +1,12 @@
 package com.hexanome.model;
 
 import com.hexanome.utils.AbstractTSP;
+
 import java.util.Collection;
 
 /**
- *  This class represents \todo javadoc here
- * 
+ * This class represents \todo javadoc here
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class RouteTSP extends AbstractTSP {

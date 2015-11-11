@@ -9,11 +9,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * This class represents a planning, a collection of deliveries 
+ * This class represents a planning, a collection of deliveries
  * contained in timeslots.
- * 
- * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  *
+ * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Planning implements Publisher {
 
@@ -44,7 +43,8 @@ public class Planning implements Publisher {
 
     /**
      * Constructor.
-     * @param map the map related to this planning.
+     *
+     * @param map       the map related to this planning.
      * @param warehouse the warehouse.
      * @param timeSlots all the timeslots where a delivery can be executed.
      */
@@ -58,6 +58,15 @@ public class Planning implements Publisher {
 
         initNodesTimeSlot();
 
+    }
+
+    private void initNodesTimeSlot() {
+        map.resetNodes();
+        for (TimeSlot ts : timeSlots) {
+            for (Delivery delivery : ts.getDeliveries()) {
+                delivery.updateNode();
+            }
+        }
     }
 
     /**
@@ -77,6 +86,7 @@ public class Planning implements Publisher {
 
     /**
      * Returns all the time slots.
+     *
      * @return the list of all the time slots.
      */
     public List<TimeSlot> getTimeSlots() {
@@ -85,6 +95,7 @@ public class Planning implements Publisher {
 
     /**
      * Returns the first time slot, with the lowest start date.
+     *
      * @return The first time slot, or null if it doesn't exist.
      */
     public TimeSlot getFirstTimeSlot() {
@@ -93,6 +104,7 @@ public class Planning implements Publisher {
 
     /**
      * Returns the map corresponding to this planning.
+     *
      * @return the map.
      */
     public Map getMap() {
@@ -101,15 +113,17 @@ public class Planning implements Publisher {
 
     /**
      * Returns the unique warehouse of this planning.
+     *
      * @return the warehouse.
      */
     public Node getWarehouse() {
         return warehouse;
     }
-    
+
     /**
      * Returns a collection of deliveries present in the planning whatever the
      * associated timeslot is.
+     *
      * @return a collection of deliveries
      */
     public List<Delivery> getDeliveries() {
@@ -122,12 +136,13 @@ public class Planning implements Publisher {
 
     /**
      * Returns the route created from this planning.
+     *
      * @return the route.
      */
     public Route getRoute() {
         return route;
     }
-    
+
     /**
      * Update the route and notify the subscribers.
      *
@@ -153,22 +168,24 @@ public class Planning implements Publisher {
         planningComputeRouteWorker = new PlanningComputeRouteWorker(this, handler);
         new Thread(planningComputeRouteWorker).start();
     }
-    
+
     /**
      * Compute the route synchronously. Update the deliveries time.
+     *
      * @throws java.lang.Exception Ifthe route can't be computed.
      */
     public void computeRoute() throws Exception {
         planningComputeRouteWorker = new PlanningComputeRouteWorker(this);
         planningComputeRouteWorker.call();
     }
+
     /**
      * Adds a delivery to the planning, after another delivery.
      *
-     * @param node The node where we want to add a delivery
+     * @param node                 The node where we want to add a delivery
      * @param nodePreviousDelivery The node where is the delivery to do before
-     * the new one we want to add.
-     * @param timeSlot The time slot in which we want the new delivery to be.
+     *                             the new one we want to add.
+     * @param timeSlot             The time slot in which we want the new delivery to be.
      * @return The delivery newly created.
      */
     public Delivery addDelivery(Node node, Node nodePreviousDelivery, TimeSlot timeSlot) {
@@ -183,6 +200,7 @@ public class Planning implements Publisher {
 
         return null;
     }
+
     /**
      * Removes a delivery from the planning.
      *
@@ -190,7 +208,7 @@ public class Planning implements Publisher {
      */
     public void removeDelivery(Delivery delivery) {
         if (route != null) {
-            route.removeDelivery(delivery);   
+            route.removeDelivery(delivery);
             notifySubscribers();
         }
     }
@@ -202,30 +220,33 @@ public class Planning implements Publisher {
      * @param delivery2 the second delivery to swap.
      */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
-        if (route != null) {            
+        if (route != null) {
             route.swapDeliveries(delivery1, delivery2);
             notifySubscribers();
         }
     }
+
     /**
      * Adds a subscriber
-     * @param s 
-     *      Subscriber to add
+     *
+     * @param s Subscriber to add
      */
     @Override
     public void addSubscriber(Subscriber s) {
         subscribers.add(s);
         s.update(this, null);
     }
+
     /**
      * Remove one subscriber
-     * @param s 
-     *      Subscriber to remove
+     *
+     * @param s Subscriber to remove
      */
     @Override
     public void removeSubscriber(Subscriber s) {
         subscribers.remove(s);
     }
+
     /**
      * Notifies all subscribers
      */
@@ -235,6 +256,7 @@ public class Planning implements Publisher {
             s.update(this, null);
         }
     }
+
     /**
      * Removes all subscribers
      */
@@ -242,9 +264,10 @@ public class Planning implements Publisher {
     public void clearSubscribers() {
         subscribers.clear();
     }
-    
+
     /**
      * Returns the string describing the objet, used for debug only
+     *
      * @return a string describing the object
      */
     @Override
@@ -261,15 +284,6 @@ public class Planning implements Publisher {
                 + "%s\n"
                 + "}"
                 + "}", warehouse.getId(), strts);
-    }
-
-    private void initNodesTimeSlot() {
-        map.resetNodes();
-        for (TimeSlot ts : timeSlots) {
-            for (Delivery delivery : ts.getDeliveries()) {
-                delivery.updateNode();
-            }
-        }
     }
 
 }

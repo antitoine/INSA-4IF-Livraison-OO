@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * This class represents a node, which can be the beginning
  * point of at least one outgoing street.
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Node {
@@ -33,7 +33,8 @@ public class Node {
 
     /**
      * Constructor.
-     * @param id the id of the node.
+     *
+     * @param id       the id of the node.
      * @param location the location of the node on the map.
      */
     public Node(int id, Point location) {
@@ -45,6 +46,7 @@ public class Node {
 
     /**
      * Returns the id of the node.
+     *
      * @return the id.
      */
     public int getId() {
@@ -53,6 +55,7 @@ public class Node {
 
     /**
      * Returns the location of the node.
+     *
      * @return the location point.
      */
     public Point getLocation() {
@@ -61,6 +64,7 @@ public class Node {
 
     /**
      * Returns the delivery attached to this node.
+     *
      * @return the delivery attached to this node.
      */
     public Delivery getDelivery() {
@@ -69,6 +73,7 @@ public class Node {
 
     /**
      * Returns all the outgoing arcs.
+     *
      * @return the list of outgoing arcs.
      */
     public List<Arc> getOutgoingArcs() {
@@ -77,6 +82,7 @@ public class Node {
 
     /**
      * Returns an outgoing arc, knowing its ending node.
+     *
      * @param dest the ending node of the arc we are looking for.
      * @return the arc.
      */
@@ -90,7 +96,6 @@ public class Node {
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -99,7 +104,6 @@ public class Node {
     }
 
     /**
-     *
      * @param obj
      * @return
      */
@@ -116,23 +120,8 @@ public class Node {
     }
 
     /**
-     * This methods adds an arc to the outgoing arcs list.
-     * @param arc the arc to attach.
-     */
-    public void attachOutgoingArc(Arc arc) {
-        outgoings.add(arc);
-    }
-    
-    /**
-     * Attaches a delivery to this node.
-     * @param delivery the delivery to attach.
-     */
-    void attachDelivery(Delivery delivery) {
-        this.delivery = delivery;
-    }
-
-    /**
      * Returns the string describing the objet, used for debug only
+     *
      * @return a string describing the object
      */
     @Override
@@ -154,6 +143,24 @@ public class Node {
                 + "%s\n"
                 + "]\n"
                 + "}", id, location.toString(), arcs);
+    }
+
+    /**
+     * This methods adds an arc to the outgoing arcs list.
+     *
+     * @param arc the arc to attach.
+     */
+    public void attachOutgoingArc(Arc arc) {
+        outgoings.add(arc);
+    }
+
+    /**
+     * Attaches a delivery to this node.
+     *
+     * @param delivery the delivery to attach.
+     */
+    void attachDelivery(Delivery delivery) {
+        this.delivery = delivery;
     }
 
 }

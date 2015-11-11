@@ -16,22 +16,26 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  * This class represents the view used to preview the roadmap
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class RoadMapView extends GridPane {
 
     @FXML
+    private
     TextFlow roadMapDescription;
 
     @FXML
+    private
     Button saveButton;
 
     @FXML
+    private
     Button cancelButton;
-    
+
     private String roadMapDescriptionBrutText;
 
     private Stage stage;
@@ -48,7 +52,7 @@ public class RoadMapView extends GridPane {
             stage = new Stage();
             stage.setTitle("Road Map");
             stage.setScene(new Scene(this, 800, 600));
-            
+
             StringBuilder sb = new StringBuilder();
             for (Text text : texts) {
                 sb.append(text.getText());
@@ -66,9 +70,12 @@ public class RoadMapView extends GridPane {
         cancelButton.setOnAction(event -> stage.close());
 
         saveButton.setOnAction(event -> UIManager.getInstance().saveRoadMapDocument(stage, roadMapDescriptionBrutText));
-        
+
     }
 
+    /**
+     * Display the RoadMap View
+     */
     public void display() {
         stage.show();
     }

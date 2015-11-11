@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.hexanome.controller.states;
 
@@ -11,27 +11,27 @@ import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 
 /**
- * This class represents the logic state when an emptyNode is 
+ * This class represents the logic state when an emptyNode is
  * selected on the map
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class EmptyNodeSelectedState extends SelectionsStates {
 
     private static EmptyNodeSelectedState emptyNodeSelectedState = null;
 
-    private EmptyNodeSelectedState(){
+    private EmptyNodeSelectedState() {
         // Nothing to do here
     }
 
     /**
      * Returns the instance of the EmptyNodeSelectedState,
      * it is a singleton
+     *
      * @return The instance of EmptyNodeSelectedState
      */
     public static EmptyNodeSelectedState getInstance() {
-        if(emptyNodeSelectedState == null)
-        {
+        if (emptyNodeSelectedState == null) {
             emptyNodeSelectedState = new EmptyNodeSelectedState();
         }
         return emptyNodeSelectedState;
@@ -62,17 +62,6 @@ public class EmptyNodeSelectedState extends SelectionsStates {
     }
 
     /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#clickOnWarehouse(com.hexanome.model.Node)
-     */
-    @Override
-    public void clickOnWarehouse(Node warehouse) {
-        // Hide current pop over
-        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
-        // Jump to WarehouseSelectedState
-        ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
-    }
-
-    /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#btnAddDelivery(com.hexanome.model.Node)
      */
     @Override
@@ -89,17 +78,21 @@ public class EmptyNodeSelectedState extends SelectionsStates {
         UIManager.getInstance().getMainWindow().repositionToLatestPosition();
         UIManager.getInstance().getMainWindow().getMapView().showPopOver(node);
     }
-    
+
     /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#closePopOver()
+     * @see com.hexanome.controller.states.IState#clickOnWarehouse(com.hexanome.model.Node)
      */
     @Override
-    public void closePopOver() {
-        // \todo TODO
+    public void clickOnWarehouse(Node warehouse) {
+        // Hide current pop over
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
+        // Jump to WarehouseSelectedState
+        ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
     }
 
     /**
      * Returns the string describing the state, used for debug only
+     *
      * @return a string describing the state
      */
     @Override

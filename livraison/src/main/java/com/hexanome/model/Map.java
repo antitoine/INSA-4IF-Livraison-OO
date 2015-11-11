@@ -7,9 +7,9 @@ import java.awt.*;
 import java.util.*;
 
 /**
- * This class represents a map, a graph, composed of arcs (streets) 
+ * This class represents a map, a graph, composed of arcs (streets)
  * and nodes (crossroads)
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Map implements Publisher {
@@ -23,6 +23,7 @@ public class Map implements Publisher {
 
     /**
      * Builds a new instance of Map
+     *
      * @param nodes
      * @param arcs
      */
@@ -36,18 +37,8 @@ public class Map implements Publisher {
     }
 
     /**
-     * Returns the node of the map which id is given or null if
-     * the id doesn't exists
-     * @param id
-     *      Id of the node to return
-     * @return
-     */
-    public Node getNodeById(int id) {
-        return nodes.get(id);
-    }
-
-    /**
      * Returns a collection of all arcs present in the map
+     *
      * @return
      */
     public ArrayList<Arc> getArcs() {
@@ -56,6 +47,7 @@ public class Map implements Publisher {
 
     /**
      * Returns a collection of all nodes present in the map
+     *
      * @return
      */
     public HashMap<Integer, Node> getNodes() {
@@ -70,7 +62,7 @@ public class Map implements Publisher {
      * @return
      */
     public Node createNode(int id, Point location) {
-        // Create a new node 
+        // Create a new node
         Node n = new Node(id, location);
         // Add the new node to the local collection
         nodes.put(id, n);
@@ -102,31 +94,43 @@ public class Map implements Publisher {
     }
 
     /**
+     * Returns the node of the map which id is given or null if
+     * the id doesn't exists
+     *
+     * @param id Id of the node to return
+     * @return
+     */
+    public Node getNodeById(int id) {
+        return nodes.get(id);
+    }
+
+    /**
      * Returns the fastest path (collection of arcs) computed between two nodes
+     *
      * @param start
      * @param target
-     * @return 
+     * @return
      */
     public Path getFastestPath(Node start, Node target) {
         ArrayList<Arc> arcs = new ArrayList<>();
-        
+
         if (!globalPreviousNodes.containsKey(start.getId())) {
             computePathsFromSource(start);
         }
-        
+
         HashMap<Integer, Node> previousNodes = globalPreviousNodes.get(start.getId());
 
         Node src = previousNodes.get(target.getId());
-        
+
         if (src == null) {
             return null;
         }
-        
+
         Node dest = target;
-        
+
         while (dest != start) {
             arcs.add(src.getOutgoingArc(dest));
-            
+
             dest = src;
             src = previousNodes.get(dest.getId());
         }
@@ -135,12 +139,14 @@ public class Map implements Publisher {
 
         return new Path(arcs);
     }
+
     /**
-    * Computes the 
-    * @param firstNode 
-    */
+     * Computes the
+     *
+     * @param firstNode
+     */
     private void computePathsFromSource(final Node firstNode) {
-        
+
         HashMap<Integer, Node> previousNodes = new HashMap<>();
         HashMap<Integer, Double> minDistances = new HashMap<>();
         globalPreviousNodes.put(firstNode.getId(), previousNodes);
@@ -203,7 +209,7 @@ public class Map implements Publisher {
         nodes.clear();
         notifySubscribers();
     }
-    
+
     /**
      * Reset the arcs in their original state.
      */
@@ -212,6 +218,7 @@ public class Map implements Publisher {
             arc.clearAssociatedTimeSlot();
         }
     }
+
     /**
      * Reset the nodes in their original state, without any delivery.
      */
@@ -220,26 +227,28 @@ public class Map implements Publisher {
             node.attachDelivery(null);
         }
     }
-    
+
     /**
      * Add one subscriber
-     * @param s 
-     *      Subscriber to add
+     *
+     * @param s Subscriber to add
      */
     @Override
     public void addSubscriber(Subscriber s) {
         subscribers.add(s);
         s.update(this, null);
     }
+
     /**
      * Remove one subscriber
-     * @param s 
-     *      Subscriber to remove
+     *
+     * @param s Subscriber to remove
      */
     @Override
     public void removeSubscriber(Subscriber s) {
         subscribers.remove(s);
     }
+
     /**
      * Notify all subscribers
      */
@@ -249,6 +258,7 @@ public class Map implements Publisher {
             s.update(this, null);
         }
     }
+
     /**
      * Remove all subscribers
      */
@@ -256,9 +266,10 @@ public class Map implements Publisher {
     public void clearSubscribers() {
         subscribers.clear();
     }
-    
+
     /**
      * Returns the string describing the objet, used for debug only
+     *
      * @return a string describing the object
      */
     @Override

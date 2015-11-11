@@ -10,7 +10,7 @@ import org.controlsfx.control.PopOver;
 
 /**
  * This class is the graphic component equivalent of the model delivery
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class DeliveryNodeView extends Circle implements INodeViewShape {
@@ -32,22 +32,29 @@ public class DeliveryNodeView extends Circle implements INodeViewShape {
 
     /**
      * Handler for mouse click events
-     * @param context 
+     *
+     * @param nodeView indicate which  the node view is clicked
      */
     @Override
-    public void onMouseClickedNotify(NodeView context) {
-        UIManager.getInstance().getMainWindow().getDeliveryTreeView().selectDelivery(context);
+    public void onMouseClickedNotify(NodeView nodeView) {
+        UIManager.getInstance().getMainWindow().getDeliveryTreeView().selectDelivery(nodeView);
         ContextManager.getInstance().getCurrentState().clickOnDelivery(node.getDelivery());
     }
-    
-    @Override
-    public Node asSceneNode() {
-        return this;
-    }
 
+    /**
+     * Create a PopOver and return it
+     *
+     * @param node The model node to represent by the popover.
+     * @return the popover
+     */
     @Override
     public PopOver createPopOver(com.hexanome.model.Node node) {
         return new PopOver(new PopOverContentDelivery(node));
+    }
+
+    @Override
+    public Node asSceneNode() {
+        return this;
     }
 
 }

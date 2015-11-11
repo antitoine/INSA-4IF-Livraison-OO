@@ -9,9 +9,9 @@ import com.hexanome.controller.UIManager;
 import com.hexanome.view.ConstView;
 
 /**
- * This abstract class provides common code for logic states when 
+ * This abstract class provides common code for logic states when
  * a map and a planning are loaded
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public abstract class SelectionsStates extends DefaultState {
@@ -27,6 +27,8 @@ public abstract class SelectionsStates extends DefaultState {
             // Full clear of the model
             ModelManager.getInstance().clearModel();
             UIManager.getInstance().getMainWindow().getMapView().clearMap();
+            UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
 
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();
@@ -63,6 +65,17 @@ public abstract class SelectionsStates extends DefaultState {
     }
 
     /* (non-Javadoc)
+     * @see com.hexanome.controller.states.IState#leftClickPressedOnDelivery(com.hexanome.model.Delivery)
+     */
+    @Override
+    public void leftClickPressedOnDelivery() {
+        // Hide popover
+        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
+        // Jump to SwapDeliveryState
+        ContextManager.getInstance().setCurrentState(SwapDeliveriesState.getInstance());
+    }
+
+    /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#btnCloseMap()
      */
     @Override
@@ -75,6 +88,7 @@ public abstract class SelectionsStates extends DefaultState {
             ModelManager.getInstance().clearModel();
             UIManager.getInstance().getMainWindow().getMapView().clearMap();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
 
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();
@@ -98,6 +112,7 @@ public abstract class SelectionsStates extends DefaultState {
             // Clear model's current planning
             ModelManager.getInstance().clearPlanning();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
+            UIManager.getInstance().getMainWindow().clearLegend();
 
             // Clear commands history
             ContextManager.getInstance().clearCommandsHistory();
@@ -107,17 +122,6 @@ public abstract class SelectionsStates extends DefaultState {
             // Jump to MapLoadedState
             ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
         }
-    }
-
-    /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#leftClickPressedOnDelivery(com.hexanome.model.Delivery)
-     */
-    @Override
-    public void leftClickPressedOnDelivery() {
-        // Hide popover
-        UIManager.getInstance().getMainWindow().getMapView().hidePopOver();
-        // Jump to SwapDeliveryState
-        ContextManager.getInstance().setCurrentState(SwapDeliveriesState.getInstance());
     }
 
     @Override

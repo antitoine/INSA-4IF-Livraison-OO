@@ -7,7 +7,6 @@ import com.hexanome.controller.ContextManager;
 import com.hexanome.controller.IOManager;
 import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
-import com.hexanome.view.ConstView;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
@@ -16,7 +15,7 @@ import java.io.File;
 /**
  * This class represents the logic state when user is selecting a
  * planning to load
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PlanningSelectState extends DefaultState {
@@ -46,7 +45,7 @@ public class PlanningSelectState extends DefaultState {
     public void btnCancel() {
         ModelManager.getInstance().clearPlanning();
         UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
-        
+
         // Jump to MapLoadedState
         ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
     }
@@ -106,18 +105,19 @@ public class PlanningSelectState extends DefaultState {
 
     }
 
+    @Override
+    public void initView() {
+        // Nothing to do here
+        // Override to not disable all buttons
+    }
+
     /**
      * Returns the string describing the state, used for debug only
+     *
      * @return a string describing the state
      */
     @Override
     public String toString() {
         return "PlanningSelectState"; //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void initView() {
-        // Nothing to do here
-        // Override to not disable all buttons
     }
 }

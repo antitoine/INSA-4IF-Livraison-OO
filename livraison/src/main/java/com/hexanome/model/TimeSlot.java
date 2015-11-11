@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * This class represents a time slot, with a start time and an end time.
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class TimeSlot implements Comparable<TimeSlot> {
@@ -23,21 +23,43 @@ public class TimeSlot implements Comparable<TimeSlot> {
     private ArrayList<Delivery> deliveries;
 
     /**
+     * Constructor.
+     *
+     * @param startTime  the start time of the time slot.
+     * @param endTime    the end time of the time slot.
+     * @param deliveries the deliveries contained in the time slot.
+     */
+    public TimeSlot(int startTime, int endTime, ArrayList<Delivery> deliveries) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.deliveries = deliveries;
+
+        for (Delivery d : deliveries) {
+            d.attachTimeSlot(this);
+        }
+    }
+
+    /**
      * Returns all the deliveries contained in the time slot.
+     *
      * @return a list of deliveries.
      */
     public ArrayList<Delivery> getDeliveries() {
         return deliveries;
     }
+
     /**
      * Returns the start time of the time slot.
+     *
      * @return the start time.
      */
     public int getStartTime() {
         return startTime;
     }
+
     /**
      * Returns the end time of the time slot.
+     *
      * @return the end time.
      */
     public int getEndTime() {
@@ -45,41 +67,30 @@ public class TimeSlot implements Comparable<TimeSlot> {
     }
 
     /**
-     * Constructor.
-     * @param startTime the start time of the time slot.
-     * @param endTime the end time of the time slot.
-     * @param deliveries the deliveries contained in the time slot.
-     */
-    public TimeSlot(int startTime, int endTime, ArrayList<Delivery> deliveries) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.deliveries = deliveries;
-        
-        for (Delivery d : deliveries) {
-            d.attachTimeSlot(this);
-        }
-    }
-
-    /**
      * Add a delivery to the current time slot
+     *
      * @param delivery The delivery to add
      */
     void addDelivery(Delivery delivery) {
         deliveries.add(delivery);
         delivery.attachTimeSlot(this);
-    } 
+    }
+
     /**
      * Remove the delivery passed by parameter in the list of deliveries.
      * Unattach the time slot to the delivery.
+     *
      * @param delivery The delivery to remove.
      */
     void removeDelivery(Delivery delivery) {
         deliveries.remove(delivery);
         delivery.attachTimeSlot(null);
     }
+
     /**
      * Checks if the time passed by parameter is betweend the start time and the
      * end time of the current time slot.
+     *
      * @param time The time to check.
      * @return True if the time is contained in the current time slot, false
      * otherwise.
@@ -89,34 +100,36 @@ public class TimeSlot implements Comparable<TimeSlot> {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if(!(obj instanceof TimeSlot)) {
-            return false;
-        }
-        
-        TimeSlot timeSlot = (TimeSlot)obj;
-        if(this.startTime != timeSlot.startTime || this.endTime != timeSlot.endTime || this.deliveries.size() != timeSlot.deliveries.size()) {
-            return false;
-        }
-        
-        for (int i = 0; i < this.deliveries.size(); i++) {
-            if (!this.deliveries.get(i).equals(timeSlot.deliveries.get(i))) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    
-    @Override
     public int hashCode() {
         int hash = 7;
         hash = 71 * hash + this.startTime;
         hash += 71 * hash + this.endTime;
         return hash;
-    }    
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof TimeSlot)) {
+            return false;
+        }
+
+        TimeSlot timeSlot = (TimeSlot) obj;
+        if (this.startTime != timeSlot.startTime || this.endTime != timeSlot.endTime || this.deliveries.size() != timeSlot.deliveries.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < this.deliveries.size(); i++) {
+            if (!this.deliveries.get(i).equals(timeSlot.deliveries.get(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * Returns the string describing the objet, used for debug only
+     *
      * @return a string describing the object
      */
     @Override

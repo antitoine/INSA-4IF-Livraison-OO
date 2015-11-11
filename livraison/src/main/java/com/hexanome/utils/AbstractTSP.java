@@ -10,14 +10,14 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * Abstract class implementing the ITSP interface. 
- * 
+ * Abstract class implementing the ITSP interface.
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public abstract class AbstractTSP implements ITSP  {
+public abstract class AbstractTSP implements ITSP {
 
     private Integer[] bestSolutions;
-    protected IGraph graph;
+    private IGraph graph;
     private float costBestSolution;
     private int limitTime;
     private long startTime;
@@ -31,7 +31,7 @@ public abstract class AbstractTSP implements ITSP  {
         this.limitTime = timeLimit;
         this.graph = graph;
         bestSolutions = new Integer[graph.getNbArcs()];
-        Collection<Integer> nonVus = new ArrayList<>(graph.getNbArcs()- 1);
+        Collection<Integer> nonVus = new ArrayList<>(graph.getNbArcs() - 1);
         for (int i = 1; i < graph.getNbArcs(); i++) {
             nonVus.add(i);
         }
@@ -39,19 +39,8 @@ public abstract class AbstractTSP implements ITSP  {
         vus.add(0); // le premier sommet visite est 0
         costBestSolution = Float.MAX_VALUE;
         branchAndBound(0, nonVus, vus, 0);
-        
+
         return bestSolutions;
-    }
-    
-    /**
-     * Check if the thread is not interrupted.
-     * @throws InterruptedException Throws the exception if the thread is
-     * interrupted.
-     */
-    private void checkInterruption() throws InterruptedException {
-        if (Thread.currentThread().isInterrupted()) {
-            throw new InterruptedException();
-        }
     }
 
     @Override
@@ -60,6 +49,18 @@ public abstract class AbstractTSP implements ITSP  {
             return costBestSolution;
         }
         return -1;
+    }
+
+    /**
+     * Check if the thread is not interrupted.
+     *
+     * @throws InterruptedException Throws the exception if the thread is
+     *                              interrupted.
+     */
+    private void checkInterruption() throws InterruptedException {
+        if (Thread.currentThread().isInterrupted()) {
+            throw new InterruptedException();
+        }
     }
 
     /**
@@ -80,9 +81,9 @@ public abstract class AbstractTSP implements ITSP  {
      * @param currentEdge
      * @param nonVus
      * @param graph
-     * @return 
+     * @return
      */
-    protected Iterator<Integer> iterator(Integer currentEdge, Collection<Integer> nonVus, IGraph graph) {
+    private Iterator<Integer> iterator(Integer currentEdge, Collection<Integer> nonVus, IGraph graph) {
         return new TSLGraphIterator(nonVus, currentEdge, graph);
     }
 
@@ -91,10 +92,10 @@ public abstract class AbstractTSP implements ITSP  {
      * et evaluation (branch and bound) du TSP pour le graphe <code>g</code>.
      *
      * @param sommetCrt le dernier sommet visite
-     * @param nonVus la liste des sommets qui n'ont pas encore ete visites
-     * @param vus la liste des sommets deja visites (y compris sommetCrt)
-     * @param coutVus la somme des couts des arcs du chemin passant par tous les
-     * sommets de vus dans l'ordre ou ils ont ete visites
+     * @param nonVus    la liste des sommets qui n'ont pas encore ete visites
+     * @param vus       la liste des sommets deja visites (y compris sommetCrt)
+     * @param coutVus   la somme des couts des arcs du chemin passant par tous les
+     *                  sommets de vus dans l'ordre ou ils ont ete visites
      */
     private void branchAndBound(int sommetCrt, Collection<Integer> nonVus, Collection<Integer> vus, float coutVus) throws InterruptedException {
         checkInterruption();
@@ -110,7 +111,7 @@ public abstract class AbstractTSP implements ITSP  {
             }
         } else if (coutVus + bound(sommetCrt, nonVus) < costBestSolution) {
             Iterator<Integer> it = iterator(sommetCrt, nonVus, graph);
-            
+
             while (it.hasNext()) {
                 checkInterruption();
                 Integer prochainSommet = it.next();

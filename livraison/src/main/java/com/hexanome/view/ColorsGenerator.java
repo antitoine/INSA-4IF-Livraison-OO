@@ -8,9 +8,9 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
- * This class generates colors to draw arcs associating them to 
+ * This class generates colors to draw arcs associating them to
  * their timeslot
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class ColorsGenerator {
@@ -40,11 +40,12 @@ public class ColorsGenerator {
         colors.add(Color.AQUAMARINE);
         colors.add(Color.CHOCOLATE);
         colors.add(Color.CHARTREUSE);
-
     }
+
     /**
      * Returns a single instance of colors generator (Singleton)
-     * @return 
+     *
+     * @return a single instance of colors generator (Singleton)
      */
     public static ColorsGenerator getInstance() {
         if (colorgenerator == null) {
@@ -55,6 +56,7 @@ public class ColorsGenerator {
 
     /**
      * Return the timeSlot associated color
+     *
      * @param ts timeSlot
      * @return the timeSlot's color
      */
@@ -65,6 +67,7 @@ public class ColorsGenerator {
 
     /**
      * Creates a color for each timeslot in the collection
+     *
      * @param timeSlots Collection of timeSlots
      */
     public void createColors(Collection<TimeSlot> timeSlots) {
@@ -76,5 +79,4 @@ public class ColorsGenerator {
             i++;
         }
     }
-
 }

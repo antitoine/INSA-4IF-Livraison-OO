@@ -39,7 +39,7 @@ public class RemoveDeliveryCommand implements ICommand {
      * @see ICommand
      */
     @Override
-    public ICommand execute() {
+    public void execute() {
         if (ModelManager.getInstance().getPlanning() != null) {
             nodePreviousDelivery = ModelManager.getInstance()
                     .getPlanning().getNodePreviousDelivery(delivery);
@@ -58,10 +58,7 @@ public class RemoveDeliveryCommand implements ICommand {
                     .repositionToLatestPosition();
             UIManager.getInstance().getMainWindow().getMapView()
                     .showPopOver(delivery.getNode());
-        } else {
-            // \todo treat error case
         }
-        return this;
     }
 
     /**
@@ -71,12 +68,9 @@ public class RemoveDeliveryCommand implements ICommand {
      * @see ICommand
      */
     @Override
-    public ICommand reverse() {
+    public void reverse() {
         if (ModelManager.getInstance().getPlanning() != null) {
             delivery = ModelManager.getInstance().getPlanning().addDelivery(node, nodePreviousDelivery, timeSlot);
-        } else {
-            // \todo treat error case
         }
-        return this;
     }
 }

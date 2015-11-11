@@ -2,18 +2,21 @@ package com.hexanome.controller.command;
 
 /**
  * This is the interface of a command which can be executed by the ContextManager
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface ICommand {
     /**
      * Execute the command
-     * @return 
+     *
+     * @return
      */
-    ICommand execute();
+    void execute();
+
     /**
      * Reverse execution of the command executing the exact opposite command
-     * @return 
+     *
+     * @return
      */
-    ICommand reverse();
+    void reverse();
 }

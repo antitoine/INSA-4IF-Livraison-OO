@@ -12,7 +12,8 @@
          minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" type="AnchorPane"
          xmlns="http://javafx.com/javafx/8">
     <children>
-        <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
                 <BorderPane fx:id="deliveriesPane">
                     <bottom>
@@ -20,20 +21,20 @@
                             <children>
                                 <GridPane fx:id="legendGridPane">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                                     </columnConstraints>
                                 </GridPane>
                                 <Button fx:id="btnComputeRoute" disable="true" mnemonicParsing="false"
                                         onAction="#computeRoute" prefHeight="40.0" prefWidth="300.0"
                                         text="%compute_route">
                                     <graphic>
-                                        <Glyph fontFamily="FontAwesome" icon="TRUCK" />
+                                        <Glyph fontFamily="FontAwesome" icon="TRUCK"/>
                                     </graphic>
                                 </Button>
                                 <Button fx:id="btnRoadMap" disable="true" mnemonicParsing="false"
                                         onAction="#generateRoadMap" prefHeight="40.0" prefWidth="300.0" text="%roadmap">
                                     <graphic>
-                                        <Glyph fontFamily="FontAwesome" icon="PRINT" />
+                                        <Glyph fontFamily="FontAwesome" icon="PRINT"/>
                                     </graphic>
                                 </Button>
                             </children>
@@ -42,14 +43,14 @@
                     <top>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Planning" BorderPane.alignment="CENTER">
                             <BorderPane.margin>
-                                <Insets bottom="10.0" top="10.0" />
+                                <Insets bottom="10.0" top="10.0"/>
                             </BorderPane.margin>
                             <font>
-                                <Font size="14.0" />
+                                <Font size="14.0"/>
                             </font>
                         </Text>
                     </top>
-                </BorderPane>          
+                </BorderPane>
             </left>
             <center>
                 <StackPane fx:id="parentMapPane" BorderPane.alignment="CENTER"/>
@@ -69,7 +70,8 @@
                                                                     shift="UP" shortcut="UP"/>
                                             </accelerator>
                                         </MenuItem>
-                                        <MenuItem fx:id="mntmLoadPlanning" disable="true" mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
+                                        <MenuItem fx:id="mntmLoadPlanning" disable="true" mnemonicParsing="false"
+                                                  onAction="#loadPlanning" text="%load_planning">
                                             <accelerator>
                                                 <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP"
                                                                     shift="UP" shortcut="UP"/>
@@ -79,23 +81,29 @@
                                                   onAction="#clearMap" text="%clear_map"/>
                                         <MenuItem disable="true" fx:id="mntmClearPlanning" mnemonicParsing="false"
                                                   onAction="#clearPlanning" text="%delete_planning"/>
-                                        <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApplication" text="%exit">
+                                        <MenuItem fx:id="quitMenuItem" mnemonicParsing="false"
+                                                  onAction="#quitApplication" text="%exit">
                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                                <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP"
+                                                                    shift="UP" shortcut="UP"/>
                                             </accelerator>
                                         </MenuItem>
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="%actions">
                                     <items>
-                                        <MenuItem fx:id="mntmUndo" disable="true" mnemonicParsing="false" onAction="#undo" text="%undo">
+                                        <MenuItem fx:id="mntmUndo" disable="true" mnemonicParsing="false"
+                                                  onAction="#undo" text="%undo">
                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                                <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP"
+                                                                    shift="UP" shortcut="UP"/>
                                             </accelerator>
                                         </MenuItem>
-                                        <MenuItem fx:id="mntmRedo" disable="true" mnemonicParsing="false" onAction="#redo" text="%redo">
+                                        <MenuItem fx:id="mntmRedo" disable="true" mnemonicParsing="false"
+                                                  onAction="#redo" text="%redo">
                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                                <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP"
+                                                                    shift="UP" shortcut="UP"/>
                                             </accelerator>
                                         </MenuItem>
                                     </items>
@@ -131,32 +139,33 @@
                             <items>
                                 <Button mnemonicParsing="false" onAction="#loadMap" text="%load_map">
                                     <graphic>
-                                        <Glyph fontFamily="FontAwesome" icon="FOLDER_OPEN" />
+                                        <Glyph fontFamily="FontAwesome" icon="FOLDER_OPEN"/>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="btnLoadPlanning" disable="true" mnemonicParsing="false" onAction="#loadPlanning" text="%load_planning">
+                                <Button fx:id="btnLoadPlanning" disable="true" mnemonicParsing="false"
+                                        onAction="#loadPlanning" text="%load_planning">
                                     <graphic>
-                                        <Glyph fontFamily="FontAwesome" icon="FILE" />
+                                        <Glyph fontFamily="FontAwesome" icon="FILE"/>
                                     </graphic>
                                 </Button>
                                 <Button fx:id="btnUndo" disable="true" mnemonicParsing="false" onAction="#undo">
                                     <graphic>
-                                        <Glyph fontFamily="FontAwesome" icon="UNDO" />
+                                        <Glyph fontFamily="FontAwesome" icon="UNDO"/>
                                     </graphic>
                                 </Button>
                                 <Button fx:id="btnRedo" disable="true" mnemonicParsing="false" onAction="#redo">
                                     <graphic>
-                                        <Glyph fontFamily="FontAwesome" icon="REPEAT" />
+                                        <Glyph fontFamily="FontAwesome" icon="REPEAT"/>
                                     </graphic>
                                 </Button>
                                 <Button mnemonicParsing="false" onAction="#zoomIn">
                                     <graphic>
-                                        <Glyph fontFamily="FontAwesome" icon="SEARCH_PLUS" />
+                                        <Glyph fontFamily="FontAwesome" icon="SEARCH_PLUS"/>
                                     </graphic>
                                 </Button>
                                 <Button mnemonicParsing="false" onAction="#zoomOut">
                                     <graphic>
-                                        <Glyph fontFamily="FontAwesome" icon="SEARCH_MINUS" />
+                                        <Glyph fontFamily="FontAwesome" icon="SEARCH_MINUS"/>
                                     </graphic>
                                 </Button>
                                 <Button mnemonicParsing="false" onAction="#resetZoom" text="1:1">

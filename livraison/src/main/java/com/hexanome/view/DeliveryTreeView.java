@@ -24,13 +24,13 @@ import java.util.Map;
 
 /**
  * Planning reprensention at the left list of deliveries
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class DeliveryTreeView extends VBox implements Subscriber {
 
     private static HashMap<String, Delivery> deliveresByName;
-    Boolean displaceViewtoNode = true;
+    private Boolean displaceViewtoNode;
     private TreeView<String> deliveryTree;
     private TreeItem<String> rootItem;
     private HashMap<Delivery, TreeItem<String>> deliveryBranch;
@@ -51,6 +51,7 @@ public class DeliveryTreeView extends VBox implements Subscriber {
         deliveryTree.setCellFactory(p -> new DeliveryTreeCell(false));
 
         // indicate that a delivery is selected
+        displaceViewtoNode = true;
         deliveryTree.getSelectionModel().selectedItemProperty().
                 addListener((observable, oldValue, newValue) -> {
                     if (newValue != null && newValue.isLeaf()) {
@@ -67,24 +68,6 @@ public class DeliveryTreeView extends VBox implements Subscriber {
     }
 
     /**
-     * Returns a delivery using its name
-     * @param string delivery as displayed in the treeView
-     * @return a Delivery as described in the model
-     */
-    static Delivery getDeliveryFromName(String string) {
-        return deliveresByName.get(string);
-    }
-
-    /**
-     * Remove all the items in the TreeView
-     */
-    public void clearTree() {
-        rootItem.getChildren().clear();
-        deliveryBranch.clear();
-        deliveresByName.clear();
-    }
-
-    /**
      * Return a delivery from an item in the treeView
      */
     private Delivery getDeliveryFromTreeItem(TreeItem<String> treeItem) {
@@ -96,6 +79,59 @@ public class DeliveryTreeView extends VBox implements Subscriber {
             }
         }
         return result;
+    }
+
+    /**
+     * Returns a delivery using its name
+     *
+     * @param string delivery as displayed in the treeView
+     * @return a Delivery as described in the model
+     */
+    static Delivery getDeliveryFromName(String string) {
+        return deliveresByName.get(string);
+    }
+
+    @Override
+    public void update(Publisher p, Object arg) {
+
+        if (p instanceof Planning) {
+            clearTree();
+            for (TimeSlot ts : ((Planning) (p)).getTimeSlots()) {
+                String start = TypeWrapper.secondsToTimestamp(ts.getStartTime());
+                String end = TypeWrapper.secondsToTimestamp(ts.getEndTime());
+
+                TreeItem<String> tsItem;
+                tsItem = makeBranch(start + " - " + end,
+                        ConstView.TreeItemType.TIMESLOT, rootItem, null, null);
+
+                List<Delivery> deliveries = ts.getDeliveries();
+                Collections.sort(deliveries);
+
+                for (Delivery d : deliveries) {
+                    String deliveryName = "Delivery " + d.getNode().getId();
+                    if (d.getDeliveryTime() > 0) {
+                        deliveryName = TypeWrapper.secondsToTimestamp((int) d.getDeliveryTime()) + " | " + deliveryName;
+                    }
+
+                    TreeItem<String> dItem;
+                    if (d.getDeliveryTime() > 0 && d.getDeliveryTime() > d.getTimeSlot().getEndTime()) {
+                        dItem = makeBranch(deliveryName, ConstView.TreeItemType.DELIVERY, tsItem, d, true);
+                    } else {
+                        dItem = makeBranch(deliveryName, ConstView.TreeItemType.DELIVERY, tsItem, d, false);
+                    }
+                    deliveryBranch.put(d, dItem);
+                }
+            }
+        }
+    }
+
+    /**
+     * Remove all the items in the TreeView
+     */
+    public void clearTree() {
+        rootItem.getChildren().clear();
+        deliveryBranch.clear();
+        deliveresByName.clear();
     }
 
     /**
@@ -123,40 +159,6 @@ public class DeliveryTreeView extends VBox implements Subscriber {
         item.setExpanded(true);
 
         return item;
-    }
-
-    @Override
-    public void update(Publisher p, Object arg) {
-
-        if (p instanceof Planning) {
-            clearTree();
-            for (TimeSlot ts : ((Planning) (p)).getTimeSlots()) {
-                String start = TypeWrapper.secondsToTimestamp(ts.getStartTime());
-                String end = TypeWrapper.secondsToTimestamp(ts.getEndTime());
-
-                TreeItem<String> tsItem;
-                tsItem = makeBranch(start + " - " + end,
-                        ConstView.TreeItemType.TIMESLOT, rootItem, null, null);
-
-                List<Delivery> deliveries = ts.getDeliveries();
-                Collections.sort(deliveries);
-
-                for (Delivery d : deliveries) {
-                    String deliveryName = "Delivery " + d.getNode().getId();
-                    if (d.getDeliveryTime() > 0) {
-                        deliveryName = TypeWrapper.secondsToTimestamp((int)d.getDeliveryTime()) + " | " + deliveryName;
-                    }
-
-                    TreeItem<String> dItem;
-                    if (d.getDeliveryTime() > 0 && d.getDeliveryTime() > d.getTimeSlot().getEndTime()) {
-                        dItem = makeBranch(deliveryName, ConstView.TreeItemType.DELIVERY, tsItem, d, true);
-                    } else {
-                        dItem = makeBranch(deliveryName, ConstView.TreeItemType.DELIVERY, tsItem, d, false);
-                    }
-                    deliveryBranch.put(d, dItem);
-                }
-            }
-        }
     }
 
     /**

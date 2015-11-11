@@ -22,7 +22,7 @@ public class ContextManager {
     private IState currentState;
 
     /**
-     * Builds a new ContextManager instance 
+     * Builds a new ContextManager instance
      */
     private ContextManager() {
         this.setCurrentState(InitState.getInstance());
@@ -118,6 +118,7 @@ public class ContextManager {
 
     /**
      * Set a new state and call the method initView of this state
+     *
      * @param currentState the currentState to set
      */
     public void setCurrentState(IState currentState) {

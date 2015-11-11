@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * This class represents a pair of nodes
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 class NodePair {
@@ -23,7 +23,7 @@ class NodePair {
     public int hashCode() {
         int hash = 5;
         hash = 79 * hash + Objects.hashCode(this.node1) +
-               79 * hash + Objects.hashCode(this.node2);
+                79 * hash + Objects.hashCode(this.node2);
         return hash;
     }
 
@@ -37,8 +37,8 @@ class NodePair {
         }
         final NodePair other = (NodePair) obj;
 
-       return (this.node1 == other.node1 && this.node2 == other.node2)
-               || (this.node1 == other.node2 && this.node2 == other.node1);
+        return (this.node1 == other.node1 && this.node2 == other.node2)
+                || (this.node1 == other.node2 && this.node2 == other.node1);
     }
 
 }

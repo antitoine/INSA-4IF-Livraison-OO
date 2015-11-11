@@ -9,11 +9,12 @@ import org.controlsfx.control.PopOver;
 
 /**
  * This class represents the warehouse version of the nodeView
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class WarehouseNodeView extends Rectangle implements INodeViewShape {
     private com.hexanome.model.Node node;
+
     /**
      * Initializes the controller class.
      */
@@ -23,7 +24,7 @@ public class WarehouseNodeView extends Rectangle implements INodeViewShape {
         setFill(Color.BLACK);
         setStroke(Color.BLACK);
         setStrokeType(StrokeType.INSIDE);
-        
+
         this.node = node;
     }
 
@@ -33,12 +34,12 @@ public class WarehouseNodeView extends Rectangle implements INodeViewShape {
     }
 
     @Override
-    public Node asSceneNode() {
-        return this;
+    public PopOver createPopOver(com.hexanome.model.Node node) {
+        return new PopOver(new PopOverContentWarehouse(node));
     }
 
     @Override
-    public PopOver createPopOver(com.hexanome.model.Node node) {
-        return new PopOver(new PopOverContentWarehouse(node));
+    public Node asSceneNode() {
+        return this;
     }
 }

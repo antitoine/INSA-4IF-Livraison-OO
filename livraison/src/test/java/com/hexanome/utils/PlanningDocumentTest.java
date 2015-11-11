@@ -8,34 +8,24 @@ package com.hexanome.utils;
 import com.hexanome.model.Map;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- *
  * @author paul
  */
 public class PlanningDocumentTest {
-    
+
     public PlanningDocumentTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
     }
 
     /**
@@ -83,10 +73,10 @@ public class PlanningDocumentTest {
             ArrayList<TimeSlot> result = instance.getTimeSlots(map);
             assertEquals(result.size(), 1); // Check number of timeslots
             assertEquals(result.get(0).getDeliveries().size(), 2); // Check number of deliveries
-            assertEquals(result.get(0).getDeliveries().get(0).getNode(), map.getNodeById(0)); 
+            assertEquals(result.get(0).getDeliveries().get(0).getNode(), map.getNodeById(0));
             assertEquals(result.get(0).getDeliveries().get(1).getNode(), map.getNodeById(1));
-            assertEquals(result.get(0).getStartTime(), 8*3600);
-            assertEquals(result.get(0).getEndTime(), 12*3600);
+            assertEquals(result.get(0).getStartTime(), 8 * 3600);
+            assertEquals(result.get(0).getEndTime(), 12 * 3600);
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(PlanningDocumentTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,12 +99,11 @@ public class PlanningDocumentTest {
             File planningFile = new File("src/test/java/com/hexanome/utils/livraison10x10.xml");
             PlanningDocument instance = new PlanningDocument(builder.build(planningFile));
             // Check result
-            boolean expResult = true;
             boolean result = instance.checkIntegrity(map);
-            assertEquals(expResult, result);
+            assertEquals(true, result);
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(PlanningDocumentTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

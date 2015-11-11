@@ -10,7 +10,7 @@ public class Delivery implements Comparable<Delivery> {
     /**
      * The duration of a delivery.
      */
-    public static final float DELIVERY_DURATION = 600f;
+    private static final float DELIVERY_DURATION = 600f;
 
     /**
      * The time when the delivery will be executed.
@@ -32,7 +32,7 @@ public class Delivery implements Comparable<Delivery> {
     /**
      * Constructor.
      *
-     * @param id the id of the delivery
+     * @param id   the id of the delivery
      * @param node the node where the delivery will be attached
      */
     public Delivery(int id, Node node) {
@@ -68,7 +68,17 @@ public class Delivery implements Comparable<Delivery> {
     }
 
     /**
+     * Set the delivery time.
+     *
+     * @param deliveryTime when the delivery will be executed.
+     */
+    void setDeliveryTime(float deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
+
+    /**
      * Returns the time whend the delivery is done.
+     *
      * @return The end time of the delivery.
      */
     public float getDeliveryEndTime() {
@@ -82,15 +92,6 @@ public class Delivery implements Comparable<Delivery> {
      */
     public Node getNode() {
         return node;
-    }
-
-    /**
-     * Set the delivery time.
-     *
-     * @param deliveryTime when the delivery will be executed.
-     */
-    void setDeliveryTime(float deliveryTime) {
-        this.deliveryTime = deliveryTime;
     }
 
     /**

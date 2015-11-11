@@ -6,9 +6,9 @@
 package com.hexanome.utils;
 
 /**
- * A class can implement the Subscriber interface when it wants 
+ * A class can implement the Subscriber interface when it wants
  * to be informed of changes in Publisher objects.
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public interface Subscriber {

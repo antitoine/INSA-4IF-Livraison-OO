@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.hexanome.controller.states;
 
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 /**
  * This class represents the default logic state extended by all
  * other states
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public abstract class DefaultState implements IState {
@@ -104,15 +104,6 @@ public abstract class DefaultState implements IState {
     }
 
     /* (non-Javadoc)
-     * @see com.hexanome.controller.states.IState#closePopOver()
-     */
-    @Override
-    public void closePopOver() {
-        Logger.getLogger(DefaultState.class.getName()).log(Level.INFO, "closePopOver In DefaultState");
-        // Nothing to do here
-    }
-
-    /* (non-Javadoc)
      * @see com.hexanome.controller.states.IState#clickOnEmptyNode()
      */
     @Override
@@ -184,11 +175,12 @@ public abstract class DefaultState implements IState {
 
     /**
      * Returns the string describing the state, used for debug only
+     *
      * @return a string describing the state
      */
     @Override
     public String toString() {
-        return "DefaultState"; 
+        return "DefaultState";
     }
 
 }

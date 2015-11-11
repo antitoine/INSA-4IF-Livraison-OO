@@ -6,7 +6,6 @@
 package com.hexanome.utils;
 
 import com.hexanome.model.Arc;
-import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.Path;
 import com.hexanome.model.Route;
@@ -23,16 +22,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *  This class provides a convenient interface to write a Route output file 
- * 
+ * This class provides a convenient interface to write a Route output file
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class RouteDocument {
     private File file;
     private String content;
+
     /**
      * Creates a new instance of a RouteDocument using pathname
-     * @param pathname 
+     *
+     * @param pathname
      */
     public RouteDocument(File file) {
         this.file = file;
@@ -88,6 +89,7 @@ public class RouteDocument {
 
     /**
      * Format content of RouteDocument
+     *
      * @param route
      * @return
      */
@@ -101,20 +103,20 @@ public class RouteDocument {
         totalText.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
         texts.add(totalText);
         texts.add(
-            new Text(
-                String.format(
-                    "Total distance travelled : %.0f meters\n" +
-                    "Departure time : %s\n" +
-                    "Arrival time : %s\n" + 
-                    "Total duration : %s\n\n\n",
-                    route.getTotalDistance(),
-                    TypeWrapper.secondsToTimestamp((int) route.getStartTime()),
-                    TypeWrapper.secondsToTimestamp((int) route.getEndTime()),
-                    TypeWrapper.secondsToTimestamp((int) route.getTotalDuration())
+                new Text(
+                        String.format(
+                                "Total distance travelled : %.0f meters\n" +
+                                        "Departure time : %s\n" +
+                                        "Arrival time : %s\n" +
+                                        "Total duration : %s\n\n\n",
+                                route.getTotalDistance(),
+                                TypeWrapper.secondsToTimestamp((int) route.getStartTime()),
+                                TypeWrapper.secondsToTimestamp((int) route.getEndTime()),
+                                TypeWrapper.secondsToTimestamp((int) route.getTotalDuration())
+                        )
                 )
-            )
         );
-        
+
         String time;
 
         Text warehouseText = new Text("From the warehouse\n");
@@ -154,7 +156,7 @@ public class RouteDocument {
             } else {
                 texts.add(new Text("- And you're back to the warehouse at " + TypeWrapper.secondsToTimestamp((int) route.getEndTime()) + " !\n"));
             }
-        }        
+        }
 
         return texts;
     }
@@ -165,6 +167,7 @@ public class RouteDocument {
 
     /**
      * Writes the route to the document content
+     *
      * @param text The text to write
      */
     public void writeRoute(String text) {
@@ -173,6 +176,7 @@ public class RouteDocument {
 
     /**
      * Save the document writting it to the File System.
+     *
      * @return true if the file was successfully written, else returns false
      */
     public boolean save() {
@@ -201,5 +205,5 @@ public class RouteDocument {
     public String getContent() {
         return content;
     }
-    
+
 }

@@ -14,9 +14,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This class is the graphic component used to display an element 
+ * This class is the graphic component used to display an element
  * in a tree
- * 
+ *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  * @see DeliveryTreeView
  */
@@ -68,12 +68,12 @@ final class DeliveryTreeCell extends TreeCell<String> {
                         .getDeliveryFromName(event.getDragboard().getString());
                 Delivery delivery2 = DeliveryTreeView
                         .getDeliveryFromName(targetCell.getString());
-                // DEBUG
-                Logger.getLogger(DeliveryTreeCell.class.getName()).log(Level.INFO, 
-                        String.format("Drag done %s <-> %s", 
-                        sourceCell.getString(),
-                        targetCell.getString()));
-                
+
+                Logger.getLogger(DeliveryTreeCell.class.getName()).log(Level.INFO,
+                        String.format("Drag done %s <-> %s",
+                                sourceCell.getString(),
+                                targetCell.getString()));
+
                 targetCell.setStyle("-fx-border-color: white;");
                 targetCell.setTextFill(Color.BLACK);
                 ContextManager.getInstance().getCurrentState()
@@ -87,12 +87,11 @@ final class DeliveryTreeCell extends TreeCell<String> {
         });
 
         setOnDragEntered(event -> {
-            /* the drag-and-drop gesture entered the target */
-            /* show to the user that it is an actual gesture target */
+            // the drag-and-drop gesture entered the target
             if (event.getDragboard().hasString()) {
                 Dragboard sourceCell = event.getDragboard();
                 DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
-                if(! targetCell.getString().equals(sourceCell.getString())) {
+                if (!targetCell.getString().equals(sourceCell.getString())) {
                     if (DeliveryTreeView.getDeliveryFromName(targetCell.getString()) != null) {
                         targetCell.setTextFill(Color.GREEN);
                         targetCell.setStyle("-fx-border-color: green;");
@@ -103,7 +102,7 @@ final class DeliveryTreeCell extends TreeCell<String> {
         });
 
         setOnDragExited(event -> {
-            /* mouse moved away, remove the graphical cues */
+            // mouse moved away, remove the red borders
             Dragboard sourceCell = event.getDragboard();
             DeliveryTreeCell targetCell = (DeliveryTreeCell) event.getSource();
             if (!targetCell.getString().equals(sourceCell.getString())) {
@@ -112,6 +111,10 @@ final class DeliveryTreeCell extends TreeCell<String> {
             }
             event.consume();
         });
+    }
+
+    private String getString() {
+        return getItem() == null ? "" : getItem();
     }
 
     @Override
@@ -136,10 +139,6 @@ final class DeliveryTreeCell extends TreeCell<String> {
                 }
             }
         }
-    }
-
-    private String getString() {
-        return getItem() == null ? "" : getItem();
     }
 
 }
