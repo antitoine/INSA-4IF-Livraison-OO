@@ -134,15 +134,6 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
         }
     }
 
-    @Override
-    public void initView() {
-        super.initView();
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_PLANNING);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.COMPUTE_ROUTE);
-    }
-
     /**
      * Returns the string describing the state, used for debug only
      *

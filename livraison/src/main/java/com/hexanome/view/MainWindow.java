@@ -354,6 +354,7 @@ public class MainWindow extends AnchorPane {
      * Enable the button
      *
      * @param btn btn to enable
+     *            
      */
     public void setEnableButton(ConstView.Button btn, Boolean isEnable) {
         isEnable = !isEnable;
