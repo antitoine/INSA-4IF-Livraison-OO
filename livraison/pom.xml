@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>com.hexanome.livraison.MainApp</mainClass>
+        <mainClass>MainApp</mainClass>
     </properties>
 
     <organization>
@@ -106,6 +106,7 @@
                         </goals>
                         <configuration>
                             <executable>${java.home}/bin/java</executable>
+                            <!--suppress MavenModelInspection -->
                             <commandlineArgs>${runfx.args}</commandlineArgs>
                         </configuration>
                     </execution>
@@ -131,7 +132,7 @@
                     <archive>
                         <index>true</index>
                         <manifest>
-                            <mainClass>com.hexanome.livraison.MainApp</mainClass>
+                            <mainClass>MainApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
