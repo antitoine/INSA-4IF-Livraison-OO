@@ -17,7 +17,6 @@ class NodeView extends StackPane {
 
     private PopOver popover;
     private INodeViewShape nodeShape;
-
     private com.hexanome.model.Node node;
 
     /**

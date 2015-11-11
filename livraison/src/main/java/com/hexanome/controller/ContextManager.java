@@ -142,5 +142,6 @@ public class ContextManager {
     public final void setCurrentState(IState currentState) {
         this.currentState = currentState;
         this.currentState.initView();
+        Logger.getLogger(ContextManager.class.getName()).log(Level.INFO, currentState.toString());
     }
 }

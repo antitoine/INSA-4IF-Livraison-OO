@@ -2,6 +2,9 @@ package com.hexanome.livraison;
 
 import com.hexanome.controller.Controller;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Entry point class with the static main method.
  * 
@@ -17,6 +20,10 @@ class MainApp {
      * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
      */
     public static void main(String[] args) {
+        // Define logging level
+        Logger globalLogger = Logger.getLogger("");
+        globalLogger.setLevel(Level.SEVERE);
+
         // Init managers by instanciating singletons
         Controller.getInstance().initManagers();
         
