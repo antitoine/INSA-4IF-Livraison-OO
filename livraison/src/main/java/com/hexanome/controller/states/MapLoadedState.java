@@ -97,7 +97,7 @@ public class MapLoadedState extends DefaultState {
     @Override
     public void initView() {
         super.initView();
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.CLEAR_MAP, true);
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.LOAD_PLANNING, true);
     }
 }

@@ -208,69 +208,36 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Disable the button
-     *
-     * @param btn btn to disable
-     */
-    public void disableButton(ConstView.Button btn) {
-        switch (btn) {
-            case UNDO:
-                mntmUndo.setDisable(true);
-                btnUndo.setDisable(true);
-                break;
-            case REDO:
-                mntmRedo.setDisable(true);
-                btnRedo.setDisable(true);
-                break;
-            case ROAD_MAP:
-                btnRoadMap.setDisable(true);
-                break;
-            case LOAD_PLANNING:
-                mntmLoadPlanning.setDisable(true);
-                btnLoadPlanning.setDisable(true);
-                break;
-            case COMPUTE_ROUTE:
-                btnComputeRoute.setDisable(true);
-                break;
-            case CLEAR_MAP:
-                mntmClearMap.setDisable(true);
-                break;
-            case CLEAR_PLANNING:
-                mntmClearPlanning.setDisable(true);
-                break;
-        }
-    }
-
-    /**
      * Enable the button
      *
      * @param btn btn to enable
      */
-    public void enableButton(ConstView.Button btn) {
+    public void setEnableButton(ConstView.Button btn, Boolean isEnable) {
+        isEnable = !isEnable;
         switch (btn) {
             case UNDO:
-                mntmUndo.setDisable(false);
-                btnUndo.setDisable(false);
+                mntmUndo.setDisable(isEnable);
+                btnUndo.setDisable(isEnable);
                 break;
             case REDO:
-                mntmRedo.setDisable(false);
-                btnRedo.setDisable(false);
+                mntmRedo.setDisable(isEnable);
+                btnRedo.setDisable(isEnable);
                 break;
             case ROAD_MAP:
-                btnRoadMap.setDisable(false);
+                btnRoadMap.setDisable(isEnable);
                 break;
             case LOAD_PLANNING:
-                mntmLoadPlanning.setDisable(false);
-                btnLoadPlanning.setDisable(false);
+                mntmLoadPlanning.setDisable(isEnable);
+                btnLoadPlanning.setDisable(isEnable);
                 break;
             case COMPUTE_ROUTE:
-                btnComputeRoute.setDisable(false);
+                btnComputeRoute.setDisable(isEnable);
                 break;
             case CLEAR_MAP:
-                mntmClearMap.setDisable(false);
+                mntmClearMap.setDisable(isEnable);
                 break;
             case CLEAR_PLANNING:
-                mntmClearPlanning.setDisable(false);
+                mntmClearPlanning.setDisable(isEnable);
                 break;
         }
     }

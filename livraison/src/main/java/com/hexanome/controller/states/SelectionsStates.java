@@ -123,10 +123,10 @@ public abstract class SelectionsStates extends DefaultState {
     @Override
     public void initView() {
         super.initView();
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_PLANNING);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.CLEAR_MAP);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.LOAD_PLANNING);
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.ROAD_MAP);
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.CLEAR_PLANNING, true);
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.CLEAR_MAP, true);
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.LOAD_PLANNING, true);
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.ROAD_MAP, true);
         // Enable Drag-and-drop
         UIManager.getInstance().getMainWindow().getDeliveryTreeView().enableDragAndDrop(true);
     }

@@ -1,13 +1,13 @@
 package com.hexanome.controller;
 
 import com.hexanome.controller.command.ICommand;
-import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.hexanome.controller.states.IState;
 import com.hexanome.controller.states.InitState;
 import com.hexanome.view.ConstView;
+
+import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class manages both commands and the main state machine of the application
@@ -17,9 +17,9 @@ import com.hexanome.view.ConstView;
 public class ContextManager {
 
     private static ContextManager contextManager = null;
-    private IState currentState;
     private final Stack<ICommand> done;
     private final Stack<ICommand> undone;
+    private IState currentState;
 
     /**
      * Builds a new ContextManager instance 
@@ -51,7 +51,7 @@ public class ContextManager {
         // Add command to done commands history
         done.push(cmd);
         // Enable undo button
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.UNDO);
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.UNDO, true);
     }
 
     /**
@@ -61,8 +61,8 @@ public class ContextManager {
         done.clear();
         undone.clear();
         // Disable undo/redo buttons
-        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.UNDO);
-        UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.REDO);
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.UNDO, false);
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.REDO, false);
     }
 
     /**
@@ -76,10 +76,10 @@ public class ContextManager {
         // Push command on the undone stack
         undone.push(cmd);
         // Enable redo button
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.REDO);
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.REDO, true);
         if (done.empty()) {
             // Disable undo button if done stack is empty
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.UNDO);
+            UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.UNDO, false);
         }
     }
 
@@ -94,10 +94,10 @@ public class ContextManager {
         // Push command on top of done stack
         done.push(cmd);
         // Enable undo button
-        UIManager.getInstance().getMainWindow().enableButton(ConstView.Button.UNDO);
+        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.UNDO, true);
         if (undone.empty()) {
             // Disable redo button if undone stack is empty
-            UIManager.getInstance().getMainWindow().disableButton(ConstView.Button.REDO);
+            UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.REDO, false);
         }
     }
 

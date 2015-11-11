@@ -3,16 +3,16 @@
  */
 package com.hexanome.controller.states;
 
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.hexanome.controller.UIManager;
 import com.hexanome.model.Delivery;
 import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 import com.hexanome.view.ConstView;
 import com.hexanome.view.MainWindow;
+
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class represents the default logic state extended by all
@@ -174,7 +174,7 @@ public abstract class DefaultState implements IState {
         if (mainWindow != null) {
             for (ConstView.Button button : ConstView.Button.values()) {
                 if (!button.equals(ConstView.Button.UNDO) && !button.equals(ConstView.Button.REDO)) {
-                    mainWindow.disableButton(button);
+                    mainWindow.setEnableButton(button, false);
                 }
             }
             // Disable Drag-and-drop
