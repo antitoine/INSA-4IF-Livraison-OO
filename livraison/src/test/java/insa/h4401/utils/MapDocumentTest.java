@@ -35,7 +35,7 @@ public class MapDocumentTest {
             Map map = new Map();
 
             SAXBuilder builder = new SAXBuilder();
-            File file = new File("src/test/java/com/hexanome/utils/plan10x10.xml");
+            File file = new File("src/test/java/insa/h4401/utils/plan10x10.xml");
             Document document = builder.build(file);
             MapDocument mapdoc = new MapDocument(document);
             mapdoc.fillMap(map);
@@ -55,7 +55,7 @@ public class MapDocumentTest {
     public void testCheckIntegrity() {
         try {
             System.out.println("checkIntegrity");
-            File file = new File("src/test/java/com/hexanome/utils/plan10x10.xml");
+            File file = new File("src/test/java/insa/h4401/utils/plan10x10.xml");
             SAXBuilder builder = new SAXBuilder();
             MapDocument instance = new MapDocument(builder.build(file));
             boolean result = instance.checkIntegrity();

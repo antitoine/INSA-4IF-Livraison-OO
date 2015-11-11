@@ -38,11 +38,11 @@ public class PlanningDocumentTest {
             // Create Map
             SAXBuilder builder = new SAXBuilder();
             Map map = new Map();
-            File mapFile = new File("src/test/java/com/hexanome/utils/plan10x10.xml");
+            File mapFile = new File("src/test/java/insa/h4401/utils/plan10x10.xml");
             MapDocument mapDoc = new MapDocument(builder.build(mapFile));
             mapDoc.fillMap(map);
             // Create planning document
-            File planningFile = new File("src/test/java/com/hexanome/utils/livraison10x10.xml");
+            File planningFile = new File("src/test/java/insa/h4401/utils/livraison10x10.xml");
             PlanningDocument instance = new PlanningDocument(builder.build(planningFile));
             // Check result
             Node expResult = map.getNodeById(2);
@@ -63,11 +63,11 @@ public class PlanningDocumentTest {
             // Create Map
             SAXBuilder builder = new SAXBuilder();
             Map map = new Map();
-            File mapFile = new File("src/test/java/com/hexanome/utils/plan10x10.xml");
+            File mapFile = new File("src/test/java/insa/h4401/utils/plan10x10.xml");
             MapDocument mapDoc = new MapDocument(builder.build(mapFile));
             mapDoc.fillMap(map);
             // Create Planning
-            File planningFile = new File("src/test/java/com/hexanome/utils/livraison10x10.xml");
+            File planningFile = new File("src/test/java/insa/h4401/utils/livraison10x10.xml");
             PlanningDocument instance = new PlanningDocument(builder.build(planningFile));
             // Check results
             ArrayList<TimeSlot> result = instance.getTimeSlots(map);
@@ -92,11 +92,11 @@ public class PlanningDocumentTest {
             // Create Map
             SAXBuilder builder = new SAXBuilder();
             Map map = new Map();
-            File mapFile = new File("src/test/java/com/hexanome/utils/plan10x10.xml");
+            File mapFile = new File("src/test/java/insa/h4401/utils/plan10x10.xml");
             MapDocument mapDoc = new MapDocument(builder.build(mapFile));
             mapDoc.fillMap(map);
             // Create Planning
-            File planningFile = new File("src/test/java/com/hexanome/utils/livraison10x10.xml");
+            File planningFile = new File("src/test/java/insa/h4401/utils/livraison10x10.xml");
             PlanningDocument instance = new PlanningDocument(builder.build(planningFile));
             // Check result
             boolean result = instance.checkIntegrity(map);
