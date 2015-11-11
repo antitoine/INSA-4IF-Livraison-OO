@@ -1,6 +1,8 @@
 package com.hexanome.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This class represents a time slot, with a start time and an end time.
@@ -10,20 +12,22 @@ import java.util.ArrayList;
 public class TimeSlot implements Comparable<TimeSlot> {
 
     /**
-     * Start time of the time slot.
+     * Start time of the time slot, in seconds.
      */
-    private int startTime; // Unit : seconds
+    private int startTime;
+    
     /**
-     * End time of the time slot.
+     * End time of the time slot, in seconds.
      */
-    private int endTime; // Unit : seconds 
+    private int endTime;
+    
     /**
      * Deliveries contained in the time slot.
      */
     private ArrayList<Delivery> deliveries;
 
     /**
-     * Constructor.
+     * Constructs a new time slot, and attach the time slot to the deliveries.
      *
      * @param startTime  the start time of the time slot.
      * @param endTime    the end time of the time slot.
@@ -34,9 +38,9 @@ public class TimeSlot implements Comparable<TimeSlot> {
         this.endTime = endTime;
         this.deliveries = deliveries;
 
-        for (Delivery d : deliveries) {
+        deliveries.stream().forEach((d) -> {
             d.attachTimeSlot(this);
-        }
+        });
     }
 
     /**
@@ -44,12 +48,12 @@ public class TimeSlot implements Comparable<TimeSlot> {
      *
      * @return a list of deliveries.
      */
-    public ArrayList<Delivery> getDeliveries() {
+    public List<Delivery> getDeliveries() {
         return deliveries;
     }
 
     /**
-     * Returns the start time of the time slot.
+     * Returns the start time of the time slot, in sum of seconds.
      *
      * @return the start time.
      */
@@ -58,7 +62,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
     }
 
     /**
-     * Returns the end time of the time slot.
+     * Returns the end time of the time slot, in sum of seconds.
      *
      * @return the end time.
      */
@@ -67,28 +71,28 @@ public class TimeSlot implements Comparable<TimeSlot> {
     }
 
     /**
-     * Add a delivery to the current time slot
+     * Adds a delivery to the current time slot and attaches it to the time slot.
      *
      * @param delivery The delivery to add
      */
-    void addDelivery(Delivery delivery) {
+    protected void addDelivery(Delivery delivery) {
         deliveries.add(delivery);
         delivery.attachTimeSlot(this);
     }
 
     /**
-     * Remove the delivery passed by parameter in the list of deliveries.
-     * Unattach the time slot to the delivery.
+     * Removes the delivery passed by parameter in the list of deliveries.
+     * Unattaches the time slot to the delivery.
      *
      * @param delivery The delivery to remove.
      */
-    void removeDelivery(Delivery delivery) {
+    protected void removeDelivery(Delivery delivery) {
         deliveries.remove(delivery);
         delivery.attachTimeSlot(null);
     }
 
     /**
-     * Checks if the time passed by parameter is betweend the start time and the
+     * Checks if the time passed by parameter is between the start time and the
      * end time of the current time slot.
      *
      * @param time The time to check.
@@ -102,7 +106,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + this.startTime;
+        hash += 71 * hash + this.startTime;
         hash += 71 * hash + this.endTime;
         return hash;
     }

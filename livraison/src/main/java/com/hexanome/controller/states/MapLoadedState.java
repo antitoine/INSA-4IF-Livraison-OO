@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
@@ -9,12 +6,13 @@ import com.hexanome.controller.UIManager;
 import com.hexanome.view.ConstView;
 
 /**
- * This class represents the logic state when a map has been loaded
+ * This class represents the logic state when a map has been loaded.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class MapLoadedState extends DefaultState {
 
+    /** The unique instance of this class. */
     private static MapLoadedState mapLoadedState = null;
 
     private MapLoadedState() {
@@ -22,7 +20,7 @@ public class MapLoadedState extends DefaultState {
     }
 
     /**
-     * Returns the instance of the MapLoadedState, it is a singleton
+     * Returns the instance of the MapLoadedState, which is a singleton.
      *
      * @return The instance of MapLoadedState
      */
@@ -41,14 +39,11 @@ public class MapLoadedState extends DefaultState {
         // WARNING : calls order matters
         if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
 
-            // Full clear of the model
             ModelManager.getInstance().clearModel();
             UIManager.getInstance().getMainWindow().getMapView().clearMap();
 
-            // Jump to MapSelectState
             ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
 
-            // Ask user for a file to load
             UIManager.getInstance().getMainWindow().askFile();
         }
     }
@@ -59,9 +54,7 @@ public class MapLoadedState extends DefaultState {
     @Override
     public void btnLoadPlanning() {
         // WARNING : calls order matters
-        // Jump to PlanningSelectState
         ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
-        // Ask user for a file to load
         UIManager.getInstance().getMainWindow().askFile();
     }
 
@@ -74,17 +67,18 @@ public class MapLoadedState extends DefaultState {
 
             UIManager.getInstance().getMainWindow().setLoadingState("Closing Map...");
 
-            // Full clear of the model
             ModelManager.getInstance().clearModel();
             UIManager.getInstance().getMainWindow().getMapView().clearMap();
 
             UIManager.getInstance().getMainWindow().endLoadingState();
 
-            // Jump to InitState
             ContextManager.getInstance().setCurrentState(InitState.getInstance());
         }
     }
 
+    /* (non-Javadoc)
+     * @see com.hexanome.controller.states.IState#initView()
+     */
     @Override
     public void initView() {
         super.initView();
@@ -99,6 +93,6 @@ public class MapLoadedState extends DefaultState {
      */
     @Override
     public String toString() {
-        return "MapLoadedState"; //To change body of generated methods, choose Tools | Templates.
+        return "MapLoadedState";
     }
 }

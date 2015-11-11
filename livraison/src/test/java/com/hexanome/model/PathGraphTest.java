@@ -5,10 +5,12 @@
  */
 package com.hexanome.model;
 
+import java.awt.Point;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,7 +35,7 @@ public class PathGraphTest {
 
         Arc arc1 = new Arc("hollywood", 12, 31, first, second);
         Arc arc2 = new Arc("doowylloh", 12, 31, second, third);
-        ArrayList<Arc> arcsList = new ArrayList<>();
+        LinkedList<Arc> arcsList = new LinkedList<>();
         arcsList.add(arc1);
         arcsList.add(arc2);
         Path path = new Path(arcsList);
@@ -61,7 +63,7 @@ public class PathGraphTest {
         Arc arc1 = new Arc("hollywood", 5, 10, first, second);
         Arc arc2 = new Arc("doowylloh", 6, 10, second, third);
 
-        ArrayList<Arc> arcsList = new ArrayList<>();
+        LinkedList<Arc> arcsList = new LinkedList<>();
         arcsList.add(arc1);
         arcsList.add(arc2);
 
@@ -90,7 +92,7 @@ public class PathGraphTest {
         Arc arc1 = new Arc("hollywood", 5, 31, first, second);
         Arc arc2 = new Arc("doowylloh", 6, 31, second, third);
 
-        ArrayList<Arc> arcsList = new ArrayList<>();
+        LinkedList<Arc> arcsList = new LinkedList<>();
         arcsList.add(arc1);
         arcsList.add(arc2);
 
@@ -120,7 +122,7 @@ public class PathGraphTest {
         Arc arc1 = new Arc("hollywood", 5, 31, first, second);
         Arc arc2 = new Arc("doowylloh", 6, 31, second, third);
 
-        ArrayList<Arc> arcsList = new ArrayList<>();
+        LinkedList<Arc> arcsList = new LinkedList<>();
         arcsList.add(arc1);
         arcsList.add(arc2);
 
@@ -131,8 +133,8 @@ public class PathGraphTest {
 
         Path expResult = instance.indexAsPath(0, 1);
 
-        ArrayList<Arc> expResultList = path.getArcs();
-        ArrayList<Arc> resultList = expResult.getArcs();
+        List<Arc> expResultList = path.getArcs();
+        List<Arc> resultList = expResult.getArcs();
         assertEquals(expResultList.size(), resultList.size());
 
         for (int i = 0; i < expResultList.size(); i++) {
@@ -154,7 +156,7 @@ public class PathGraphTest {
         Arc arc1 = new Arc("hollywood", 5, 31, first, second);
         Arc arc2 = new Arc("doowylloh", 6, 31, second, third);
 
-        ArrayList<Arc> arcsList = new ArrayList<>();
+        LinkedList<Arc> arcsList = new LinkedList<>();
         arcsList.add(arc1);
         arcsList.add(arc2);
 
@@ -165,8 +167,8 @@ public class PathGraphTest {
 
         Path expResult = instance.indexAsPath(0, 1); //Function tested
 
-        ArrayList<Arc> expResultList = path.getArcs();
-        ArrayList<Arc> resultList = expResult.getArcs();
+        List<Arc> expResultList = path.getArcs();
+        List<Arc> resultList = expResult.getArcs();
         assertEquals(expResultList.size(), resultList.size());
 
         for (int i = 0; i < expResultList.size(); i++) {

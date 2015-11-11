@@ -5,12 +5,13 @@ import com.hexanome.controller.UIManager;
 
 /**
  * This class represents the logic state at the very beginning
- * of the application
+ * of the application.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class InitState extends DefaultState {
 
+    /** The unique instance of this class. */
     private static InitState initState = null;
 
     private InitState() {
@@ -18,10 +19,9 @@ public class InitState extends DefaultState {
     }
 
     /**
-     * Returns the instance of the InitState,
-     * it is a singleton
+     * Returns the instance of the InitState, which is a singleton.
      *
-     * @return The instance of InitState
+     * @return The instance of InitState.
      */
     public static InitState getInstance() {
         if (initState == null) {
@@ -36,9 +36,7 @@ public class InitState extends DefaultState {
     @Override
     public void btnLoadMap() {
         // WARNING : calls order matters
-        // Jump to MapSelectedState
         ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
-        // Ask user for the file to load
         UIManager.getInstance().getMainWindow().askFile();
     }
 
@@ -49,7 +47,6 @@ public class InitState extends DefaultState {
      */
     @Override
     public String toString() {
-        return "InitState"; //To change body of generated methods, choose Tools | Templates.
+        return "InitState";
     }
-
 }

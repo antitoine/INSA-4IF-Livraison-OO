@@ -18,24 +18,27 @@ public class Node {
      * The id of the node.
      */
     private int id;
+    
     /**
      * The arcs starting from this node.
      */
     private ArrayList<Arc> outgoings;
+    
     /**
      * The location of this node on the map.
      */
     private Point location;
+    
     /**
      * The delivery attached to this node (if there is one).
      */
     private Delivery delivery;
 
     /**
-     * Constructor.
+     * Constructs a new point, without any delivery.
      *
-     * @param id       the id of the node.
-     * @param location the location of the node on the map.
+     * @param id       The id of the node.
+     * @param location The location of the node on the map.
      */
     public Node(int id, Point location) {
         this.id = id;
@@ -65,7 +68,7 @@ public class Node {
     /**
      * Returns the delivery attached to this node.
      *
-     * @return the delivery attached to this node.
+     * @return the delivery attached to this node, or null if it doesn't exist.
      */
     public Delivery getDelivery() {
         return delivery;
@@ -86,26 +89,37 @@ public class Node {
      * @param dest the ending node of the arc we are looking for.
      * @return the arc.
      */
-    Arc getOutgoingArc(Node dest) {
+    protected Arc getOutgoingArc(Node dest) {
         for (Arc arc : outgoings) {
             if (arc.getDest().equals(dest)) {
                 return arc;
             }
         }
         return null;
-    }
+    }    
 
     /**
-     * @return
+     * This methods adds an arc to the outgoing arcs list.
+     *
+     * @param arc the arc to attach.
      */
-    @Override
-    public int hashCode() {
-        return 7;
+    protected void attachOutgoingArc(Arc arc) {
+        outgoings.add(arc);
     }
 
     /**
-     * @param obj
-     * @return
+     * Attaches a delivery to this node.
+     *
+     * @param delivery the delivery to attach.
+     */
+    protected void attachDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
+    /**
+     * Two nodes are equals if their location are equals too.
+     * @param obj The object of compare.
+     * @return True if the obect is equals to the current node, false otherwise.
      */
     @Override
     public boolean equals(Object obj) {
@@ -117,6 +131,11 @@ public class Node {
         }
         final Node other = (Node) obj;
         return Objects.equals(this.location, other.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return location.hashCode();
     }
 
     /**
@@ -144,23 +163,4 @@ public class Node {
                 + "]\n"
                 + "}", id, location.toString(), arcs);
     }
-
-    /**
-     * This methods adds an arc to the outgoing arcs list.
-     *
-     * @param arc the arc to attach.
-     */
-    public void attachOutgoingArc(Arc arc) {
-        outgoings.add(arc);
-    }
-
-    /**
-     * Attaches a delivery to this node.
-     *
-     * @param delivery the delivery to attach.
-     */
-    void attachDelivery(Delivery delivery) {
-        this.delivery = delivery;
-    }
-
 }

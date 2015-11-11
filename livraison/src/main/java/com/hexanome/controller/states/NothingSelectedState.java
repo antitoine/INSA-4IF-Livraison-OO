@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
@@ -10,12 +7,15 @@ import com.hexanome.model.Node;
 
 /**
  * This class represents the logic state when a map and a planning
- * are loaded but no node is selected
+ * are loaded but no node is selected.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class NothingSelectedState extends SelectionsStates {
 
+    /**
+     * The unique instance of this class.
+     */
     private static NothingSelectedState nothingSelectedState = null;
 
     private NothingSelectedState() {
@@ -23,8 +23,7 @@ public class NothingSelectedState extends SelectionsStates {
     }
 
     /**
-     * Returns the instance of the NothingSelectedState,
-     * it is a singleton
+     * Returns the instance of the NothingSelectedState, which is a singleton.
      *
      * @return The instance of NothingSelectedState
      */
@@ -42,7 +41,6 @@ public class NothingSelectedState extends SelectionsStates {
     public void clickOnDelivery(Delivery delivery) {
         // Show new pop over assuming none is currently open (current state assumption)
         UIManager.getInstance().getMainWindow().getMapView().showPopOver(delivery.getNode());
-        // Jump to DeliverySelectedState
         ContextManager.getInstance().setCurrentState(DeliverySelectedState.getInstance());
     }
 
@@ -53,7 +51,6 @@ public class NothingSelectedState extends SelectionsStates {
     public void clickOnEmptyNode(Node node) {
         // Show new pop over assuming none is currently open (current state assumption)
         UIManager.getInstance().getMainWindow().getMapView().showPopOver(node);
-        // Jump to EmptyNodeSelectedState
         ContextManager.getInstance().setCurrentState(EmptyNodeSelectedState.getInstance());
     }
 
@@ -64,7 +61,6 @@ public class NothingSelectedState extends SelectionsStates {
     public void clickOnWarehouse(Node warehouse) {
         // Show new pop over assuming none is currently open (current state assumption)
         UIManager.getInstance().getMainWindow().getMapView().showPopOver(warehouse);
-        // Jump to WarehouseSelectedState
         ContextManager.getInstance().setCurrentState(WarehouseSelectedState.getInstance());
     }
 
@@ -75,7 +71,6 @@ public class NothingSelectedState extends SelectionsStates {
      */
     @Override
     public String toString() {
-        return "NothingSelectedState"; //To change body of generated methods, choose Tools | Templates.
+        return "NothingSelectedState";
     }
-
 }

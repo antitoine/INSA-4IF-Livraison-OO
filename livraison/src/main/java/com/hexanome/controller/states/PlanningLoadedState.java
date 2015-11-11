@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
@@ -11,12 +8,15 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 
 /**
- * This class represents the logic state when a planning has been loaded
+ * This class represents the logic state when a planning has been loaded.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PlanningLoadedState extends DefaultState implements EventHandler {
 
+    /**
+     * The unique instance of this class.
+     */
     private static PlanningLoadedState planningLoadedState = null;
 
     private PlanningLoadedState() {
@@ -24,7 +24,7 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
     }
 
     /**
-     * Returns the instance of the PlanningLoadedState, it is a singleton
+     * Returns the instance of the PlanningLoadedState, which is a singleton.
      *
      * @return The instance of PlanningLoadedState
      */
@@ -42,16 +42,14 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
     public void btnLoadMap() {
         // WARNING : calls order matters
         if (UIManager.getInstance().askConfirmation("Current map and planning will be lost.")) {
-            // Full clear model
             ModelManager.getInstance().clearModel();
 
             UIManager.getInstance().getMainWindow().getMapView().clearMap();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
             UIManager.getInstance().getMainWindow().clearLegend();
 
-            // Jump to MapSelectState
             ContextManager.getInstance().setCurrentState(MapSelectState.getInstance());
-            // Ask user for the map to load
+
             UIManager.getInstance().getMainWindow().askFile();
         }
     }
@@ -62,7 +60,6 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
     @Override
     public void btnLoadPlanning() {
         // WARNING : calls order matters
-        // Clear current model's planning
         if (UIManager.getInstance().askConfirmation("Current planning will be lost.")) {
 
             ModelManager.getInstance().clearPlanning();
@@ -70,10 +67,8 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
             UIManager.getInstance().getMainWindow().clearLegend();
 
-            // Jump to PlanningSelectState
             ContextManager.getInstance().setCurrentState(PlanningSelectState.getInstance());
 
-            // Ask user for planning file to load
             UIManager.getInstance().getMainWindow().askFile();
         }
     }
@@ -83,7 +78,6 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
      */
     @Override
     public void btnGenerateRoute() {
-        // Jump to ComputingRouteState
         ContextManager.getInstance().setCurrentState(ComputingRouteState.getInstance());
 
         // Launch asynchronous Route computation algorithm
@@ -100,7 +94,6 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
 
             UIManager.getInstance().getMainWindow().setLoadingState("Closing Map...");
 
-            // Full clear model
             ModelManager.getInstance().clearModel();
             UIManager.getInstance().getMainWindow().getMapView().clearMap();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
@@ -108,7 +101,6 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
 
             UIManager.getInstance().getMainWindow().endLoadingState();
 
-            // Jump to InitState
             ContextManager.getInstance().setCurrentState(InitState.getInstance());
         }
     }
@@ -122,14 +114,12 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
 
             UIManager.getInstance().getMainWindow().setLoadingState("Clearing Planning...");
 
-            // Clear model's current planning
             ModelManager.getInstance().clearPlanning();
             UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
             UIManager.getInstance().getMainWindow().clearLegend();
 
             UIManager.getInstance().getMainWindow().endLoadingState();
 
-            // Jump to MapLoadedState
             ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
         }
     }
@@ -141,31 +131,28 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
      */
     @Override
     public String toString() {
-        return "PlanningLoadedState"; //To change body of generated methods, choose Tools | Templates.
+        return "PlanningLoadedState";
     }
 
     /**
      * Handler for the end of the route computing.
      *
-     * @param event an event to handle the end of route computing
+     * @param event Event handled at the end of route computing.
      */
     @Override
     public void handle(Event event) {
-        // Change current state to nothing selected state
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
-
-        // Enable ROAD_MAP button
 
         UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.ROAD_MAP, true);
         UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.COMPUTE_ROUTE, false);
 
-        // Add MapView as a subscriber of route
         UIManager.getInstance().endRouteComputation();
     }
 
     @Override
     public void initView() {
         super.initView();
+        
         UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.CLEAR_PLANNING, true);
         UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.CLEAR_MAP, true);
         UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.LOAD_PLANNING, true);

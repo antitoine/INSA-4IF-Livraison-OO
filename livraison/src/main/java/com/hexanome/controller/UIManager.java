@@ -14,32 +14,36 @@ import java.io.File;
 import java.util.Optional;
 
 /**
- * This controller manage all the view and is notify when something happens on
- * the view
- * <p>
+ * This controller manages all the view and is notified when something happens 
+ * on the view.
+ * 
  * It implements the sigleton design pattern and only one instance should exist
- * when the application is running
- * <p>
- * Should always be use as following UIManager.getInstance(). ...
+ * when the application is running.
+ * 
+ * Should always be used as following UIManager.getInstance(). ...
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class UIManager {
 
+    /** The unique instance of UIManager. */
     private static UIManager uimanager = null;
 
     /**
-     * Main Window of the application see MainWindow class for more information
+     * Main Window of the application managed by the UIManager.
+     * @see MainWindow 
      */
     private MainWindow mainWindow;
 
+    /**
+     * Constructs the UIManager.
+     */
     private UIManager() {
+        // Nothing to do here, but it's a private method.
     }
 
     /**
-     * Return the single of the UIManager
-     *
-     * @return the UIManager Instance
+     * @return The single instance of the UIManager.
      */
     public static UIManager getInstance() {
         if (uimanager == null) {
@@ -49,21 +53,21 @@ public class UIManager {
     }
 
     /**
-     * Create the main Window and return it
+     * Creates the main Window and returns it.
      *
-     * @param stage the main stage
-     * @return the mainWindow which should be integrated into the scene
+     * @param stage The main stage to use to create the main window.
+     * @return The mainWindow which should be integrated into the scene.
      */
-    MainWindow createMainWindow(Stage stage) {
+    protected MainWindow createMainWindow(Stage stage) {
         mainWindow = new MainWindow(stage);
         return mainWindow;
     }
 
     /**
-     * Asks for confirmation
+     * Asks for a confirmation message.
      *
-     * @param message message for the dialog
-     * @return true if the user select ok, false otherwise
+     * @param message The message for the confirmation dialog.
+     * @return True if the user selects ok, false otherwise.
      */
     public boolean askConfirmation(String message) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -76,14 +80,14 @@ public class UIManager {
     }
 
     /**
-     * @return the mainWindow
+     * @return The mainWindow managed by the UIManager.
      */
     public MainWindow getMainWindow() {
         return mainWindow;
     }
 
     /**
-     * Modifies mainwindow according to the action of loading a map
+     * Updates mainwindow according to the action of loading a map.
      */
     public void beginLoadMap() {
         mainWindow.setLoadingState("Loading Map...");
@@ -92,7 +96,7 @@ public class UIManager {
     }
 
     /**
-     * Modifies mainwindow according to the action of stoping map loading process
+     * Updates mainwindow according to the action of stoping map loading process.
      */
     public void endLoadMap() {
         ModelManager.getInstance().getMap().clearSubscribers();
@@ -103,7 +107,7 @@ public class UIManager {
     }
 
     /**
-     * Modifies mainwindow according to the action of loading a planning
+     * Updates mainwindow according to the action of loading a planning.
      */
     public void beginLoadPlanning() {
         mainWindow.setLoadingState("Loading Planning...");
@@ -111,10 +115,9 @@ public class UIManager {
     }
 
     /**
-     * Modifies mainwindow according to the action of stoping planning loading process
+     * Updates mainwindow according to the action of stoping planning loading process.
      */
     public void endLoadPlanning() {
-        // Add view subscribers to the model
         ModelManager.getInstance().getPlanning().clearSubscribers();
         ModelManager.getInstance().getPlanning().addSubscriber(mainWindow.getDeliveryTreeView());
         ColorsGenerator.getInstance().createColors(ModelManager.getInstance().getPlanning().getTimeSlots());
@@ -122,17 +125,21 @@ public class UIManager {
 
         mainWindow.clearLegend();
         mainWindow.setLegend();
-        // Update mainwindow
         mainWindow.resetZoom();
+        
         mainWindow.endLoadingState();
     }
 
+    /**
+     * Updates the view according to the action of starting the route computing.
+     */
     public void beginComputingRoute() {
         mainWindow.setLoadingState("Computing Route...");
     }
 
     /**
-     * Change subscribers of the route
+     * Updates the view according to the end of the route computing. Updates
+     * the planning view.
      */
     public void endRouteComputation() {
         mainWindow.endLoadingState();
@@ -143,16 +150,15 @@ public class UIManager {
     }
 
     /**
-     * Modifies mainwindow to display an error message
+     * Updates mainwindow to display an error message.
      */
     public void showError(String msg) {
         mainWindow.endLoadingState();
-        // Ask main window to display error
         mainWindow.displayError(msg);
     }
 
     /**
-     * Generate the road Map file
+     * Generates the road Map file.
      */
     public void generateRoadMap() {
         RoadMapView roadMapView = new RoadMapView(
@@ -164,27 +170,25 @@ public class UIManager {
     }
 
     /**
-     * Saves the roadmap to a file
+     * Saves the roadmap to a file.
      *
-     * @param stage Stage above which should be displayed the file Chooser
+     * @param stage Stage above which should be displayed the file Chooser.
      * @param text  The text describing the road map.
      */
     public void saveRoadMapDocument(Stage stage, String text) {
         FileChooser fileChooser = new FileChooser();
 
-        //Set extension filter
         FileChooser.ExtensionFilter extFilter =
                 new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        //Show save file dialog
         File file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
             if (!IOManager.getInstance().saveRouteDocument(file, text)) {
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("There was a problem when saving your file ! ");
+                alert.setContentText("There was a problem when saving your file !");
                 alert.show();
             }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -192,7 +196,6 @@ public class UIManager {
             alert.setContentText("Your Road map is saved ! ");
             alert.show();
             stage.close();
-
         }
     }
 }

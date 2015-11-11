@@ -5,13 +5,14 @@ import com.hexanome.controller.ModelManager;
 import com.hexanome.controller.UIManager;
 
 /**
- * This class represent the logic state in which the application
- * is computing the best route to reach all delivery points
+ * This class represents the logic state in which the application
+ * is computing the best route to reach all delivery points.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class ComputingRouteState extends DefaultState {
 
+    /** The unique instance of this class. */
     private static ComputingRouteState computingRouteState = null;
 
     private ComputingRouteState() {
@@ -19,10 +20,9 @@ public class ComputingRouteState extends DefaultState {
     }
 
     /**
-     * Returns the instance of the ComputingRouteState,
-     * it is a singleton
+     * Returns the instance of the ComputingRouteState, which is a singleton.
      *
-     * @return The instance of ComputingRouteState
+     * @return The instance of ComputingRouteState.
      */
     public static ComputingRouteState getInstance() {
         if (computingRouteState == null) {
@@ -31,7 +31,8 @@ public class ComputingRouteState extends DefaultState {
         return computingRouteState;
     }
 
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see com.hexanome.controller.states.IState#btnCancel()
      */
     @Override
@@ -42,12 +43,12 @@ public class ComputingRouteState extends DefaultState {
     }
 
     /**
-     * Returns the string describing the state, used for debug only
+     * Returns the string describing the state, used for debug only.
      *
-     * @return a string describing the state
+     * @return A string describing the state
      */
     @Override
     public String toString() {
-        return "ComputingRouteState"; //To change body of generated methods, choose Tools | Templates.
+        return "ComputingRouteState";
     }
 }

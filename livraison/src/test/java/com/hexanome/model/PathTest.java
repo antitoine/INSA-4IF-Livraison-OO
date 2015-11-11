@@ -5,10 +5,12 @@
  */
 package com.hexanome.model;
 
+import java.awt.Point;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -31,11 +33,11 @@ public class PathTest {
         Node node2 = new Node(2, new Point(10, 20));
         Arc arc1 = new Arc("hollywood", 12, 31, node1, node2);
         Arc arc2 = new Arc("doowylloh", 12, 31, node2, node1);
-        ArrayList<Arc> expResult = new ArrayList<>();
+        LinkedList<Arc> expResult = new LinkedList<>();
         expResult.add(arc1);
         expResult.add(arc2);
         Path instance = new Path(expResult);
-        ArrayList<Arc> result = instance.getArcs();
+        List<Arc> result = instance.getArcs();
         assertEquals(expResult, result);
     }
 
@@ -50,7 +52,7 @@ public class PathTest {
         Node third = new Node(3, new Point(10, 30));
         Arc arc1 = new Arc("hollywood", 12, 31, first, second);
         Arc arc2 = new Arc("doowylloh", 12, 31, second, third);
-        ArrayList<Arc> expResult = new ArrayList<>();
+        LinkedList<Arc> expResult = new LinkedList<>();
         expResult.add(arc1);
         expResult.add(arc2);
         Path instance = new Path(expResult);
@@ -69,7 +71,7 @@ public class PathTest {
         Node third = new Node(3, new Point(10, 30));
         Arc arc1 = new Arc("hollywood", 12, 31, first, second);
         Arc arc2 = new Arc("doowylloh", 12, 31, second, third);
-        ArrayList<Arc> expResult = new ArrayList<>();
+        LinkedList<Arc> expResult = new LinkedList<>();
         expResult.add(arc1);
         expResult.add(arc2);
         Path instance = new Path(expResult);
@@ -90,7 +92,7 @@ public class PathTest {
         Node test = new Node(2, new Point(10, 30));
         Arc arc1 = new Arc("hollywood", 12, 31, first, second);
         Arc arc2 = new Arc("doowylloh", 12, 31, second, test);
-        ArrayList<Arc> arcsListWithNodeTest = new ArrayList<>();
+        LinkedList<Arc> arcsListWithNodeTest = new LinkedList<>();
         arcsListWithNodeTest.add(arc1);
         arcsListWithNodeTest.add(arc2);
 
@@ -99,7 +101,7 @@ public class PathTest {
         assertEquals(true, result1);
 
         //Node is not in the path
-        ArrayList<Arc> arcsListWithoutNodeTest = new ArrayList<>();
+        LinkedList<Arc> arcsListWithoutNodeTest = new LinkedList<>();
         arcsListWithoutNodeTest.add(arc1);
         Path instance2 = new Path(arcsListWithoutNodeTest);
         boolean result2 = instance2.containsNode(test);
@@ -119,7 +121,7 @@ public class PathTest {
         Node test = new Node(2, new Point(10, 30));
         Arc arc1 = new Arc("hollywood", 12, 10, first, second);
         Arc arc2 = new Arc("doowylloh", 12, 10, second, test);
-        ArrayList<Arc> arcsList = new ArrayList<>();
+        LinkedList<Arc> arcsList = new LinkedList<>();
         arcsList.add(arc1);
         arcsList.add(arc2);
         Path instance = new Path(arcsList);

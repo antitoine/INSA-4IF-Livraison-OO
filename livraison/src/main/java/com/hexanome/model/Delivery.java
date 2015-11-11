@@ -1,39 +1,42 @@
 package com.hexanome.model;
 
 /**
- * This class represents a delivery point.
+ * This class represents a delivery point, comparable by delivery times.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Delivery implements Comparable<Delivery> {
 
     /**
-     * The duration of a delivery.
+     * The duration of a delivery, in seconds.
      */
     private static final float DELIVERY_DURATION = 600f;
 
     /**
-     * The time when the delivery will be executed.
+     * The time when the delivery will be started.
      */
     private float deliveryTime;
+    
     /**
      * The node where this delivery will be executed.
      */
     private Node node;
+    
     /**
      * The id of the delivery.
      */
     private int id;
+    
     /**
      * The time slot to which the delivery belongs.
      */
     private TimeSlot timeSlot;
 
     /**
-     * Constructor.
+     * Constructs a new delivery, updating the node where the delivery is.
      *
-     * @param id   the id of the delivery
-     * @param node the node where the delivery will be attached
+     * @param id   The id of the delivery
+     * @param node The node where the delivery will be attached
      */
     public Delivery(int id, Node node) {
         this.id = id;
@@ -45,7 +48,7 @@ public class Delivery implements Comparable<Delivery> {
     /**
      * Update the node associated with the current delivery.
      */
-    final void updateNode() {
+    protected final void updateNode() {
         node.attachDelivery(this);
     }
 
@@ -59,8 +62,9 @@ public class Delivery implements Comparable<Delivery> {
     }
 
     /**
-     * Returns the effective delivery time
-     *
+     * Returns the effective delivery time. If any route was computed before,
+     * the delivery time will always be 0.
+     * 
      * @return a float that is the sum in seconds of a timestamp
      */
     public float getDeliveryTime() {
@@ -72,14 +76,14 @@ public class Delivery implements Comparable<Delivery> {
      *
      * @param deliveryTime when the delivery will be executed.
      */
-    void setDeliveryTime(float deliveryTime) {
+    protected void setDeliveryTime(float deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
 
     /**
-     * Returns the time whend the delivery is done.
+     * Returns the time when the delivery is done.
      *
-     * @return The end time of the delivery.
+     * @return The end time of the delivery, in a sum of seconds.
      */
     public float getDeliveryEndTime() {
         return deliveryTime + DELIVERY_DURATION;
@@ -99,7 +103,7 @@ public class Delivery implements Comparable<Delivery> {
      *
      * @param timeSlot the time slot attached to the delivery
      */
-    void attachTimeSlot(TimeSlot timeSlot) {
+    protected void attachTimeSlot(TimeSlot timeSlot) {
         this.timeSlot = timeSlot;
     }
 

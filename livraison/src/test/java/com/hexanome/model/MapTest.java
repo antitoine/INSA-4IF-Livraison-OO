@@ -5,11 +5,14 @@
  */
 package com.hexanome.model;
 
+import java.awt.Point;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -90,7 +93,7 @@ public class MapTest {
         ArrayList<Arc> expResult = new ArrayList<>();
         expResult.add(arc1);
 
-        ArrayList<Arc> result = map.getArcs();
+        java.util.List<Arc> result = map.getArcs();
 
         assertEquals(result.get(0).toString(), arc1.toString());
         assertEquals(result, expResult);
@@ -110,10 +113,9 @@ public class MapTest {
         System.out.println("getNodes");
         Map map = new Map();
         Node node1 = map.createNode(1, new Point(20, 30));
-        HashMap<Integer, Node> expResult = new HashMap<>();
-        expResult.put(1, node1);
-        HashMap<Integer, Node> result = map.getNodes();
-        assertEquals(expResult, result);
+        Collection<Node> result = map.getNodes();
+        assertEquals(1, result.size());
+        assertEquals(node1, result.iterator().next());
     }
 
     /**
@@ -131,15 +133,15 @@ public class MapTest {
         Arc arc2 = map.createArc("route2", 6, 31, 1, 2);
         Arc arc3 = map.createArc("route3", 5, 31, 2, 3);
 
-        ArrayList<Arc> arcs = new ArrayList<>();
+        LinkedList<Arc> arcs = new LinkedList<>();
         arcs.add(arc2);
         arcs.add(arc3);
         Path expResult = new Path(arcs);
 
         Path result = map.getFastestPath(start, end);
 
-        ArrayList<Arc> expResultList = expResult.getArcs();
-        ArrayList<Arc> resultList = result.getArcs();
+        List<Arc> expResultList = expResult.getArcs();
+        List<Arc> resultList = result.getArcs();
         assertEquals(expResultList.size(), resultList.size()); //test number of arcs.
 
         for (int i = 0; i < expResultList.size(); i++) {

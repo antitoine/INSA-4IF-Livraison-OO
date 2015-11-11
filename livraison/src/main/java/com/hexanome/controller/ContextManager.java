@@ -10,29 +10,37 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This class manages both commands and the main state machine of the application
+ * This class manages both commands and the main state machine of the 
+ * application
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class ContextManager {
 
+    /** Instance of the class used by the Singleton. */
     private static ContextManager contextManager = null;
+    
+    /** Stack of commands already executed. */
     private final Stack<ICommand> done;
+    
+    /** Stack of commands canceled. */
     private final Stack<ICommand> undone;
+    
+    /** The current state of the application. */
     private IState currentState;
 
     /**
-     * Builds a new ContextManager instance
+     * Builds a new ContextManager instance.
      */
     private ContextManager() {
-        this.setCurrentState(InitState.getInstance());
         this.done = new Stack<>();
         this.undone = new Stack<>();
+        this.setCurrentState(InitState.getInstance());
     }
 
     /**
-     * @return the instance of ContextManager in the application, it is a
-     * Singleton
+     * @return The instance of ContextManager in the application, which is a
+     * Singleton.
      */
     public static ContextManager getInstance() {
         if (contextManager == null) {
@@ -42,90 +50,97 @@ public class ContextManager {
     }
 
     /**
-     * Execute the given command and add it to commands history
+     * Executes the given command and add it to commands history. Enables the
+     * undo button.
      *
-     * @param cmd the command to execute
+     * @param cmd The command to execute
      */
     public void executeCommand(final ICommand cmd) {
         cmd.execute();
-        // Add command to done commands history
         done.push(cmd);
-        // Enable undo button
-        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.UNDO, true);
+        
+        UIManager.getInstance()
+                 .getMainWindow()
+                 .setEnableButton(ConstView.Button.UNDO, true);
     }
 
     /**
-     * Clears commands history
+     * Clears commands history and disables undo/redo buttons.
      */
     public void clearCommandsHistory() {
         done.clear();
         undone.clear();
-        // Disable undo/redo buttons
-        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.UNDO, false);
-        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.REDO, false);
+        
+        UIManager.getInstance()
+                 .getMainWindow()
+                 .setEnableButton(ConstView.Button.UNDO, false);
+        
+        UIManager.getInstance()
+                 .getMainWindow()
+                 .setEnableButton(ConstView.Button.REDO, false);
     }
 
     /**
-     * Undo the last command added to done commands stack
+     * Undoes the last command added to done commands stack, and updates the 
+     * undo/redo buttons.
      */
     public void undo() {
-        // Take command from stack
         ICommand cmd = done.pop();
-        // Reverse command
         cmd.reverse();
-        // Push command on the undone stack
         undone.push(cmd);
-        // Enable redo button
-        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.REDO, true);
+
+        UIManager.getInstance()
+                 .getMainWindow()
+                 .setEnableButton(ConstView.Button.REDO, true);
+        
         if (done.empty()) {
-            // Disable undo button if done stack is empty
-            UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.UNDO, false);
+            UIManager.getInstance()
+                     .getMainWindow()
+                     .setEnableButton(ConstView.Button.UNDO, false);
         }
     }
 
     /**
-     * Redo the last command added to undone commands stack
+     * Redoes the last command added to undone commands stack and update the 
+     * undo/redo buttons.
      */
     public void redo() {
-        // Take command from top of undone stack
         ICommand cmd = undone.pop();
-        // Execute command
         cmd.execute();
-        // Push command on top of done stack
         done.push(cmd);
-        // Enable undo button
-        UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.UNDO, true);
+
+        UIManager.getInstance()
+                 .getMainWindow()
+                 .setEnableButton(ConstView.Button.UNDO, true);
+        
         if (undone.empty()) {
-            // Disable redo button if undone stack is empty
-            UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.REDO, false);
+            UIManager.getInstance()
+                     .getMainWindow()
+                     .setEnableButton(ConstView.Button.REDO, false);
         }
     }
 
     /**
-     * Closes the application
+     * Closes the application.
      */
     public void exit() {
-        // EXIT application
         System.exit(0);
     }
 
     /**
-     * @return the currentState
+     * @return The current state of the application.
      */
     public IState getCurrentState() {
         return currentState;
     }
 
     /**
-     * Set a new state and call the method initView of this state
+     * Sets a new state and calls the method initView of this state.
      *
-     * @param currentState the currentState to set
+     * @param currentState The currentState to set.
      */
-    public void setCurrentState(IState currentState) {
+    public final void setCurrentState(IState currentState) {
         this.currentState = currentState;
         this.currentState.initView();
-        // removeMeLater DEBUG --------------
-        Logger.getLogger(ContextManager.class.getName()).log(Level.INFO, currentState.toString());
-        // ----------------------------------
     }
 }

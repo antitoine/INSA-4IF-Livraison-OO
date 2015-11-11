@@ -9,22 +9,29 @@ import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 
 /**
- * This class represent the action of removing a delivery from the planning
+ * This class represents the action of removing a delivery from the planning.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  * @see ICommand
  */
 public class RemoveDeliveryCommand implements ICommand {
 
+    /** The delivery to remove. */
     private Delivery delivery;
+    
+    /** The node that contains the delivery preceding the delivery to remove. */
     private Node nodePreviousDelivery;
+    
+    /** The time slot of the delivery to remove. */
     private TimeSlot timeSlot;
+    
+    /** The location of the delivery to remove. */
     private Node node;
 
     /**
-     * Constructs a new instance of a RemoveDeliveryCommand
+     * Constructs a new instance of a RemoveDeliveryCommand.
      *
-     * @param delivery Delivery to be removed
+     * @param delivery Delivery to be removed.
      */
     public RemoveDeliveryCommand(Delivery delivery) {
         this.delivery = delivery;
@@ -33,9 +40,7 @@ public class RemoveDeliveryCommand implements ICommand {
     }
 
     /**
-     * Execute the command by removing the delivery
-     *
-     * @return
+     * Executes the command by removing the delivery.
      * @see ICommand
      */
     @Override
@@ -46,25 +51,22 @@ public class RemoveDeliveryCommand implements ICommand {
 
             ModelManager.getInstance().getPlanning().removeDelivery(delivery);
 
-            ModelManager.getInstance()
-                    .getPlanning().notifySubscribers();
-            ModelManager.getInstance().getPlanning()
-                    .getRoute().notifySubscribers();
-            // Jump to EmptyNodeSelectedState
-            ContextManager.getInstance()
-                    .setCurrentState(EmptyNodeSelectedState.getInstance());
-            // Open new popover
-            UIManager.getInstance().getMainWindow()
-                    .repositionToLatestPosition();
-            UIManager.getInstance().getMainWindow().getMapView()
-                    .showPopOver(delivery.getNode());
+            ModelManager.getInstance().getPlanning().notifySubscribers();
+            ModelManager.getInstance().getPlanning().getRoute().notifySubscribers();
+
+            ContextManager.getInstance().setCurrentState(
+                    EmptyNodeSelectedState.getInstance()
+            );
+            
+            UIManager.getInstance().getMainWindow().repositionToLatestPosition();
+            UIManager.getInstance().getMainWindow().getMapView().showPopOver(
+                    delivery.getNode()
+            );
         }
     }
 
     /**
-     * Reverse command execution by bringing back the removed delivery
-     *
-     * @return
+     * Reverses command execution by bringing back the removed delivery.
      * @see ICommand
      */
     @Override

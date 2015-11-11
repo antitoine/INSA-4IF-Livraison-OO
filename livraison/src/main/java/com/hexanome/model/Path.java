@@ -1,17 +1,22 @@
 package com.hexanome.model;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 /**
- * This class represents the path to follow to execute all the deliveries.
+ * This class represents an ordered collection of arcs to follow to reach a
+ * delivery or a warehouse.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Path {
+
     /**
      * All the arcs to take, in the right order.
      */
-    private ArrayList<Arc> arcs;
+    private LinkedList<Arc> arcs;
 
     /**
      * The total duration of the path.
@@ -28,7 +33,7 @@ public class Path {
      *
      * @param arcs the list of arcs of the path.
      */
-    public Path(ArrayList<Arc> arcs) {
+    public Path(LinkedList<Arc> arcs) {
         this.arcs = arcs;
         this.pathDuration = 0;
 
@@ -43,8 +48,8 @@ public class Path {
      *
      * @return a collection of arcs
      */
-    public ArrayList<Arc> getArcs() {
-        return arcs;
+    public List<Arc> getArcs() {
+        return Collections.unmodifiableList(arcs);
     }
 
     /**
@@ -90,20 +95,17 @@ public class Path {
      * @return true if the node is contained in the path.
      */
     public boolean containsNode(Node node) {
-        for (Arc arc : arcs) {
-            if (arc.getSrc().equals(node) || arc.getDest().equals(node)) {
-                return true;
-            }
-        }
-
-        return false;
+        return arcs.stream().anyMatch(
+                (arc) -> (arc.getSrc().equals(node) || arc.getDest().equals(node))
+        );
     }
 
     /**
-     * Comparison operator for equality
+     * Comparison operator for equality.
      *
-     * @param obj
-     * @return
+     * @param obj The object to compare.
+     * 
+     * @return True if equals, false otherwise.
      */
     @Override
     public boolean equals(Object obj) {
@@ -121,7 +123,17 @@ public class Path {
                 return false;
             }
         }
-        return true; //To change body of generated methods, choose Tools | Templates.
+        
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash += 41 * hash + Objects.hashCode(this.arcs);
+        hash += 41 * hash + Float.floatToIntBits(this.pathDuration);
+        hash += 41 * hash + Float.floatToIntBits(this.pathDistance);
+        return hash;
     }
 
     /**
@@ -132,9 +144,9 @@ public class Path {
     @Override
     public String toString() {
         String strarcs = "{";
-        for (Arc arc : arcs) {
-            strarcs += arc.toString() + ",";
-        }
+        strarcs = arcs.stream()
+                      .map((arc) -> arc.toString() + ",")
+                      .reduce(strarcs, String::concat);
         strarcs += strarcs.substring(0, strarcs.length() - 1) + "}";
         return String.format("\"Path\" : {\n"
                 + "\"pathDuration\":%s, \"arcs\":\"%s\"\n"

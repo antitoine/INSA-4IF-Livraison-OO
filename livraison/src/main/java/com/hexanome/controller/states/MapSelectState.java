@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
@@ -13,13 +10,16 @@ import javafx.concurrent.Task;
 import java.io.File;
 
 /**
- * This class represents the logic state when the user is selecting
- * a map to load
+ * This class represents the logic state when the user is selecting a map to
+ * load.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class MapSelectState extends DefaultState {
 
+    /**
+     * The unique instance of this class.
+     */
     private static MapSelectState mapSelectState = null;
 
     private MapSelectState() {
@@ -27,9 +27,9 @@ public class MapSelectState extends DefaultState {
     }
 
     /**
-     * Returns the instance of the MapSelectState, it is a singleton
+     * Returns the instance of the MapSelectState, which is a singleton.
      *
-     * @return The instance of MapSelectState
+     * @return The instance of MapSelectState.
      */
     public static MapSelectState getInstance() {
         if (mapSelectState == null) {
@@ -43,7 +43,6 @@ public class MapSelectState extends DefaultState {
      */
     @Override
     public void btnCancel() {
-        // Jump back to InitState
         ContextManager.getInstance().setCurrentState(InitState.getInstance());
     }
 
@@ -56,9 +55,9 @@ public class MapSelectState extends DefaultState {
         UIManager.getInstance().beginLoadMap();
 
         /**
-         * The task is created in a different thread A listenner listen the
+         * The task is created in a different thread. A listenner listen the
          * result of the thread and executes the right commands if the task
-         * succeds
+         * succeds.
          *
          * Otherwise, all the task listed here will be executed in the UI Thread
          */
@@ -68,34 +67,37 @@ public class MapSelectState extends DefaultState {
                 return new Task<String>() {
                     @Override
                     protected String call() throws Exception {
-                        return ModelManager.getInstance().initModelMap(IOManager
-                                .getInstance().getMapDocument(file));
+                        return ModelManager.getInstance().initModelMap(
+                                IOManager.getInstance().getMapDocument(file)
+                        );
                     }
                 };
             }
         };
-        loadService.stateProperty()
-                .addListener((observableValue, oldValue, newValue) -> {
+
+        loadService.stateProperty().addListener(
+                (observableValue, oldValue, newValue) -> {
                     switch (newValue) {
                         case SUCCEEDED:
                             if (loadService.getValue() != null) {
-                                // Full clear of the model
                                 ModelManager.getInstance().clearModel();
-                                // Jump to InitState
-                                ContextManager.getInstance()
-                                        .setCurrentState(InitState.getInstance());
-                                // Update mainWindow
-                                UIManager.getInstance().showError(loadService.getValue());
+                                ContextManager.getInstance().setCurrentState(
+                                        InitState.getInstance()
+                                );
+                                UIManager.getInstance().showError(
+                                        loadService.getValue()
+                                );
                             } else {
-                                ContextManager.getInstance()
-                                        .setCurrentState(MapLoadedState.getInstance());
+                                ContextManager.getInstance().setCurrentState(
+                                        MapLoadedState.getInstance()
+                                );
                                 UIManager.getInstance().endLoadMap();
                             }
                             break;
                     }
-                });
+                }
+        );
         loadService.start();
-
     }
 
     @Override
@@ -111,6 +113,6 @@ public class MapSelectState extends DefaultState {
      */
     @Override
     public String toString() {
-        return "MapSelectState"; //To change body of generated methods, choose Tools | Templates.
+        return "MapSelectState";
     }
 }

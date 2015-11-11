@@ -5,10 +5,11 @@
  */
 package com.hexanome.model;
 
+import java.awt.Point;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -39,7 +40,7 @@ public class TimeSlotTest {
         expResult1.add(delivery1);
         TimeSlot timeSlot = new TimeSlot(8, 9, expResult1);
         //without timeslot attached
-        ArrayList<Delivery> result = timeSlot.getDeliveries();
+        List<Delivery> result = timeSlot.getDeliveries();
         // array empty
         for (int i = 0; i < expResult2.size(); i++) {
             assertEquals(expResult2.get(i), result.get(i));
@@ -74,7 +75,7 @@ public class TimeSlotTest {
 
         expResult.add(delivery2);
         timeSlot.addDelivery(delivery2);        //Function tested
-        ArrayList<Delivery> result = timeSlot.getDeliveries();
+        List<Delivery> result = timeSlot.getDeliveries();
         for (int i = 0; i < expResult.size(); i++) {
             assertEquals(expResult.get(i), result.get(i));
         }

@@ -20,57 +20,65 @@ public class Planning implements Publisher {
      * The map associated with this planning.
      */
     private Map map;
+    
     /**
      * The unique warehouse of the map.
      */
     private Node warehouse;
+    
     /**
      * The route created from this planning.
      */
     private Route route;
+    
     /**
      * All the timeslots where a delivery can be executed.
      */
     private ArrayList<TimeSlot> timeSlots;
+    
     /**
      * The subscribers of this class.
      */
     private ArrayList<Subscriber> subscribers;
+    
     /**
      * Computes the route from this planning.
      */
     private PlanningComputeRouteWorker planningComputeRouteWorker;
 
     /**
-     * Constructor.
+     * Constructs a new planning.
      *
-     * @param map       the map related to this planning.
-     * @param warehouse the warehouse.
-     * @param timeSlots all the timeslots where a delivery can be executed.
+     * @param map       The map related to this planning.
+     * @param warehouse The warehouse.
+     * @param timeSlots All the timeslots where a delivery can be executed.
      */
     public Planning(Map map, Node warehouse, ArrayList<TimeSlot> timeSlots) {
         this.map = map;
         this.warehouse = warehouse;
-        this.route = null; // On initialise à null pour l'instant
+        this.route = null; // Route is null at this time, not yet computed.
         this.timeSlots = timeSlots;
 
         subscribers = new ArrayList<>();
 
         initNodesTimeSlot();
-
-    }
-
-    private void initNodesTimeSlot() {
-        map.resetNodes();
-        for (TimeSlot ts : timeSlots) {
-            for (Delivery delivery : ts.getDeliveries()) {
-                delivery.updateNode();
-            }
-        }
     }
 
     /**
-     * Finds the delivery passed by parameter and returns the node which
+     * Initializes the nodes contained in the map associated with the current
+     * planning.
+     */
+    private void initNodesTimeSlot() {
+        map.resetNodes();
+        timeSlots.stream().forEach((ts) -> {
+            ts.getDeliveries().stream().forEach((delivery) -> {
+                delivery.updateNode();
+            });
+        });
+    }
+
+    /**
+     * Finds the delivery passed by parameter and returns the node that
      * contains the delivery done before. A route must be computed when you
      * call this method. Otherwise, it will return null.
      *
@@ -124,13 +132,13 @@ public class Planning implements Publisher {
      * Returns a collection of deliveries present in the planning whatever the
      * associated timeslot is.
      *
-     * @return a collection of deliveries
+     * @return A list of deliveries
      */
     public List<Delivery> getDeliveries() {
-        ArrayList<Delivery> deliveries = new ArrayList<>();
-        for (TimeSlot ts : timeSlots) {
+        List<Delivery> deliveries = new ArrayList<>();
+        timeSlots.stream().forEach((ts) -> {
             deliveries.addAll(ts.getDeliveries());
-        }
+        });
         return deliveries;
     }
 
@@ -144,25 +152,29 @@ public class Planning implements Publisher {
     }
 
     /**
-     * Update the route and notify the subscribers.
+     * Updates the route.
      *
      * @param route The new route tu use.
      */
     void setRoute(Route route) {
         this.route = route;
-        //notifySubscribers();
     }
 
     /**
-     * Abort the route computing if it is running.
+     * Aborts the route computing if it is running.
      */
     public void abortComputeRoute() {
         planningComputeRouteWorker.cancel();
     }
 
     /**
-     * Start the route computing. The observers will be notified when the route
-     * is set. Update the deliveries time as well.
+     * Starts the route computing in a new thread. Update the deliveries time as
+     * well. The handler will be notified when the route computing will be done.
+     * An ArithmeticException can be thrown throught the thread, if any route
+     * can't be found.
+     * 
+     * @param handler The event handler to notify and the route computing is
+     * finished.
      */
     public void computeRoute(EventHandler handler) {
         planningComputeRouteWorker = new PlanningComputeRouteWorker(this, handler);
@@ -170,9 +182,9 @@ public class Planning implements Publisher {
     }
 
     /**
-     * Compute the route synchronously. Update the deliveries time.
+     * Computes the route synchronously. Updates the deliveries time.
      *
-     * @throws java.lang.Exception Ifthe route can't be computed.
+     * @throws java.lang.Exception If the route can't be computed.
      */
     public void computeRoute() throws Exception {
         planningComputeRouteWorker = new PlanningComputeRouteWorker(this);
@@ -180,21 +192,28 @@ public class Planning implements Publisher {
     }
 
     /**
-     * Adds a delivery to the planning, after another delivery.
+     * Adds a delivery to the planning, after another delivery. Notifies the
+     * planning and route subscribers when it's done.
      *
-     * @param node                 The node where we want to add a delivery
+     * @param node The node where we want to add a delivery
      * @param nodePreviousDelivery The node where is the delivery to do before
-     *                             the new one we want to add.
-     * @param timeSlot             The time slot in which we want the new delivery to be.
+     * the new one we want to add.
+     * @param timeSlot The time slot in which we want the new delivery to be.
+     * 
      * @return The delivery newly created.
      */
     public Delivery addDelivery(Node node, Node nodePreviousDelivery, TimeSlot timeSlot) {
         if (route != null) {
-            Delivery newDelivery = new Delivery(timeSlot.getDeliveries().size() + 1, node);
+            Delivery newDelivery = new Delivery(
+                    timeSlot.getDeliveries().size() + 1, 
+                    node
+            );
             timeSlot.addDelivery(newDelivery);
 
             route.addDelivery(newDelivery, nodePreviousDelivery);
+            
             notifySubscribers();
+            
             return newDelivery;
         }
 
@@ -202,7 +221,8 @@ public class Planning implements Publisher {
     }
 
     /**
-     * Removes a delivery from the planning.
+     * Removes a delivery from the planning.  Notifies the planning and route 
+     * subscribers when it's done.
      *
      * @param delivery the delivery to remove.
      */
@@ -214,10 +234,11 @@ public class Planning implements Publisher {
     }
 
     /**
-     * Swaps two deliveries.
+     * Swaps two deliveries. Notifies the planning and route subscribers when 
+     * it's done.
      *
-     * @param delivery1 the first delivery to swap.
-     * @param delivery2 the second delivery to swap.
+     * @param delivery1 The first delivery to swap.
+     * @param delivery2 The second delivery to swap.
      */
     public void swapDeliveries(Delivery delivery1, Delivery delivery2) {
         if (route != null) {
@@ -227,38 +248,38 @@ public class Planning implements Publisher {
     }
 
     /**
-     * Adds a subscriber
+     * Adds a subscriber and notifies it.
      *
-     * @param s Subscriber to add
+     * @param subscriber Subscriber to add
      */
     @Override
-    public void addSubscriber(Subscriber s) {
-        subscribers.add(s);
-        s.update(this, null);
+    public void addSubscriber(Subscriber subscriber) {
+        subscribers.add(subscriber);
+        subscriber.update(this, null);
     }
 
     /**
-     * Remove one subscriber
+     * Remove one subscriber.
      *
-     * @param s Subscriber to remove
+     * @param subscriber Subscriber to remove
      */
     @Override
-    public void removeSubscriber(Subscriber s) {
-        subscribers.remove(s);
+    public void removeSubscriber(Subscriber subscriber) {
+        subscribers.remove(subscriber);
     }
 
     /**
-     * Notifies all subscribers
+     * Notifies all subscribers.
      */
     @Override
     public void notifySubscribers() {
-        for (Subscriber s : subscribers) {
-            s.update(this, null);
-        }
+        subscribers.stream().forEach((subscriber) -> {
+            subscriber.update(this, null);
+        });
     }
 
     /**
-     * Removes all subscribers
+     * Removes all subscribers.
      */
     @Override
     public void clearSubscribers() {
@@ -266,7 +287,7 @@ public class Planning implements Publisher {
     }
 
     /**
-     * Returns the string describing the objet, used for debug only
+     * Returns the string describing the objet, used for debug only.
      *
      * @return a string describing the object
      */
@@ -285,5 +306,4 @@ public class Planning implements Publisher {
                 + "}"
                 + "}", warehouse.getId(), strts);
     }
-
 }

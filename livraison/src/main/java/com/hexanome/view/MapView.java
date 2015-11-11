@@ -33,7 +33,7 @@ public class MapView extends AnchorPane implements Subscriber {
             clearMap();
             Map map = (Map) p;
             addArcs(map.getArcs());
-            addEmptyNodes(map.getNodes().values(), Cursor.DEFAULT);
+            addEmptyNodes(map.getNodes(), Cursor.DEFAULT);
         } else if (p instanceof Planning) {
             updateMapWithDeliveries((Planning) p);
         }
@@ -113,7 +113,7 @@ public class MapView extends AnchorPane implements Subscriber {
 
         addArcs(mapArc);
 
-        addEmptyNodes(map.getNodes().values(), Cursor.HAND);
+        addEmptyNodes(map.getNodes(), Cursor.HAND);
 
         for (TimeSlot ts : planning.getTimeSlots()) {
             for (Delivery d : ts.getDeliveries()) {

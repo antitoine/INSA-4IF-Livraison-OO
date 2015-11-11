@@ -6,25 +6,36 @@ import com.hexanome.model.Node;
 import com.hexanome.model.TimeSlot;
 
 /**
- * This class represent the action of adding a delivery to the planning
+ * This class represents the action of adding a delivery to the planning.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  * @see ICommand
  */
 public class AddDeliveryCommand implements ICommand {
 
+    /** The node representing the location of the new delivery to add. */
     private Node node;
+    
+    /**
+     * The node representing the location of the delivery done before the
+     * delivery to add.
+     */
     private Node nodePreviousDelivery;
+    
+    /** The time slot of the new delivery to add. */
     private TimeSlot timeSlot;
+    
+    /** The delivery to add in the planning. */
     private Delivery delivery;
 
     /**
-     * Construct a new AddDeliveryCommand to add a new delivery to the planning
+     * Constructs a new AddDeliveryCommand, in order to add a new delivery 
+     * to a planning
      *
-     * @param node                 Delivery to add
-     * @param nodePreviousDelivery The node with the delivery preceding the
-     *                             delivery to add
-     * @param timeSlot             The time slot of the new delivery to add
+     * @param node The location on the map where a new delivery will be added.
+     * @param nodePreviousDelivery The node with the delivery preceding the 
+     * delivery to add
+     * @param timeSlot The time slot of the new delivery to add.
      */
     public AddDeliveryCommand(Node node, Node nodePreviousDelivery, TimeSlot timeSlot) {
         this.node = node;
@@ -34,9 +45,7 @@ public class AddDeliveryCommand implements ICommand {
     }
 
     /**
-     * Execute the command by adding a delivery to the planning
-     *
-     * @return
+     * Executes the command by adding a delivery to the planning.
      * @see ICommand
      */
     @Override
@@ -50,10 +59,9 @@ public class AddDeliveryCommand implements ICommand {
     }
 
     /**
-     * Reverse execution of the command by removing the delivery from the
-     * planning
+     * Reverses execution of the command by removing the added delivery from the
+     * planning.
      *
-     * @return
      * @see ICommand
      */
     @Override
@@ -62,5 +70,4 @@ public class AddDeliveryCommand implements ICommand {
             ModelManager.getInstance().getPlanning().removeDelivery(delivery);
         }
     }
-
 }

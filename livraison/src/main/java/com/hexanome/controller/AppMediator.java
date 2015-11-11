@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * This class implement the Meditor Pattern
+ * This class implements the Mediator Pattern
  * and is responsible for attaching the main window
  * to the scene as it is not possible to get
  * the current instance of a javaFX application
@@ -19,10 +19,10 @@ import javafx.stage.Stage;
 public class AppMediator extends Application {
 
     /**
-     * Method used to start JavaFX mainwindow
+     * Method used to start the JavaFX mainwindow
      *
      * @param stage Stage to use to start the app
-     * @throws Exception
+     * @throws Exception Any exception thrown by the javaFX main window
      */
     @Override
     public void start(Stage stage) throws Exception {
@@ -37,7 +37,5 @@ public class AppMediator extends Application {
         stage.setMaximized(true);
 
         stage.show();
-
     }
-
 }

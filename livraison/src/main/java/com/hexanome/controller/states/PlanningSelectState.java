@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
@@ -13,13 +10,16 @@ import javafx.concurrent.Task;
 import java.io.File;
 
 /**
- * This class represents the logic state when user is selecting a
- * planning to load
+ * This class represents the logic state when user is selecting a planning to
+ * load.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class PlanningSelectState extends DefaultState {
 
+    /**
+     * The unique instance of this class.
+     */
     private static PlanningSelectState planningSelectState = null;
 
     private PlanningSelectState() {
@@ -27,7 +27,7 @@ public class PlanningSelectState extends DefaultState {
     }
 
     /**
-     * Returns the instance of the PlanningSelectState, it is a singleton
+     * Returns the instance of the PlanningSelectState, it is a singleton.
      *
      * @return The instance of PlanningSelectState
      */
@@ -46,7 +46,6 @@ public class PlanningSelectState extends DefaultState {
         ModelManager.getInstance().clearPlanning();
         UIManager.getInstance().getMainWindow().getDeliveryTreeView().clearTree();
 
-        // Jump to MapLoadedState
         ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
     }
 
@@ -56,11 +55,10 @@ public class PlanningSelectState extends DefaultState {
     @Override
     public void btnValidateFile(final File file) {
 
-        // update the view
         UIManager.getInstance().beginLoadPlanning();
 
         /**
-         * The task is created in a different thread A listenner listen the
+         * The task is created in a different thread. A listenner listen the
          * result of the thread and executes the right commands if the task
          * succeds
          *
@@ -72,33 +70,35 @@ public class PlanningSelectState extends DefaultState {
                 return new Task<String>() {
                     @Override
                     protected String call() throws Exception {
-                        return ModelManager.getInstance()
-                                .initModelPlanning(IOManager.getInstance()
-                                        .getPlanningDocument(file));
+                        return ModelManager.getInstance().initModelPlanning(
+                                IOManager.getInstance().getPlanningDocument(
+                                        file
+                                )
+                        );
                     }
                 };
             }
         };
+
         loadService.stateProperty()
                 .addListener((observableValue, oldValue, newValue) -> {
                     switch (newValue) {
                         case SUCCEEDED:
                             if (loadService.getValue() != null) {
-                                // Clear current model's planning
                                 ModelManager.getInstance().clearPlanning();
-                                // Jump to MapLoadedState
-                                ContextManager.getInstance().setCurrentState(MapLoadedState.getInstance());
-                                // Update mainWindow
-                                UIManager.getInstance().showError(loadService.getValue());
-                                break;
+                                ContextManager.getInstance().setCurrentState(
+                                        MapLoadedState.getInstance()
+                                );
+                                UIManager.getInstance().showError(
+                                        loadService.getValue()
+                                );
                             } else {
-                                // Jump to PlanningLoadedState
-                                ContextManager.getInstance()
-                                        .setCurrentState(PlanningLoadedState.getInstance());
-                                // update the view
+                                ContextManager.getInstance().setCurrentState(
+                                        PlanningLoadedState.getInstance()
+                                );
                                 UIManager.getInstance().endLoadPlanning();
-                                break;
                             }
+                            break;
                     }
                 });
         loadService.start();
@@ -118,6 +118,6 @@ public class PlanningSelectState extends DefaultState {
      */
     @Override
     public String toString() {
-        return "PlanningSelectState"; //To change body of generated methods, choose Tools | Templates.
+        return "PlanningSelectState";
     }
 }

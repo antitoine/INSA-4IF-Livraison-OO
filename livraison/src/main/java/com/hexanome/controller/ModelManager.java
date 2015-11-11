@@ -14,22 +14,25 @@ import com.hexanome.utils.PlanningDocument;
  */
 public class ModelManager {
 
+    /** Unique instance of ModelManager. */
     private static ModelManager modelManager = null;
+    
+    /** The current map managed by the ModelManager. */
     private Map map = null;
+    
+    /** The current planning managed by the ModelManager. */
     private Planning planning = null;
 
     /**
-     * Builds a new ModelManager instance
+     * Builds a new ModelManager instance.
      */
     private ModelManager() {
-        // Nothing to do here for now
+        // Nothing to do here, but it's a private method.
     }
 
     /**
-     * Return the instance of the ModelManager in the application, ModelManager
-     * is a Singleton
-     *
-     * @return
+     * @return The instance of the ModelManager in the application, which
+     * is a Singleton.
      */
     public static ModelManager getInstance() {
         if (modelManager == null) {
@@ -39,61 +42,61 @@ public class ModelManager {
     }
 
     /**
-     * Initialize model's Map with the given MapDocument
+     * Initializes model's Map with the given MapDocument.
      *
-     * @param mapDoc MapDocument used to fill Map object
-     * @return false if a map already exists in the model or the integrity of
-     * MapDocument is compromised, else it will return true.
+     * @param mapDoc MapDocument used to fill Map object.
+     * @return An error message if a map already exists in the model or if the 
+     * integrity of MapDocument is compromised, else it will return null.
      */
     public String initModelMap(MapDocument mapDoc) {
-        String s = null;
+        String errorMsg = null;
         if (mapDoc != null) {
             if (map == null) {
-                // Map creation
                 map = new Map();
                 if (mapDoc.checkIntegrity()) {
                     mapDoc.fillMap(map);
                 } else {
-                    s = mapDoc.getErrorMsg();
+                    errorMsg = mapDoc.getErrorMsg();
                 }
             } else {
-                s = "ModelManager: a map already exists !";
+                errorMsg = "ModelManager: a map already exists !";
             }
         } else {
-            s = DocumentFactory.getLastError();
+            errorMsg = DocumentFactory.getLastError();
         }
-        return s;
+        return errorMsg;
     }
 
     /**
-     * Initialize model's Planning with the given PlanningDocument
+     * Initializes model's Planning with the given PlanningDocument.
      *
      * @param planDoc PlanningDocument used to fill Planning object
-     * @return false if a map doesn't exists in the model or a planning already
-     * exists in the model, it also returns false if the integrity of the
-     * PlanningDocument is compromised, else it will return true.
+     * @return An error message if a map doesn't exists in the model or if a 
+     * planning already exists in the model. It also returns an error message if
+     * the integrity of the PlanningDocument is compromised, else it will return
+     * null.
      */
     public String initModelPlanning(PlanningDocument planDoc) {
-        String s = null;
+        String errorMsg = null;
         if (planDoc != null) {
             if (map != null && planning == null) {
-                // Planning creation
                 if (planDoc.checkIntegrity(map)) {
-                    planning = new Planning(map, planDoc.getWarehouse(map), planDoc.getTimeSlots(map));
+                    planning = new Planning(map, planDoc.getWarehouse(map), 
+                                    planDoc.getTimeSlots(map));
                 } else {
-                    s = planDoc.getErrorMsg();
+                    errorMsg = planDoc.getErrorMsg();
                 }
             } else {
-                s = "ModelManager: map wasn't initialized or a planning already exists !";
+                errorMsg = "ModelManager: map wasn't initialized or a planning already exists !";
             }
         } else {
-            s = DocumentFactory.getLastError();
+            errorMsg = DocumentFactory.getLastError();
         }
-        return s;
+        return errorMsg;
     }
 
     /**
-     * Clears the Model
+     * Clears the Model.
      */
     public void clearModel() {
         map = null;
@@ -101,7 +104,7 @@ public class ModelManager {
     }
 
     /**
-     * Clears the map
+     * Clears the planning.
      */
     public void clearPlanning() {
         planning = null;
@@ -111,16 +114,14 @@ public class ModelManager {
     }
 
     /**
-     * Returns model's map
-     *
-     * @return
+     * @return The model's map, currently managed by the ModelManager.
      */
     public Map getMap() {
         return map;
     }
 
     /**
-     * @return
+     * @return The model's planning, currently managed by the ModelManager.
      */
     public Planning getPlanning() {
         return planning;

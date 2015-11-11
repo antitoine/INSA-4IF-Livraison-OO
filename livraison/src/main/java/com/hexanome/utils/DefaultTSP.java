@@ -14,7 +14,7 @@ import java.util.Iterator;
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public abstract class AbstractTSP implements ITSP {
+public class DefaultTSP implements ITSP {
 
     private Integer[] bestSolutions;
     private IGraph graph;
@@ -73,7 +73,9 @@ public abstract class AbstractTSP implements ITSP {
      * <code>nonVus</code> exactement une fois, puis retournant sur le sommet
      * <code>0</code>.
      */
-    protected abstract int bound(Integer sommetCourant, Collection<Integer> nonVus);
+    protected int bound(Integer sommetCourant, Collection<Integer> nonVus) {
+        return 0;
+    }
 
     /**
      * Returns an iterator to iterate on every unviewed edge following the currentEdge.

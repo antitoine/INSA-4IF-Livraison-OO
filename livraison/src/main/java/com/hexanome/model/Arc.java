@@ -10,49 +10,56 @@ import java.util.TreeSet;
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Arc {
+    
     /**
      * Name of the street.
      */
     private String streetName;
+    
     /**
-     * Length of the street.
+     * Length of the street, in meters.
      */
     private float length;
+    
     /**
-     * Average speed of the street.
+     * Average speed of the street, in meters/seconds.
      */
     private float avgSpeed;
+    
     /**
      * The time (seconds) needed to go from the start to the end of the arc.
      */
     private float duration;
+    
     /**
      * The node at the end of the arc.
      */
     private Node dest;
+    
     /**
      * The node at the beginning of the arc.
      */
     private Node src;
+    
     /**
      * The time slots associated with the arc when the arc is in a route.
      */
     private Set<TimeSlot> associatedTimeSlot;
 
     /**
-     * Constructor.
+     * Constructs a new arc.
      *
-     * @param streetName the name of the street
-     * @param length     the length of the street
-     * @param avgSpeed   the average speed on this street
-     * @param src        the node from where the street starts
-     * @param dest       the node where the street ends
+     * @param streetName The name of the street.
+     * @param length     The length of the street, in meters.
+     * @param avgSpeed   The average speed on this street, in meters/seconds.
+     * @param src        The node from where the street starts.
+     * @param dest       The node where the street ends.
      */
     public Arc(String streetName, float length, float avgSpeed, Node src, Node dest) {
         this.streetName = streetName;
         this.length = length;
         this.avgSpeed = avgSpeed;
-        this.duration = length / avgSpeed; // Unit : s
+        this.duration = length / avgSpeed;
         this.dest = dest;
         this.src = src;
         this.associatedTimeSlot = new TreeSet<>();
@@ -77,16 +84,16 @@ public class Arc {
     }
 
     /**
-     * Returns arc's length
+     * Returns arc's length.
      *
-     * @return the length in meters
+     * @return The length in meters.
      */
     public float getLength() {
         return length;
     }
 
     /**
-     * Returns street's name
+     * Returns street's name.
      *
      * @return a string containing street's name
      */
@@ -95,25 +102,27 @@ public class Arc {
     }
 
     /**
-     * Returns the duration (seconds) needed to go from the start to the end of the arc.
+     * Returns the duration (seconds) needed to go from the start to the end 
+     * of the arc.
      *
-     * @return the attribute "duration".
+     * @return The duration in seconds.
      */
     public float getDuration() {
         return duration;
     }
 
     /**
-     * Returns the time slots associated with the arc, if it exists.
+     * Returns the time slots associated with the arc.
      *
-     * @return The time slot if it exists, empty list otherwise.
+     * @return The time slots if it exists, empty list otherwise.
      */
     public Set<TimeSlot> getAssociatedTimeSlots() {
         return Collections.unmodifiableSet(associatedTimeSlot);
     }
 
     /**
-     * Set a time slot to the current arc.
+     * Add a time slot to the current arc, or ignore it if it's already contained
+     * in the list.
      *
      * @param timeSlot The time slot to attach.
      */
@@ -149,5 +158,4 @@ public class Arc {
                 + "\"srcNodeId\":%s\n"
                 + "}", streetName, length, avgSpeed, duration, dest.getId(), src.getId());
     }
-
 }

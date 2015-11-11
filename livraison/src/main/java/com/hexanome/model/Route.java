@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * This class represents a route, with the entire path to follow to execute
+ * This class represents a route, with the entire paths to follow to execute
  * every delivery.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
@@ -37,7 +38,7 @@ public class Route implements Publisher {
     private float totalDistance;
 
     /**
-     * Construct the route with the paths passed by parameter and update the
+     * Constructs the route with the paths passed by parameter and update the
      * deliveries times.
      *
      * @param planning
@@ -54,7 +55,7 @@ public class Route implements Publisher {
     }
 
     /**
-     * Update the delivery time of each delivery contained in the path
+     * Updates the delivery time of each delivery contained in the path
      * collection.
      */
     private void updateDeliveriesTime() {
@@ -86,30 +87,28 @@ public class Route implements Publisher {
     }
 
     /**
-     * Update the associated time slots of the arcs contained in the path.
+     * Updates the associated time slots of the arcs contained in the path.
      */
     private void updateArcTimeSlots() {
         planning.getMap().resetArcs();
 
-        for (Path p : paths) {
-            Delivery delivery = p.getLastNode().getDelivery();
-
+        paths.stream().forEach((path) -> {
+            Delivery delivery = path.getLastNode().getDelivery();
+            
             if (delivery == null) {
-                delivery = p.getFirstNode().getDelivery();
+                delivery = path.getFirstNode().getDelivery();
             }
-
+            
             if (delivery != null) {
-                for (Arc arc : p.getArcs()) {
+                for (Arc arc : path.getArcs()) {
                     arc.addAssociatedTimeSlot(delivery.getTimeSlot());
                 }
             }
-        }
+        });
     }
 
     /**
-     * Rteurns a list of paths
-     *
-     * @return
+     * @return The ordered list of paths.
      */
     public List<Path> getPaths() {
         return Collections.unmodifiableList(paths);
@@ -124,6 +123,11 @@ public class Route implements Publisher {
         return totalDistance;
     }
 
+    /**
+     * Returns the total duration of the route, in seconds.
+     * 
+     * @return The total duration of the route, in seconds.
+     */
     public float getTotalDuration() {
         if (paths.isEmpty()) {
             return 0;
@@ -132,14 +136,21 @@ public class Route implements Publisher {
         return getEndTime() - getStartTime();
     }
 
+    /**
+     * @return The time, in sum of seconds, when the route is done.
+     */
     public float getEndTime() {
         if (paths.isEmpty()) {
             return 0;
         }
         Path lastPath = paths.get(paths.size() - 1);
-        return lastPath.getFirstNode().getDelivery().getDeliveryEndTime() + lastPath.getPathDuration();
+        return lastPath.getFirstNode().getDelivery().getDeliveryEndTime() 
+                + lastPath.getPathDuration();
     }
 
+    /**
+     * @return The time, in sum of seconds, when the route is started.
+     */
     public float getStartTime() {
         if (paths.isEmpty()) {
             return 0;
@@ -149,7 +160,7 @@ public class Route implements Publisher {
     }
 
     /**
-     * Find the delivery passed by parameter and return the next delivery if
+     * Finds the delivery passed by parameter and returns the next delivery if
      * exists.
      *
      * @param delivery The delivery to find in the route.
@@ -170,13 +181,13 @@ public class Route implements Publisher {
     }
 
     /**
-     * Find and return the node of the previous delivery done before the
+     * Finds and returns the node of the previous delivery done before the
      * delivery passed by parameter.
      *
      * @param delivery The delivery to find.
      * @return The node of the previous delivery in the current route.
      */
-    Node getNodePreviousDelivery(Delivery delivery) {
+    protected Node getNodePreviousDelivery(Delivery delivery) {
         for (Path p : paths) {
             if (p.getLastNode().getDelivery() != null
                     && p.getLastNode().getDelivery().equals(delivery)) {
@@ -187,20 +198,20 @@ public class Route implements Publisher {
     }
 
     /**
-     * Adds a delivery to the route, and notify the subscribers.
+     * Adds a delivery to the route, and notifies the subscribers.
      *
      * @param delivery             The delivery to add
      * @param nodePreviousDelivery The node with the delivery that will be
      *                             executed before the one to add.
      */
-    void addDelivery(Delivery delivery, Node nodePreviousDelivery) {
+    protected void addDelivery(Delivery delivery, Node nodePreviousDelivery) {
         addDelivery(delivery, nodePreviousDelivery, true);
     }
 
     /**
      * Adds a delivery to the route.
      *
-     * @param delivery             the delivery to add.
+     * @param delivery             The delivery to add.
      * @param nodePreviousDelivery The node with the delivery that will be
      *                             executed before the one to add.
      * @param update               Notify the subscribers if update is true.
@@ -212,8 +223,8 @@ public class Route implements Publisher {
 
         boolean previousPathFound = false;
         for (int indexPath = 0, maxIndexPath = paths.size() - 1;
-             !previousPathFound && indexPath <= maxIndexPath;
-             ++indexPath) {
+                !previousPathFound && indexPath <= maxIndexPath;
+                ++indexPath) {
             Path p = paths.get(indexPath);
 
             Node currentNode = p.getFirstNode();
@@ -256,18 +267,18 @@ public class Route implements Publisher {
     }
 
     /**
-     * Remove a delivery from the route and notify the subscribers.
+     * Removes a delivery from the route and notifies the subscribers.
      *
      * @param deliveryToRemove The delivery to remove.
      */
-    void removeDelivery(Delivery deliveryToRemove) {
+    protected void removeDelivery(Delivery deliveryToRemove) {
         removeDelivery(deliveryToRemove, true);
     }
 
     /**
      * Removes a delivery from the route.
      *
-     * @param deliveryToRemove the delivery to remove.
+     * @param deliveryToRemove The delivery to remove.
      * @param update           Notify the subscribers if update is true.
      */
     private void removeDelivery(Delivery deliveryToRemove, boolean update) {
@@ -318,10 +329,10 @@ public class Route implements Publisher {
     }
 
     /**
-     * Swaps two deliveries.
+     * Swaps two deliveries and notifies the subscribers.
      *
-     * @param delivery1 the first delivery to swap.
-     * @param delivery2 the second delivery to swap.
+     * @param delivery1 The first delivery to swap.
+     * @param delivery2 The second delivery to swap.
      */
     void swapDeliveries(Delivery delivery1, Delivery delivery2) {
 
@@ -357,50 +368,44 @@ public class Route implements Publisher {
     }
 
     /**
-     * Add one subscriber
+     * Add one subscriber.
      *
-     * @param s Subscriber to add
+     * @param subscriber Subscriber to add
      */
     @Override
-    public void addSubscriber(Subscriber s) {
-        subscribers.add(s);
-        s.update(this, planning);
+    public void addSubscriber(Subscriber subscriber) {
+        subscribers.add(subscriber);
+        subscriber.update(this, planning);
     }
 
     /**
-     * Removes one subscriber
+     * Removes one subscriber.
      *
-     * @param s Subscriber to remove
+     * @param subscriber Subscriber to remove
      */
     @Override
-    public void removeSubscriber(Subscriber s) {
-        subscribers.remove(s);
+    public void removeSubscriber(Subscriber subscriber) {
+        subscribers.remove(subscriber);
     }
 
     /**
-     * Notifies all subscribers
+     * Notifies all subscribers.
      */
     @Override
     public void notifySubscribers() {
-        for (Subscriber s : subscribers) {
+        subscribers.stream().forEach((s) -> {
             s.update(this, planning);
-        }
+        });
     }
 
     /**
-     * Remove all subscribers
+     * Remove all subscribers.
      */
     @Override
     public void clearSubscribers() {
         subscribers.clear();
     }
-
-    /**
-     * Comparison operator for equality
-     *
-     * @param obj
-     * @return
-     */
+    
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Route)) {
@@ -409,7 +414,9 @@ public class Route implements Publisher {
 
         Route route = (Route) obj;
 
-        if (this.subscribers.size() != route.subscribers.size() || this.paths.size() != route.paths.size() || !(this.planning.equals(route.planning))) {
+        if (this.subscribers.size() != route.subscribers.size() 
+                || this.paths.size() != route.paths.size() 
+                || !(this.planning.equals(route.planning))) {
             return false;
         }
 
@@ -424,7 +431,17 @@ public class Route implements Publisher {
                 return false;
             }
         }
+        
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash += 59 * hash + Objects.hashCode(this.paths);
+        hash += 59 * hash + Objects.hashCode(this.subscribers);
+        hash += 59 * hash + Objects.hashCode(this.planning);
+        return hash;
     }
 
     /**
@@ -441,5 +458,4 @@ public class Route implements Publisher {
         strpaths = strpaths.substring(0, strpaths.length() - 1) + "}";
         return String.format("{ \"Route\" : { \"paths\":%s } }", strpaths);
     }
-
 }

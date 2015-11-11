@@ -1,5 +1,6 @@
 package com.hexanome.model;
 
+import com.hexanome.utils.DefaultTSP;
 import com.hexanome.utils.ITSP;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
@@ -15,7 +16,8 @@ import java.util.List;
 class PlanningComputeRouteWorker extends Task<Void> {
 
     /**
-     * timeout computation time
+     * Timeout computation time, in seconds.
+     * The default time out is of an hour, because the task can be interrupted.
      */
     private final int TIME_LIMIT = 3600000;
 
@@ -44,17 +46,20 @@ class PlanningComputeRouteWorker extends Task<Void> {
     public PlanningComputeRouteWorker(Planning planning) {
         this.planning = planning;
     }
-
-    @Override
-    protected Void call() throws Exception {
+    
+    /**
+     * Create a new Path Graph with all the path solutions, to do all the
+     * deliveries.
+     * 
+     * @return The PathGraph computed.
+     */
+    private PathGraph computeSolutionsGraph() {
         PathGraph graph = new PathGraph();
-
+        
+        Map map = planning.getMap();
         List<TimeSlot> timeSlots = planning.getTimeSlots();
         Node warehouse = planning.getWarehouse();
-        Map map = planning.getMap();
-
-        map.resetArcs();
-
+        
         // Time slots processing
         for (int numTimeSlot = 0, maxTimeSlot = timeSlots.size() - 1;
              numTimeSlot <= maxTimeSlot; ++numTimeSlot) {
@@ -86,7 +91,6 @@ class PlanningComputeRouteWorker extends Task<Void> {
                 // Find the fastest path between the current delivery and the
                 // other deliveries in the same time slot
                 for (Delivery nextDelivery : ts.getDeliveries()) {
-
                     if (!startDelivery.equals(nextDelivery)) {
                         Path fastestPath = map.getFastestPath(startNode, nextDelivery.getNode());
                         graph.addPath(fastestPath);
@@ -94,11 +98,20 @@ class PlanningComputeRouteWorker extends Task<Void> {
                 }
             }
         }
+        
+        return graph;
+    }
+
+    @Override
+    protected Void call() throws Exception {        
+        Map map = planning.getMap();
+        map.resetArcs();
+        
+        PathGraph graph = computeSolutionsGraph();        
 
         // Compute the TSP algorithm on the new path graph
-        ITSP tsp = new RouteTSP();
+        ITSP tsp = new DefaultTSP();
 
-        long tempsDebut = System.currentTimeMillis();
         Integer[] solutions;
 
         try {
@@ -111,19 +124,21 @@ class PlanningComputeRouteWorker extends Task<Void> {
             throw new ArithmeticException("Any route can't be found with the current map and planning");
         }
 
-        // Recreate the path to create the Route
-        int nbEdges = graph.getNbArcs();
+        // Recreate the paths to create the Route
+        int nbArcs = graph.getNbArcs();
         LinkedList<Path> paths = new LinkedList<>();
 
-        for (int i = 0, j = 1; j < nbEdges; ++i, ++j) {
+        for (int i = 0, j = 1; j < nbArcs; ++i, ++j) {
             paths.add(graph.indexAsPath(solutions[i], solutions[j]));
         }
 
-        paths.add(graph.indexAsPath(solutions[nbEdges - 1], solutions[0]));
+        paths.add(graph.indexAsPath(solutions[nbArcs - 1], solutions[0]));
 
         Route route = new Route(planning, paths);
 
         planning.setRoute(route);
+        
+        // Return null required by the Task<Void> extend.
         return null;
     }
 

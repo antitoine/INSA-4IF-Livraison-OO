@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.hexanome.controller.states;
 
 import com.hexanome.controller.ContextManager;
@@ -10,12 +7,15 @@ import com.hexanome.model.Delivery;
 
 /**
  * This class represents the state when to deliveries are being
- * swaped
+ * swaped.
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class SwapDeliveriesState extends DefaultState {
 
+    /**
+     * The unique instance of this class.
+     */
     private static SwapDeliveriesState swapDeliveriesState = null;
 
     private SwapDeliveriesState() {
@@ -23,8 +23,7 @@ public class SwapDeliveriesState extends DefaultState {
     }
 
     /**
-     * Returns the instance of the SwapDeliveriesState,
-     * it is a singleton
+     * Returns the instance of the SwapDeliveriesState, which is a singleton.
      *
      * @return The instance of SwapDeliveriesState
      */
@@ -40,15 +39,12 @@ public class SwapDeliveriesState extends DefaultState {
      */
     @Override
     public void leftClickReleased(Delivery sourceDelivery, Delivery targetDelivery) {
-        // If both nodes are not null 
         if (sourceDelivery != null && targetDelivery != null) {
-            // Create and execute command
             SwapDeliveriesCommand cmd = new SwapDeliveriesCommand(sourceDelivery, targetDelivery);
             ContextManager.getInstance().executeCommand(cmd);
         }
-        // Jump to NothingSelectedState
+
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
-        // Replace mainwindow map view
         UIManager.getInstance().getMainWindow().repositionToLatestPosition();
     }
 
@@ -65,6 +61,6 @@ public class SwapDeliveriesState extends DefaultState {
      */
     @Override
     public String toString() {
-        return "SwapDeliveriesState"; //To change body of generated methods, choose Tools | Templates.
+        return "SwapDeliveriesState";
     }
 }

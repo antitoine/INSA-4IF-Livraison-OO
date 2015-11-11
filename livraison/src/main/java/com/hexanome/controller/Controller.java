@@ -9,17 +9,19 @@ import javafx.application.Application;
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
 public class Controller {
+    
+    /** The unique instance of the class. */
     private static Controller controller = null;
 
     /**
-     * Builds a new instance of the Controller
+     * Builds a new instance of the Controller.
      */
     private Controller() {
-        // Nothing to do here for now
+        // Nothing to do but it's a private method.
     }
 
     /**
-     * @return the single existing instance of the controller
+     * @return The single existing instance of the controller.
      */
     public static Controller getInstance() {
         if (controller == null) {
@@ -29,8 +31,8 @@ public class Controller {
     }
 
     /**
-     * Initialize internal sub-components of the controller
-     * package called managers
+     * Initializes internal sub-components of the controller
+     * package called managers.
      */
     public void initManagers() {
         // <!>
@@ -47,7 +49,7 @@ public class Controller {
     }
 
     /**
-     * Initialize User Interface Event loop.
+     * Initializes User Interface Event loop.
      * This instruction is blocking.
      *
      * @param args Arguments to give to the graphic app
@@ -57,5 +59,4 @@ public class Controller {
         // This is JAVAFX default behaviour
         Application.launch(AppMediator.class, args);
     }
-
 }

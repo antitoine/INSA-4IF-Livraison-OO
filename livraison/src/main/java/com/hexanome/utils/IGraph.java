@@ -18,20 +18,21 @@ public interface IGraph {
     int getNbArcs();
 
     /**
-     * @param i The number of the initial vertex. (starts to 0)
-     * @param j The number of the terminal vertex. (starts to 0)
+     * @param initialVertexNumber The number of the initial vertex. (starts to 0)
+     * @param terminalVertexNumber The number of the terminal vertex. (starts to 0)
      * @return The cost associated with the directed arc (i, j), if it exists.
      * Otherwise, returns -1.
      */
-    float getCost(int i, int j);
+    float getCost(int initialVertexNumber, int terminalVertexNumber);
 
     /**
-     * Check if an arc exists.
+     * Checks if an arc exists in the graph.
      *
-     * @param i The number of the initial vertex. (starts to 0)
-     * @param j The number of the terminal vertex. (starts to 0)
-     * @return True if the directed arc (i, j) exists, false otherwise.
+     * @param initialVertexNumber The number of the initial vertex. (starts to 0)
+     * @param terminalVertexNumber The number of the terminal vertex. (starts to 0)
+     * 
+     * @return True if the directed arc exists, false otherwise.
      */
-    boolean isArc(int i, int j);
+    boolean isArc(int initialVertexNumber, int terminalVertexNumber);
 
 }
