@@ -98,7 +98,7 @@ Ce document constitue la synthèse de l'ensemble des livrables devant être remi
 \label{sec:planning-previsionnel-du-projet}
 
 Voici le diagramme de Gantt du déroulement du projet.
-Nous avions estimé que le projet devait être bien avancé pendant les vacances de la semaine 44 et finaliser les détails durant la semaine 45.
+Nous avions estimé que le projet devait être bien avancé pendant les vacances de la semaine 44 et finaliser les détails durant la semaine 45 ne sachant pas la date initiale du rendu. Bien entendu nous avons étendu la phase d'implémentation une fois cet élément manquant acquis (cf. diagramme de Gantt réel~\ref{sec:planning-effectif-du-projet}).
 
 \begin{figure}[H]
 \centering
@@ -164,32 +164,34 @@ Voici la répartition globale des tâches ainsi qu'une rapide estimation des tem
   \hline
   %%%% Implémentation et tests
   \hline
-  \bfit{Implémentation et tests} & \multicolumn{2}{r|}{\it{Sous-Total : 36 heures}} \\
+  \bfit{Implémentation et tests} & \multicolumn{2}{r|}{\it{Sous-Total : 52 heures}} \\
   \hline
-  Réalisation IHM & Hugues & 10 heures \\
+  Réalisation IHM & Hugues & 20 heures \\
   \hline
-  Réalisation Modèle & Pierre, Lisa et Guillaume & 10 heures \\
+  Réalisation Modèle & Pierre, Lisa et Guillaume & 15 heures \\
   \hline
   Réalisation des contrôleurs & Estelle, Paul et Antoine & 15 heures \\
   \hline
-  Diagramme rétro-générés & Antoine & 1 heures \\
+  Diagramme rétro-générés & Antoine & 2 heures \\
   \hline
   %%%% Bilan
   \hline
-  \bfit{Bilan} & \multicolumn{2}{r|}{\it{Sous-Total : 4 heures}} \\
+  \bfit{Bilan} & \multicolumn{2}{r|}{\it{Sous-Total : 6 heures}} \\
   \hline
   Planning effectif & Antoine & 2 heures \\
   \hline
-  Bilan humain et technique & Antoine & 2 heures \\
+  Bilan humain et technique & Antoine & 4 heures \\
   \hline
   %%%% Total
   \hline
-  \multicolumn{3}{|r|}{\bf{Total temps estimé :} 104,5 heures} \\
+  \multicolumn{3}{|r|}{\bf{Total temps estimé :} 122,5 heures} \\
   \hline
 \end{tabular}
 \end{center}
 \caption{Affectations et estimations des tâches}
 \end{figure}
+
+Un certain nombre de tâches supplémentaires sont arrivé ensuite ainsi qu'un redécoupage en sous-tâches pour l'implémentation. Donc le temps estimé a été augmenté une fois que nous avions une vision plus complète sur le travail à effectuer (analyse des besoins et conception terminées).
 
 \section{Domain model \it{(EN)}}
 \label{sec:domain-model}
@@ -483,7 +485,6 @@ Glossary :
   \item[•] \it{leftClickReleased :} when the user releaded the previous left click pressed on a delivery.
   \item[•] \it{clickOnDelivery :} when the user make a simple click on a delivery.
   \item[•] \it{clickSomewhereElse :} when the user click on something not interactive in the application.
-  \item[•] \it{closePopOver :} when the user request to close a previous oepn pop over.
   \item[•] \it{clickOnEmptyNode :} when the user mae a simple click on an empty node.
   \item[•] \it{btnAddDelivery :} the user request to add a new delivery on a previous empty node selected.
   \item[•] \it{btnRemoveDelivery :} the user request to remove a delivery previously selected.
@@ -494,7 +495,7 @@ Glossary :
 
 \begin{figure}[H]
 \advance\leftskip-1cm
-\includegraphics[scale=0.4,angle=90]{figures/state-machine.png}
+\includegraphics[scale=0.43,angle=90]{figures/state-machine.png}
 \caption{State-Transition Diagram}
 \end{figure}
 
@@ -520,7 +521,7 @@ Glossary :
 
 \begin{figure}[H]
 \advance\leftskip-1.5cm
-\includegraphics[scale=0.44,angle=0]{figures/view-class.png}
+\includegraphics[scale=0.40,angle=0]{figures/view-class.png}
 \caption{View package including classes}
 \end{figure}
 
@@ -627,7 +628,7 @@ On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme de
 \label{part:bilan}
 
 \section{Planning effectif du projet \it{(FR)}}
-\label{sec:planning(effectif-du-projet}
+\label{sec:planning-effectif-du-projet}
 
 \Todo{Ajouter le planning effectif (Gantt réel)}
 
@@ -636,10 +637,6 @@ On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme de
 
 \subsection{Explications pour le dépassement des estimations}
 \label{subsec:explications-pour-le-depassement-des-estimations}
-
-Comme présenté dans le planning effectif, nous avons fait un dépassement sur plusieurs estimations. Tout d'abord, il faut prendre en compte que nous avions peu d'expérience dans le domaine et c'est une qualité qui s'obtient avec l’entraînement et l'expérience.
-
-Nous avions décidé d'utiliser l'outil JavaFX pour faire ce projet, sachant que nous n'avions aucune expérience avec ce dernier. Pour éviter de perdre du temps sur ce manque, nous avions nommé une personne du groupe pour avancer et explorer les opportunités pour l'interface graphique. Nous avons eu alors très rapidement un début d'interface. Le problème c'est que cette interface pour fonctionner devait faire l'impasse sur l'ensemble de la conception précédemment pensée, le temps que les autres composantes soient faites. Donc nous avons passé un certain temps à corriger et adapter la vue pour respecter les principes des différents patrons et la corréler avec les autres parties (modèle et contrôleur).
 
 \Todo{Rédiger le bilan ici}
 
