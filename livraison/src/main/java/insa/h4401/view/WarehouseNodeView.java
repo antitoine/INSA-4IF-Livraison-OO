@@ -17,6 +17,7 @@ public class WarehouseNodeView extends Rectangle implements INodeViewShape {
 
     /**
      * Initializes the controller class.
+     * @param node node for the warehouse Node View
      */
     public WarehouseNodeView(insa.h4401.model.Node node) {
         setHeight(10);

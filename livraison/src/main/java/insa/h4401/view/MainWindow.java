@@ -246,6 +246,8 @@ public class MainWindow extends AnchorPane {
     /**
      * Permits to move the viewport so that old center remains in the center after the
      * scaling
+     * @param scaleFactor indicate the zoom factor
+     * @param scrollOffset indicate the position where the view should focus on
      */
     public void repositionScroller(double scaleFactor, Point2D scrollOffset) {
         latestScaleFactor = scaleFactor;
@@ -358,6 +360,7 @@ public class MainWindow extends AnchorPane {
      * Enable the button
      *
      * @param btn btn to enable
+     * @param isEnable true is the button should be enabled, false otherwise
      *            
      */
     public void setEnableButton(ConstView.Button btn, Boolean isEnable) {

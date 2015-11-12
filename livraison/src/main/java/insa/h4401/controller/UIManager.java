@@ -151,6 +151,7 @@ public class UIManager {
 
     /**
      * Updates mainwindow to display an error message.
+     * @param msg message to display
      */
     public void showError(String msg) {
         mainWindow.endLoadingState();
