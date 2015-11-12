@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.util.Pair;
 
 /**
  * This class provides a convenient interface to extract information from the
@@ -136,6 +137,14 @@ public class PlanningDocument extends XMLParser {
                 setErrorMsg("At least one timeslot should be specified by planning file !");
                 return false; // Interrupt check here
             }
+            
+            /*********************************
+                    PATCH AFTER DEMO (12/11/2015)
+            **********************************/
+            // Create table to memorize timeslots boundaries
+            ArrayList<Integer> timeslotsBounds = new ArrayList<>();
+            /*********************************/
+            
             // TEST : check if each timeSlot contains at least one delivery
             for (Element ts : root.getChildren("PlagesHoraires").get(0).getChildren()) {
 
@@ -154,6 +163,14 @@ public class PlanningDocument extends XMLParser {
                     setErrorMsg("Missing <heureFin> attribute in at least one timeSlot !");
                     return false; // Interrupt check here
                 }
+                /*********************************
+                    PATCH AFTER DEMO (12/11/2015)
+                **********************************/
+                // Add start time and end time to collection
+                timeslotsBounds.add(startTime);
+                timeslotsBounds.add(endTime);
+                /**********************************/
+                
                 // TEST : check if endTime > startTime
                 if (startTime >= endTime) {
                     setErrorMsg("At least one timeSlot has an end time before its start time !");
@@ -205,6 +222,18 @@ public class PlanningDocument extends XMLParser {
                     }
                 }
             }
+            /*********************************
+                PATCH AFTER DEMO (12/11/2015)
+            **********************************/
+            // TEST : check for intersecting timeslosts
+            for (int i = 1; i < timeslotsBounds.size(); i++) {
+                if(timeslotsBounds.get(i) <= timeslotsBounds.get(i-1)) { // time[i] must always be greater than time[i-1] 
+                    setErrorMsg("At least two timeslots are intersecting !");
+                    return false; // Interrupt check here
+                }
+            }
+            /**********************************/
+            
         }
 
         return true;
