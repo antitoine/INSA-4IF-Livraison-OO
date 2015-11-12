@@ -11,16 +11,19 @@
 \usepackage{url}
 \usepackage{pdfpages}
 \usepackage{todonotes}
-\usepackage[a4paper, body={16cm,23cm},margin=1cm]{geometry}
+\usepackage[a4paper, 
+			body={16cm,23cm},
+			lmargin=1cm,
+			rmargin=1cm,
+			tmargin=1cm,
+			bmargin=1.5cm]{geometry}
 \usepackage{float}
 \usepackage{framed}
 \usepackage[toc,page]{appendix} 
 \usepackage{multicol}
 \usepackage{colortbl}
 \usepackage{pgfplotstable}
-\usepackage{svg}
-\usepackage{amsmath}
-\usepackage{graphicx}
+
 %%% Custom sectioning
 \usepackage{sectsty}
 \allsectionsfont{  \normalfont\scshape}
@@ -522,6 +525,8 @@ Glossary :
 \caption{State-Transition Diagram}
 \end{figure}
 
+\newpage
+
 \section{Packages and Classes Diagrams \it{(EN)}}
 \label{sec:packages-and-classes-diagrams}
 
@@ -643,24 +648,6 @@ On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme de
 \label{sec:packages-and-classes-diagrams-generated-from-source-code}
 
 \Todo{Retro-generated diagrams}
-
-
-\includepdf{figures/package}
-
-
-
-\includepdf{figures/command}
-
-
-
-\includepdf{figures/states}
-
-
-\includepdf{figures/model}
-
-
-\includepdf{figures/view}
- 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Bilan
 
