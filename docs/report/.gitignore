@@ -1,6 +1,7 @@
 *.aux
 *.log
-*.pdf
+rapport.pdf
+title.pdf
 *.gz
 *.toc
 *.backup

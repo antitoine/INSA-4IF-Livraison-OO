@@ -1,6 +1,6 @@
 # Construit le PDF du rapport LaTex
 
-LATEX_BUILDER=pdflatex
+LATEX_BUILDER=pdflatex --shell-escape
 BUILD_FLAGS=-interaction nonstopmode
 
 all: cleanAll buildTitle build show
