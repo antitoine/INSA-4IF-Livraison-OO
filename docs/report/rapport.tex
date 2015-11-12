@@ -496,6 +496,33 @@ Glossary :
 
 \Todo{We should add a comment here}
 
+\bf{State-transition diagram:}
+At any moment, the user can exit the program.
+At the opening, the program is in InitState. Right there, the only thing he can do is selecting a map (MapSelectState). From this state, he can either select a map (from an XML file) and go to MapLoadedState, or go back to InitState. If he decides to select a map, then the same process repeats with the selection of a planning (PlanningSelectState). Then he either comes back to MapLoadedState and pick a planning and ends in PlanningLoadedState. From this point, he has many options:
+\begin{itemize}
+  \item[•] Select a new planning (PlanningSelectState).
+  \item[•] Select a new map (MapSelectState).
+  \item[•] Go back to the beginning (InitState)
+  \item[•] Compute the route (ComputingRouteState).
+\end{itemize}
+If he decides to compute the route and everything is fine, the program will be in NothingSelectedState, where you just have the map with the route computed but you don't have any node selected on the mpa or on the tree list. Here, the user has two choices:
+\begin{itemize}
+  \item[•] Clicking on an existing delivery (going to DeliverySelectedState).
+  \item[•] Clicking on an emptyNode (goingto EmptyNodeSelected).
+\end{itemize}
+From the first choice, the user can go to the second one, and from the second one he can go to the first one. If he is in DeliverySelectedState and he decides to remove the delivery by clicking the remove-button, he goes to EmptyNodeSelected.
+From both choices, it is also possible to click on the warehouse (going to WarehouseSelectedState), and to comeback to NothingSelectedState by clicking anywhere else on the map.
+After computing the route, at any moment the user can:
+\begin{itemize}
+  \item[•] Swap two deliveries (SwapDeliveriesState): it's something a bit different here, because we use the drag and drop. To access to this state, the user has to left click a delivery and keep it pressed. To leave this state, he has to release the left click, either on a delivery (so the two deliveries will be swapped) or not on a delivery (so nothing happens). In both cases, the program comes back to NothingSelectedState.
+  \item[•] Undo his last action.
+  \item[•] Redo the last cancelled action.
+  \item[•] Go back to PlanningSelectState by clicking "Load Planning" or "Clear History".
+  \item[•] Go back to MapLoadedState by clicking "Clear Planning" or "Clear History".
+  \item[•] Go back to MapSelectState by clicking "Load Map" or "Clear History".
+  \item[•] Go back to InitState by clicking "Close Map" or "Clear History".
+\end{itemize}
+
 \bf{The user-level events list :}
 \begin{itemize}
   \item[•] \it{btnLoadMap :} the user request to load a new map from a XML file.
