@@ -1,92 +1,95 @@
 Utilisateur;Demande;2015;Temps total
 Antoine Chabert;;41,00;41,00
-;Feature 4 Diagramme de cas d'utilisation;0,25;0,25
-;Feature 5 Planning previsionnel;2,00;2,00
-;Feature 9 Liste des evenments et diagramme etats-transitions;2,00;2,00
-;Feature 10 Diagramme de classes et de packages;2,50;2,50
-;Feature 14 Initialisation du projet;0,25;0,25
-;Feature 18 Diagrammes retro-generes;1,00;1,00
-;Feature 19 Planning effectif;2,00;2,00
-;Feature 20 Bilan humain et technique;4,00;4,00
-;Feature 21 Mise au propre des livrables;10,50;10,50
-;Support 22 Reunion avancement 1;0,50;0,50
-;Support 23 Reunion avancement 2;0,50;0,50
-;Support 24 Reunion avancement 3;1,00;1,00
-;Support 25 Reunion avancement 4;0,25;0,25
-;Support 26 Reunion avancement 5;1,00;1,00
-;Support 27 Reunion avancement 6;1,00;1,00
-;Feature 34 Tests unitaires;0,75;0,75
-;Feature 36 Partie  Contexte Manager;7,50;7,50
-;Feature 39 Verifier l'application du guide de style d'Oracle;2,00;2,00
-;Feature 41 Realisation de la RoadMap;2,00;2,00
+;Feature \#4: Diagramme de cas d'utilisation;0,25;0,25
+;Feature \#5: Planning prévisionnel;2,00;2,00
+;Feature \#9: Liste des évenments et diagramme états-transitions;2,00;2,00
+;Feature \#10: Diagramme de classes et de packages;2,50;2,50
+;Feature \#14: Initialisation du projet;0,25;0,25
+;Feature \#18: Diagrammes rétro-générés;1,00;1,00
+;Feature \#19: Planning effectif;2,00;2,00
+;Feature \#20: Bilan humain et technique;5,50;5,50
+;Feature \#21: Mise au propre des livrables;10,50;10,50
+;Support \#22: Réunion avancement 1;0,50;0,50
+;Support \#23: Réunion avancement 2;0,50;0,50
+;Support \#24: Réunion avancement 3;1,00;1,00
+;Support \#25: Réunion avancement 4;0,25;0,25
+;Support \#26: Réunion avancement 5;1,00;1,00
+;Support \#27: Réunion avancement 6;1,00;1,00
+;Feature \#34: Tests unitaires;0,75;0,75
+;Feature \#36: Partie  Contexte Manager;7,50;7,50
+;Feature \#39: Vérifier l'application du guide de style d'Oracle;2,00;2,00
+;Feature \#41: Réalisation de la RoadMap;0,50;0,50
 Hugues Verlin;;52,75;52,75
-;Feature 6 Creation du projet et documentation;4,00;4,00
-;Feature 10 Diagramme de classes et de packages;2,00;2,00
-;Feature 12 Maquettes IHM;3,00;3,00
-;Feature 16 Realisation Modele;2,00;2,00
-;Support 23 Reunion avancement 2;0,25;0,25
-;Feature 32 Lecture des nodes a partir du fichier XML MapDocument;0,50;0,50
-;Feature 40 Realisatioin des arcs;6,00;6,00
-;Feature 42 Fenetre, carte et menus;35,00;35,00
+;Feature \#6: Création du projet et documentation;4,00;4,00
+;Feature \#10: Diagramme de classes et de packages;2,00;2,00
+;Feature \#12: Maquettes IHM;3,00;3,00
+;Feature \#16: Réalisation Modèle;2,00;2,00
+;Support \#23: Réunion avancement 2;0,25;0,25
+;Feature \#32: Lecture des nodes a partir du fichier XML MapDocument;0,50;0,50
+;Feature \#40: Realisatioin des arcs;6,00;6,00
+;Feature \#42: Fenêtre, carte et menus;35,00;35,00
 Paul Dautry;;26,25;26,25
-;Feature 3 Modele de domaine;3,00;3,00
-;Feature 7 Glossaire;0,75;0,75
-;Feature 10 Diagramme de classes et de packages;14,00;14,00
-;Feature 11 Documentation sur les choix d'architecture;2,50;2,50
-;Feature 14 Initialisation du projet;0,25;0,25
-;Support 23 Reunion avancement 2;0,25;0,25
-;Support 25 Reunion avancement 4;0,25;0,25
-;Support 26 Reunion avancement 5;0,25;0,25
-;Support 27 Reunion avancement 6;0,25;0,25
-;Feature 31 Implementation des classes PlanningDocument et DocumentFactory;1,25;1,25
-;Feature 32 Lecture des nodes a partir du fichier XML MapDocument;0,50;0,50
-;Feature 37 Partie Model Manager;3,00;3,00
+;Feature \#3: Modèle de domaine;3,00;3,00
+;Feature \#7: Glossaire;0,75;0,75
+;Feature \#10: Diagramme de classes et de packages;14,00;14,00
+;Feature \#11: Documentation sur les choix d'architecture;2,50;2,50
+;Feature \#14: Initialisation du projet;0,25;0,25
+;Support \#23: Réunion avancement 2;0,25;0,25
+;Support \#25: Réunion avancement 4;0,25;0,25
+;Support \#26: Réunion avancement 5;0,25;0,25
+;Support \#27: Réunion avancement 6;0,25;0,25
+;Feature \#31: Implémentation des classes PlanningDocument et DocumentFactory;1,25;1,25
+;Feature \#32: Lecture des nodes a partir du fichier XML MapDocument;0,50;0,50
+;Feature \#37: Partie Model Manager;3,00;3,00
 Pierre Jarsaillon;;38,00;38,00
-;Feature 3 Modele de domaine;0,50;0,50
-;Feature 4 Diagramme de cas d'utilisation;1,50;1,50
-;Feature 8 Description textuelle structuree des cas d'utilisation;4,25;4,25
-;Feature 10 Diagramme de classes et de packages;6,00;6,00
-;Feature 13 Diagramme de sequence;1,50;1,50
-;Feature 15 Realisation IHM;2,00;2,00
-;Feature 16 Realisation Modele;5,00;5,00
-;Support 22 Reunion avancement 1;0,50;0,50
-;Support 23 Reunion avancement 2;0,50;0,50
-;Support 24 Reunion avancement 3;1,00;1,00
-;Support 25 Reunion avancement 4;0,25;0,25
-;Feature 28 Implementation de la partie calcul de graphe/tournee;7,00;7,00
-;Feature 29 Implementation de l'algorithme de Dijkstra;1,00;1,00
-;Feature 33 Realisation des conroleurs;2,00;2,00
-;Feature 34 Tests unitaires;5,00;5,00
+;Feature \#3: Modèle de domaine;0,50;0,50
+;Feature \#4: Diagramme de cas d'utilisation;1,50;1,50
+;Feature \#8: Description textuelle structurée des cas d'utilisation;4,25;4,25
+;Feature \#10: Diagramme de classes et de packages;6,00;6,00
+;Feature \#13: Diagramme de séquence;1,50;1,50
+;Feature \#15: Réalisation IHM;2,00;2,00
+;Feature \#16: Réalisation Modèle;5,00;5,00
+;Support \#22: Réunion avancement 1;0,50;0,50
+;Support \#23: Réunion avancement 2;0,50;0,50
+;Support \#24: Réunion avancement 3;1,00;1,00
+;Support \#25: Réunion avancement 4;0,25;0,25
+;Feature \#28: Implémentation de la partie calcul de graphe/tournée;7,00;7,00
+;Feature \#29: Implémentation de l'algorithme de Dijkstra;1,00;1,00
+;Feature \#33: Réalisation des conrôleurs;2,00;2,00
+;Feature \#34: Tests unitaires;5,00;5,00
 Guillaume Sarnette;;27,00;27,00
-;Feature 4 Diagramme de cas d'utilisation;1,00;1,00
-;Feature 8 Description textuelle structuree des cas d'utilisation;2,00;2,00
-;Feature 9 Liste des evenments et diagramme etats-transitions;4,50;4,50
-;Feature 10 Diagramme de classes et de packages;2,00;2,00
-;Feature 14 Initialisation du projet;2,00;2,00
-;Support 22 Reunion avancement 1;0,50;0,50
-;Support 23 Reunion avancement 2;0,50;0,50
-;Support 24 Reunion avancement 3;1,00;1,00
-;Support 25 Reunion avancement 4;0,50;0,50
-;Feature 34 Tests unitaires;12,00;12,00
-;Feature 35 Passage des diagrammes au code Java;1,00;1,00
-Estelle Lepeigneux;;17,75;17,75
-;Feature 3 Modele de domaine;3,00;3,00
-;Feature 9 Liste des evenments et diagramme etats-transitions;6,50;6,50
-;Feature 15 Realisation IHM;2,00;2,00
-;Support 24 Reunion avancement 3;1,00;1,00
-;Support 25 Reunion avancement 4;0,25;0,25
-;Feature 34 Tests unitaires;2,00;2,00
-;Feature 36 Partie  Contexte Manager;3,00;3,00
+;Feature \#4: Diagramme de cas d'utilisation;1,00;1,00
+;Feature \#8: Description textuelle structurée des cas d'utilisation;2,00;2,00
+;Feature \#9: Liste des évenments et diagramme états-transitions;4,50;4,50
+;Feature \#10: Diagramme de classes et de packages;2,00;2,00
+;Feature \#14: Initialisation du projet;2,00;2,00
+;Support \#22: Réunion avancement 1;0,50;0,50
+;Support \#23: Réunion avancement 2;0,50;0,50
+;Support \#24: Réunion avancement 3;1,00;1,00
+;Support \#25: Réunion avancement 4;0,50;0,50
+;Feature \#34: Tests unitaires;12,00;12,00
+;Feature \#35: Passage des diagrammes au code Java;1,00;1,00
+Estelle Lepeigneux;;26,75;26,75
+;Feature \#3: Modèle de domaine;3,00;3,00
+;Feature \#9: Liste des évenments et diagramme états-transitions;6,50;6,50
+;Feature \#15: Réalisation IHM;2,00;2,00
+;Support \#24: Réunion avancement 3;1,00;1,00
+;Support \#25: Réunion avancement 4;0,25;0,25
+;Feature \#33: Réalisation des conrôleurs;3,00;3,00
+;Feature \#34: Tests unitaires;2,00;2,00
+;Feature \#36: Partie  Contexte Manager;3,00;3,00
+;Feature \#41: Réalisation de la RoadMap;4,00;4,00
+;Feature \#42: Fenêtre, carte et menus;2,00;2,00
 Lisa Courant;;22,25;22,25
-;Feature 3 Modele de domaine;3,50;3,50
-;Feature 8 Description textuelle structuree des cas d'utilisation;2,00;2,00
-;Feature 12 Maquettes IHM;1,00;1,00
-;Feature 14 Initialisation du projet;0,50;0,50
-;Support 22 Reunion avancement 1;0,50;0,50
-;Support 23 Reunion avancement 2;0,50;0,50
-;Support 24 Reunion avancement 3;1,00;1,00
-;Support 25 Reunion avancement 4;0,25;0,25
-;Feature 28 Implementation de la partie calcul de graphe/tournee;2,00;2,00
-;Feature 29 Implementation de l'algorithme de Dijkstra;5,00;5,00
-;Feature 34 Tests unitaires;6,00;6,00
-Temps total;;225,00;225,00
+;Feature \#3: Modèle de domaine;3,50;3,50
+;Feature \#8: Description textuelle structurée des cas d'utilisation;2,00;2,00
+;Feature \#12: Maquettes IHM;1,00;1,00
+;Feature \#14: Initialisation du projet;0,50;0,50
+;Support \#22: Réunion avancement 1;0,50;0,50
+;Support \#23: Réunion avancement 2;0,50;0,50
+;Support \#24: Réunion avancement 3;1,00;1,00
+;Support \#25: Réunion avancement 4;0,25;0,25
+;Feature \#28: Implémentation de la partie calcul de graphe/tournée;2,00;2,00
+;Feature \#29: Implémentation de l'algorithme de Dijkstra;5,00;5,00
+;Feature \#34: Tests unitaires;6,00;6,00
+Temps total;;234,00;234,00
