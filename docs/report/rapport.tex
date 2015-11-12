@@ -216,7 +216,7 @@ Voici la répartition globale des tâches ainsi qu'une rapide estimation des tem
 \caption{Affectations et estimations des tâches}
 \end{figure}
 
-Un certain nombre de tâches supplémentaires sont arrivé ensuite ainsi qu'un redécoupage en sous-tâches pour l'implémentation. Donc le temps estimé a été augmenté une fois que nous avions une vision plus complète sur le travail à effectuer (analyse des besoins et conception terminées).
+Un certain nombre de tâches supplémentaires sont arrivés ensuite ainsi qu'un redécoupage en sous-tâches pour l'implémentation. Le temps estimé a donc été augmenté une fois que nous avions une vision plus complète sur le travail à effectuer (analyse des besoins et conception terminées).
 
 \section{Domain model \it{(EN)}}
 \label{sec:domain-model}
@@ -251,7 +251,7 @@ Glossary :
 	\item[\textbullet] \bf{Planning} : Set of intersections (cf. Node) to be processed by the route computation algorithm (cf. Route).
 	\item[\textbullet] \bf{Route} \it{(tournée)} : Ordered list of paths to travel along (cf. Planning). 
 	\item[\textbullet] \bf{TimeSlot} \it{(fenêtre de livraison)} : time interval bounded by a start time and an end time containing a set of deliveries to be honored.
-	\item[\textbullet] \bf{Warehouse} \it{(entrepot)} : Special intersection representing both the start and the end point of the route (cf. Route).
+	\item[\textbullet] \bf{Warehouse} \it{(entrepôt)} : Special intersection representing both the start and the end point of the route (cf. Route).
 	\item[\textbullet] \bf{Average Speed} \it{(vitesse moyenne)} : average speed of vehicles in meters per second on an arc (cf. Arc).
 	\item[\textbullet] \bf{Planning File} \it{(fichier de planning)} : XML formated input file, describing a planning (cf. Planning).
 	\item[\textbullet] \bf{Map File} \it{(fichier de plan)} : XML formated input file, describing a Map.
@@ -508,21 +508,26 @@ Each use case is detailed further in the following section, through the textual 
 
 \bf{State-transition diagram:}
 At any moment, the user can exit the program.
-At the opening, the program is in InitState. Right there, the only thing he can do is selecting a map (MapSelectState). From this state, he can either select a map (from an XML file) and go to MapLoadedState, or go back to InitState. If he decides to select a map, then the same process repeats with the selection of a planning (PlanningSelectState). Then he either comes back to MapLoadedState and pick a planning and ends in PlanningLoadedState. From this point, he has many options:
+At the opening, the program is in InitState. Right there, the only thing he can do is selecting a map (MapSelectState). From this state, he can either select a map (from an XML file) and go to MapLoadedState, or go back to InitState. If he decides to select a map, then the same process repeats with the selection of a planning (PlanningSelectState). Then he either comes back to MapLoadedState and pick a planning and ends in PlanningLoadedState. From this point, he has many options:\\
+
 \begin{itemize}
   \item[•] Select a new planning (PlanningSelectState).
   \item[•] Select a new map (MapSelectState).
   \item[•] Go back to the beginning (InitState)
-  \item[•] Compute the route (ComputingRouteState).
+  \item[•] Compute the route (ComputingRouteState).\\
 \end{itemize}
-If he decides to compute the route and everything is fine, the program will be in NothingSelectedState, where you just have the map with the route computed but you don't have any node selected on the mpa or on the tree list. Here, the user has two choices:
+
+If he decides to compute the route and everything is fine, the program will be in NothingSelectedState, where you just have the map with the route computed but you don't have any node selected on the mpa or on the tree list. Here, the user has two choices:\\
+
 \begin{itemize}
   \item[•] Clicking on an existing delivery (going to DeliverySelectedState).
-  \item[•] Clicking on an emptyNode (goingto EmptyNodeSelected).
+  \item[•] Clicking on an emptyNode (goingto EmptyNodeSelected).\\
 \end{itemize}
+
 From the first choice, the user can go to the second one, and from the second one he can go to the first one. If he is in DeliverySelectedState and he decides to remove the delivery by clicking the remove-button, he goes to EmptyNodeSelected.
 From both choices, it is also possible to click on the warehouse (going to WarehouseSelectedState), and to comeback to NothingSelectedState by clicking anywhere else on the map.
-After computing the route, at any moment the user can:
+After computing the route, at any moment the user can:\\
+
 \begin{itemize}
   \item[•] Swap two deliveries (SwapDeliveriesState): it's something a bit different here, because we use the drag and drop. To access to this state, the user has to left click a delivery and keep it pressed. To leave this state, he has to release the left click, either on a delivery (so the two deliveries will be swapped) or not on a delivery (so nothing happens). In both cases, the program comes back to NothingSelectedState.
   \item[•] Undo his last action.
@@ -567,12 +572,14 @@ After computing the route, at any moment the user can:
 
 The following figure shows classes which are part of the model package. These classes implements the Domain Model and others objects needed to properly use design patterns. All methods are not shown, especially getters and setters. Further information are available in III.3 section.\\
 
-\vspace*{-6.5cm}
+\begin{center}
+\vspace*{-6cm}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.52,angle=90]{figures/model-class.png}
+\includegraphics[scale=0.47,angle=90]{figures/model-class.png}
 \caption{Model package including classes}
 \end{figure}
+\end{center}
 
 \subsection{View related diagrams}
 \label{subsec:view-related-diagrams}
@@ -673,10 +680,10 @@ At this point, the new \bf{Route} is set and can be used by the software.
 \label{part:implementation-et-tests}
 \setcounter{section}{0}
 
-\section{Notes related to source code, its documentation and unit tests \it{(EN)}}
+\section{Notes related to source code and unit tests \it{(EN)}}
 \label{sec:notes-related-to-source-code}
 
-\bf{Source code:} After we made the conception and the UML class diagrams, we started to implement them. However, for more efficiency, we chose to use the Java threads and tasks mechanisms, changing a little the implementation but allowing the user to abort long tasks and do not block the user interface.
+\bf{Source code:} After we made the conception and the UML class diagrams, we started to implement them. However, for more efficiency, we chose to use the Java threads and tasks mechanisms, changing a little the implementation but allowing the user to abort long tasks and do not block the user interface.\\
 
 \bf{Unit tests:} All the tests have been realized thanks to JUnit, a unit-testing framework for Java. We have done the tests of all the classes of the model, and also the test of the utility classes (utils package). The principle of this framework is simply to test if the expected result of the tested method is the same as the resultat we really get from this method. The testing method of JUnit looks like that : \it{assertEquals(expectedResult, actualResult)}. If the two objects are not equals, an AssertionError is thrown. We have tried to test as much cases as possible, so sometimes a method can have more than one \it{assertEquals} test.
  
