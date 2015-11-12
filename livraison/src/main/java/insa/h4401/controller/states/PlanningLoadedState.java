@@ -4,6 +4,7 @@ import insa.h4401.controller.ContextManager;
 import insa.h4401.controller.ModelManager;
 import insa.h4401.controller.UIManager;
 import insa.h4401.view.ConstView;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 
@@ -12,7 +13,7 @@ import javafx.event.EventHandler;
  *
  * @author Lisa, Estelle, Antoine, Pierre, Hugues, Guillaume, Paul
  */
-public class PlanningLoadedState extends DefaultState implements EventHandler {
+public class PlanningLoadedState extends DefaultState implements EventHandler<WorkerStateEvent> {
 
     /**
      * The unique instance of this class.
@@ -140,7 +141,7 @@ public class PlanningLoadedState extends DefaultState implements EventHandler {
      * @param event Event handled at the end of route computing.
      */
     @Override
-    public void handle(Event event) {
+    public void handle(WorkerStateEvent event) {
         ContextManager.getInstance().setCurrentState(NothingSelectedState.getInstance());
 
         UIManager.getInstance().getMainWindow().setEnableButton(ConstView.Button.ROAD_MAP, true);

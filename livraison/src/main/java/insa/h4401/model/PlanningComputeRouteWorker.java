@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 
 import java.util.LinkedList;
 import java.util.List;
+import javafx.concurrent.WorkerStateEvent;
 
 /**
  * Worker Thread used to compute a route of a planning. Can be interrupted.
@@ -32,9 +33,8 @@ class PlanningComputeRouteWorker extends Task<Void> {
      * @param planning The planning to use to compute the route.
      * @param handler  The handler to notify when the task ends.
      */
-    public PlanningComputeRouteWorker(Planning planning, EventHandler handler) {
+    public PlanningComputeRouteWorker(Planning planning, EventHandler<WorkerStateEvent> handler) {
         this.planning = planning;
-        //noinspection unchecked
         setOnSucceeded(handler);
     }
 

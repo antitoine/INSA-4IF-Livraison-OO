@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javafx.concurrent.WorkerStateEvent;
 
 /**
  * This class represents a planning, a collection of deliveries
@@ -170,7 +171,7 @@ public class Planning implements Publisher {
      * @param handler The event handler to notify and the route computing is
      * finished.
      */
-    public void computeRoute(EventHandler handler) {
+    public void computeRoute(EventHandler<WorkerStateEvent> handler) {
         planningComputeRouteWorker = new PlanningComputeRouteWorker(this, handler);
         new Thread(planningComputeRouteWorker).start();
     }
