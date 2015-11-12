@@ -17,6 +17,7 @@
 \usepackage[toc,page]{appendix} 
 \usepackage{multicol}
 \usepackage{colortbl}
+\usepackage{pgfplotstable}
 
 %%% Custom sectioning
 \usepackage{sectsty}
@@ -120,7 +121,7 @@ Nous avions estimé que le projet devait être bien avancé pendant les vacances
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5,angle=0]{figures/gantt-prev.png}
+\includegraphics[scale=0.5,angle=0]{redmine/gantt-prev.png}
 \caption{Planning prévisionnel}
 \end{figure}
 
@@ -650,14 +651,36 @@ On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme de
 \section{Planning effectif du projet \it{(FR)}}
 \label{sec:planning-effectif-du-projet}
 
+Voici le planning effectif du projet sous forme d'un Gantt. Comme vous pouvez le voir il diffère du prévisionnel avec un grand nombre de tâche supplémentaire et un redécoupage en sous-tâche.
+
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5,angle=0]{figures/gantt-real.png}
+\includegraphics[scale=0.5,angle=0]{redmine/gantt-real.png}
 \caption{Planning effectif}
 \end{figure}
 
+\section{Temps passés sur les tâches \it{(FR)}}
+\label{sec:temps-passes-sur-les-taches}
 
-\Todo{Ajouter le planning effectif (Gantt réel)}
+Le suivi de projet a été fait en utilisant l'outil Redmine. Vous trouverez en annexe (cf. \ref{sec:cr-des-taches-redmine}~Compte-rendu des tâches) un aperçu des temps assignations et des temps passés pour chaque tâche. L'affectation correspond à la personne en charge de cette tâche, cela ne veut pas dire que les autres membres de l'hexanome n'ont pas travaillé dessus.
+
+Voici le détails des heures effectués pour chaque personne :
+
+\begin{figure}[H]
+\centering
+\pgfplotstabletypeset[
+    col sep=semicolon,
+    string type,
+    columns={Utilisateur,Temps total},
+    columns/Utilisateur/.style={column name=Utilisateur, column type={|l}},
+    columns/Temps total/.style={column name=Temps Total (heures), column type={|r|}},
+    every head row/.style={before row=\hline,after row=\hline},
+    every last row/.style={before row=\hline,after row=\hline},
+    ]{redmine/users-time.csv}
+\caption{Temps passés par personne}
+\end{figure}
+
+Vous trouverez en annexe le détail par demande des temps passés (cf. \ref{sec:details-des-temps-passes}~Détail des temps passés) ainsi que le détail par tâche (cf. \ref{sec:cr-des-taches-redmine}~Compte-rendu des tâches).
 
 \section{Bilan humain et technique \it{(FR)}}
 \label{sec:bilan-humain-et-technique}
@@ -735,6 +758,29 @@ On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme de
     \end{itemize}
   \end{itemize}
 \end{itemize}
+
+\includepdf[scale=0.8,angle=90,pages={1},pagecommand=\section{Compte-rendu des tâches - Page 1}]{redmine/list-issues-redmine.pdf}
+\label{sec:cr-des-taches-redmine}
+\includepdf[scale=0.8,angle=90,pages={2},pagecommand=\section{Compte-rendu des tâches - Page 2}]{redmine/list-issues-redmine.pdf}
+
+\section{Détails des temps passés}
+\label{sec:details-des-temps-passes}
+
+\begin{figure}[H]
+\centering
+\noindent\scalebox{0.6}{\pgfplotstabletypeset[
+    col sep=semicolon,
+    string type,
+    columns={Utilisateur,Demande,Temps total},
+    columns/Utilisateur/.style={column name=Utilisateur, column type={|l}},
+    columns/Demande/.style={column name=Demande, column type={|l}},
+    columns/2015/.style={column name=2015, column type={|l}},
+    columns/Temps total/.style={column name=Temps Total (heures), column type={|r|}},
+    every head row/.style={before row=\hline,after row=\hline},
+    every last row/.style={before row=\hline,after row=\hline},
+    ]{redmine/users-time-by-issue.csv}}
+\caption{Temps passés par personne}
+\end{figure}
 
 %%% End document
 \end{document}
