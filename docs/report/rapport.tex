@@ -677,25 +677,44 @@ At this point, the new \bf{Route} is set and can be used by the software.
 \section{Packages and classes diagrams generated from source code \it{(EN)}}
 \label{sec:packages-and-classes-diagrams-generated-from-source-code}
 
-\Todo{Retro-generated diagrams}
+The reader will find the retro-generated diagrams of our project in the following pages. \\
 
+We can see that even if they have the same structure as the ones presented in the conception parts, some differences appear. They are caused by the fact that it is impossible to make correct diagrams without knowing everything about the project, and also everything about java, as there are some specifity about the language that we have learned while doing the project. \\
+
+The following paragraphs will focus on the core differences that can be found between these diagrams and the one presented previously.
+
+
+\subsection{Differences found in the model diagram}
+
+The main difference that was introduced during the developpement was the creation of the \textit{PlanningComputeRouteWorker} that allow us to launch the route computation in a different thread. Indeed, in \textit{Swing} or in \textit{JavaFX}, everything that is launched from the UI stay in the UI thread by default. This can lead to a "buggy" interface, that seems to freeze during long computation. This also permits to interrupt the computation.\\
+
+As a result we also introduce thread creation during the map and planning loading. This permits to change the appearence of the cursor during the loadings.\\
+
+For convenience purposes double sided access of attribute from different parts of the model were added. For example, the we didn't plan to make a getter for the \textit{Planning} and a getter for the \textit{Planning} in the \textit{Map}.\\
+
+Otherwise, some additional methods have been added to make the view access information more easily. Indeed, the method \textit{getAssociatedTimeSlots} can now be found in the \textit{Arc} object as that was a lot more convenient to color the arcs in the view.
+
+\subsection{Differences found in the view diagram}
+
+The view is the part that has the more differences, and this is due to the fact that \textit{JavaFX} was new to us, and that we cannot know every aspects of its underlying concepts.\\
+
+The first thing we can see is that there are lots of method we didn't planned to introduce during the conception phase. We have also change the way of managing the nodes, by creating a \textit{NodeViewShapeFactory} in order to make the creation of nodes more generic and robust to changes.\\
+
+We also introduce the \textit{RoadMapView} that was not mandatory but, as it provides a great benefit to the overall user interface, we decided to create one.\\
+
+A helper class \textit{ColorGenerator} was added to color the different arcs and nodes easily. 
+
+\subsection{Other differences found}
+
+Very few modifications were added in the controler package. Some classes were added to launch the application such as \textit{AppMediator}. But this is mainly due to javafx behaviour conerning the launching of the application and the fact, that it was not possible to get the intance of the launch application when it was launched.\\
+
+Few methods were added in the \textit{UIManager} in order to permits to other controllers and actions to gain access to more control on the view.
 
 \includepdf[landscape=true]{figures/package}
-
-
-
 \includepdf[landscape=true]{figures/command}
-
-
-
 \includepdf[landscape=true]{figures/states}
-
-
 \includepdf{figures/model}
-
-
 \includepdf[landscape=true]{figures/view}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Bilan
 
 \part{Bilan}
