@@ -253,7 +253,11 @@ Glossary :
 \section{Use case diagram \it{(EN)}}
 \label{sec:use-case-diagram}
 
-\Todo{We should add a comment here}
+This application doesn’t have any user access control, so only the user role can be represented as a main actor, in the following use cases diagram. However, we can see a second actor, called \og Files system \fg{}, related to the use cases \og Load Map \fg{}, \og Load Planning \fg{} and \og Export Route \fg{}. Those use cases require at least one reading or writing file interaction, managed by the \og Files system \fg{} actor, mostly managed itself by the operating system.\\
+
+The use case \og Edit Route \fg{} could be split in three sub-parts - \og Add a delivery \fg{}, \og Remove a delivery \fg{} and \og Swap two deliveries \fg{} - but we choose to keep only one use case. Indeed, if the application will be improved with several new edit route features, it won’t be necessary to update the diagram with too many use cases.\\
+
+Each use case is detailed further in the following section, through the textual descriptions.
 
 \begin{figure}[H]
 \centering
@@ -608,29 +612,29 @@ After computing the route, at any moment the user can:
 \section{Choix architecturaux et patrons de conception utilisés \it{(FR)}}
 \label{sec:choix-architecturaux-et-patrons-de-conception-utilises}
 
-\bfit{Les classes cités dans ce document pouvant présenter des ambiguïtés sont référencés dans le glossaire.} \\
+\bfit{Les classes citées dans ce document pouvant présenter des ambiguïtés sont référencées dans le glossaire.} \\
 
 Nous choisirons tout d'abord de respecter l'architecture globale de type \bf{MVC} afin de garantir une simplicité de maintenance corrective et évolutive de l'application. Les différents composants appartenant à ces trois grandes catégories (Modèle, Vue et Contrôleur) implémenteront divers patrons de conception. \\
 
 Concernant l'architecture globale, nous avons choisi de faire en sorte que la hiérarchie en couche soit parfaitement respectée, c'est-à-dire que la vue ne modifie en aucun cas le modèle sans  passer par le contrôleur. La vue, cependant, implémente pour certains de ses composants le patron \bf{Observateur} pour détecter les modifications au niveau du modèle et se modifier ou demander au contrôleur d'effectuer des actions en conséquence.\\
 
-Les objets du modèle, qui constitue l'ensemble des données métier manipulées par l'application représentées par des objets, sont pour la plupart des conteneurs de données améliorés et n'implémentent pas de traitements particuliers. Il y a cependant une exception, l'objet \bf{Map} implémente l'algorithme permettant de calculer la tournée et de créer l'objet \bf{Route} correspondant. Certains objets, tels que \bf{Map} et \bf{Planning}, constituent en réalité des conteneurs d'autres objets du modèle. Ces objets agissent comme des \bf{Fabrique}s pour les objets qu'ils contiennent. Cela permet de garantir la cohérence des objets contenus dans ces conteneurs ainsi que la maîtrise de la durée de vie de ces derniers. Comme indiqué dans le paragraphe précédent, le modèle est observé par la vue ce qui signifie que certains objets du modèle sont \bf{Observable}s. Ce mécanisme nous permet de notifier la vue de changements au niveau du modèle. \\
+Les objets du modèle, qui constituent l'ensemble des données métier manipulées par l'application représentées par des objets, sont pour la plupart des conteneurs de données améliorés et n'implémentent pas de traitements particuliers. Il y a cependant des exceptions, l'objet \bf{Map} implémentant l'algorithme permettant de calculer le plus court chemin entre deux points et l'objet \bf{Planning} permettant de calculer une tournée et de créer l'objet \bf{Route} correspondant. Certains objets, tels que \bf{Map} et \bf{Planning}, constituent en réalité des conteneurs d'autres objets du modèle. Ces objets agissent comme des \bf{Fabrique}s pour les objets qu'ils contiennent. Cela permet de garantir la cohérence des objets contenus dans ces conteneurs ainsi que la maîtrise de la durée de vie de ces derniers. Comme indiqué dans le paragraphe précédent, le modèle est observé par la vue ce qui signifie que certains objets du modèle sont \bf{Observable}s. Il s'agit des objets \bf{Map}, \bf{Planning} et \bf{Route}. Ce mécanisme nous permet de notifier la vue de changements au niveau du modèle. \\
 
-L'objet qui représente la \bf{Map}, \bf{MapView}, ainsi que celui qui représente l'arbre des livraisons implémentent le patron \bf{Observateur}. Pour le reste, la vue est isolée du modèle. Celui peut donc fonctionner indépendamment de la vue.\\
+L'objet qui représente la \bf{Map} dans la vue, \bf{MapView}, ainsi que celui qui représente l'arbre des livraisons implémentent le patron \bf{Observateur}. Pour le reste, la vue est isolée du modèle. Celui-ci peut donc fonctionner indépendamment de la vue. \\
 
-Nous avons ajouté un package supplémentaire n'apparaissant pas dans l'architecture MVC afin d'y placer tous les objets étant catégorisés utilitaires, c'est-à-dire rendant des services aux autres objets de l'application mais dont les traitements auraient pu être intégrés aux objets de l'application si nous n'avions pas fait le choix de segmenter les traitements. Ce package, nommé utils, contient notamment les objets constituant des interfaces plus simples pour la création des objets du modèle possédant une représentation sous forme de fichiers XML. Ce package contient également une classe permettant la conversion de types spéciaux propres à l'application et une \bf{Fabrique} pour les objets d'interface avec les fichiers. \\
+Nous avons ajouté un package supplémentaire n'apparaissant pas dans l'architecture MVC afin d'y placer tous les objets étant catégorisés utilitaires. Ces  derniers rendent des services aux autres objets de l'application mais possèdent des traitements qui auraient pu être intégrés aux objets de l'application si nous n'avions pas fait le choix de segmenter les traitements. Ce package, nommé utils, contient notamment des interfaces plus simples pour la création des objets du modèle qui possèdent une représentation sous forme de fichiers XML. Ce package contient également une classe permettant la conversion de types spéciaux propres à l'application et une \bf{Fabrique} pour les objets d'interface avec les fichiers. Nous retrouvons également dans ce package les interfaces et les classes permettant d'utiliser une implémentation générique de l'algorithme de résolution TSP (Traveler Salesman Problem), ce dernier pouvant être utilisé par d'autres modules. \\
 
 Le choix majeur effectué concernant le contrôleur est de séparer les traitements en créant des sous-composants de ce contrôleur principal. Ce package contient donc un ensemble de  contrôleurs spécialisés. Cette organisation au niveau du contrôleur présente de nombreux avantages et notamment la simplification des procédures de gestion des erreurs, leurs causes étant segmentées à l'image des contrôleurs qui peuvent les rencontrer. 
-Nous avons donc choisi de dédier un contrôleur à la gestion du modèle, il constitue en réalité l'interface du contrôleur avec le modèle. Ce contrôleur se nomme \bf{ModelManager} et garantie la cohérence du modèle exploité par l'application, tout en proposant une interface simple pour l'accès au modèle. Il ajoute également un niveau d'encapsulation supplémentaire concernant les données manipulées dans le modèle. 
+Nous avons donc choisi de dédier un contrôleur à la gestion du modèle, qui constitue en réalité l'interface du contrôleur avec le modèle. Ce contrôleur se nomme \bf{ModelManager} et garantie la cohérence du modèle exploité par l'application, tout en proposant une interface simple pour l'accès au modèle. Il ajoute également un niveau d'encapsulation supplémentaire concernant les données manipulées dans le modèle. 
 
 Un second contrôleur, nommé \bf{IOManager}, est chargé des interactions avec le système de fichiers du système d'exploitation exécutant l'application. C’est à son niveau que sont traitées les erreurs de type Entrée/Sortie telles que l'absence de fichier ou encore les privilèges insuffisants pour lire/écrire un fichier. De nouveau, ce contrôleur propose une interface simple pour effectuer les opérations dont il est chargé. 
 
-Ensuite, l'\bf{UIManager}, pendant du \bf{ModelManager}, mais pour l'interface graphique cette fois. Il constitue une interface, simple d'utilisation, entre le contrôleur et la vue. Cela permet de centraliser les informations provenant de la vue. C'est aussi le rôle de ce contrôleur d'interpréter les ordres en provenance de la vue pour les convertir en ordres exécutables par le \bf{ContextManager}. 
+Ensuite, l'\bf{UIManager}, est le pendant du \bf{ModelManager}, mais pour l'interface graphique. Il constitue une interface, simple d'utilisation, entre le contrôleur et la vue. Cela permet de centraliser les informations provenant de la vue. C'est aussi le rôle de ce contrôleur d'interpréter les ordres en provenance de la vue pour les convertir en ordres exécutables par le \bf{ContextManager}. 
 
-Le \bf{ContextManager} a deux rôles majeurs qui lui valent d'implémenter deux patrons de conception qui sont le patron État et le patron Commande. Il a tout d'abord pour rôle d'entretenir la machine à états globale de l'application, c'est-à-dire de garantir à chaque instant qu'une commande utilisateur déclenchera les bons traitements dans l'application et donc les bonnes réactions de l'interface utilisateur et du modèle. Son second rôle est d'entretenir un historique des modifications effectuées de sorte à ce que l'utilisateur puisse défaire et refaire les dernières actions qu'il a effectué. Ce contrôleur assure à l'utilisateur que l'action qu'il veut effectuer a du sens dans le processus global que déroule l'application. Il est dans cette optique étroitement lié à l'\bf{UIManager} qui lui fait parvenir les commandes de l'utilisateur.
-Il est, à ce stade, important de préciser que ces différents composants implémentent tous le patron Singleton afin de garantir l'unicité de chaque interface et par conséquent l'unicité du modèle, de l'état de global de l'application et de l'historique des commandes effectuées.
+Le \bf{ContextManager} a deux rôles majeurs qui lui valent d'implémenter deux patrons de conception qui sont le patron \bf{État} et le patron \bf{Commande}. Il a tout d'abord pour rôle d'entretenir la machine à états globale de l'application, c'est-à-dire de garantir à chaque instant qu'une commande utilisateur déclenchera les bons traitements dans l'application et donc les bonnes réactions de l'interface utilisateur et du modèle. Son second rôle est d'entretenir un historique des modifications effectuées de sorte à ce que l'utilisateur puisse défaire et refaire les dernières actions qu'il a effectué. Ce contrôleur assure à l'utilisateur que l'action qu'il veut effectuer a du sens dans le processus global que déroule l'application. Il est dans cette optique étroitement lié à l'\bf{UIManager} qui lui fait parvenir les commandes de l'utilisateur.
+Il est, à ce stade, important de préciser que ces différents composants implémentent tous le patron \bf{Singleton} afin de garantir l'unicité de chaque interface et par conséquent l'unicité du modèle, de l'état global de l'application et de l'historique des commandes effectuées.
 
-L'objet \bf{Controller} présent dans le package ne constituent en réalité que le point d'entrée de l'application, il est appelé par la procédure main qui l'utilise pour initialiser les différents composants du contrôleur, c'est-à-dire réaliser la première instanciation des composants du contrôleur, puis démarrer l'interface graphique.
+L'objet \bf{Controller} présent dans le package ne constitue en réalité que le point d'entrée de l'application. Il est appelé par la procédure main qui l'utilise pour initialiser les différents composants du contrôleur, c'est-à-dire réaliser la première instanciation des composants du contrôleur, puis démarrer l'interface graphique.
 
 On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme des \bf{Façade}s respectivement pour la vue et le modèle. 
 
@@ -645,13 +649,17 @@ On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme de
 \caption{Sequence diagram describing route computation process}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.6,angle=0]{figures/sequence-diagram-route-compute-ref-get-fastest-path.png}
-\caption{Reference of the sequence diagram : getFastestPath}
-\end{figure}
+The main goal of the application is to figure out what is the best route to deliver in lower times each customer, thanks to a loaded planning. The previous sequence diagram shows us the interactions between the different parts of the model used to compute this route.\\
 
-\Todo{We should add a comment here}
+The \bf{Planning} object is describing all the deliveries’ points, so the method used to start the calculation is \bf{computeRoute}. The main idea of this algorithm, is to build a new graph, that will represent the solutions that could be selected to do the route. In fact, all the deliveries are grouped by time slots. So, in the new graph, the nodes are corresponding to the deliveries - or the warehouse, and the arcs are corresponding to the fastest path between the initial vertex and the terminal vertex. This fastest path is based on the duration time and is computed thanks to a Dijkstra algorithm implementation. This calculation is represented in the sequence diagram by the \bf{getFastestPath(Node startNode, Node endNode)} method, in the \bf{Map} class.\\
+
+So, for each time slot, we find the fastest path between each delivery of the time slot and add the result in the new graph, by calling the \bf{addPath(Path path)} method, in the \bf{PathGraph} class. Then, we do the same between the deliveries of a time slot and the deliveries of the previous time slot, in order to link them. If the current time slot being computed is the first one or the last one, we need to find the fastest path between its deliveries and the warehouse.\\
+
+After we created this new graph, we try to find a solution for doing all the deliveries and come back to the warehouse, by calling the \bf{computeSolution(int maxTimeLimit, IGraph graph)} method, of the \bf{DefaultTSP} class, which implements the Traveler Salesman Problem (TSP) resolution.\\
+
+Then, if the TSP resolution was successful, we can construct the corresponding \bf{Route} object, by getting the correct \bf{Path} objects stored in the \bf{PathGraph} object. The step is done by calling the \bf{indexAsPath(int i, int j)} method. Indeed, the TSP algorithm is done by using numeric indexes to identify the nodes, so we need to convert back the solution’s indexes into real \bf{Path} objects.\\
+
+At this point, the new \bf{Route} is set and can be used by the software.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Implémentation et tests
 
