@@ -97,23 +97,16 @@
 \section{Présentation du contenu du rapport}
 \label{sec:presentation-du-contenu-du-rapport}
 
-Ce document constitue la synthèse de l'ensemble des livrables devant être remis à la fin du projet Développement Orienté Objet effectué en 4IF. Il a été convenu avec les professeurs encadrant le projet que le code pouvait être réalisé en langue anglaise mais que ceci impliquait également le rendu de certains livrables en Anglais. Les livrables devant être rendu en Anglais ont été identifiés avec les professeurs lors de la première séance de TP. Il sera donc indiqué dans le titre de chaque partie si le contenu de la partie est rédigé en Anglais \it{(EN)} ou en Français \it{(FR)}.  
-
-\newpage
-
-Voici deux captures d'écran du logiciel réalisé.
-
-\begin{figure}[hbtp]
+Ce document constitue la synthèse de l'ensemble des livrables devant être remis à la fin du projet Développement Orienté Objet effectué en 4IF. Il a été convenu avec les professeurs encadrant le projet que le code pouvait être réalisé en langue anglaise mais que ceci impliquait également le rendu de certains livrables en Anglais. Les livrables devant être rendu en Anglais ont été identifiés avec les professeurs lors de la première séance de TP. Il sera donc indiqué dans le titre de chaque partie si le contenu de la partie est rédigé en Anglais \it{(EN)} ou en Français \it{(FR)}. Ci-dessous, un aperçu du logiciel réalisé :
+\begin{center}
+\begin{figure}[H]
 \centering
 \noindent\makebox[\textwidth]{\includegraphics[width=\textwidth]{figures/screenshot.png}}
 
 \noindent\makebox[\textwidth]{\includegraphics[width=\textwidth]{figures/screenshot-1.png}}
 \caption{Captures d'écran du logiciel}
-
 \end{figure}
-
-
-
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Capture et analyse des besoins
 
@@ -220,7 +213,7 @@ Voici la répartition globale des tâches ainsi qu'une rapide estimation des tem
 \caption{Affectations et estimations des tâches}
 \end{figure}
 
-Un certain nombre de tâches supplémentaires sont arrivés ensuite ainsi qu'un redécoupage en sous-tâches pour l'implémentation. Le temps estimé a donc été augmenté une fois que nous avions une vision plus complète sur le travail à effectuer (analyse des besoins et conception terminées).
+Un certain nombre de tâches supplémentaires sont arrivées ensuite ainsi qu'un redécoupage en sous-tâches pour l'implémentation. Le temps estimé a donc été augmenté une fois que nous avions une vision plus complète sur le travail à effectuer (analyse des besoins et conception terminées).
 
 \section{Domain model \it{(EN)}}
 \label{sec:domain-model}
@@ -510,11 +503,9 @@ Each use case is detailed further in the following section, through the textual 
 \section{User-level events list and State-Transition Diagram \it{(EN)}}
 \label{sec:user-level-events-list-and-state-transition-diagram}
 
-\Todo{We should add a comment here}
-
 \bf{State-transition diagram:}
 At any moment, the user can exit the program.
-At the opening, the program is in InitState. Right there, the only thing he can do is selecting a map (MapSelectState). From this state, he can either select a map (from an XML file) and go to MapLoadedState, or go back to InitState. If he decides to select a map, then the same process repeats with the selection of a planning (PlanningSelectState). Then he either comes back to MapLoadedState and pick a planning and ends in PlanningLoadedState. From this point, he has many options:\\
+At the opening, the program is in InitState. Right there, the only thing he can do is selecting a map (MapSelectState). From this state, he can either select a map (from an XML file) and go to MapLoadedState, or go back to InitState. If he decides to select a map, then the same process repeats with the selection of a planning (PlanningSelectState). Then he either comes back to MapLoadedState and picks a planning and ends in PlanningLoadedState. From this point, he has different options:\\
 
 \begin{itemize}
   \item[•] Select a new planning (PlanningSelectState).
@@ -523,7 +514,7 @@ At the opening, the program is in InitState. Right there, the only thing he can 
   \item[•] Compute the route (ComputingRouteState).\\
 \end{itemize}
 
-If he decides to compute the route and everything is fine, the program will be in NothingSelectedState, where you just have the map with the route computed but you don't have any node selected on the mpa or on the tree list. Here, the user has two choices:\\
+If he decides to compute the route and everything is fine, the program will be in NothingSelectedState, where you just have the map with the route computed but you don't have any node selected on the map or on the tree list. Here, the user has two choices:\\
 
 \begin{itemize}
   \item[•] Clicking on an existing delivery (going to DeliverySelectedState).
@@ -646,16 +637,15 @@ L'objet qui représente la \bf{Map} dans la vue, \bf{MapView}, ainsi que celui q
 Nous avons ajouté un package supplémentaire n'apparaissant pas dans l'architecture MVC afin d'y placer tous les objets étant catégorisés utilitaires. Ces  derniers rendent des services aux autres objets de l'application mais possèdent des traitements qui auraient pu être intégrés aux objets de l'application si nous n'avions pas fait le choix de segmenter les traitements. Ce package, nommé utils, contient notamment des interfaces plus simples pour la création des objets du modèle qui possèdent une représentation sous forme de fichiers XML. Ce package contient également une classe permettant la conversion de types spéciaux propres à l'application et une \bf{Fabrique} pour les objets d'interface avec les fichiers. Nous retrouvons également dans ce package les interfaces et les classes permettant d'utiliser une implémentation générique de l'algorithme de résolution TSP (Traveler Salesman Problem), ce dernier pouvant être utilisé par d'autres modules. \\
 
 Le choix majeur effectué concernant le contrôleur est de séparer les traitements en créant des sous-composants de ce contrôleur principal. Ce package contient donc un ensemble de  contrôleurs spécialisés. Cette organisation au niveau du contrôleur présente de nombreux avantages et notamment la simplification des procédures de gestion des erreurs, leurs causes étant segmentées à l'image des contrôleurs qui peuvent les rencontrer. 
-Nous avons donc choisi de dédier un contrôleur à la gestion du modèle, qui constitue en réalité l'interface du contrôleur avec le modèle. Ce contrôleur se nomme \bf{ModelManager} et garantie la cohérence du modèle exploité par l'application, tout en proposant une interface simple pour l'accès au modèle. Il ajoute également un niveau d'encapsulation supplémentaire concernant les données manipulées dans le modèle. 
+Nous avons donc choisi de dédier un contrôleur à la gestion du modèle, qui constitue en réalité l'interface du contrôleur avec le modèle. Ce contrôleur se nomme \bf{ModelManager} et garantie la cohérence du modèle exploité par l'application, tout en proposant une interface simple pour l'accès au modèle. Il ajoute également un niveau d'encapsulation supplémentaire concernant les données manipulées dans le modèle. \\
 
-Un second contrôleur, nommé \bf{IOManager}, est chargé des interactions avec le système de fichiers du système d'exploitation exécutant l'application. C’est à son niveau que sont traitées les erreurs de type Entrée/Sortie telles que l'absence de fichier ou encore les privilèges insuffisants pour lire/écrire un fichier. De nouveau, ce contrôleur propose une interface simple pour effectuer les opérations dont il est chargé. 
+Un second contrôleur, nommé \bf{IOManager}, est chargé des interactions avec le système de fichiers du système d'exploitation exécutant l'application. C’est à son niveau que sont traitées les erreurs de type Entrée/Sortie telles que l'absence de fichier ou encore les privilèges insuffisants pour lire/écrire un fichier. De nouveau, ce contrôleur propose une interface simple pour effectuer les opérations dont il est chargé. \\
 
-Ensuite, l'\bf{UIManager}, est le pendant du \bf{ModelManager}, mais pour l'interface graphique. Il constitue une interface, simple d'utilisation, entre le contrôleur et la vue. Cela permet de centraliser les informations provenant de la vue. C'est aussi le rôle de ce contrôleur d'interpréter les ordres en provenance de la vue pour les convertir en ordres exécutables par le \bf{ContextManager}. 
+Ensuite, l'\bf{UIManager}, est le pendant du \bf{ModelManager}, mais pour l'interface graphique. Il constitue une interface, simple d'utilisation, entre le contrôleur et la vue. Cela permet de centraliser les informations provenant de la vue. C'est aussi le rôle de ce contrôleur d'interpréter les ordres en provenance de la vue pour les convertir en ordres exécutables par le \bf{ContextManager}. \\
 
-Le \bf{ContextManager} a deux rôles majeurs qui lui valent d'implémenter deux patrons de conception qui sont le patron \bf{État} et le patron \bf{Commande}. Il a tout d'abord pour rôle d'entretenir la machine à états globale de l'application, c'est-à-dire de garantir à chaque instant qu'une commande utilisateur déclenchera les bons traitements dans l'application et donc les bonnes réactions de l'interface utilisateur et du modèle. Son second rôle est d'entretenir un historique des modifications effectuées de sorte à ce que l'utilisateur puisse défaire et refaire les dernières actions qu'il a effectué. Ce contrôleur assure à l'utilisateur que l'action qu'il veut effectuer a du sens dans le processus global que déroule l'application. Il est dans cette optique étroitement lié à l'\bf{UIManager} qui lui fait parvenir les commandes de l'utilisateur.
-Il est, à ce stade, important de préciser que ces différents composants implémentent tous le patron \bf{Singleton} afin de garantir l'unicité de chaque interface et par conséquent l'unicité du modèle, de l'état global de l'application et de l'historique des commandes effectuées.
+Le \bf{ContextManager} a deux rôles majeurs qui lui valent d'implémenter deux patrons de conception qui sont le patron \bf{État} et le patron \bf{Commande}. Il a tout d'abord pour rôle d'entretenir la machine à états globale de l'application, c'est-à-dire de garantir à chaque instant qu'une commande utilisateur déclenchera les bons traitements dans l'application et donc les bonnes réactions de l'interface utilisateur et du modèle. Son second rôle est d'entretenir un historique des modifications effectuées de sorte à ce que l'utilisateur puisse défaire et refaire les dernières actions qu'il a effectué. Ce contrôleur assure à l'utilisateur que l'action qu'il veut effectuer a du sens dans le processus global que déroule l'application. Il est dans cette optique étroitement lié à l'\bf{UIManager} qui lui fait parvenir les commandes de l'utilisateur. Il est, à ce stade, important de préciser que ces différents composants implémentent tous le patron \bf{Singleton} afin de garantir l'unicité de chaque interface et par conséquent l'unicité du modèle, de l'état global de l'application et de l'historique des commandes effectuées.\\
 
-L'objet \bf{Controller} présent dans le package ne constitue en réalité que le point d'entrée de l'application. Il est appelé par la procédure main qui l'utilise pour initialiser les différents composants du contrôleur, c'est-à-dire réaliser la première instanciation des composants du contrôleur, puis démarrer l'interface graphique.
+L'objet \bf{Controller} présent dans le package ne constitue en réalité que le point d'entrée de l'application. Il est appelé par la procédure main qui l'utilise pour initialiser les différents composants du contrôleur, c'est-à-dire réaliser la première instanciation des composants du contrôleur, puis démarrer l'interface graphique.\\
 
 On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme des \bf{Façade}s respectivement pour la vue et le modèle. 
 
@@ -668,7 +658,7 @@ On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme de
 \caption{Sequence diagram describing route computation process}
 \end{figure}
 
-The main goal of the application is to figure out what is the best route to deliver in lower times each customer, thanks to a loaded planning. The previous sequence diagram shows us the interactions between the different parts of the model used to compute this route.\\
+The main goal of the application is to figure out what is the best route to deliver in the shortest times each customer, thanks to a loaded planning. The previous sequence diagram shows us the interactions between the different parts of the model used to compute this route.\\
 
 The \bf{Planning} object is describing all the deliveries’ points, so the method used to start the calculation is \bf{computeRoute}. The main idea of this algorithm, is to build a new graph, that will represent the solutions that could be selected to do the route. In fact, all the deliveries are grouped by time slots. So, in the new graph, the nodes are corresponding to the deliveries - or the warehouse, and the arcs are corresponding to the fastest path between the initial vertex and the terminal vertex. This fastest path is based on the duration time and is computed thanks to a Dijkstra algorithm implementation. This calculation is represented in the sequence diagram by the \bf{getFastestPath(Node startNode, Node endNode)} method, in the \bf{Map} class.\\
 
@@ -679,6 +669,19 @@ After we created this new graph, we try to find a solution for doing all the del
 Then, if the TSP resolution was successful, we can construct the corresponding \bf{Route} object, by getting the correct \bf{Path} objects stored in the \bf{PathGraph} object. The step is done by calling the \bf{indexAsPath(int i, int j)} method. Indeed, the TSP algorithm is done by using numeric indexes to identify the nodes, so we need to convert back the solution’s indexes into real \bf{Path} objects.\\
 
 At this point, the new \bf{Route} is set and can be used by the software.
+
+\section{Application mockup \it{(EN)}}
+\label{sec:mockup}
+
+Before we started to implement the user interface, we did first the following mockup, setting the main actions and controls of the main window. 
+
+\begin{center}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35,angle=0]{figures/mockup.png}
+\caption{Initial mock-up}
+\end{figure}
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Implémentation et tests
 
@@ -705,19 +708,19 @@ The following paragraphs will focus on the core differences that can be found be
 
 \subsection{Differences found in the model diagram}
 
-The main difference that was introduced during the developpement was the creation of the \textit{PlanningComputeRouteWorker} that allow us to launch the route computation in a different thread. Indeed, in \textit{Swing} or in \textit{JavaFX}, everything that is launched from the UI stay in the UI thread by default. This can lead to a "buggy" interface, that seems to freeze during long computation. This also permits to interrupt the computation.\\
+The main difference that was introduced during the developpement was the creation of the \textit{PlanningComputeRouteWorker} that allow us to launch the route computation in a different thread. Indeed, in \textit{Swing} or in \textit{JavaFX}, everything that is launched from the UI stays in the UI thread by default. This can lead to a "buggy" interface, that seems to freeze during long computation. This also permits to interrupt the process.\\
 
-As a result we also introduce thread creation during the map and planning loading. This permits to change the appearence of the cursor during the loadings.\\
+As a result we also introduce thread creation during the map and planning loading. This allows to change the appearance of the cursor during the loadings.\\
 
-For convenience purposes double sided access of attribute from different parts of the model were added. For example, the we didn't plan to make a getter for the \textit{Planning} and a getter for the \textit{Planning} in the \textit{Map}.\\
+For convenience purposes, double sided access of attribute from different parts of the model were added. For example, we didn't plan to make a getter for the \textit{Planning} and a getter for the \textit{Planning} in the \textit{Map}.\\
 
-Otherwise, some additional methods have been added to make the view access information more easily. Indeed, the method \textit{getAssociatedTimeSlots} can now be found in the \textit{Arc} object as that was a lot more convenient to color the arcs in the view.
+Otherwise, some additional methods have been added to make the view access information more easily. Indeed, the method \textit{getAssociatedTimeSlots} can now be found in the \textit{Arc} object as that was much more convenient to color the arcs in the view.
 
 \subsection{Differences found in the view diagram}
 
 The view is the part that has the more differences, and this is due to the fact that \textit{JavaFX} was new to us, and that we cannot know every aspects of its underlying concepts.\\
 
-The first thing we can see is that there are lots of method we didn't planned to introduce during the conception phase. We have also change the way of managing the nodes, by creating a \textit{NodeViewShapeFactory} in order to make the creation of nodes more generic and robust to changes.\\
+The first thing we can see is that there are lots of method we hadn't planned to introduce during the conception phase. We have also changed the way of managing the nodes, by creating a \textit{NodeViewShapeFactory} in order to make the creation of nodes more generic and robust to changes.\\
 
 We also introduce the \textit{RoadMapView} that was not mandatory but, as it provides a great benefit to the overall user interface, we decided to create one.\\
 
@@ -725,9 +728,9 @@ A helper class \textit{ColorGenerator} was added to color the different arcs and
 
 \subsection{Other differences found}
 
-Very few modifications were added in the controler package. Some classes were added to launch the application such as \textit{AppMediator}. But this is mainly due to javafx behaviour conerning the launching of the application and the fact, that it was not possible to get the intance of the launch application when it was launched.\\
+Very few modifications were added in the controller package. Some classes were added to launch the application such as \textit{AppMediator}. But this is mainly due to javafx behaviour concerning the launching of the application and the fact that it was not possible to get the intance of the launch application when it was launched.\\
 
-Few methods were added in the \textit{UIManager} in order to permits to other controllers and actions to gain access to more control on the view.
+Few methods were added in the \textit{UIManager} in order to allow the other controllers and actions to gain access to more control on the view.
 
 \includepdf[landscape=true]{figures/package}
 \includepdf[landscape=true]{figures/command}
@@ -780,26 +783,25 @@ Vous trouverez en annexe le détail par demande des temps passés (cf. \ref{sec:
 \subsection{Dépassements des estimations}
 \label{subsec:depassements-des-estimations}
 
-Comme présenté dans le planning effectif et les temps passés, nous avons fait un dépassement sur plusieurs estimations. Tout d'abord, il faut prendre en compte que nous avions peu d'expérience pour estimer ce projet et c'est une qualité qui s'obtient avec l’entraînement et l'expérience.
+Comme présenté dans le planning effectif et les temps passés, nous avons fait un dépassement sur plusieurs estimations. Tout d'abord, il faut prendre en compte que nous avions peu d'expérience pour estimer ce projet et c'est une qualité qui s'obtient avec l’entraînement et l'expérience.\\
 
-Nous avons fait le choix d'utiliser l'outil JavaFX afin d'acquérir de nouvelles compétences. L'apprentissage a pris beaucoup plus de temps de prévu ce qui explique le dépassement sur l'implémentation de l'IHM. De plus, nous avions fait le choix de lancer en autonomie un membre de l'équipe, le rendant indispensable pour toute modification sur la partie vue de notre programme. Cela a provoqué un ralentissement global pour l'assemblage des trois composantes (contrôleur, vue et modèle).
+Nous avons fait le choix d'utiliser l'outil JavaFX afin d'acquérir de nouvelles compétences. L'apprentissage a pris beaucoup plus de temps de prévu ce qui explique le dépassement sur l'implémentation de l'IHM. De plus, nous avions fait le choix de lancer en autonomie un membre de l'équipe, le rendant indispensable pour toute modification sur la partie vue de notre programme. Cela a provoqué un ralentissement global pour l'assemblage des trois composantes (contrôleur, vue et modèle).\\
 
+Nous pouvons aussi noter un dépassement sur la partie conception. C'est l'une des tâches les plus importantes et nous avons préféré passer plus de temps sur ce point avant de commencer l'implémentation pour éviter des dépassements plus importants par la suite (notamment sur la partie modèle). Cependant, un manque de focalisation sur cette étape conceptuelle peut également expliquer ces dépassements d'horaires. En effet, l'envie d'avoir rapidement un rendu visuel et fonctionnel a tendance à détourner les développeurs de cette tâche. Des recentrages ont notamment été nécessaires sur les parties vue et contrôleur, afin de terminer en premier lieu cette étape de conception.\\
 
-Nous pouvons aussi noter un dépassement sur la partie conception. C'est l'une des tâches les plus importantes et nous avons préféré passer plus de temps sur ce point avant de commencer l'implémentation pour éviter des dépassements plus importants par la suite (notamment sur la partie modèle). Cependant, un manque de focalisation sur cette étape conceptuelle peut également expliquer ces dépassements d'horaires. En effet, l'envie d'avoir rapidement un rendu visuel et fonctionnel a tendance à détourner les développeurs de cette tâche. Des recentrages ont notamment été nécessaires sur les parties vue et contrôleur, afin de terminer en premier lieu cette étape de conception.
-
-Même si les tâches de gestion de projet, d'analyse et de bilan sont plutôt correctes, le chiffrage général reste bien trop bas par rapport au réel et il est important de le noter pour les projets futurs.
+Même si les tâches de gestion de projet, d'analyse et de bilan sont plutôt correctes, le chiffrage général reste bien trop bas par rapport au réel et il est important de le noter pour les projets futurs.\\
 
 \subsection{Bilan humain et ressentis des membres}
 \label{subsec:bilan-humain}
 
 
-Globalement le projet c'est bien passé. Nous sommes arrivés à termes du projet et nous avons réussi à implémenter tous les scénarios prévus lors du lancement du projet. Cependant, nous avons eu quelques points négatifs sur le plan humain.
+Globalement le projet c'est bien passé. Nous sommes arrivés à termes du projet et nous avons réussi à implémenter tous les scénarios prévus lors du lancement du projet. Cependant, nous avons eu quelques points négatifs sur le plan humain.\\
 
-Ce projet était notre première occasion de réaliser un projet en grande équipe (7 membres), tout en devant réaliser les différentes phases d'un projet, de l'analyse jusqu'à l'implémentation. Il apparaît que sur des projets de plus petite taille, les écarts de niveau est bien moins visible, tandis qu'ici, chaque membre a son importance et le ralentissement de l'un d'eux provoque un retard global sur le projet. Les différentes expériences en entreprise chez les uns et les autres amplifient également ce phénomène.
+Ce projet était notre première occasion de réaliser un projet en grande équipe (7 membres), tout en devant réaliser les différentes phases d'un projet, de l'analyse jusqu'à l'implémentation. Il apparaît que sur des projets de plus petite taille, les écarts de niveau est bien moins visible, tandis qu'ici, chaque membre a son importance et le ralentissement de l'un d'eux provoque un retard global sur le projet. Les différentes expériences en entreprise chez les uns et les autres amplifient également ce phénomène.\\
 
-Un ressenti partagé par l'ensemble de l'équipe a été qu'il n'ait pas été possible de toucher à tout et intervenir dans n'importe quelle partie du projet. Ce changement est spécifiquement dû au fait que chaque personne se spécialise dans le rôle qu'on lui a donné et qu'on ne peut pas se permettre de passer plusieurs heures supplémentaires à comprendre l'ensemble des mécanismes mis en place par les autres. Notamment, nous avons remarqué des spécialisations pour JavaFX, pour le calcul de la tournée, pour la gestion des fichiers XML ou encore une autre pour le fonctionnement de la machine à état.
+Un ressenti partagé par l'ensemble de l'équipe a été qu'il n'ait pas été possible de toucher à tout et intervenir dans n'importe quelle partie du projet. Ce changement est spécifiquement dû au fait que chaque personne se spécialise dans le rôle qu'on lui a donné et qu'on ne peut pas se permettre de passer plusieurs heures supplémentaires à comprendre l'ensemble des mécanismes mis en place par les autres. Notamment, nous avons remarqué des spécialisations pour JavaFX, pour le calcul de la tournée, pour la gestion des fichiers XML ou encore une autre pour le fonctionnement de la machine à état.\\
 
-Cependant, nous pouvons relever comme points positifs, que techniquement nous avons bien progressé. La mise en pratique des designs patterns nous a permis d’acquérir de nouvelles visions sur la conception et a engendré un meilleur projet sur le point de vue maintenance et durabilité.
+Cependant, nous pouvons relever comme points positifs, que techniquement nous avons bien progressé. La mise en pratique des designs patterns nous a permis d’acquérir de nouvelles visions sur la conception et a engendré un meilleur projet sur le point de vue maintenance et durabilité.\\
 
 Enfin, nous avons réussi à garder notre calme et une certaine bonne ambiance dans l'équipe malgré des périodes de travail intense ou de pression en raison de la charge de travail plus conséquente en cette période. Nous avons donc tout de même pu rester productif et gagner en efficacité, tout en augmentant la cohésion de groupe et en devenant plus soudés.
 
