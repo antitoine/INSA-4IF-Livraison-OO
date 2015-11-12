@@ -13,9 +13,9 @@
 \usepackage{todonotes}
 \usepackage[a4paper, 
 			body={16cm,23cm},
-			lmargin=1cm,
-			rmargin=1cm,
-			tmargin=1cm,
+			lmargin=1.5cm,
+			rmargin=1.5cm,
+			tmargin=1.5cm,
 			bmargin=1.5cm]{geometry}
 \usepackage{float}
 \usepackage{framed}
@@ -97,19 +97,15 @@
 \section{Présentation du contenu du rapport}
 \label{sec:presentation-du-contenu-du-rapport}
 
-Ce document constitue la synthèse de l'ensemble des livrables devant être remis à la fin du projet Développement Orienté Objet effectué en 4IF. Il a été convenu avec les professeurs encadrant le projet que le code pouvait être réalisé en langue anglaise mais que ceci impliquait également le rendu de certains livrables en Anglais. Les livrables devant être rendu en Anglais ont été identifiés avec les professeurs lors de la première séance de TP. Il sera donc indiqué dans le titre de chaque partie si le contenu de la partie est rédigé en Anglais \it{(EN)} ou en Français \it{(FR)}.  
+Ce document constitue la synthèse de l'ensemble des livrables devant être remis à la fin du projet Développement Orienté Objet effectué en 4IF. Il a été convenu avec les professeurs encadrant le projet que le code pouvait être réalisé en langue anglaise mais que ceci impliquait également le rendu de certains livrables en Anglais. Les livrables devant être rendu en Anglais ont été identifiés avec les professeurs lors de la première séance de TP. Il sera donc indiqué dans le titre de chaque partie si le contenu de la partie est rédigé en Anglais \it{(EN)} ou en Français \it{(FR)}.  \\
 
-\newpage
+Ci-dessous, deux captures d'écran du logiciel réalisé :
 
-Voici deux captures d'écran du logiciel réalisé.
-
-\begin{figure}[hbtp]
+\begin{figure}[H]
 \centering
 \noindent\makebox[\textwidth]{\includegraphics[width=\textwidth]{figures/screenshot.png}}
-
 \noindent\makebox[\textwidth]{\includegraphics[width=\textwidth]{figures/screenshot-1.png}}
 \caption{Captures d'écran du logiciel}
-
 \end{figure}
 
 
@@ -225,7 +221,11 @@ Un certain nombre de tâches supplémentaires sont arrivé ensuite ainsi qu'un r
 \section{Domain model \it{(EN)}}
 \label{sec:domain-model}
 
-\Todo{We should add a comment here}
+This application has two main entry points that are the Map and Planning classes. The first one is used to represent the streets (directed arcs) and intersections (nodes) of a city, using a graph design. The class Planning represents the set of deliveries that must be done at some locations, in particular time slots. Those data are represented through the TimeSlot and Delivery classes.\\
+
+The Route class represents the best known solution to do all the delivery points contained in the Planning object, thanks to an ordered collection of Path. A Path is itself an ordered collection of arcs to use to go from a node with a delivery (or a warehouse) to another node with a delivery (or a warehouse).\\
+
+The delivery time attribute in the Delivery class is rather important because it's the time that is affected to a delivery when a route is computed.
 
 \begin{figure}[H]
 \centering
@@ -565,7 +565,7 @@ After computing the route, at any moment the user can:
 \subsection{Model related diagrams}
 \label{subsec:model-related-diagrams}
 
-The following figure shows classes which are part of the model package. These classes implements the Domain Model and others objects needed to properly use design patterns. All methods are not shown, especially getters and setters. Further information are available in III.3 section.
+The following figure shows classes which are part of the model package. These classes implements the Domain Model and others objects needed to properly use design patterns. All methods are not shown, especially getters and setters. Further information are available in III.3 section.\\
 
 \vspace*{-6.5cm}
 \begin{figure}[H]
