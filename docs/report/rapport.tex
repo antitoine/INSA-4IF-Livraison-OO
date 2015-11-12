@@ -1,5 +1,5 @@
 %%% Preamble
-\documentclass[paper=a4,fontsize=11pt]{report}
+\documentclass[paper=a4, fontsize=11pt]{report}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -11,12 +11,7 @@
 \usepackage{url}
 \usepackage{pdfpages}
 \usepackage{todonotes}
-\usepackage[a4paper, 
-			body={16cm,23cm},
-			lmargin=1.5cm,
-			rmargin=1.5cm,
-			tmargin=1.5cm,
-			bmargin=1.5cm]{geometry}
+\usepackage[a4paper, body={16cm,23cm}]{geometry}
 \usepackage{float}
 \usepackage{framed}
 \usepackage[toc,page]{appendix} 
@@ -24,9 +19,8 @@
 \usepackage{colortbl}
 \usepackage{pgfplotstable}
 \usepackage{svg}
-\usepackage{amsmath}	
+\usepackage{amsmath}
 \usepackage{graphicx}
-
 %%% Custom sectioning
 \usepackage{sectsty}
 \allsectionsfont{  \normalfont\scshape}
@@ -97,15 +91,19 @@
 \section{Présentation du contenu du rapport}
 \label{sec:presentation-du-contenu-du-rapport}
 
-Ce document constitue la synthèse de l'ensemble des livrables devant être remis à la fin du projet Développement Orienté Objet effectué en 4IF. Il a été convenu avec les professeurs encadrant le projet que le code pouvait être réalisé en langue anglaise mais que ceci impliquait également le rendu de certains livrables en Anglais. Les livrables devant être rendu en Anglais ont été identifiés avec les professeurs lors de la première séance de TP. Il sera donc indiqué dans le titre de chaque partie si le contenu de la partie est rédigé en Anglais \it{(EN)} ou en Français \it{(FR)}.  \\
+Ce document constitue la synthèse de l'ensemble des livrables devant être remis à la fin du projet Développement Orienté Objet effectué en 4IF. Il a été convenu avec les professeurs encadrant le projet que le code pouvait être réalisé en langue anglaise mais que ceci impliquait également le rendu de certains livrables en Anglais. Les livrables devant être rendu en Anglais ont été identifiés avec les professeurs lors de la première séance de TP. Il sera donc indiqué dans le titre de chaque partie si le contenu de la partie est rédigé en Anglais \it{(EN)} ou en Français \it{(FR)}.  
 
-Ci-dessous, deux captures d'écran du logiciel réalisé :
+\newpage
 
-\begin{figure}[H]
+Voici deux captures d'écran du logiciel réalisé.
+
+\begin{figure}[hbtp]
 \centering
 \noindent\makebox[\textwidth]{\includegraphics[width=\textwidth]{figures/screenshot.png}}
+
 \noindent\makebox[\textwidth]{\includegraphics[width=\textwidth]{figures/screenshot-1.png}}
 \caption{Captures d'écran du logiciel}
+
 \end{figure}
 
 
@@ -216,16 +214,12 @@ Voici la répartition globale des tâches ainsi qu'une rapide estimation des tem
 \caption{Affectations et estimations des tâches}
 \end{figure}
 
-Un certain nombre de tâches supplémentaires sont arrivés ensuite ainsi qu'un redécoupage en sous-tâches pour l'implémentation. Le temps estimé a donc été augmenté une fois que nous avions une vision plus complète sur le travail à effectuer (analyse des besoins et conception terminées).
+Un certain nombre de tâches supplémentaires sont arrivé ensuite ainsi qu'un redécoupage en sous-tâches pour l'implémentation. Donc le temps estimé a été augmenté une fois que nous avions une vision plus complète sur le travail à effectuer (analyse des besoins et conception terminées).
 
 \section{Domain model \it{(EN)}}
 \label{sec:domain-model}
 
-This application has two main entry points that are the Map and Planning classes. The first one is used to represent the streets (directed arcs) and intersections (nodes) of a city, using a graph design. The class Planning represents the set of deliveries that must be done at some locations, in particular time slots. Those data are represented through the TimeSlot and Delivery classes.\\
-
-The Route class represents the best known solution to do all the delivery points contained in the Planning object, thanks to an ordered collection of Path. A Path is itself an ordered collection of arcs to use to go from a node with a delivery (or a warehouse) to another node with a delivery (or a warehouse).\\
-
-The delivery time attribute in the Delivery class is rather important because it's the time that is affected to a delivery when a route is computed.
+\Todo{We should add a comment here}
 
 \begin{figure}[H]
 \centering
@@ -251,7 +245,7 @@ Glossary :
 	\item[\textbullet] \bf{Planning} : Set of intersections (cf. Node) to be processed by the route computation algorithm (cf. Route).
 	\item[\textbullet] \bf{Route} \it{(tournée)} : Ordered list of paths to travel along (cf. Planning). 
 	\item[\textbullet] \bf{TimeSlot} \it{(fenêtre de livraison)} : time interval bounded by a start time and an end time containing a set of deliveries to be honored.
-	\item[\textbullet] \bf{Warehouse} \it{(entrepôt)} : Special intersection representing both the start and the end point of the route (cf. Route).
+	\item[\textbullet] \bf{Warehouse} \it{(entrepot)} : Special intersection representing both the start and the end point of the route (cf. Route).
 	\item[\textbullet] \bf{Average Speed} \it{(vitesse moyenne)} : average speed of vehicles in meters per second on an arc (cf. Arc).
 	\item[\textbullet] \bf{Planning File} \it{(fichier de planning)} : XML formated input file, describing a planning (cf. Planning).
 	\item[\textbullet] \bf{Map File} \it{(fichier de plan)} : XML formated input file, describing a Map.
@@ -506,28 +500,25 @@ Each use case is detailed further in the following section, through the textual 
 \section{User-level events list and State-Transition Diagram \it{(EN)}}
 \label{sec:user-level-events-list-and-state-transition-diagram}
 
+\Todo{We should add a comment here}
+
 \bf{State-transition diagram:}
 At any moment, the user can exit the program.
-At the opening, the program is in InitState. Right there, the only thing he can do is selecting a map (MapSelectState). From this state, he can either select a map (from an XML file) and go to MapLoadedState, or go back to InitState. If he decides to select a map, then the same process repeats with the selection of a planning (PlanningSelectState). Then he either comes back to MapLoadedState and pick a planning and ends in PlanningLoadedState. From this point, he has many options:\\
-
+At the opening, the program is in InitState. Right there, the only thing he can do is selecting a map (MapSelectState). From this state, he can either select a map (from an XML file) and go to MapLoadedState, or go back to InitState. If he decides to select a map, then the same process repeats with the selection of a planning (PlanningSelectState). Then he either comes back to MapLoadedState and pick a planning and ends in PlanningLoadedState. From this point, he has many options:
 \begin{itemize}
   \item[•] Select a new planning (PlanningSelectState).
   \item[•] Select a new map (MapSelectState).
   \item[•] Go back to the beginning (InitState)
-  \item[•] Compute the route (ComputingRouteState).\\
+  \item[•] Compute the route (ComputingRouteState).
 \end{itemize}
-
-If he decides to compute the route and everything is fine, the program will be in NothingSelectedState, where you just have the map with the route computed but you don't have any node selected on the mpa or on the tree list. Here, the user has two choices:\\
-
+If he decides to compute the route and everything is fine, the program will be in NothingSelectedState, where you just have the map with the route computed but you don't have any node selected on the mpa or on the tree list. Here, the user has two choices:
 \begin{itemize}
   \item[•] Clicking on an existing delivery (going to DeliverySelectedState).
-  \item[•] Clicking on an emptyNode (goingto EmptyNodeSelected).\\
+  \item[•] Clicking on an emptyNode (goingto EmptyNodeSelected).
 \end{itemize}
-
 From the first choice, the user can go to the second one, and from the second one he can go to the first one. If he is in DeliverySelectedState and he decides to remove the delivery by clicking the remove-button, he goes to EmptyNodeSelected.
 From both choices, it is also possible to click on the warehouse (going to WarehouseSelectedState), and to comeback to NothingSelectedState by clicking anywhere else on the map.
-After computing the route, at any moment the user can:\\
-
+After computing the route, at any moment the user can:
 \begin{itemize}
   \item[•] Swap two deliveries (SwapDeliveriesState): it's something a bit different here, because we use the drag and drop. To access to this state, the user has to left click a delivery and keep it pressed. To leave this state, he has to release the left click, either on a delivery (so the two deliveries will be swapped) or not on a delivery (so nothing happens). In both cases, the program comes back to NothingSelectedState.
   \item[•] Undo his last action.
@@ -535,7 +526,7 @@ After computing the route, at any moment the user can:\\
   \item[•] Go back to PlanningSelectState by clicking "Load Planning" or "Clear History".
   \item[•] Go back to MapLoadedState by clicking "Clear Planning" or "Clear History".
   \item[•] Go back to MapSelectState by clicking "Load Map" or "Clear History".
-  \item[•] Go back to InitState by clicking "Close Map" or "Clear History".\\
+  \item[•] Go back to InitState by clicking "Close Map" or "Clear History".
 \end{itemize}
 
 \bf{The user-level events list :}
@@ -562,29 +553,25 @@ After computing the route, at any moment the user can:\\
 \caption{State-Transition Diagram}
 \end{figure}
 
-\newpage
-
 \section{Packages and Classes Diagrams \it{(EN)}}
 \label{sec:packages-and-classes-diagrams}
 
 \subsection{Model related diagrams}
 \label{subsec:model-related-diagrams}
 
-The following figure shows classes which are part of the model package. These classes implements the Domain Model and others objects needed to properly use design patterns. All methods are not shown, especially getters and setters. Further information are available in III.3 section.\\
+\Todo{We should add a comment here}
 
-\begin{center}
 \vspace*{-6cm}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.47,angle=90]{figures/model-class.png}
+\includegraphics[scale=0.52,angle=90]{figures/model-class.png}
 \caption{Model package including classes}
 \end{figure}
-\end{center}
 
 \subsection{View related diagrams}
 \label{subsec:view-related-diagrams}
 
-The following figure presents the view package, it is reduced to objects linked directly or indirectly to the Domain Model. Some objects such as PopOverContent and its derivates exists due to technological choices made to represent information about nodes and the way user will interact with them. UIManager which is part of the controller package but is strongly related to this package as it is in charge of instanciating the MainWindow. Further information are available in III.3 section.
+\Todo{We should add a comment here}
 
 \begin{figure}[H]
 \noindent\makebox[\textwidth]{\includegraphics[scale=0.40,angle=0]{figures/view-class.png}}
@@ -593,8 +580,6 @@ The following figure presents the view package, it is reduced to objects linked 
 
 \subsection{Controller related diagrams}
 \label{subsec:controller-related-diagrams}
-
-The three following figures show how we designed the controller. The controller is in fact divided into four Managers which are in reality sub-controllers dedicted to specific tasks. They have been named according to their role. Two more packages, states and commands, have been added to implement State and Command design patterns. These two packages are used by the ContextManager which is charged of assuring application process consistency. Further information are available in III.3 section.  
 
 \begin{figure}[H]
 \centering
@@ -613,16 +598,18 @@ The three following figures show how we designed the controller. The controller 
 \caption{Controller Commands package including classes}
 \end{figure}
 
+\Todo{We should add a comment here}
+
 \subsection{Other diagrams}
 \label{subsec:other-diagrams}
-
-The next figure shows utils package which contains all utility classes which can also be called helpers. These objects are used to implement design patterns or - as XML parsers - to provide convenient interfaces to convert data stored in files into objects usable by the application. Further information are available in III.3 section.
 
 \begin{figure}[H]
 \centering
 \noindent\makebox[\textwidth]{\includegraphics[scale=0.5,angle=0]{figures/utils-class.png}}
 \caption{Utils package and its classes}
 \end{figure}
+
+\Todo{We should add a comment here}
 
 \section{Choix architecturaux et patrons de conception utilisés \it{(FR)}}
 \label{sec:choix-architecturaux-et-patrons-de-conception-utilises}
@@ -653,6 +640,8 @@ L'objet \bf{Controller} présent dans le package ne constitue en réalité que l
 
 On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme des \bf{Façade}s respectivement pour la vue et le modèle. 
 
+\Todo{Ajouter des explications concernant les patrons de conception utilisés.}
+
 \section{Sequence Diagram describing Route computation process \it{(EN)}}
 \label{sec:sequence-diagram-describing-route-computation-process}
 
@@ -680,21 +669,32 @@ At this point, the new \bf{Route} is set and can be used by the software.
 \label{part:implementation-et-tests}
 \setcounter{section}{0}
 
-\section{Notes related to source code and unit tests \it{(EN)}}
+\section{Notes related to source code, its documentation and unit tests \it{(EN)}}
 \label{sec:notes-related-to-source-code}
 
-\bf{Source code:} After we made the conception and the UML class diagrams, we started to implement them. However, for more efficiency, we chose to use the Java threads and tasks mechanisms, changing a little the implementation but allowing the user to abort long tasks and do not block the user interface.\\
-
 \bf{Unit tests:} All the tests have been realized thanks to JUnit, a unit-testing framework for Java. We have done the tests of all the classes of the model, and also the test of the utility classes (utils package). The principle of this framework is simply to test if the expected result of the tested method is the same as the resultat we really get from this method. The testing method of JUnit looks like that : \it{assertEquals(expectedResult, actualResult)}. If the two objects are not equals, an AssertionError is thrown. We have tried to test as much cases as possible, so sometimes a method can have more than one \it{assertEquals} test.
- 
+
 \section{Packages and classes diagrams generated from source code \it{(EN)}}
 \label{sec:packages-and-classes-diagrams-generated-from-source-code}
 
-\includepdf{figures/package}
-\includepdf{figures/command}
-\includepdf{figures/states}
+\Todo{Retro-generated diagrams}
+
+
+\includepdf[landscape=true]{figures/package}
+
+
+
+\includepdf[landscape=true]{figures/command}
+
+
+
+\includepdf[landscape=true]{figures/states}
+
+
 \includepdf{figures/model}
-\includepdf{figures/view}
+
+
+\includepdf[landscape=true]{figures/view}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Bilan
 
@@ -766,7 +766,6 @@ Ce projet est notre premier gros projet qui comprend toutes les phases de l'anal
 \label{subsec:synthese}
 
 \Todo{Faire la synthèse}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Annexes
 
 \part{Annexes}
@@ -776,39 +775,32 @@ Ce projet est notre premier gros projet qui comprend toutes les phases de l'anal
 \section{Errors lists \it{(EN)}}
 \label{sec:errors-lists}
 
+\Todo{Expliquer ce que sont ces listes d'erreurs}
 
 \subsection{IO Errors List}
 \label{subsec:io-errors-list}
 
-This section presents a list of errors which can occur during Input/Output operations such as reading or writing files. \\
-
 \textbf{Input errors :}
 \begin{itemize}
   \item[•] \textbf{Cant Read File Error :} the folder is not readable, user’s privileges doesn’t match required privileges.
-  \item[•] \textbf{Missing File Error :} the file is missing in the OS File System. \\
+  \item[•] \textbf{Missing File Error :} the file is missing in file system. 
 \end{itemize}
 
 \textbf{Output errors :}
 \begin{itemize}
-  \item[•] Cant Write File Error : the folder is not writable, user’s privileges don’t match required privileges.  
+  \item[•] Cant Write File Error : the folder is not readable, user’s privileges doesn’t match required privileges.  
 \end{itemize}
 
 \subsection{XML errors list}
 \label{subsec:xml-errors-lists}
 
-The following lists presents all errors which can be found when reading input XML files.\\
-
-This list contains errors shared by both map definition file and planning definition file.\\
-
 \textbf{Shared errors:}
 \begin{itemize}
   \item[•] \textbf{Syntax errors :}
   \begin{itemize}
-    \item[•] \textbf{Unexpected End Of File Error :} XML file is not well formatted, tags are not closed properly.\\
+    \item[•] \textbf{Unexpected End Of File Error :} XML file is not well formatted, tags are not closed properly.
   \end{itemize}
 \end{itemize}
-
-The next list contains all semantic errors that can occur when parsing XML data. Errors are sorted by file.\\ 
 
 \textbf{File specific errors :}
 \begin{itemize}
@@ -819,9 +811,9 @@ The next list contains all semantic errors that can occur when parsing XML data.
       \item[•] \textbf{Empty Map Error :} root tag has no child.
       \item[•] \textbf{Missing Node Attribute :} missing id, x or y attribute.
       \item[•] \textbf{Empty Node Error :} tag Node has no outgoing arc.
-      \item[•] \textbf{Duplicate Node ID Error :} two or more nodes share the same ID.
-      \item[•] \textbf{Duplicate Node Error :} two or more nodes share the same coordinates.
-      \item[•] \textbf{Duplicate Arc Error :} two or more outgoing arcs of a single node share the same destination node. 
+      \item[•] \textbf{Duplicate Node ID Error :} two or more nodes have the same ID.
+      \item[•] \textbf{Duplicate Node Error :} two or more nodes have the same coordinates.
+      \item[•] \textbf{Duplicate Arc Error :} two or more outgoing arcs of a single node have the same destination node. 
       \item[•] \textbf{Missing Destination Node Error :} the node referenced by an arc as its destination doesn’t exist. 
       \item[•] \textbf{Invalid Average Speed Value Error :} an arc specified average speed is missing, negative or zero. 
       \item[•] \textbf{Invalid Length Value Error :} an arc specified length is missing, negative or zero.
@@ -835,7 +827,6 @@ The next list contains all semantic errors that can occur when parsing XML data.
       \item[•] \textbf{Duplicate TimeSlot Error :} two or more timeslots have the same start time and end time.
       \item[•] \textbf{Null TimeSlot Error :} a timeslot has the same start and end time.
       \item[•] \textbf{Intersecting TimeSlot Error :} two or more timeslots are intersecting.
-      \item[•] \textbf{Reversed TimeSlot Error :} at least one timeslot has its startTime greater than its endTime.
       \item[•] \textbf{Missing Delivery Node Error :} the address specified by a delivery doesn’t match any node in the Map.
       \item[•] \textbf{Duplicate Delivery Error :} two or more deliveries share the same destination. 
     \end{itemize}
@@ -862,7 +853,7 @@ The next list contains all semantic errors that can occur when parsing XML data.
     every head row/.style={before row=\hline,after row=\hline},
     every last row/.style={before row=\hline,after row=\hline},
     ]{redmine/users-time-by-issue.csv}}
-\caption{Temps passés par personne}
+\caption{Détail des temps passés par personne}
 \end{figure}
 
 %%% End document
