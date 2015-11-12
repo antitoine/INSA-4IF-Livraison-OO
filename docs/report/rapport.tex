@@ -1,5 +1,5 @@
 %%% Preamble
-\documentclass[paper=a4, fontsize=11pt]{report}
+\documentclass[paper=a4,fontsize=11pt]{report}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -11,7 +11,7 @@
 \usepackage{url}
 \usepackage{pdfpages}
 \usepackage{todonotes}
-\usepackage[a4paper, body={16cm,23cm}]{geometry}
+\usepackage[a4paper, body={16cm,23cm},margin=1cm]{geometry}
 \usepackage{float}
 \usepackage{framed}
 \usepackage[toc,page]{appendix} 
@@ -253,11 +253,7 @@ Glossary :
 \section{Use case diagram \it{(EN)}}
 \label{sec:use-case-diagram}
 
-This application doesn’t have any user access control, so only the user role can be represented as a main actor, in the following use cases diagram. However, we can see a second actor, called \og Files system \fg{}, related to the use cases \og Load Map \fg{}, \og Load Planning \fg{} and \og Export Route \fg{}. Those use cases require at least one reading or writing file interaction, managed by the \og Files system \fg{} actor, mostly managed itself by the operating system.\\
-
-The use case \og Edit Route \fg{} could be split in three sub-parts - \og Add a delivery \fg{}, \og Remove a delivery \fg{} and \og Swap two deliveries \fg{} - but we choose to keep only one use case. Indeed, if the application will be improved with several new edit route features, it won’t be necessary to update the diagram with too many use cases.\\
-
-Each use case is detailed further in the following section, through the textual descriptions.
+\Todo{We should add a comment here}
 
 \begin{figure}[H]
 \centering
@@ -500,33 +496,6 @@ Each use case is detailed further in the following section, through the textual 
 
 \Todo{We should add a comment here}
 
-\bf{State-transition diagram:}
-At any moment, the user can exit the program.
-At the opening, the program is in InitState. Right there, the only thing he can do is selecting a map (MapSelectState). From this state, he can either select a map (from an XML file) and go to MapLoadedState, or go back to InitState. If he decides to select a map, then the same process repeats with the selection of a planning (PlanningSelectState). Then he either comes back to MapLoadedState and pick a planning and ends in PlanningLoadedState. From this point, he has many options:
-\begin{itemize}
-  \item[•] Select a new planning (PlanningSelectState).
-  \item[•] Select a new map (MapSelectState).
-  \item[•] Go back to the beginning (InitState)
-  \item[•] Compute the route (ComputingRouteState).
-\end{itemize}
-If he decides to compute the route and everything is fine, the program will be in NothingSelectedState, where you just have the map with the route computed but you don't have any node selected on the mpa or on the tree list. Here, the user has two choices:
-\begin{itemize}
-  \item[•] Clicking on an existing delivery (going to DeliverySelectedState).
-  \item[•] Clicking on an emptyNode (goingto EmptyNodeSelected).
-\end{itemize}
-From the first choice, the user can go to the second one, and from the second one he can go to the first one. If he is in DeliverySelectedState and he decides to remove the delivery by clicking the remove-button, he goes to EmptyNodeSelected.
-From both choices, it is also possible to click on the warehouse (going to WarehouseSelectedState), and to comeback to NothingSelectedState by clicking anywhere else on the map.
-After computing the route, at any moment the user can:
-\begin{itemize}
-  \item[•] Swap two deliveries (SwapDeliveriesState): it's something a bit different here, because we use the drag and drop. To access to this state, the user has to left click a delivery and keep it pressed. To leave this state, he has to release the left click, either on a delivery (so the two deliveries will be swapped) or not on a delivery (so nothing happens). In both cases, the program comes back to NothingSelectedState.
-  \item[•] Undo his last action.
-  \item[•] Redo the last cancelled action.
-  \item[•] Go back to PlanningSelectState by clicking "Load Planning" or "Clear History".
-  \item[•] Go back to MapLoadedState by clicking "Clear Planning" or "Clear History".
-  \item[•] Go back to MapSelectState by clicking "Load Map" or "Clear History".
-  \item[•] Go back to InitState by clicking "Close Map" or "Clear History".
-\end{itemize}
-
 \bf{The user-level events list :}
 \begin{itemize}
   \item[•] \it{btnLoadMap :} the user request to load a new map from a XML file.
@@ -557,9 +526,9 @@ After computing the route, at any moment the user can:
 \subsection{Model related diagrams}
 \label{subsec:model-related-diagrams}
 
-\Todo{We should add a comment here}
+The following figure shows classes which are part of the model package. These classes implements the Domain Model and others objects needed to properly use design patterns. All methods are not shown, especially getters and setters. Further information are available in III.3 section.
 
-\vspace*{-6cm}
+\vspace*{-6.5cm}
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.52,angle=90]{figures/model-class.png}
@@ -569,7 +538,7 @@ After computing the route, at any moment the user can:
 \subsection{View related diagrams}
 \label{subsec:view-related-diagrams}
 
-\Todo{We should add a comment here}
+The following figure presents the view package, it is reduced to objects linked directly or indirectly to the Domain Model. Some objects such as PopOverContent and its derivates exists due to technological choices made to represent information about nodes and the way user will interact with them. UIManager which is part of the controller package but is strongly related to this package as it is in charge of instanciating the MainWindow. Further information are available in III.3 section.
 
 \begin{figure}[H]
 \noindent\makebox[\textwidth]{\includegraphics[scale=0.40,angle=0]{figures/view-class.png}}
@@ -578,6 +547,8 @@ After computing the route, at any moment the user can:
 
 \subsection{Controller related diagrams}
 \label{subsec:controller-related-diagrams}
+
+The three following figures show how we designed the controller. The controller is in fact divided into four Managers which are in reality sub-controllers dedicted to specific tasks. They have been named according to their role. Two more packages, states and commands, have been added to implement State and Command design patterns. These two packages are used by the ContextManager which is charged of assuring application process consistency. Further information are available in III.3 section.  
 
 \begin{figure}[H]
 \centering
@@ -596,10 +567,10 @@ After computing the route, at any moment the user can:
 \caption{Controller Commands package including classes}
 \end{figure}
 
-\Todo{We should add a comment here}
-
 \subsection{Other diagrams}
 \label{subsec:other-diagrams}
+
+The next figure shows utils package which contains all utility classes which can also be called helpers. These objects are used to implement design patterns or - as XML parsers - to provide convenient interfaces to convert data stored in files into objects usable by the application. Further information are available in III.3 section.
 
 \begin{figure}[H]
 \centering
@@ -607,34 +578,32 @@ After computing the route, at any moment the user can:
 \caption{Utils package and its classes}
 \end{figure}
 
-\Todo{We should add a comment here}
-
 \section{Choix architecturaux et patrons de conception utilisés \it{(FR)}}
 \label{sec:choix-architecturaux-et-patrons-de-conception-utilises}
 
-\bfit{Les classes citées dans ce document pouvant présenter des ambiguïtés sont référencées dans le glossaire.} \\
+\bfit{Les classes cités dans ce document pouvant présenter des ambiguïtés sont référencés dans le glossaire.} \\
 
 Nous choisirons tout d'abord de respecter l'architecture globale de type \bf{MVC} afin de garantir une simplicité de maintenance corrective et évolutive de l'application. Les différents composants appartenant à ces trois grandes catégories (Modèle, Vue et Contrôleur) implémenteront divers patrons de conception. \\
 
 Concernant l'architecture globale, nous avons choisi de faire en sorte que la hiérarchie en couche soit parfaitement respectée, c'est-à-dire que la vue ne modifie en aucun cas le modèle sans  passer par le contrôleur. La vue, cependant, implémente pour certains de ses composants le patron \bf{Observateur} pour détecter les modifications au niveau du modèle et se modifier ou demander au contrôleur d'effectuer des actions en conséquence.\\
 
-Les objets du modèle, qui constituent l'ensemble des données métier manipulées par l'application représentées par des objets, sont pour la plupart des conteneurs de données améliorés et n'implémentent pas de traitements particuliers. Il y a cependant des exceptions, l'objet \bf{Map} implémentant l'algorithme permettant de calculer le plus court chemin entre deux points et l'objet \bf{Planning} permettant de calculer une tournée et de créer l'objet \bf{Route} correspondant. Certains objets, tels que \bf{Map} et \bf{Planning}, constituent en réalité des conteneurs d'autres objets du modèle. Ces objets agissent comme des \bf{Fabrique}s pour les objets qu'ils contiennent. Cela permet de garantir la cohérence des objets contenus dans ces conteneurs ainsi que la maîtrise de la durée de vie de ces derniers. Comme indiqué dans le paragraphe précédent, le modèle est observé par la vue ce qui signifie que certains objets du modèle sont \bf{Observable}s. Il s'agit des objets \bf{Map}, \bf{Planning} et \bf{Route}. Ce mécanisme nous permet de notifier la vue de changements au niveau du modèle. \\
+Les objets du modèle, qui constitue l'ensemble des données métier manipulées par l'application représentées par des objets, sont pour la plupart des conteneurs de données améliorés et n'implémentent pas de traitements particuliers. Il y a cependant une exception, l'objet \bf{Map} implémente l'algorithme permettant de calculer la tournée et de créer l'objet \bf{Route} correspondant. Certains objets, tels que \bf{Map} et \bf{Planning}, constituent en réalité des conteneurs d'autres objets du modèle. Ces objets agissent comme des \bf{Fabrique}s pour les objets qu'ils contiennent. Cela permet de garantir la cohérence des objets contenus dans ces conteneurs ainsi que la maîtrise de la durée de vie de ces derniers. Comme indiqué dans le paragraphe précédent, le modèle est observé par la vue ce qui signifie que certains objets du modèle sont \bf{Observable}s. Ce mécanisme nous permet de notifier la vue de changements au niveau du modèle. \\
 
-L'objet qui représente la \bf{Map} dans la vue, \bf{MapView}, ainsi que celui qui représente l'arbre des livraisons implémentent le patron \bf{Observateur}. Pour le reste, la vue est isolée du modèle. Celui-ci peut donc fonctionner indépendamment de la vue. \\
+L'objet qui représente la \bf{Map}, \bf{MapView}, ainsi que celui qui représente l'arbre des livraisons implémentent le patron \bf{Observateur}. Pour le reste, la vue est isolée du modèle. Celui peut donc fonctionner indépendamment de la vue.\\
 
-Nous avons ajouté un package supplémentaire n'apparaissant pas dans l'architecture MVC afin d'y placer tous les objets étant catégorisés utilitaires. Ces  derniers rendent des services aux autres objets de l'application mais possèdent des traitements qui auraient pu être intégrés aux objets de l'application si nous n'avions pas fait le choix de segmenter les traitements. Ce package, nommé utils, contient notamment des interfaces plus simples pour la création des objets du modèle qui possèdent une représentation sous forme de fichiers XML. Ce package contient également une classe permettant la conversion de types spéciaux propres à l'application et une \bf{Fabrique} pour les objets d'interface avec les fichiers. Nous retrouvons également dans ce package les interfaces et les classes permettant d'utiliser une implémentation générique de l'algorithme de résolution TSP (Traveler Salesman Problem), ce dernier pouvant être utilisé par d'autres modules. \\
+Nous avons ajouté un package supplémentaire n'apparaissant pas dans l'architecture MVC afin d'y placer tous les objets étant catégorisés utilitaires, c'est-à-dire rendant des services aux autres objets de l'application mais dont les traitements auraient pu être intégrés aux objets de l'application si nous n'avions pas fait le choix de segmenter les traitements. Ce package, nommé utils, contient notamment les objets constituant des interfaces plus simples pour la création des objets du modèle possédant une représentation sous forme de fichiers XML. Ce package contient également une classe permettant la conversion de types spéciaux propres à l'application et une \bf{Fabrique} pour les objets d'interface avec les fichiers. \\
 
 Le choix majeur effectué concernant le contrôleur est de séparer les traitements en créant des sous-composants de ce contrôleur principal. Ce package contient donc un ensemble de  contrôleurs spécialisés. Cette organisation au niveau du contrôleur présente de nombreux avantages et notamment la simplification des procédures de gestion des erreurs, leurs causes étant segmentées à l'image des contrôleurs qui peuvent les rencontrer. 
-Nous avons donc choisi de dédier un contrôleur à la gestion du modèle, qui constitue en réalité l'interface du contrôleur avec le modèle. Ce contrôleur se nomme \bf{ModelManager} et garantie la cohérence du modèle exploité par l'application, tout en proposant une interface simple pour l'accès au modèle. Il ajoute également un niveau d'encapsulation supplémentaire concernant les données manipulées dans le modèle. 
+Nous avons donc choisi de dédier un contrôleur à la gestion du modèle, il constitue en réalité l'interface du contrôleur avec le modèle. Ce contrôleur se nomme \bf{ModelManager} et garantie la cohérence du modèle exploité par l'application, tout en proposant une interface simple pour l'accès au modèle. Il ajoute également un niveau d'encapsulation supplémentaire concernant les données manipulées dans le modèle. 
 
 Un second contrôleur, nommé \bf{IOManager}, est chargé des interactions avec le système de fichiers du système d'exploitation exécutant l'application. C’est à son niveau que sont traitées les erreurs de type Entrée/Sortie telles que l'absence de fichier ou encore les privilèges insuffisants pour lire/écrire un fichier. De nouveau, ce contrôleur propose une interface simple pour effectuer les opérations dont il est chargé. 
 
-Ensuite, l'\bf{UIManager}, est le pendant du \bf{ModelManager}, mais pour l'interface graphique. Il constitue une interface, simple d'utilisation, entre le contrôleur et la vue. Cela permet de centraliser les informations provenant de la vue. C'est aussi le rôle de ce contrôleur d'interpréter les ordres en provenance de la vue pour les convertir en ordres exécutables par le \bf{ContextManager}. 
+Ensuite, l'\bf{UIManager}, pendant du \bf{ModelManager}, mais pour l'interface graphique cette fois. Il constitue une interface, simple d'utilisation, entre le contrôleur et la vue. Cela permet de centraliser les informations provenant de la vue. C'est aussi le rôle de ce contrôleur d'interpréter les ordres en provenance de la vue pour les convertir en ordres exécutables par le \bf{ContextManager}. 
 
-Le \bf{ContextManager} a deux rôles majeurs qui lui valent d'implémenter deux patrons de conception qui sont le patron \bf{État} et le patron \bf{Commande}. Il a tout d'abord pour rôle d'entretenir la machine à états globale de l'application, c'est-à-dire de garantir à chaque instant qu'une commande utilisateur déclenchera les bons traitements dans l'application et donc les bonnes réactions de l'interface utilisateur et du modèle. Son second rôle est d'entretenir un historique des modifications effectuées de sorte à ce que l'utilisateur puisse défaire et refaire les dernières actions qu'il a effectué. Ce contrôleur assure à l'utilisateur que l'action qu'il veut effectuer a du sens dans le processus global que déroule l'application. Il est dans cette optique étroitement lié à l'\bf{UIManager} qui lui fait parvenir les commandes de l'utilisateur.
-Il est, à ce stade, important de préciser que ces différents composants implémentent tous le patron \bf{Singleton} afin de garantir l'unicité de chaque interface et par conséquent l'unicité du modèle, de l'état global de l'application et de l'historique des commandes effectuées.
+Le \bf{ContextManager} a deux rôles majeurs qui lui valent d'implémenter deux patrons de conception qui sont le patron État et le patron Commande. Il a tout d'abord pour rôle d'entretenir la machine à états globale de l'application, c'est-à-dire de garantir à chaque instant qu'une commande utilisateur déclenchera les bons traitements dans l'application et donc les bonnes réactions de l'interface utilisateur et du modèle. Son second rôle est d'entretenir un historique des modifications effectuées de sorte à ce que l'utilisateur puisse défaire et refaire les dernières actions qu'il a effectué. Ce contrôleur assure à l'utilisateur que l'action qu'il veut effectuer a du sens dans le processus global que déroule l'application. Il est dans cette optique étroitement lié à l'\bf{UIManager} qui lui fait parvenir les commandes de l'utilisateur.
+Il est, à ce stade, important de préciser que ces différents composants implémentent tous le patron Singleton afin de garantir l'unicité de chaque interface et par conséquent l'unicité du modèle, de l'état de global de l'application et de l'historique des commandes effectuées.
 
-L'objet \bf{Controller} présent dans le package ne constitue en réalité que le point d'entrée de l'application. Il est appelé par la procédure main qui l'utilise pour initialiser les différents composants du contrôleur, c'est-à-dire réaliser la première instanciation des composants du contrôleur, puis démarrer l'interface graphique.
+L'objet \bf{Controller} présent dans le package ne constituent en réalité que le point d'entrée de l'application, il est appelé par la procédure main qui l'utilise pour initialiser les différents composants du contrôleur, c'est-à-dire réaliser la première instanciation des composants du contrôleur, puis démarrer l'interface graphique.
 
 On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme des \bf{Façade}s respectivement pour la vue et le modèle. 
 
@@ -649,17 +618,13 @@ On peut également considérer l'\bf{UIManager} et le \bf{ModelManager} comme de
 \caption{Sequence diagram describing route computation process}
 \end{figure}
 
-The main goal of the application is to figure out what is the best route to deliver in lower times each customer, thanks to a loaded planning. The previous sequence diagram shows us the interactions between the different parts of the model used to compute this route.\\
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6,angle=0]{figures/sequence-diagram-route-compute-ref-get-fastest-path.png}
+\caption{Reference of the sequence diagram : getFastestPath}
+\end{figure}
 
-The \bf{Planning} object is describing all the deliveries’ points, so the method used to start the calculation is \bf{computeRoute}. The main idea of this algorithm, is to build a new graph, that will represent the solutions that could be selected to do the route. In fact, all the deliveries are grouped by time slots. So, in the new graph, the nodes are corresponding to the deliveries - or the warehouse, and the arcs are corresponding to the fastest path between the initial vertex and the terminal vertex. This fastest path is based on the duration time and is computed thanks to a Dijkstra algorithm implementation. This calculation is represented in the sequence diagram by the \bf{getFastestPath(Node startNode, Node endNode)} method, in the \bf{Map} class.\\
-
-So, for each time slot, we find the fastest path between each delivery of the time slot and add the result in the new graph, by calling the \bf{addPath(Path path)} method, in the \bf{PathGraph} class. Then, we do the same between the deliveries of a time slot and the deliveries of the previous time slot, in order to link them. If the current time slot being computed is the first one or the last one, we need to find the fastest path between its deliveries and the warehouse.\\
-
-After we created this new graph, we try to find a solution for doing all the deliveries and come back to the warehouse, by calling the \bf{computeSolution(int maxTimeLimit, IGraph graph)} method, of the \bf{DefaultTSP} class, which implements the Traveler Salesman Problem (TSP) resolution.\\
-
-Then, if the TSP resolution was successful, we can construct the corresponding \bf{Route} object, by getting the correct \bf{Path} objects stored in the \bf{PathGraph} object. The step is done by calling the \bf{indexAsPath(int i, int j)} method. Indeed, the TSP algorithm is done by using numeric indexes to identify the nodes, so we need to convert back the solution’s indexes into real \bf{Path} objects.\\
-
-At this point, the new \bf{Route} is set and can be used by the software.
+\Todo{We should add a comment here}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Implémentation et tests
 
@@ -670,7 +635,7 @@ At this point, the new \bf{Route} is set and can be used by the software.
 \section{Notes related to source code, its documentation and unit tests \it{(EN)}}
 \label{sec:notes-related-to-source-code}
 
-\bf{Unit tests:} All the tests have been realized thanks to JUnit, a unit-testing framework for Java. We have done the tests of all the classes of the model, and also the test of the utility classes (utils package). The principle of this framework is simply to test if the expected result of the tested method is the same as the resultat we really get from this method. The testing method of JUnit looks like that : \it{assertEquals(expectedResult, actualResult)}. If the two objects are not equals, an AssertionError is thrown. We have tried to test as much cases as possible, so sometimes a method can have more than one \it{assertEquals} test.
+\Todo{Add notes here if needed or remove this section}
 
 \section{Packages and classes diagrams generated from source code \it{(EN)}}
 \label{sec:packages-and-classes-diagrams-generated-from-source-code}
@@ -723,30 +688,19 @@ Vous trouverez en annexe le détail par demande des temps passés (cf. \ref{sec:
 \subsection{Dépassements des estimations}
 \label{subsec:depassements-des-estimations}
 
-Comme présenté dans le planning effectif et les temps passés, nous avons fait un dépassement sur plusieurs estimations. Tout d'abord, il faut prendre en compte que nous avions peu d'expérience pour estimer ce projet et c'est une qualité qui s'obtient avec l’entraînement et l'expérience.
-
-Nous avons fait le choix d'utiliser l'outil JavaFX afin d'acquérir de nouvelles compétences. L'apprentissage a pris beaucoup plus de temps de prévu ce qui explique le dépassement sur l'implémentation de l'IHM. De plus, nous avions fait le choix de lancer en autonomie un membre de l'équipe, le rendant indispensable pour toute modification sur la partie vue de notre programme. Cela a provoqué un ralentissement global pour l'assemblage des trois composantes (contrôleur, vue et modèle).
-
-Nous pouvons aussi noter un dépassement sur la partie conception. C'est l'une des tâches les plus importantes et nous avons préféré passer plus de temps sur ce point avant de commencer l'implémentation pour éviter des dépassements plus importants par la suite.
+\Todo{Rédiger une synthèse ici}
 
 \subsection{Bilan humain et ressentis des membres}
 \label{subsec:bilan-humain}
 
-Globalement le projet c'est bien passé. Nous sommes arrivé à termes du projet et nous avons réussi à implémenter tous les scénarios conçu. Cependant nous avons eu quelques points négatifs sur le plan humain.
-
-Ce projet est notre premier gros projet qui comprend toutes les phases de l'analyse à l'implémentation en grande équipe (7 membres). Sur des projets de plus petites tailles, l'écart de niveau technique est bien moins visible. Ici, chaque membre a son importance et le ralentissement de l'un d'eux provoque un retard global sur le projet.
-
-\Todo{Expliquer les points positifs}
+\Todo{Rédiger une synthèse ici}
 
 \subsection{Bilan technique}
 \label{subsec:bilan-technique}
 
-\Todo{Expliquer les plus techniques (javaFX, thread...)}
-
 \subsection{Synthèse}
 \label{subsec:synthese}
 
-\Todo{Faire la synthèse}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Annexes
 
 \part{Annexes}
@@ -756,32 +710,39 @@ Ce projet est notre premier gros projet qui comprend toutes les phases de l'anal
 \section{Errors lists \it{(EN)}}
 \label{sec:errors-lists}
 
-\Todo{Expliquer ce que sont ces listes d'erreurs}
 
 \subsection{IO Errors List}
 \label{subsec:io-errors-list}
 
+This section presents a list of errors which can occur during Input/Output operations such as reading or writing files. \\
+
 \textbf{Input errors :}
 \begin{itemize}
   \item[•] \textbf{Cant Read File Error :} the folder is not readable, user’s privileges doesn’t match required privileges.
-  \item[•] \textbf{Missing File Error :} the file is missing in file system. 
+  \item[•] \textbf{Missing File Error :} the file is missing in the OS File System. \\
 \end{itemize}
 
 \textbf{Output errors :}
 \begin{itemize}
-  \item[•] Cant Write File Error : the folder is not readable, user’s privileges doesn’t match required privileges.  
+  \item[•] Cant Write File Error : the folder is not writable, user’s privileges don’t match required privileges.  
 \end{itemize}
 
 \subsection{XML errors list}
 \label{subsec:xml-errors-lists}
 
+The following lists presents all errors which can be found when reading input XML files.\\
+
+This list contains errors shared by both map definition file and planning definition file.\\
+
 \textbf{Shared errors:}
 \begin{itemize}
   \item[•] \textbf{Syntax errors :}
   \begin{itemize}
-    \item[•] \textbf{Unexpected End Of File Error :} XML file is not well formatted, tags are not closed properly.
+    \item[•] \textbf{Unexpected End Of File Error :} XML file is not well formatted, tags are not closed properly.\\
   \end{itemize}
 \end{itemize}
+
+The next list contains all semantic errors that can occur when parsing XML data. Errors are sorted by file.\\ 
 
 \textbf{File specific errors :}
 \begin{itemize}
@@ -792,9 +753,9 @@ Ce projet est notre premier gros projet qui comprend toutes les phases de l'anal
       \item[•] \textbf{Empty Map Error :} root tag has no child.
       \item[•] \textbf{Missing Node Attribute :} missing id, x or y attribute.
       \item[•] \textbf{Empty Node Error :} tag Node has no outgoing arc.
-      \item[•] \textbf{Duplicate Node ID Error :} two or more nodes have the same ID.
-      \item[•] \textbf{Duplicate Node Error :} two or more nodes have the same coordinates.
-      \item[•] \textbf{Duplicate Arc Error :} two or more outgoing arcs of a single node have the same destination node. 
+      \item[•] \textbf{Duplicate Node ID Error :} two or more nodes share the same ID.
+      \item[•] \textbf{Duplicate Node Error :} two or more nodes share the same coordinates.
+      \item[•] \textbf{Duplicate Arc Error :} two or more outgoing arcs of a single node share the same destination node. 
       \item[•] \textbf{Missing Destination Node Error :} the node referenced by an arc as its destination doesn’t exist. 
       \item[•] \textbf{Invalid Average Speed Value Error :} an arc specified average speed is missing, negative or zero. 
       \item[•] \textbf{Invalid Length Value Error :} an arc specified length is missing, negative or zero.
@@ -808,6 +769,7 @@ Ce projet est notre premier gros projet qui comprend toutes les phases de l'anal
       \item[•] \textbf{Duplicate TimeSlot Error :} two or more timeslots have the same start time and end time.
       \item[•] \textbf{Null TimeSlot Error :} a timeslot has the same start and end time.
       \item[•] \textbf{Intersecting TimeSlot Error :} two or more timeslots are intersecting.
+      \item[•] \textbf{Reversed TimeSlot Error :} at least one timeslot has its startTime greater than its endTime.
       \item[•] \textbf{Missing Delivery Node Error :} the address specified by a delivery doesn’t match any node in the Map.
       \item[•] \textbf{Duplicate Delivery Error :} two or more deliveries share the same destination. 
     \end{itemize}
@@ -834,7 +796,7 @@ Ce projet est notre premier gros projet qui comprend toutes les phases de l'anal
     every head row/.style={before row=\hline,after row=\hline},
     every last row/.style={before row=\hline,after row=\hline},
     ]{redmine/users-time-by-issue.csv}}
-\caption{Détail des temps passés par personne}
+\caption{Temps passés par personne}
 \end{figure}
 
 %%% End document
